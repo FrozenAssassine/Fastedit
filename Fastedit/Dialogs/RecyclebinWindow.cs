@@ -46,7 +46,7 @@ namespace Fastedit.Dialogs
             listview.SelectionChanged += Listview_SelectionChanged;
             dialog.PrimaryButtonClick += RecyclebinWindow_PrimaryButtonClick;
             dialog.SecondaryButtonClick += RecyclebinWindow_SecondaryButtonClick;
-            FillListView(listview);
+            UpdateListViewItems(listview);
         }
 
         private async void RecyclebinWindow_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -63,10 +63,9 @@ namespace Fastedit.Dialogs
                     Debug.WriteLine("Exception in RecyclebinWindow --> RecyclebinWindow_PrimaryButtonClick:" + "\n" + ex.Message);
                 }
 
-                FillListView(listview);
+                UpdateListViewItems(listview);
             }
         }
-
         private async void RecyclebinWindow_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (selecteditem != null)
@@ -77,10 +76,9 @@ namespace Fastedit.Dialogs
                 {
                     await selecteditem.file.DeleteAsync();
                 }
-                FillListView(listview);
+                UpdateListViewItems(listview);
             }
         }
-
         private void Listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count >= 1)
@@ -102,17 +100,51 @@ namespace Fastedit.Dialogs
             }
         }
 
-        public async void FillListView(ListView listview)
+        public async void UpdateListViewItems(ListView listview)
         {
             listview.Items.Clear();
             StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.RecycleBin_FolderName, CreationCollisionOption.OpenIfExists);
-            foreach (StorageFile file in await folder.GetFilesAsync())
+            var files = await folder.GetFilesAsync();
+            for (int i = 0; i< files.Count; i++)
             {
-                listview.Items.Add(new RecycleBinListViewItem(file, file.Name, file.DateCreated.UtcDateTime.ToString()));
+                listview.Items.Add(new RecycleBinListViewItem(files[i], files[i].Name, files[i].DateCreated.UtcDateTime.ToString()));
+            }
+        }
+        public static async Task<ClearRecycleBinResult> ClearRecycleBin()
+        {
+            try
+            {
+                var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.RecycleBin_FolderName, CreationCollisionOption.OpenIfExists);
+                if (folder == null) 
+                    return ClearRecycleBinResult.NullError;
+
+                var files = await folder.GetFilesAsync();
+                for (int i = 0; i < files.Count; i++)
+                {
+                    if (files[i] == null) 
+                        return ClearRecycleBinResult.NullError;
+                    await files[i].DeleteAsync();
+                }
+
+                //check if all have been deleted
+                var files_2 = await folder.GetFilesAsync();
+                if (files_2.Count == 0)
+                    return ClearRecycleBinResult.Success;
+                else
+                    return ClearRecycleBinResult.NotAllFilesDeleted;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception in RecyclebinWindow -> ClearRecycleBin" + ex.Message);
+                return ClearRecycleBinResult.Exception;
             }
         }
     }
 
+    public enum ClearRecycleBinResult
+    {
+        Success, Exception, NotAllFilesDeleted, NullError
+    }
     public class RecycleBinListViewItem : ListViewItem
     {
         public string Filename;
