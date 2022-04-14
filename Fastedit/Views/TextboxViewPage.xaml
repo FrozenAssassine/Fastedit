@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="Fastedit.Views.TextboxViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:textbox="using:Fastedit.Controls.Textbox"
+    mc:Ignorable="d"
+    RequestedTheme="Dark"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:muxc ="using:Microsoft.UI.Xaml.Controls">
+    <Grid>
+        <Grid x:Name="Titlebar" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+        <TextBlock Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Center" Margin="0,8,0,0" x:Name="TitleDisplay"/>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Click="ReturnToOldWindowButton_Click" x:Name="ReturnToOldWindowButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE944;" FontFamily="Segoe MDL2 Assets"/>
+            <Button Click="FullscreenButton_Click" x:Name="FullscreenButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE740;" FontFamily="Segoe MDL2 Assets"/>
+            <!--<Button Click="Save_Click" x:Name="SaveButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE74E;" FontFamily="Segoe MDL2 Assets"/>-->
+        </StackPanel>
+        <Grid Margin="0,30,0,0" HorizontalAlignment="Stretch" Height="2" x:Name="OverTextboxLine"/>
+        <textbox:TextControlBox LineNumberForeground="purple" Margin="0,32,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainTextbox"/>
+    </Grid>
+</Page>

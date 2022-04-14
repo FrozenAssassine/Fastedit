@@ -1,0 +1,1164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPage_ContactButton.Content" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="AboutPage_ContactViaEmail.Text" xml:space="preserve">
+    <value>Du kannst mich über Email kontaktieren:</value>
+  </data>
+  <data name="AboutPage_DevelopedBy.Text" xml:space="preserve">
+    <value>Entwickelt von:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="AboutPage_NugetPackagesUsed.Text" xml:space="preserve">
+    <value>Verwendete Nuget-Pakete</value>
+  </data>
+  <data name="AboutPage_ReportSubmitFeature.Content" xml:space="preserve">
+    <value>Bug melden / Feature vorschlagen</value>
+  </data>
+  <data name="AboutPage_Version.Text" xml:space="preserve">
+    <value>Version:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="AskSaveDialog_AskSaveContent.Text" xml:space="preserve">
+    <value>Möchtest du die Änderungen speichern?</value>
+    <comment>Ask save content</comment>
+  </data>
+  <data name="AskSaveDialog_AskToSaveFile.Text" xml:space="preserve">
+    <value>Möchtest du die Datei speichern?</value>
+  </data>
+  <data name="AskSaveDialog_CancelButton.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+    <comment>Cancel button content</comment>
+  </data>
+  <data name="AskSaveDialog_DontSaveButton.Text" xml:space="preserve">
+    <value>Nicht speichern</value>
+    <comment>Don't save button content</comment>
+  </data>
+  <data name="AskSaveDialog_FileWasDeletedFromYourPc.Text" xml:space="preserve">
+    <value>Die Datei ist nicht mehr auf deinem PC gespeichert, möchtest du sie speichern?</value>
+  </data>
+  <data name="AskSaveDialog_Save.Text" xml:space="preserve">
+    <value>Speichern?</value>
+    <comment>The dialog title</comment>
+  </data>
+  <data name="AskSaveDialog_SaveButton.Text" xml:space="preserve">
+    <value>Speichern</value>
+    <comment>Save button content</comment>
+  </data>
+  <data name="Disclaimer_Content1.Text" xml:space="preserve">
+    <value>Haftungsausschluss</value>
+  </data>
+  <data name="Disclaimer_Content10.Text" xml:space="preserve">
+    <value>Dienst</value>
+  </data>
+  <data name="Disclaimer_Content11.Text" xml:space="preserve">
+    <value>bezieht sich auf die Anwendung.</value>
+  </data>
+  <data name="Disclaimer_Content12.Text" xml:space="preserve">
+    <value>Sie</value>
+  </data>
+  <data name="Disclaimer_Content13.Text" xml:space="preserve">
+    <value>bezeichnet die Person, die auf den Dienst zugreift, oder das Unternehmen oder eine andere juristische Person, in deren Namen diese Person auf den Dienst zugreift oder ihn nutzt, soweit zutreffend.</value>
+  </data>
+  <data name="Disclaimer_Content14.Text" xml:space="preserve">
+    <value>Anwendung</value>
+  </data>
+  <data name="Disclaimer_Content15.Text" xml:space="preserve">
+    <value>bezeichnet das vom Unternehmen bereitgestellte Softwareprogramm, das von Ihnen auf ein elektronisches Gerät namens Fastedit heruntergeladen wird.</value>
+  </data>
+  <data name="Disclaimer_Content16.Text" xml:space="preserve">
+    <value>Haftungsausschluss</value>
+  </data>
+  <data name="Disclaimer_Content17.Text" xml:space="preserve">
+    <value>Die im Dienst enthaltenen Informationen dienen nur zu allgemeinen Informationszwecken.</value>
+  </data>
+  <data name="Disclaimer_Content18.Text" xml:space="preserve">
+    <value>Das Unternehmen übernimmt keine Verantwortung für Fehler oder Auslassungen in den Inhalten des Dienstes.</value>
+  </data>
+  <data name="Disclaimer_Content19.Text" xml:space="preserve">
+    <value>In keinem Fall haftet das Unternehmen für besondere, direkte, indirekte, Folge- oder Nebenschäden oder Schäden jeglicher Art, sei es aus einer Vertragshandlung, Fahrlässigkeit oder einer anderen unerlaubten Handlung, die sich aus oder im Zusammenhang mit der Nutzung des Dienstes oder des Inhalts des Dienstes ergeben. Das Unternehmen behält sich das Recht vor, jederzeit ohne vorherige Ankündigung Ergänzungen, Löschungen oder Änderungen an den Inhalten des Dienstes vorzunehmen. Dieser Haftungsausschluss wurde mit Hilfe des</value>
+  </data>
+  <data name="Disclaimer_Content2.Text" xml:space="preserve">
+    <value>Letzte Aktualisierung 14.01.2022</value>
+  </data>
+  <data name="Disclaimer_Content20.Text" xml:space="preserve">
+    <value>Disclaimer Templates erstellt.</value>
+  </data>
+  <data name="Disclaimer_Content21.Text" xml:space="preserve">
+    <value>Das Unternehmen garantiert nicht, dass der Dienst frei von Viren oder anderen schädlichen Komponenten ist.</value>
+  </data>
+  <data name="Disclaimer_Content22.Text" xml:space="preserve">
+    <value>Haftungsausschluss für externe Links</value>
+  </data>
+  <data name="Disclaimer_Content23.Text" xml:space="preserve">
+    <value>Der Dienst kann Links zu externen Websites enthalten, die nicht vom Unternehmen bereitgestellt oder gepflegt werden oder in irgendeiner Weise mit dem Unternehmen verbunden sind.</value>
+  </data>
+  <data name="Disclaimer_Content24.Text" xml:space="preserve">
+    <value>Bitte beachten Sie, dass das Unternehmen keine Garantie für die Richtigkeit, Relevanz, Aktualität oder Vollständigkeit der Informationen auf diesen externen Websites übernimmt.</value>
+  </data>
+  <data name="Disclaimer_Content25.Text" xml:space="preserve">
+    <value>Haftungsausschluss für Fehler und Auslassungen</value>
+  </data>
+  <data name="Disclaimer_Content26.Text" xml:space="preserve">
+    <value>Die vom Dienst bereitgestellten Informationen dienen nur der allgemeinen Orientierung in Angelegenheiten von Interesse. Selbst wenn das Unternehmen alle Vorsichtsmaßnahmen trifft, um sicherzustellen, dass der Inhalt des Dienstes sowohl aktuell als auch genau ist, können Fehler auftreten. Darüber hinaus kann es angesichts der sich ändernden Gesetze, Regeln und Vorschriften zu Verzögerungen, Auslassungen oder Ungenauigkeiten in denen im Service enthaltenen Informationen kommen.</value>
+  </data>
+  <data name="Disclaimer_Content27.Text" xml:space="preserve">
+    <value>Das Unternehmen ist nicht verantwortlich für Fehler, Auslassungen oder für die Ergebnisse, die durch die Verwendung dieser Informationen erzielt werden.</value>
+  </data>
+  <data name="Disclaimer_Content28.Text" xml:space="preserve">
+    <value>Haftungsausschluss für faire Nutzung</value>
+  </data>
+  <data name="Disclaimer_Content29.Text" xml:space="preserve">
+    <value>Das Unternehmen kann urheberrechtlich geschütztes Material verwenden, das nicht immer ausdrücklich vom Urheberrechtsinhaber genehmigt wurde. Das Unternehmen stellt solches Material für Kritik, Kommentare, Nachrichtenberichterstattung, Lehre, Wissenschaft oder Forschung zur Verfügung.</value>
+  </data>
+  <data name="Disclaimer_Content3.Text" xml:space="preserve">
+    <value>Interpretation und Definition</value>
+  </data>
+  <data name="Disclaimer_Content30.Text" xml:space="preserve">
+    <value>Das Unternehmen ist der Ansicht, dass dies eine "faire Nutzung" von urheberrechtlich geschütztem Material gemäß Abschnitt 107 des Urheberrechtsgesetzes der Vereinigten Staaten darstellt.</value>
+  </data>
+  <data name="Disclaimer_Content31.Text" xml:space="preserve">
+    <value>Wenn Sie urheberrechtlich geschütztes Material aus dem Dienst für Ihre eigenen Zwecke verwenden möchten, die über die faire Nutzung hinausgehen, müssen Sie die Erlaubnis des Urheberrechtsinhabers einholen.</value>
+  </data>
+  <data name="Disclaimer_Content32.Text" xml:space="preserve">
+    <value>Geäußerte Ansichten Haftungsausschluss</value>
+  </data>
+  <data name="Disclaimer_Content33.Text" xml:space="preserve">
+    <value>Der Dienst kann Ansichten und Meinungen enthalten, die denen der Autoren entsprechen und nicht unbedingt die offizielle Politik oder Position eines anderen Autors, einer Agentur, einer Organisation, eines Arbeitgebers oder eines Unternehmens, einschließlich des Unternehmens, widerspiegeln.</value>
+  </data>
+  <data name="Disclaimer_Content34.Text" xml:space="preserve">
+    <value>Kommentare, die von Benutzern veröffentlicht werden, liegen in ihrer alleinigen Verantwortung und die Benutzer übernehmen die volle Verantwortung, Haftung und Schuld für verleumdungen oder rechtsstreitigkeiten, die sich aus etwas ergeben, das in oder als direkte Folge von etwas in einem Kommentar geschrieben wurde. Das Unternehmen haftet nicht für Kommentare, die von Benutzern veröffentlicht werden, und behält sich das Recht vor, Kommentare aus irgendeinem Grund zu löschen.</value>
+  </data>
+  <data name="Disclaimer_Content35.Text" xml:space="preserve">
+    <value>Haftungsausschluss für keine Verantwortung</value>
+  </data>
+  <data name="Disclaimer_Content36.Text" xml:space="preserve">
+    <value>Die Informationen über den Dienst werden unter dem Verständnis bereitgestellt, dass das Unternehmen hierin nicht in der Erbringung von rechtlichen, buchhalterischen, steuerlichen oder anderen professionellen Ratschlägen und Dienstleistungen tätig ist. Als solches sollte es nicht als Ersatz für die Beratung mit professionellen Buchhaltungs-, Steuer-, Rechts- oder anderen kompetenten Beratern verwendet werden.</value>
+  </data>
+  <data name="Disclaimer_Content37.Text" xml:space="preserve">
+    <value>In keinem Fall haftet das Unternehmen für besondere, zufällige, indirekte oder Folgeschäden, die sich aus oder im Zusammenhang mit Ihrem Zugriff oder Ihrer Nutzung oder der Unfähigkeit, auf den Dienst zuzugreifen oder ihn zu nutzen, ergeben.</value>
+  </data>
+  <data name="Disclaimer_Content38.Text" xml:space="preserve">
+    <value>Haftungsausschluss "Nutzung auf eigene Gefahr"</value>
+  </data>
+  <data name="Disclaimer_Content39.Text" xml:space="preserve">
+    <value>Alle Informationen im Dienst werden "wie besehen" zur Verfügung gestellt, ohne Garantie für Vollständigkeit, Genauigkeit, Aktualität oder der Ergebnisse, die durch die Verwendung dieser Informationen erzielt werden, und ohne jegliche ausdrückliche oder stillschweigende Gewährleistung, einschließlich, aber nicht beschränkt auf Garantien der Leistung, Marktgängigkeit und Eignung für einen bestimmten Zweck.</value>
+  </data>
+  <data name="Disclaimer_Content4.Text" xml:space="preserve">
+    <value>Interpretation</value>
+  </data>
+  <data name="Disclaimer_Content40.Text" xml:space="preserve">
+    <value>Das Unternehmen haftet Ihnen oder anderen gegenüber nicht für Entscheidungen oder Maßnahmen, die im Vertrauen auf die vom Dienst bereitgestellten Informationen getroffen werden, oder für Folgeschäden, besondere oder ähnliche Schäden, selbst wenn auf die Möglichkeit solcher Schäden hingewiesen wurde.</value>
+  </data>
+  <data name="Disclaimer_Content41.Text" xml:space="preserve">
+    <value>Kontaktieren Sie uns</value>
+  </data>
+  <data name="Disclaimer_Content42.Text" xml:space="preserve">
+    <value>Wenn Sie Fragen zu diesem Haftungsausschluss haben, können Sie uns kontaktieren:</value>
+  </data>
+  <data name="Disclaimer_Content5.Text" xml:space="preserve">
+    <value>Die Wörter, von denen der Anfangsbuchstabe groß geschrieben wird, haben Bedeutungen, die unter den folgenden Bedingungen definiert sind. Die folgenden Definitionen haben die gleiche Bedeutung, unabhängig davon, ob sie im Singular oder im Plural erscheinen.</value>
+  </data>
+  <data name="Disclaimer_Content6.Text" xml:space="preserve">
+    <value>Definition</value>
+  </data>
+  <data name="Disclaimer_Content7.Text" xml:space="preserve">
+    <value>Für die Zwecke dieses Haftungsausschlusses:</value>
+  </data>
+  <data name="Disclaimer_Content8.Text" xml:space="preserve">
+    <value>Firma</value>
+  </data>
+  <data name="Disclaimer_Content9.Text" xml:space="preserve">
+    <value>(in diesem Haftungsausschluss entweder als "das Unternehmen", "wir", "uns" oder "unser" bezeichnet) bezieht sich auf Fastedit.</value>
+  </data>
+  <data name="DropDownMenu_Copy.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="DropDownMenu_Cut.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="DropDownMenu_Dialogs_Encoding.Text" xml:space="preserve">
+    <value>Kodierung</value>
+  </data>
+  <data name="DropDownMenu_Dialogs_Info.Text" xml:space="preserve">
+    <value>Datei Info</value>
+  </data>
+  <data name="DropDownMenu_Dialogs_Share.Text" xml:space="preserve">
+    <value>Teilen</value>
+  </data>
+  <data name="DropDownMenu_FormatCode.Text" xml:space="preserve">
+    <value>Code formatieren</value>
+  </data>
+  <data name="DropDownMenu_GoToLine.Text" xml:space="preserve">
+    <value>Gehe zu</value>
+  </data>
+  <data name="DropDownMenu_LockTab.Text" xml:space="preserve">
+    <value>Bearbeitung sperren</value>
+  </data>
+  <data name="DropDownMenu_New.Text" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="DropDownMenu_Open.Text" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="DropDownMenu_Paste.Text" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="DropDownMenu_Recyclebin.Text" xml:space="preserve">
+    <value>Papierkorb</value>
+  </data>
+  <data name="DropDownMenu_Redo.Text" xml:space="preserve">
+    <value>Schritt vor</value>
+  </data>
+  <data name="DropDownMenu_Replace.Text" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
+  <data name="DropDownMenu_Save.Text" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="DropDownMenu_SaveAs.Text" xml:space="preserve">
+    <value>Speichern unter</value>
+  </data>
+  <data name="DropDownMenu_Search.Text" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="DropDownMenu_SelectAll.Text" xml:space="preserve">
+    <value>Alles auswählen</value>
+  </data>
+  <data name="DropDownMenu_Settings.Text" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="DropDownMenu_SpellChecking.Text" xml:space="preserve">
+    <value>Rechtschreibprüfung</value>
+  </data>
+  <data name="DropDownMenu_SubMenu_Dialogs.Text" xml:space="preserve">
+    <value>Dialoge</value>
+  </data>
+  <data name="DropDownMenu_SubMenu_Tab.Text" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="DropDownMenu_SubMenu_Window.Text" xml:space="preserve">
+    <value>Fenster</value>
+  </data>
+  <data name="DropDownMenu_Title_Advanced.Title" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
+  <data name="DropDownMenu_Title_Document.Title" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
+  <data name="DropDownMenu_Title_Edit.Title" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="DropDownMenu_Title_File.Title" xml:space="preserve">
+    <value>Datei</value>
+  </data>
+  <data name="DropDownMenu_Title_View.Title" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="DropDownMenu_Undo.Text" xml:space="preserve">
+    <value>Schritt zurück</value>
+  </data>
+  <data name="DropDownMenu_Window_Close.Text" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="DropDownMenu_Window_Fullscreen.Text" xml:space="preserve">
+    <value>Vollbild</value>
+  </data>
+  <data name="DropDownMenu_Window_MarkdownPreview.Text" xml:space="preserve">
+    <value>Markdown umschalten</value>
+  </data>
+  <data name="DropDownMenu_Window_Minimode.Text" xml:space="preserve">
+    <value>Kompakter Modus</value>
+  </data>
+  <data name="DropDownMenu_Window_SurroundWith.Text" xml:space="preserve">
+    <value>Umschließen mit</value>
+  </data>
+  <data name="DropDownMenu_WordWrap.Text" xml:space="preserve">
+    <value>Zeilenumbruch</value>
+  </data>
+  <data name="DropDownMenu_ZoomIn.Text" xml:space="preserve">
+    <value>Vergrößern</value>
+  </data>
+  <data name="DropDownMenu_ZoomOut.Text" xml:space="preserve">
+    <value>Verkleinern</value>
+  </data>
+  <data name="EncodingDialog_Button_Cancel.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="EncodingDialog_Button_Done.Text" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="EncodingDialog_Title.Text" xml:space="preserve">
+    <value>Kodierung:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="ErrorDialogs.LoadTempTabError.Text" xml:space="preserve">
+    <value>Konnte den temporär gespeicherten Tab nicht laden, warcheinlich wurde die Datei von deinem PC gelöscht</value>
+  </data>
+  <data name="ErrorDialogs_CloseTabError.Text" xml:space="preserve">
+    <value>Konnte den Tab nicht schließen</value>
+  </data>
+  <data name="ErrorDialogs_CreateTabErrorDialog.Text" xml:space="preserve">
+    <value>Fehler beim erstellen des Tabs</value>
+  </data>
+  <data name="ErrorDialogs_DragDropError.Text" xml:space="preserve">
+    <value>Fehler beim öffnen der Datei</value>
+  </data>
+  <data name="ErrorDialogs_GetTabError.Text" xml:space="preserve">
+    <value>Bei der Umwandlung des Tabs ist ein fehler aufgetreten</value>
+  </data>
+  <data name="ErrorDialogs_Header_Error.Text" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="ErrorDialogs_LoadTabsError.Text" xml:space="preserve">
+    <value>Beim Laden der Tabs ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="ErrorDialogs_OpenErrorDialog.Text" xml:space="preserve">
+    <value>Konnte die Datei nicht öffnen</value>
+  </data>
+  <data name="ErrorDialogs_SaveDataBaseError.Text" xml:space="preserve">
+    <value>Fehler beim Versuch die Datenbank zu speichern</value>
+  </data>
+  <data name="ErrorDialogs_SaveDataBaseError_Close.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="ErrorDialogs_SaveDataBaseError_CloseAnyway.Text" xml:space="preserve">
+    <value>Schließe trotzdem</value>
+  </data>
+  <data name="ErrorDialogs_SaveDataBaseError_Retry.Text" xml:space="preserve">
+    <value>Nochmal</value>
+  </data>
+  <data name="ErrorDialogs_SaveErrorDialog.Text" xml:space="preserve">
+    <value>Konnte nicht in die Datei schreiben</value>
+  </data>
+  <data name="ErrorDialogs_SaveFileError.Text" xml:space="preserve">
+    <value>Datei konnte nicht gespeichert werden</value>
+  </data>
+  <data name="ErrorDialogs_Title_DataBaseError.Text" xml:space="preserve">
+    <value>Datenbank fehler</value>
+  </data>
+  <data name="FileInfo_CharacterCount.Text" xml:space="preserve">
+    <value>Zeichen:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_CopyButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="FileInfo_Created.Text" xml:space="preserve">
+    <value>Erstelldatum:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_Extension.Text" xml:space="preserve">
+    <value>Endung:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_FileInfo.Text" xml:space="preserve">
+    <value>Datei Informationen</value>
+  </data>
+  <data name="FileInfo_Filename.Text" xml:space="preserve">
+    <value>Name:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_Filepath.Text" xml:space="preserve">
+    <value>Pfad:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_FileSize.Text" xml:space="preserve">
+    <value>Größe auf Datenträger:</value>
+  </data>
+  <data name="FileInfo_LastModified.Text" xml:space="preserve">
+    <value>Zuletzt geändert:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="FileInfo_OkButton.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="FileInfo_WordCount.Text" xml:space="preserve">
+    <value>Wörter:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="InfoBarMessage_FileInvalidPath.Text" xml:space="preserve">
+    <value>Der angegebene Pfad ist ungültig</value>
+  </data>
+  <data name="InfoBarMessage_FileInvalidPath_Title.Text" xml:space="preserve">
+    <value>Ungültiger Pfad</value>
+  </data>
+  <data name="InfoBarMessage_FileNoAccess.Text" xml:space="preserve">
+    <value>Du hast keine Berechtigung, um diese Datei zu öffnen</value>
+  </data>
+  <data name="InfoBarMessage_FileNoAccess_Title.Text" xml:space="preserve">
+    <value>Keine Berechtigung</value>
+  </data>
+  <data name="InfoBarMessage_FileNotFound.Text" xml:space="preserve">
+    <value>Die Datei konnte nich gefunden werden</value>
+  </data>
+  <data name="InfoBarMessage_FileNotFound_Title.Text" xml:space="preserve">
+    <value>Datei nicht gefunden</value>
+  </data>
+  <data name="InfoBarMessage_LoadingFile.Text" xml:space="preserve">
+    <value>Öffnet die Datei</value>
+  </data>
+  <data name="InfoBarMessage_NewVersion_Text.Text" xml:space="preserve">
+    <value>View Changelog</value>
+  </data>
+  <data name="InfoBarMessage_NewVersion_Text1.Text" xml:space="preserve">
+    <value>Wilkommen zu Fastedit version</value>
+  </data>
+  <data name="InfoBarMessage_NotOpenInNewView.Text" xml:space="preserve">
+    <value>Beim öffnen des Dokuments in einem neuen Fenster ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="InfoBarMessage_NotOpenInNewView_Title.Text" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="InfoBarMessage_SearchNotFound.Text" xml:space="preserve">
+    <value>wurde nicht gefunden</value>
+  </data>
+  <data name="InfoBarMessage_UpdatingEncoding.Text" xml:space="preserve">
+    <value>Aktualisiert die Kodierung, dies könnte einen Weile dauern</value>
+  </data>
+  <data name="InfoBarMesssage_CloseAllInstances.Text" xml:space="preserve">
+    <value>Bitte schließe alle geöffneten Instanzen von Fastedit</value>
+  </data>
+  <data name="InfoBarMesssage_CloseAllInstances_Title.Text" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="MainPageGoToLineWindow.Title" xml:space="preserve">
+    <value>Gehe zu Zeile</value>
+  </data>
+  <data name="MainPageGoToLineWindow_LineTextBox_Placeholder.PlaceholderText" xml:space="preserve">
+    <value>Zeile...</value>
+  </data>
+  <data name="MainPageSearchWindow.Title" xml:space="preserve">
+    <value>Suche</value>
+  </data>
+  <data name="MainPageSearchWindow_FindTextBox_Placeholder.PlaceholderText" xml:space="preserve">
+    <value>Suchen...</value>
+  </data>
+  <data name="MainPageSearchWindow_ReplaceTextBox_Placeholder.PlaceholderText" xml:space="preserve">
+    <value>Ersetzen...</value>
+  </data>
+  <data name="MainPage_SearchWindow_FindWholeWordButton.Content" xml:space="preserve">
+    <value>Ganzes Wort</value>
+  </data>
+  <data name="MainPage_SearchWindow_ReplaceAllButton.Content" xml:space="preserve">
+    <value>Alles ersetzen</value>
+  </data>
+  <data name="MainPage_Statusbar_Saved.Text" xml:space="preserve">
+    <value>Gespeichert</value>
+  </data>
+  <data name="MainPage_Statusbar_Unsaved.Text" xml:space="preserve">
+    <value>Ungespeichert</value>
+  </data>
+  <data name="MainPage_Statusbar_Wordcount.Text" xml:space="preserve">
+    <value>Wörter</value>
+  </data>
+  <data name="PrivacyPolicy_Part1.Text" xml:space="preserve">
+    <value>Durch die Nutzung der App Fastedit stimmen Sie unseren Richtlinien bezüglich der Erfassung, Verwendung und Offenlegung personenbezogener Daten zu, die in dieser Datenschutzerklärung dargelegt sind.</value>
+  </data>
+  <data name="PrivacyPolicy_Part2.Text" xml:space="preserve">
+    <value>Wir sammeln, speichern, verwenden oder teilen keine persönlichen Daten oder sonstigen Informationen.</value>
+  </data>
+  <data name="PrivacyPolicy_Part3.Text" xml:space="preserve">
+    <value>Wenn Sie dem Entwickler eine E-Mail für Support, Feedback oder anderes senden, werden die E-Mails mit E-Mail-Adressen zu Qualitätssicherungszwecken aufbewahrt. Die E-Mail-Adressen werden nur verwendet, um auf geäußertes Feedback, Support oder andere zu antworten, und werden niemals für Marketingzwecke verwendet.</value>
+  </data>
+  <data name="PrivacyPolicy_Part4.Text" xml:space="preserve">
+    <value>Wir werden Ihre Daten nicht an Drittanbieter weitergeben, es sei denn, Sie stimmen ausdrücklich zu oder wenn dies gesetzlich vorgeschrieben ist.</value>
+  </data>
+  <data name="PrivacyPolicy_Part5.Text" xml:space="preserve">
+    <value>Wenn Sie Fragen zu dieser Datenschutzerklärung haben, können Sie uns eine E-Mail senden.</value>
+  </data>
+  <data name="PrivacyPolicy_Title1.Text" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
+  </data>
+  <data name="PrivacyPolicy_Title2.Text" xml:space="preserve">
+    <value>Erfassung personenbezogener Daten</value>
+  </data>
+  <data name="PrivacyPolicy_Title3.Text" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="PrivacyPolicy_Title4.Text" xml:space="preserve">
+    <value>Offenlegung personenbezogener Daten</value>
+  </data>
+  <data name="PrivacyPolicy_Title5.Text" xml:space="preserve">
+    <value>Kontaktieren Sie uns</value>
+  </data>
+  <data name="RenameThemeDialog_CancelButton.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="RenameThemeDialog_DoneButton.Text" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="RenameThemeDialog_NamePlaceholder.Text" xml:space="preserve">
+    <value>Benennen</value>
+  </data>
+  <data name="RenameThemeDialog_Title.Text" xml:space="preserve">
+    <value>Benennen / Umbenennen</value>
+  </data>
+  <data name="RichEditBoxMenuFlyout_Cut.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="SettingsPage1_Combobox_Font.Text" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="SettingsPage1_Combobox_FontBackgroundColor.Header" xml:space="preserve">
+    <value>Textbox Hintergrundfarbe</value>
+  </data>
+  <data name="SettingsPage1_Combobox_FontColor.Header" xml:space="preserve">
+    <value>Schriftfarbe</value>
+  </data>
+  <data name="SettingsPage1_Combobox_Fontsize.Text" xml:space="preserve">
+    <value>Schriftgröße</value>
+  </data>
+  <data name="SettingsPage1_Combobox_LineNumberBackground.Header" xml:space="preserve">
+    <value>Zeilennummern Hintergrundfarbe</value>
+  </data>
+  <data name="SettingsPage1_Combobox_LineNumberForeground.Header" xml:space="preserve">
+    <value>Zeilennummern Schriftfarbe</value>
+  </data>
+  <data name="SettingsPage1_Combobox_TextSelectionColor.Header" xml:space="preserve">
+    <value>Textauswahlfarbe</value>
+  </data>
+  <data name="SettingsPage1_HandwritingEnabled.Text" xml:space="preserve">
+    <value>Stift im Editor</value>
+  </data>
+  <data name="SettingsPage1_HandwritingEnabled_Description.Text" xml:space="preserve">
+    <value>Wenn du einen Stift benutzt, kannst du direkt in das Textfeld schreiben</value>
+  </data>
+  <data name="SettingsPage1_Header_Editor.Text" xml:space="preserve">
+    <value>Editor:</value>
+  </data>
+  <data name="SettingsPage1_Header_Linenumbers.Text" xml:space="preserve">
+    <value>Zeilennummern</value>
+  </data>
+  <data name="SettingsPage1_Linenumbers.Text" xml:space="preserve">
+    <value>Zeilennummern</value>
+  </data>
+  <data name="SettingsPage1_ShowSelectionFlyout.Text" xml:space="preserve">
+    <value>Menü bei Auswahl</value>
+  </data>
+  <data name="SettingsPage1_ShowSelectionFlyout_Description.Text" xml:space="preserve">
+    <value>Zeigt ein Menü, mit Ausschneiden, Kopieren, Sucehn und Teilen button, wenn du einen Text auswählst</value>
+  </data>
+  <data name="SettingsPage2_AutomaticDesignChange.Text" xml:space="preserve">
+    <value>Du kannst das Design ändern lassen, wenn Windows das Thema wechselt.</value>
+  </data>
+  <data name="SettingsPage2_Combobox_AppBackground.Header" xml:space="preserve">
+    <value>App Hintergrund</value>
+  </data>
+  <data name="SettingsPage2_Combobox_Language.Text" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="SettingsPage2_Combobox_Theme.Header" xml:space="preserve">
+    <value>Thema</value>
+  </data>
+  <data name="SettingsPage2_Controls.Text" xml:space="preserve">
+    <value>Steuerelemente anzeigen/ausschalten</value>
+  </data>
+  <data name="SettingsPage2_DarkThemeCombobox.Header" xml:space="preserve">
+    <value>Design für den Darkmode</value>
+  </data>
+  <data name="SettingsPage2_EnableAcrylicSwitch.OffContent" xml:space="preserve">
+    <value>Acryl Darstellung</value>
+  </data>
+  <data name="SettingsPage2_EnableAcrylicSwitch.OnContent" xml:space="preserve">
+    <value>Acryl Darstellung</value>
+  </data>
+  <data name="SettingsPage2_EnableAcrylicSwitch.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Acryl-Darstellung lässt die Fensterhintergrundfarben durchscheinen, kann aber zu schlechterer Performance führen. Falls Acryl-Design aktiviert ist aber nicht funktioniert prüf ob es in Windows aktiviert wurde.</value>
+  </data>
+  <data name="SettingsPage2_FeatureInBeta.Text" xml:space="preserve">
+    <value>Info: Diese Funktion ist in der Beta und könnte bugs beinhalten</value>
+  </data>
+  <data name="SettingsPage2_Header_App.Text" xml:space="preserve">
+    <value>App:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage2_Header_Titlebar.Text" xml:space="preserve">
+    <value>Titelleiste</value>
+  </data>
+  <data name="SettingsPage2_Language.Text" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="SettingsPage2_LightThemeCombobox.Header" xml:space="preserve">
+    <value>Design für den Lightmode</value>
+  </data>
+  <data name="SettingsPage2_ShowDropDownMenu.OffContent" xml:space="preserve">
+    <value>Dropdown-Menü anzeigen</value>
+  </data>
+  <data name="SettingsPage2_ShowDropDownMenu.OnContent" xml:space="preserve">
+    <value>Dropdown-Menü anzeigen</value>
+  </data>
+  <data name="SettingsPage2_ShowNavigateToNextTab.OffContent" xml:space="preserve">
+    <value>Nächster Tab-Button</value>
+  </data>
+  <data name="SettingsPage2_ShowNavigateToNextTab.OnContent" xml:space="preserve">
+    <value>Nächster Tab-Button</value>
+  </data>
+  <data name="SettingsPage2_ShowNavigateToPreviousTab.OffContent" xml:space="preserve">
+    <value>Vorheriger Tab-Button</value>
+  </data>
+  <data name="SettingsPage2_ShowNavigateToPreviousTab.OnContent" xml:space="preserve">
+    <value>Vorheriger Tab-Button</value>
+  </data>
+  <data name="SettingsPage2_Theme.Text" xml:space="preserve">
+    <value>Thema</value>
+  </data>
+  <data name="SettingsPage2_Theme_Dark.Content" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="SettingsPage2_Theme_Default.Content" xml:space="preserve">
+    <value>System Standard</value>
+  </data>
+  <data name="SettingsPage2_Theme_Light.Content" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="SettingsPage2_Titlebar_Backgroundcolor.Header" xml:space="preserve">
+    <value>Titelleisten Hintergrundfarbe</value>
+  </data>
+  <data name="SettingsPage2_UseMica.OffContent" xml:space="preserve">
+    <value>Benutze Mica als Hintergrund</value>
+  </data>
+  <data name="SettingsPage2_UseMica.OnContent" xml:space="preserve">
+    <value>Benutze Mica als Hintergrund</value>
+  </data>
+  <data name="SettingsPage2_UseMica.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mica ist ein System, welches den Hintergrund der app dem Desktophintergrund anpasst. Funktioniert aktuell aber erst bei Windows 11</value>
+  </data>
+  <data name="SettingsPage4_Button_CreateNewTab.Content" xml:space="preserve">
+    <value>Neuen Tab erstellen</value>
+  </data>
+  <data name="SettingsPage4_Button_RecoverRecentTabs.Content" xml:space="preserve">
+    <value>Letzte Tabs wiederherstellen</value>
+  </data>
+  <data name="SettingsPage4_Combobox_SelectedTabColor.Header" xml:space="preserve">
+    <value>Hintergrundfarbe von ausgewähltem Tab</value>
+  </data>
+  <data name="SettingsPage4_Combobox_TabColorNotFocused.Header" xml:space="preserve">
+    <value>Hintergrundfarbe von nicht ausgewähltem Tab</value>
+  </data>
+  <data name="SettingsPage4_Combobox_TabSizeMode.Header" xml:space="preserve">
+    <value>Tab größe</value>
+  </data>
+  <data name="SettingsPage4_Combobox_TabSizeMode_Compact.Content" xml:space="preserve">
+    <value>Kompakt</value>
+  </data>
+  <data name="SettingsPage4_Combobox_TabSizeMode_Equal.Content" xml:space="preserve">
+    <value>Gleich</value>
+  </data>
+  <data name="SettingsPage4_Combobox_TabSizeMode_SizeToContent.Content" xml:space="preserve">
+    <value>An Text anpasssen</value>
+  </data>
+  <data name="SettingsPage4_Header_OnStart.Text" xml:space="preserve">
+    <value>Beim Start:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage4_Header_TabControl.Text" xml:space="preserve">
+    <value>Tab-Steuerelement:</value>
+  </data>
+  <data name="SettingsPage4_TabIcon.Text" xml:space="preserve">
+    <value>Tab Symbol</value>
+  </data>
+  <data name="SettingsPage4_TextBox_NewDocumentTitle.Text" xml:space="preserve">
+    <value>Title eines neu erstellten Tabs</value>
+  </data>
+  <data name="SettingsPage5_DialogOpacitySlider_Header.Header" xml:space="preserve">
+    <value>Dialog Deckkraft:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage5_Header_DialogBackgroundcolor.Header" xml:space="preserve">
+    <value>Dialog Hintergrundfarbe:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage5_Header_Dialogs.Text" xml:space="preserve">
+    <value>Dialog:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage5_Header_GoToLineDialog.Text" xml:space="preserve">
+    <value>Gehe zu Zeilen Dialog:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage5_HideGoToLineDialogAfterGoingToLine.Content" xml:space="preserve">
+    <value>Schließe Dialog nachdem zur Linie gegangen wurde</value>
+  </data>
+  <data name="SettingsPage5_SelectLineAfterGoingToIt.Content" xml:space="preserve">
+    <value>Ganze Linie auswählen</value>
+  </data>
+  <data name="SettingsPage6_AutoBackupDatabaseAfter.Text" xml:space="preserve">
+    <value>Automatisch Backup von Database erstellen nach: (0 = aus)</value>
+  </data>
+  <data name="SettingsPage6_AutomaticallySaveFilesAfter.Text" xml:space="preserve">
+    <value>Dateien automatisch speichern nach: (0 = aus)</value>
+  </data>
+  <data name="SettingsPage6_Button_BackupNow.Content" xml:space="preserve">
+    <value>Backup erstellen</value>
+  </data>
+  <data name="SettingsPage6_Button_ExportBackup.Content" xml:space="preserve">
+    <value>Backup exportieren</value>
+  </data>
+  <data name="SettingsPage6_Button_ExportSettings.Content" xml:space="preserve">
+    <value>Einstellungen exportieren</value>
+  </data>
+  <data name="SettingsPage6_Button_Import.Content" xml:space="preserve">
+    <value>Backup laden</value>
+  </data>
+  <data name="SettingsPage6_Button_ImportSettings.Content" xml:space="preserve">
+    <value>Einstellungen laden</value>
+  </data>
+  <data name="SettingsPage6_Button_LoadLastBackup.Content" xml:space="preserve">
+    <value>Letztes Backup laden</value>
+  </data>
+  <data name="SettingsPage6_ClearRecyclebin_Button.Content" xml:space="preserve">
+    <value>Ja, Lösche alle Dateien</value>
+  </data>
+  <data name="SettingsPage6_ClearRecyclebin_Warning.Text" xml:space="preserve">
+    <value>Alle Dateien in dem Papierkorb werden gelöscht , möchtest du fortfahren?</value>
+  </data>
+  <data name="SettingsPage6_ClearRecyclebin.Content" xml:space="preserve">
+    <value>Lösche Papierkorb</value>
+  </data>
+  <data name="SettingsPage6_Header_Backup.Text" xml:space="preserve">
+    <value>Datenbank backup:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage6_Header_Settings.Text" xml:space="preserve">
+    <value>App-Einstellungen:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage6_Recyclebin.Text" xml:space="preserve">
+    <value>Papierkorb</value>
+  </data>
+  <data name="SettingsPage6_Slider_Header_AppTransparency.Header" xml:space="preserve">
+    <value>App Transparenz</value>
+  </data>
+  <data name="SettingsPage7_Button_Import.Content" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="SettingsPage7_Button_New.Content" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="SettingsPage7_DesignsAreDisabled.Subtitle" xml:space="preserve">
+    <value>Du kannst das Design nicht ändern, weil die automatische Änderung aktiviert ist. Du kannst sie unter App -&gt; Thema ausschalten</value>
+  </data>
+  <data name="SettingsPage7_DesignsAreDisabled.Title" xml:space="preserve">
+    <value>Designs sind deaktiviert</value>
+  </data>
+  <data name="SettingsPage7_Header_CustomDesigns.Text" xml:space="preserve">
+    <value>Eigene Designs</value>
+  </data>
+  <data name="SettingsPage8_Combobox_StatusbarBackground.Header" xml:space="preserve">
+    <value>Statusleiste Hintergrundfarbe</value>
+  </data>
+  <data name="SettingsPage8_Combobox_StatusbarForeground.Header" xml:space="preserve">
+    <value>Statusleiste Schriftfarbe</value>
+  </data>
+  <data name="SettingsPage8_Item_Encoding.OffContent" xml:space="preserve">
+    <value>Kodierung</value>
+  </data>
+  <data name="SettingsPage8_Item_Encoding.OnContent" xml:space="preserve">
+    <value>Kodierung</value>
+  </data>
+  <data name="SettingsPage8_Item_LineNumber.OffContent" xml:space="preserve">
+    <value>Zeilennummer</value>
+  </data>
+  <data name="SettingsPage8_Item_LineNumber.OnContent" xml:space="preserve">
+    <value>Zeilennummer</value>
+  </data>
+  <data name="SettingsPage8_Item_Rename.OffContent" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="SettingsPage8_Item_Rename.OnContent" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="SettingsPage8_Item_SaveStatus.OffContent" xml:space="preserve">
+    <value>Speicher-Status</value>
+  </data>
+  <data name="SettingsPage8_Item_SaveStatus.OnContent" xml:space="preserve">
+    <value>Speicher-Status</value>
+  </data>
+  <data name="SettingsPage8_Item_SaveStatus_WithColors.OffContent" xml:space="preserve">
+    <value>Aktiviere Farben</value>
+  </data>
+  <data name="SettingsPage8_Item_SaveStatus_WithColors.OnContent" xml:space="preserve">
+    <value>Aktiviere Farben</value>
+  </data>
+  <data name="SettingsPage8_Item_WordCount.OffContent" xml:space="preserve">
+    <value>Wörterzahl</value>
+  </data>
+  <data name="SettingsPage8_Item_WordCount.OnContent" xml:space="preserve">
+    <value>Wörterzahl</value>
+  </data>
+  <data name="SettingsPage8_Item_Zoom.OffContent" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="SettingsPage8_Item_Zoom.OnContent" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="SettingsPage8_ShowHideItems.Text" xml:space="preserve">
+    <value>Items ein/ausblenden</value>
+  </data>
+  <data name="SettingsPage8_ShowStatusbar.Text" xml:space="preserve">
+    <value>Statusleiste</value>
+  </data>
+  <data name="SettingsPage8_ShowStatusbarInBold.Content" xml:space="preserve">
+    <value>Schrift in Fett</value>
+  </data>
+  <data name="SettingsPage_ApplySettings.Content" xml:space="preserve">
+    <value>Einstellungen anwenden</value>
+  </data>
+  <data name="SettingsPage_ComboboxItem_Accentcolor.Content" xml:space="preserve">
+    <value>Akzentfarbe</value>
+  </data>
+  <data name="SettingsPage_ComboboxItem_Customcolor.Content" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="SettingsPage_ComboboxItem_Default.Content" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="SettingsPage_ComboboxItem_Fontcolor.Content" xml:space="preserve">
+    <value>Schriftfarbe</value>
+  </data>
+  <data name="SettingsPage_ComboboxItem_Transparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="SettingsPage_Header_Appearance.Text" xml:space="preserve">
+    <value>Aussehen:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage_Header_GeneralSettings.Text" xml:space="preserve">
+    <value>Allgemein:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="SettingsPage_Item_About.Content" xml:space="preserve">
+    <value>Über Fastedit</value>
+  </data>
+  <data name="SettingsPage_Item_App.Content" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="SettingsPage_Item_ChangeLog.Content" xml:space="preserve">
+    <value>Änderungsliste</value>
+  </data>
+  <data name="SettingsPage_Item_Data.Content" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="SettingsPage_Item_Designs.Content" xml:space="preserve">
+    <value>Designs</value>
+  </data>
+  <data name="SettingsPage_Item_Dialogs.Content" xml:space="preserve">
+    <value>Dialog</value>
+  </data>
+  <data name="SettingsPage_Item_Editor.Content" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="SettingsPage_Item_PrivacyPolicy.Content" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
+  </data>
+  <data name="SettingsPage_Item_Shortcuts.Content" xml:space="preserve">
+    <value>Tastenkürzel</value>
+  </data>
+  <data name="SettingsPage_Item_Statusbar.Content" xml:space="preserve">
+    <value>Statusleiste</value>
+  </data>
+  <data name="SettingsPage_Item_TabControl.Content" xml:space="preserve">
+    <value>Tab-Steuerelement</value>
+  </data>
+  <data name="ShortcutPage_CloseFile" xml:space="preserve">
+    <value>Datei schließen</value>
+  </data>
+  <data name="ShortcutPage_Copy.ActionOnClick" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="ShortcutPage_Create new file" xml:space="preserve">
+    <value>Neue Datei erstellen</value>
+  </data>
+  <data name="ShortcutPage_Cut.ActionOnClick" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="ShortcutPage_DuplicateLine" xml:space="preserve">
+    <value>Zeile duplizieren</value>
+  </data>
+  <data name="ShortcutPage_FindNext" xml:space="preserve">
+    <value>Nächstes suchen</value>
+  </data>
+  <data name="ShortcutPage_Fullscreen" xml:space="preserve">
+    <value>Vollbild</value>
+  </data>
+  <data name="ShortcutPage_GoToLine" xml:space="preserve">
+    <value>Gehe zu Zeile</value>
+  </data>
+  <data name="ShortcutPage_OpenFile" xml:space="preserve">
+    <value>Datei öffnen</value>
+  </data>
+  <data name="ShortcutPage_OpenSettings" xml:space="preserve">
+    <value>Einstellungen öffnen</value>
+  </data>
+  <data name="ShortcutPage_Paste.ActionOnClick" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="ShortcutPage_Redo" xml:space="preserve">
+    <value>Schritt vor</value>
+  </data>
+  <data name="ShortcutPage_Replace" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
+  <data name="ShortcutPage_SaveFile" xml:space="preserve">
+    <value>Datei speichern</value>
+  </data>
+  <data name="ShortcutPage_SaveFileAs" xml:space="preserve">
+    <value>Datei speichern unter</value>
+  </data>
+  <data name="ShortcutPage_ScrollDown" xml:space="preserve">
+    <value>Nach unten scrollen</value>
+  </data>
+  <data name="ShortcutPage_ScrollUp" xml:space="preserve">
+    <value>Nach oben scrollen</value>
+  </data>
+  <data name="ShortcutPage_Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="ShortcutPage_SelectAll.ActionOnClick" xml:space="preserve">
+    <value>Alles auswählen</value>
+  </data>
+  <data name="ShortcutPage_SelectLastTab" xml:space="preserve">
+    <value>Letzten Tab auswählen</value>
+  </data>
+  <data name="ShortcutPage_SelectTab1To8" xml:space="preserve">
+    <value>Tab 1 - 8 auswählen</value>
+  </data>
+  <data name="ShortcutPage_Undo" xml:space="preserve">
+    <value>Schritt zurück</value>
+  </data>
+  <data name="ShortcutPage_ZoomIn" xml:space="preserve">
+    <value>Text vergrößern</value>
+  </data>
+  <data name="ShortcutPage_ZoomOut" xml:space="preserve">
+    <value>Text verkleinern</value>
+  </data>
+  <data name="Statusbar_Display_Column.Text" xml:space="preserve">
+    <value>Spalte:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="Statusbar_Display_Line.Text" xml:space="preserve">
+    <value>Zeile:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="Statusbar_Display_Zoom.Text" xml:space="preserve">
+    <value>Zoom:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="Statusbar_Encoding_Header.Text" xml:space="preserve">
+    <value>Kodierung</value>
+  </data>
+  <data name="Statusbar_GoToLine_Button_Ok.Content" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Statusbar_GoToLine_Header.Text" xml:space="preserve">
+    <value>Gehe zu Zeile:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="Statusbar_Rename_Header.Text" xml:space="preserve">
+    <value>Umbenennen:</value>
+    <comment>DOPPELPUNKT</comment>
+  </data>
+  <data name="Statusbar_Rename_RenameButton.Content" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="Statusbar_SaveStatus_Save.Text" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="TabRightClickMenu_Close.Text" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="TabRightClickMenu_CloseAll.Text" xml:space="preserve">
+    <value>Alle Schließen</value>
+  </data>
+  <data name="TabRightClickMenu_CloseAll_ButThis.Text" xml:space="preserve">
+    <value>Alle außer diesem schließen</value>
+  </data>
+  <data name="TabRightClickMenu_CloseAll_Left.Text" xml:space="preserve">
+    <value>Schließe alle linken</value>
+  </data>
+  <data name="TabRightClickMenu_CloseAll_Right.Text" xml:space="preserve">
+    <value>Schließe alle rechten</value>
+  </data>
+  <data name="TabRightClickMenu_CloseAll_WithoutSave.Text" xml:space="preserve">
+    <value>Schließe alle ohne speichern</value>
+  </data>
+  <data name="TabRightClickMenu_Info.Text" xml:space="preserve">
+    <value>Datei Informationen</value>
+  </data>
+  <data name="TabRightClickMenu_Lock.Text" xml:space="preserve">
+    <value>Sperren</value>
+  </data>
+  <data name="TabRightClickMenu_OpenInNewWindow.Text" xml:space="preserve">
+    <value>In neuem Fenster öffnen</value>
+  </data>
+  <data name="TabRightClickMenu_Save.Text" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="TabRightClickMenu_Share.Text" xml:space="preserve">
+    <value>Teilen</value>
+  </data>
+  <data name="TabRightClickMenu_Unlock.Text" xml:space="preserve">
+    <value>Entsperren</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_Copy.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_Cut.Text" xml:space="preserve">
+    <value>Ausschneiden</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_Find.Text" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_Paste.Text" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_SelectAll.Text" xml:space="preserve">
+    <value>Alles auswählen</value>
+  </data>
+  <data name="TextControlBoxFlyoutMenu_Undo.Text" xml:space="preserve">
+    <value>Schritt zurück</value>
+  </data>
+  <data name="TextControlBox_Markdown_Close.Text" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="TextControlBox_Markdown_LeftRightTopBottom.Text" xml:space="preserve">
+    <value>Links-Rechts / Oben-Unten umschalten</value>
+  </data>
+  <data name="TextControlBox_Markdown_Rotate.Text" xml:space="preserve">
+    <value>Um 90° drehen</value>
+  </data>
+  <data name="ThemeRightClickMenu_Delete.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ThemeRightClickMenu_Export.Text" xml:space="preserve">
+    <value>Exportieren</value>
+  </data>
+  <data name="ThemeRightClickMenu_Rename.Text" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="ThemeRightClickMenu_SaveAsThis.Text" xml:space="preserve">
+    <value>Überschreiben</value>
+  </data>
+  <data name="Toast_SaveSucced.Text" xml:space="preserve">
+    <value>Gespeichert!</value>
+  </data>
+</root>

@@ -1,0 +1,53 @@
+﻿<Page
+	x:Class="Fastedit.Views.SettingsPage.Page6"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc ="using:Microsoft.UI.Xaml.Controls"
+	mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" Margin="0,30,0,0">
+            <StackPanel Orientation="Vertical" Margin="30,30,30,0" >
+                <muxc:Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
+                    <muxc:Expander.Header>
+                        <TextBlock x:Uid="SettingsPage6_Header_Settings" Text="Settings:" Margin="0,20,0,20" Width="170" FontSize="20" HorizontalAlignment="Left"/>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel Margin="20,0,0,0">
+                            <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="SettingsPage6_Button_ExportSettings" Content="Export settings" Click="ExportSettingsButton_Click" Margin="0,20,0,0" Width="180"/>
+                            <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="SettingsPage6_Button_ImportSettings" Content="Import settings" Click="ImportSettingsButton_Click" Margin="0,20,0,0" Width="180"/>
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+                <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                    <muxc:Expander.Header>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                            <SymbolIcon Symbol="Delete" />
+                            <TextBlock x:Uid="SettingsPage6_Recyclebin" Text="Recyclcebin" FontSize="24" Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <Button Margin="20,0,0,0" Content="Clear recyclebin" x:Uid="SettingsPage6_ClearRecyclebin" Style="{ThemeResource AccentButtonStyle}">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" x:Uid="SettingsPage6_ClearRecyclebin_Warning" Text="All items in the Recyclebin will be deleted, do you want to continue?" Margin="0,0,0,12" />
+                                        <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="SettingsPage6_ClearRecyclebin_Button" Click="ClearRecyclebin_Click" Content="Clear" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+            </StackPanel>
+        </ScrollViewer>
+        <muxc:InfoBar Margin="0,0,0,0" x:Name="SettingsInfoBar"
+			IsOpen="False"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Top"
+			Title=""
+			Message=""/>
+    </Grid>
+</Page>

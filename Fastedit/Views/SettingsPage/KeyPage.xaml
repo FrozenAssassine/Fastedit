@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPage.KeyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Fastedit.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    PointerPressed="Page_PointerPressed">
+    <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled">
+        <StackPanel Margin="20,0,0,70">
+            
+            <TextBlock Text="Text:" Margin="10,20,0,5" FontSize="18"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="A" x:Uid="ShortcutPage_SelectAll" ActionOnClick="Select all"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="X" x:Uid="ShortcutPage_Cut" ActionOnClick="Cut"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="C" x:Uid="ShortcutPage_Copy" ActionOnClick="Copy"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="V" ActionOnClick="Paste"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="D" ActionOnClick="Duplicate line"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Z" ActionOnClick="Undo"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Y" ActionOnClick="Redo"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="+" ActionOnClick="Zoom in"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="-" ActionOnClick="Zoom out"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Back / Delete" ActionOnClick="Remove whole word"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Up" ActionOnClick="Scroll up"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Down" ActionOnClick="Scroll down"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Q" ActionOnClick="Surround with text"/>
+
+            <TextBlock Text="Tabs:" Margin="10,20,0,5" FontSize="18"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="1-8" ActionOnClick="Select tab 1-8"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="9" ActionOnClick="Select the last tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="T / N" ActionOnClick="Create a new file"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="W" ActionOnClick="Close file"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="Middlemouse" ActionOnClick="Close file"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="S" ActionOnClick="Save file"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" SecondModifier="Shift" Key="S" ActionOnClick="Save file as"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="O" ActionOnClick="Open a file"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="Tab" ActionOnClick="Navigate to next tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" SecondModifier="Shift" Key="Tab" ActionOnClick="Navigate to previous tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="MouseButton 5" ActionOnClick="Select previous tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="MouseButton 4" ActionOnClick="Select next tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" SecondModifier="Menu" Key="Left Arrow" ActionOnClick="Select previous tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" SecondModifier="Menu" Key="Right Arrow" ActionOnClick="Select next tab"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="B" ActionOnClick="Open the selected document in a new window"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="M" ActionOnClick="Toggle markdown preview for selected document"/>
+
+
+            <TextBlock Text="Dialogs:" Margin="10,20,0,5" FontSize="18"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="F" ActionOnClick="Open Search"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="F3" ActionOnClick="Find next"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="G" ActionOnClick="Goto line"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="R" ActionOnClick="Replace"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Control" Key="J" ActionOnClick="File info"/>
+
+            <TextBlock Text="Search:" Margin="10,20,0,5" FontSize="18"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="Shift" Key="Enter" ActionOnClick="Search up"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="Enter" ActionOnClick="Search down"/>
+
+            <TextBlock Text="Other:" Margin="10,20,0,5" FontSize="18"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="F1" ActionOnClick="Open Settings"/>
+            <controls:ShortCutInfo Margin="{x:Bind ItemThickness}" Modifier="None" Key="F11" ActionOnClick="Fullscreen"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

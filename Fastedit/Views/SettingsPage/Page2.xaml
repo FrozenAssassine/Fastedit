@@ -1,0 +1,107 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPage.Page2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc ="using:Microsoft.UI.Xaml.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled">
+        <Grid>
+            <muxc:InfoBar Margin="0,0,0,0" x:Name="SettingsInfoBar"
+            IsOpen="False"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Title=""
+            Message=""/>
+
+            <StackPanel Margin="30,30,30,0" Orientation="Vertical">
+
+                <muxc:Expander IsExpanded="False" Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                    <muxc:Expander.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE793;" Margin="0,0,20,0"/>
+                                <TextBlock FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Theme:" x:Uid="SettingsPage2_Theme"/>
+                            </StackPanel>
+                            <!--Theme-->
+                            <ComboBox VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,20,0,20" x:Name="ThemeCombobox" Width="150" SelectionChanged="ThemeCombobox_SelectionChanged">
+                                <ComboBoxItem Content="Default" x:Uid="SettingsPage2_Theme_Default"/>
+                                <ComboBoxItem Content="Light" x:Uid="SettingsPage2_Theme_Light"/>
+                                <ComboBoxItem Content="Dark" x:Uid="SettingsPage2_Theme_Dark"/>
+                            </ComboBox>
+                        </Grid>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                            <TextBlock Margin="0,20,0,0" x:Uid="SettingsPage2_AutomaticDesignChange" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                Text="You can automatically change the design if Windows changes the theme"/>
+                            <ToggleSwitch Toggled="ToggleThemeChange_Toggled" HorizontalAlignment="Left" x:Name="ToggleThemeChange"/>
+                            <StackPanel Orientation="Horizontal" Visibility="{x:Bind ToggleThemeChange.IsOn, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ComboBox x:Uid="SettingsPage2_LightThemeCombobox" HorizontalAlignment="Left" Header="Theme for Lightmode" SelectionChanged="ThemeCombobox1_SelectionChanged" Margin="0,10,0,0" Width="150" x:Name="ThemeCombobox1"/>
+                                <ComboBox  Margin="20,10,0,0" x:Uid="SettingsPage2_DarkThemeCombobox" HorizontalAlignment="Left" Header="Theme for Darkmode" SelectionChanged="ThemeCombobox2_SelectionChanged" Width="150" x:Name="ThemeCombobox2"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+
+                <Grid Margin="0,5,0,0" Height="80" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF2B7;" Margin="0,0,20,0"/>
+                        <TextBlock FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Language:" x:Uid="SettingsPage2_Language"/>
+                    </StackPanel>
+                    <!--Language-->
+                    <ComboBox HorizontalAlignment="Right" Margin="0,20,60,20" x:Uid="SettingsPage2_Combobox_Language" x:Name="Languagecombobox"  SelectionChanged="Language_SelectionChange" Width="150">
+                        <ComboBoxItem Content="Deutsch" Tag="de-DE"/>
+                        <ComboBoxItem Content="English" Tag="en-US"/>
+                    </ComboBox>
+                </Grid>
+                
+                <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                    <muxc:Expander.Header>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB3C;" Margin="0,0,20,0"/>
+                            <TextBlock TextWrapping="Wrap" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Stretch" x:Uid="SettingsPage2_Controls"/>
+                        </StackPanel>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel Margin="20,0,0,0">
+                            <ToggleSwitch x:Uid="SettingsPage2_ShowDropDownMenu" OnContent="Show Dropdownmenu" OffContent="Show Dropdownmenu" Toggled="ShowDropDownMenu_Toggled" x:Name="ShowHideDropDownMenuButton"/>
+                            <ToggleSwitch OnContent="Show Menubar" OffContent="Show Menubar" Toggled="ShowMenubar_Toggled" x:Name="ShowMenuBarToggleButton"/>
+
+                            <ToggleSwitch x:Uid="SettingsPage2_ShowNavigateToNextTab" Margin="0,10,0,0" OnContent="Show navigate to next tab" OffContent="Show navigate to next tab" Toggled="ShowNavigateToNextTab_Toggled" x:Name="NavigateToNextTab"/>
+                            <ToggleSwitch x:Uid="SettingsPage2_ShowNavigateToPreviousTab"  Margin="0,0,0,0" OnContent="Show navigate to previous tab" OffContent="Show navigate to previous tab" Toggled="ShowNavigateToPreviousTab_Toggled" x:Name="NavigateToPreviousTab"/>
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+
+                <Grid Margin="0,5,0,0" Height="80" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8E3;" Margin="0,0,20,0"/>
+                        <TextBlock FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Menubar alignment"/>
+                    </StackPanel>
+                    <!--Language-->
+                    <ComboBox HorizontalAlignment="Right" Margin="0,20,60,20" x:Name="MenubarAlignment" SelectionChanged="MenubarAlignment_SelectionChanged" Width="150">
+                        <ComboBoxItem Content="Left"/>
+                        <ComboBoxItem Content="Center"/>
+                        <ComboBoxItem Content="Right"/>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+
+            <muxc:TeachingTip x:Name="GetBackToSettingsTeachingTip"
+                Target="{x:Bind ShowHideDropDownMenuButton}"
+                PreferredPlacement="Right" CloseButtonClick="GetBackToSettingsTeachingTip_CloseButtonClick">
+                <muxc:TeachingTip.Content>
+                    <TextBlock TextWrapping="WrapWholeWords" Margin="0,16,0,0">When all controls are hidden, you can only get back to the settings by pressing F1</TextBlock>
+                </muxc:TeachingTip.Content>
+            </muxc:TeachingTip>
+        </Grid>
+    </ScrollViewer>
+</Page>

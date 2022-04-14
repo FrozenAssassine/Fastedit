@@ -1,0 +1,97 @@
+﻿<UserControl
+    x:Class="Fastedit.Controls.Textbox.TextControlBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myrichtextbox="using:Fastedit.Controls.Textbox"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    BorderThickness="0"
+    AllowDrop="True"
+    Background="Transparent"
+    SizeChanged="UserControl_SizeChanged">
+    <UserControl.Resources>
+        <Style x:Key="RichEditBoxStyle1" TargetType="RichEditBox">
+            <Setter Property="Background" Value="{ThemeResource TextControlBackground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RichEditBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid SizeChanged="OnLineNumberGridSizeChanged" Grid.Column="0" x:Name="LineNumberGrid">
+                                <Canvas x:Name="LineNumberCanvas"/>
+                            </Grid>
+                            <Canvas Grid.ColumnSpan="2" x:Name="LineHighlighterCanvas">
+                                <Grid Visibility="Visible" CornerRadius="1" Opacity="1" BorderThickness="2" HorizontalAlignment="Stretch" x:Name="LineHighlighterControl"/>
+                            </Canvas>
+                            <ScrollViewer CanContentRenderOutsideBounds="False" Background="{TemplateBinding Background}" Grid.Column="1" SizeChanged="ScrollViewer_SizeChanged" ViewChanged="TextControlBox_ScrollChanged" x:Name="ContentElement" AutomationProperties.AccessibilityView="Raw" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsTabStop="False" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" ZoomMode="Disabled"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="splittedgrid">
+        <myrichtextbox:MyRichEditBox
+                Background="Blue"
+                Grid.Column="0"
+                Style="{StaticResource RichEditBoxStyle1}"
+                ClipboardCopyFormat="PlainText"
+                DisabledFormattingAccelerators="All"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                BorderThickness="0"
+                CornerRadius="0"
+                x:Name="textbox"
+                AcceptsReturn="True"
+                Foreground="Black"
+                Loaded="Textbox_Loaded">
+        </myrichtextbox:MyRichEditBox>
+        <controls:GridSplitter 
+            x:Load="False"
+            x:Name="Splittedview_Splitter"
+            Grid.Column="1"
+            Width="16"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto"
+            FontSize="18"
+            GripperCursor="Default"
+            CursorBehavior="ChangeOnSplitterHover">
+            <controls:GridSplitter.Element>
+                <Grid>
+                    <Button Background="Transparent" Margin="0,0,0,0" FontWeight="ExtraBold" BorderThickness="0" Padding="0" x:Name="GridsplitterSettingsFlyout" Content="&#xE76C;" Foreground="Black" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                <MenuFlyoutItem Click="ToggleLeftRight_Markdown_Click" x:Uid="TextControlBox_Markdown_LeftRightTopBottom" Text="Toggle Left-Right / Top-Bottom"/>
+                                <MenuFlyoutItem Icon="Rotate" Click="Rotate90Degree_Click" x:Uid="TextControlBox_Markdown_Rotate" Text="Rotate 90°"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Icon="Cancel" Click="CloseMarkdown_Click" x:Uid="TextControlBox_Markdown_Close" Text="Close"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <Button.RenderTransform>
+                            <RotateTransform x:Name="Markdown_Button_Rotation" Angle="90" CenterY="0"/>
+                        </Button.RenderTransform>
+                    </Button>
+                    <Grid CornerRadius="5" x:Name="GridSplitter_GripperBar" Background="{ThemeResource SystemColorButtonTextBrush}"/>
+                </Grid>
+            </controls:GridSplitter.Element>
+        </controls:GridSplitter>
+        
+        <ScrollViewer Grid.Column="2" Margin="0,0,0,0" x:Load="False" x:Name="markdowntextblock_sv" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:MarkdownTextBlock Padding="10" MarkdownRendered="Markdowntextblock_MarkdownRendered" x:Load="False" x:Name="markdowntextblock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            </controls:MarkdownTextBlock>
+        </ScrollViewer>
+        
+        <muxc:ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" x:Load="False" x:Name="progressring"/>
+        <muxc:TeachingTip x:Name="ContentSavedInfo" Title="Saved" IsOpen="False" />
+    </Grid>
+</UserControl>
