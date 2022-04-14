@@ -41,6 +41,26 @@
                         </Button>
                     </muxc:Expander.Content>
                 </muxc:Expander>
+                <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
+                    <muxc:Expander.Header>
+                        <TextBlock Margin="0,20,0,20" x:Uid="SettingsPage6_Header_Backup" Text="Backup:" Width="170" FontSize="20" HorizontalAlignment="Left"/>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel Margin="20,0,0,0">
+                            <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="SettingsPage6_Button_LoadLastBackup" Content="Load last backup" Margin="0,10,0,0" Width="180">
+                                <Button.Flyout>
+                                    <Flyout>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" Text="Do you really want to load the last backup, all currently opened files will be closed!"/>
+                                            <Button Content="Load" Click="LoadLastBackupButton_Click"/>
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                            <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="SettingsPage6_Button_BackupNow" Content="Backup now" Margin="0,10,0,0" Width="180" Click="BackupNowButton_Click"/>
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
             </StackPanel>
         </ScrollViewer>
         <muxc:InfoBar Margin="0,0,0,0" x:Name="SettingsInfoBar"

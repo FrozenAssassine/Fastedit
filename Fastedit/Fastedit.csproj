@@ -181,6 +181,7 @@
     <Compile Include="Extensions\KeyboardCommands.cs" />
     <Compile Include="Extensions\StringBuilder.cs" />
     <Compile Include="Extensions\Utilities.cs" />
+    <Compile Include="ExternalData\DatabaseImportExport.cs" />
     <Compile Include="Helper\ThemeHelper.cs" />
     <Compile Include="ExternalData\CustomDesigns.cs" />
     <Compile Include="ExternalData\ExportImportSettings.cs" />

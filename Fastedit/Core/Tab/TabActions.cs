@@ -36,7 +36,7 @@ namespace Fastedit.Core.Tab
         private readonly MainPage mainpage = null;
         private readonly static TabPageHelper tabpagehelper = new TabPageHelper();
         private readonly static SaveFileHelper savefilehelper = new SaveFileHelper();
-
+        private StorageFolder DatabaseFolder = null;
         //Other variables
         public muxc.TabViewItem SettingsTabPage = null;
         private readonly DispatcherTimer CloseTabsTimerToSaveDatabase = new DispatcherTimer
@@ -46,8 +46,7 @@ namespace Fastedit.Core.Tab
 
         public void ShowInfobar(string Content, string Title = "", muxc.InfoBarSeverity severity = muxc.InfoBarSeverity.Warning, int Time = 5)
         {
-            mainpage.ShowInfobar(Content, Title, severity, Time);
-      
+            mainpage.ShowInfobar(Content, Title, severity, Time);     
         }
         public void ShowInfobar(muxc.InfoBar infobar)
         {
@@ -446,41 +445,36 @@ namespace Fastedit.Core.Tab
         /// Saves all tab data to the database
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> SaveAllTabChanges(StorageFolder folder = null)
+        public async Task<bool> SaveAllTabChanges(bool DeleteAllTemporarySavedFiles = true)
         {
             try
             {
-                tabdatabase.DeleteAllTemporarySavedFiles(folder == null ? "" : folder.Path);
-                int TabItemCount = GetTabItemCount();
-                if (TabItemCount == 0)
-                    return true;
-
-                if (folder == null)
-                    folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Database_FolderName, CreationCollisionOption.OpenIfExists);
-
-                for (int i = 0; i < TabItemCount; i++)
+                if (DatabaseFolder == null)
                 {
-                    if (GetTabItems()[i] is muxc.TabViewItem Tab)
+                    DatabaseFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Database_FolderName, CreationCollisionOption.OpenIfExists);
+                }
+                if(DeleteAllTemporarySavedFiles)
+                    tabdatabase.DeleteAllTemporarySavedFiles(DatabaseFolder.Path);
+
+                var tabitems = GetTabItems();
+                for (int i = 0; i < tabitems.Count; i++)
+                {
+                    if (tabitems[i] is muxc.TabViewItem Tab)
                     {
-                        await SaveTempFile(Tab, folder);
+                        await SaveTempFile(Tab, DatabaseFolder);
                     }
                     else
                     {
                         ShowInfobar(ErrorDialogs.GetTabErrorDialog());
                     }
                 }
-                return await tabdatabase.SaveTabPages(TextTabControl, folder.Path);
+                return await tabdatabase.SaveTabPageData(TextTabControl);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Exception in TabActions --> SaveAllTabChanges:" + "\n" + e.Message);
                 return false;
             }
-        }
-        public async Task<bool> SaveAllTabChangesToBackup()
-        {
-            StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Backup_FolderName, CreationCollisionOption.OpenIfExists);
-            return await SaveAllTabChanges(folder);
         }
 
         /// <summary>
@@ -552,12 +546,12 @@ namespace Fastedit.Core.Tab
         /// <param name="LoadFromBackup">Whether load the tabs from latest backup or from the default database folder</param>
         /// <param name="folder"></param>
         /// <returns></returns>
-        public async Task<bool> LoadTabs(bool LoadFromBackup, StorageFolder folder = null)
+        public async Task<bool> LoadTabs(bool FromBackup)
         {
             try
             {
                 //Datalist for tab to save tabpages to 
-                var tabdatafromdatabase = await tabdatabase.GetTabData(LoadFromBackup);
+                var tabdatafromdatabase = await tabdatabase.GetTabData(FromBackup);
                 if (tabdatafromdatabase == null)
                     return false;
 
@@ -566,8 +560,7 @@ namespace Fastedit.Core.Tab
 
                 TextTabControl.TabItems.Clear();
                 string[] tempFilePaths = Directory.GetFiles(
-                       Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                       LoadFromBackup ? DefaultValues.Backup_FolderName : DefaultValues.Database_FolderName)
+                       Path.Combine(ApplicationData.Current.LocalFolder.Path, FromBackup ? DefaultValues.Backup_FolderName : DefaultValues.Database_FolderName)
                        );
 
                 async Task<(string Text, Encoding encoding, bool succed)> getTabtext(TextControlBox textbox)
@@ -872,10 +865,17 @@ namespace Fastedit.Core.Tab
             {
                 if (TabPage.Content is TextControlBox textbox)
                 {
-                    StorageFile file = await folder.CreateFileAsync(GetTextBoxFromTabPage(TabPage).Name, CreationCollisionOption.OpenIfExists);
+                    var filename = GetTextBoxFromTabPage(TabPage).Name;
+                    StorageFile file = await folder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
                     if (file != null)
                     {
-                        System.IO.File.WriteAllText(file.Path, textbox.GetText());
+                        //I really don't know why this happens, but every time I just use the first CreateFileAsync methode for the file Tab1, it wont be created.
+                        //But all the other files are. So this is the simplest solution to fix this, because I DON'T know :(
+                        
+                        if(textbox.Name == "Tab1")
+                            file = await folder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
+
+                        await System.IO.File.WriteAllTextAsync(Path.Combine(folder.Path, filename), textbox.GetText());
                         textbox.TempFile = file.Name;
                         if (textbox.TabSaveMode == TabSaveMode.SaveAsTemp)
                             textbox.Storagefile = file;
@@ -1048,120 +1048,6 @@ namespace Fastedit.Core.Tab
             {
                 ShowInfobar(ErrorDialogs.OpenErrorDialog());
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// Chooses whether open a temporary saved file or a file from a path
-        /// </summary>
-        /// <param name="TabPage">The tabpage to set the text to</param>
-        /// <param name="tabsavemode">The tabsavemode to choose between the filetypes</param>
-        /// <param name="Token"></param>
-        /// <returns>Whether the methode succed or failed</returns>
-        public async Task<bool> LoadFilesFromDatabase(muxc.TabViewItem TabPage, StorageFolder folder = null)
-        {
-            try
-            {
-                if (folder == null)
-                {
-                    folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Database_FolderName, CreationCollisionOption.OpenIfExists);
-                }
-
-                var file = await folder.GetFileAsync(tabpagehelper.GetTabTempfile(TabPage));
-                if (file == null)
-                    return false;
-
-                var (Text, encoding, Succed) = await ReadTextFromFileAsync(file);
-                if (Succed)
-                {
-                    if (GetTextBoxFromTabPage(TabPage) is TextControlBox textbox)
-                    {
-                        await Task.Run(() => textbox.SetText(Text));
-                        return true;
-                    }
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                string FilePath = string.Empty;
-                if (GetTextBoxFromTabPage(TabPage) is TextControlBox tb)
-                {
-                    FilePath = tb.FilePath;
-                }
-
-                ShowInfobar(ErrorDialogs.FileNotFoundExceptionErrorDialog(e, FilePath));
-
-                TextTabControl.TabItems.Remove(TabPage);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                string FilePath = string.Empty;
-                if (GetTextBoxFromTabPage(TabPage) is TextControlBox tb)
-                {
-                    FilePath = tb.FilePath;
-                }
-
-                ShowInfobar(ErrorDialogs.FileNoAccessExceptionErrorDialog(e, FilePath));
-            }
-            catch (Exception e)
-            {
-                ShowInfobar(e.Message, "Error", muxc.InfoBarSeverity.Error);
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Open a file from backup-folder
-        /// </summary>
-        /// <param name="TabPage">Tabpage to set the text to</param>
-        /// <param name="folder">the folder to read from</param>
-        /// <returns></returns>
-        public async Task<bool> OpenFileFromBackup(muxc.TabViewItem TabPage, StorageFolder folder = null)
-        {
-            try
-            {
-                if (folder == null)
-                {
-                    folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Backup_FolderName, CreationCollisionOption.OpenIfExists);
-                }
-
-                StorageFile file = await folder.GetFileAsync(tabpagehelper.GetTabName(TabPage) + ".txt");
-
-                var (Text, encoding, Succed) = await ReadTextFromFileAsync(file);
-                if (Succed)
-                {
-                    tabpagehelper.SetTabText(TabPage, Text);
-                    tabpagehelper.SetTabHeader(TabPage, tabpagehelper.GetTabHeader(TabPage));
-                    return true;
-                }
-                return false;
-            }
-            catch (FileNotFoundException e)
-            {
-                string FilePath = string.Empty;
-                if (GetTextBoxFromTabPage(TabPage) is TextControlBox tb)
-                {
-                    FilePath = tb.FilePath;
-                }
-
-                ShowInfobar(ErrorDialogs.FileNotFoundExceptionErrorDialog(e, FilePath));
-                return false;
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                string FilePath = string.Empty;
-                if (GetTextBoxFromTabPage(TabPage) is TextControlBox tb)
-                {
-                    FilePath = tb.FilePath;
-                }
-
-                ShowInfobar(ErrorDialogs.FileNoAccessExceptionErrorDialog(e, FilePath));
-                return false;
-            }
-            catch (Exception e)
-            {
-                ShowInfobar(e.Message, "Error", muxc.InfoBarSeverity.Error);
-                return false;
             }
         }
 
