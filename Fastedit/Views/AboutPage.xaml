@@ -8,8 +8,7 @@
     mc:Ignorable="d">
     <ScrollViewer HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Width="80" Height="80" Source="ms-appx:///Assets/App_Icon/Icon.png"/>
@@ -22,7 +21,7 @@
 
             </StackPanel>
 
-            <StackPanel Margin="0,150,0,0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel Margin="0,50,0,0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TextBlock FontSize="24" Text="NuGet-packages used:" x:Uid="AboutPage_NugetPackagesUsed"/>
                 <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/Microsoft/microsoft-ui-xaml" Content="Microsoft Ui Xaml"/>
                 <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/Microsoft/Win2D" Content="Win2D"/>
@@ -30,31 +29,38 @@
                 <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
             </StackPanel>
 
-            <StackPanel Margin="0,350,0,0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Button Height="45" x:Uid="AboutPage_ContactButton" FontSize="16" Content="Contact" Margin="10">
-                    <Button.Flyout>
-                        <Flyout>
-                            <StackPanel>
-                                <TextBlock x:Uid="AboutPage_ContactViaEmail" FontSize="20" FontWeight="Bold" Text="You can contact me via email:"/>
-                                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" FontSize="16" Text="FasteditSoftware@gmail.com"/>
-                                    <Button ToolTipService.ToolTip="Copy" Click="CopyEmailAddress_Click" VerticalAlignment="Center" FontSize="16" Margin="20,0,0,0" Content="&#xE8C8;" FontFamily="Segoe MDL2 Assets"/>
-                                </StackPanel>
+            <Button HorizontalAlignment="Center" Width="150" Height="40" x:Uid="AboutPage_ContactButton" FontSize="16" Content="Contact" Margin="5">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock x:Uid="AboutPage_ContactViaEmail" FontSize="20" FontWeight="Bold" Text="You can contact me via email:"/>
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" FontSize="16" Text="FasteditSoftware@gmail.com"/>
+                                <Button ToolTipService.ToolTip="Copy" Click="CopyEmailAddress_Click" VerticalAlignment="Center" FontSize="16" Margin="20,0,0,0" Content="&#xE8C8;" FontFamily="Segoe MDL2 Assets"/>
                             </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
-                <HyperlinkButton Margin="10" NavigateUri="https://www.instagram.com/fastedit.texteditor/">
-                    <StackPanel Orientation="Vertical">
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0" >
+                    <HyperlinkButton Margin="10" NavigateUri="https://www.instagram.com/fastedit.texteditor/">
+                    <StackPanel Orientation="Horizontal">
                         <Image Width="40" Height="40" Source="ms-appx:///Assets/SocialIcons/Instagram_Glyph_Gradient_RGB.png"/>
+                        <TextBlock Margin="10,0,0,0" FontSize="30" VerticalAlignment="Center" Text="Instagram"/>
                     </StackPanel>
                 </HyperlinkButton>
-                <Button Height="45" x:Uid="AboutPage_ReportSubmitFeature" FontSize="16" Margin="10" Visibility="Collapsed" d:Visibility="Visible" x:Name="ReportFeedbackButton" Click="ReportBugSubmitFeature_Click" Content="Report Bug/ Submit Feature"/>
+
+                <HyperlinkButton Margin="20,0,0,0"  NavigateUri="https://github.com/FrozenAssassine/Fastedit">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="40" x:Name="GithubIconDisplay" Height="40"/>
+                        <TextBlock Margin="10,0,0,0" FontSize="30" VerticalAlignment="Center" Text="Github"/>
+                    </StackPanel>
+                </HyperlinkButton> 
             </StackPanel>
+            
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,50,0,20" Fill="Black" Height="3" />
 
-            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,450,0,0" Fill="Black" Height="3" />
-
-            <StackPanel Orientation="Vertical" Margin="50,500,50,0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Margin="50,50,50,0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                 <RichTextBlock IsTextSelectionEnabled="False" HorizontalAlignment="Center" TextAlignment="left">
                     
                     <Paragraph FontWeight="Bold" FontSize="32">
@@ -240,6 +246,6 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </Grid>
+        </StackPanel>
     </ScrollViewer>
 </Page>
