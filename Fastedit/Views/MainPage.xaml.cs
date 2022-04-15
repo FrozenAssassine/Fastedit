@@ -168,11 +168,17 @@ namespace Fastedit
 
                 //Decide to either load a theme with Mica or Acrylic  
                 if(VersionHelper.GetWindowsVersion() == WindowsVersion.Windows11)
+                {
+                    appsettings.SaveSettings("SelectedDesign", 5);
                     await customdesigns.LoadDesignFromFile(
                         await customdesigns.GetFileFromDesignsFolder(DefaultValues.DefaultWindows11ThemeName));
+                }
                 else
+                {
+                    appsettings.SaveSettings("SelectedDesign", 1);
                     await customdesigns.LoadDesignFromFile(
                         await customdesigns.GetFileFromDesignsFolder(DefaultValues.DefaultThemeName));
+                }
             }
             catch (Exception e)
             {
