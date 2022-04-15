@@ -3,10 +3,15 @@
  </p>
  <h1  align="center">Fastedit</h1>
 <div align="center">
-    <img src="https://img.shields.io/github/repo-size/FrozenAssassine/Fastedit?style=flat-square">
-    <img src="https://img.shields.io/github/languages/count/FrozenAssassine/Fastedit?style=flat-square">
-    <img src="https://img.shields.io/github/languages/top/FrozenAssassine/Fastedit?style=flat-square">
-    <img src="https://img.shields.io/github/last-commit/FrozenAssassine/Fastedit?color=red&style=flat-square">
+     <a href="https://www.microsoft.com/en-us/p/fastedit/9ntq53w18dpw?activetab=pivot:overviewtab">
+         <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat">
+    </a>
+    <a href="https://www.instagram.com/fastedit.texteditor/">
+        <img src="https://img.shields.io/badge/Instagram-E4405F?style=flat&logo=instagram&logoColor=white">
+    </a>
+    <img src="https://img.shields.io/github/stars/FrozenAssassine/Fastedit.svg?style=flat">
+    <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/Fastedit.svg?style=flat">
+    <img src="https://img.shields.io/github/repo-size/FrozenAssassine/Fastedit?style=flat">
  </div>
 
 ### What is Fastedit?
