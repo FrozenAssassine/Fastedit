@@ -1074,15 +1074,14 @@ namespace Fastedit
 
         private void ShowHideControlsOnSelectionChanged(bool isEnabled)
         {
-            //just check two
-            if (!DropDownMenu_Redo.IsEnabled || !DropDownMenu_New.IsEnabled)
+            //DropDownMenu:
+            if (DropDownMenu.Visibility == Visibility.Visible)
             {
-                //DropDownMenu:
                 for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
                 {
                     if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
                     {
-                        if(item.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        if (item.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
                         {
                             item.IsEnabled = isEnabled;
                         }
@@ -1095,32 +1094,34 @@ namespace Fastedit
                         }
                     }
                 }
-                //Menubar:
-                for(int i = 0; i<MainMenuBar.Items.Count; i++)
+            }
+            //Menubar:
+            if (!ShowMenubar)
+                return;
+            for (int i = 0; i < MainMenuBar.Items.Count; i++)
+            {
+                if (MainMenuBar.Items[i] is MenuBarItem mbitem)
                 {
-                    if(MainMenuBar.Items[i] is MenuBarItem mbitem)
+                    if (mbitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
                     {
-                        if (mbitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        mbitem.IsEnabled = isEnabled;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < mbitem.Items.Count; j++)
                         {
-                            mbitem.IsEnabled = isEnabled;
-                        }
-                        else
-                        {
-                            for (int j = 0; j < mbitem.Items.Count; j++)
+                            if (mbitem.Items[j] is MenuFlyoutItem mfi)
                             {
-                                if (mbitem.Items[j] is MenuFlyoutItem mfi)
+                                if (mfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
                                 {
-                                    if (mfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
-                                    {
-                                        mfi.IsEnabled = isEnabled;
-                                    }
+                                    mfi.IsEnabled = isEnabled;
                                 }
-                                else if (mbitem.Items[j] is ToggleMenuFlyoutItem tmfi)
+                            }
+                            else if (mbitem.Items[j] is ToggleMenuFlyoutItem tmfi)
+                            {
+                                if (tmfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
                                 {
-                                    if (tmfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
-                                    {
-                                        tmfi.IsEnabled = isEnabled;
-                                    }
+                                    tmfi.IsEnabled = isEnabled;
                                 }
                             }
                         }
