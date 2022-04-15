@@ -338,6 +338,8 @@
     <Content Include="Assets\ExtensionIcons\XML\xml.png" />
     <Content Include="Assets\ExtensionIcons\XML\xml.svg" />
     <Content Include="Assets\news.txt" />
+    <Content Include="Assets\SocialIcons\GitHub-Mark-120px-plus.png" />
+    <Content Include="Assets\SocialIcons\GitHub-Mark-Light-120px-plus.png" />
     <Content Include="Assets\SocialIcons\Instagram_Glyph_Gradient_RGB.png" />
     <Content Include="Assets\todo_temp.txt" />
     <Content Include="Package.StoreAssociation.xml" />
