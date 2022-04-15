@@ -58,7 +58,7 @@ namespace Fastedit
             ("Changelog", typeof(ChangelogPage), AppSettings.GetResourceStringStatic("SettingsPage_Item_ChangeLog/Content")), //Changelog
         };
 
-        private void NavigationView_ItemInvoked_1(muxc.NavigationView sender, muxc.NavigationViewItemInvokedEventArgs args)
+        private void NavigationView_ItemInvoked(muxc.NavigationView sender, muxc.NavigationViewItemInvokedEventArgs args)
         {
             var navItemTag = args.InvokedItemContainer.Tag.ToString();
             appsettings.SaveSettings("SettingsRecentPage", navItemTag);
@@ -96,42 +96,5 @@ namespace Fastedit
                 await mainpage.SetSettings();
             }
         }
-
-        /*
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            var suitableItems = new List<string>();
-            var splitText = sender.Text.ToLower();
-        +
-            foreach (SearchBoxItem item in AutoSuggestionBoxItems)
-            {
-                var found = splitText.All((key) =>
-                {
-                    return item.ItemName.ToLower().Contains(key);
-                });
-                if (found)
-                {
-                    suitableItems.Add(item.ItemName);
-                }
-            }
-            if (suitableItems.Count == 0)
-            {
-                suitableItems.Add("No results found");
-            }
-            sender.ItemsSource = suitableItems;
-        }
-
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            foreach (SearchBoxItem item in AutoSuggestionBoxItems)
-            {
-                if (item.ItemName == args.SelectedItem.ToString())
-                {
-                    NavView_Navigate(item.Page.ToString().Replace("Fastedit.", ""), null);
-                }
-            }
-
-        }*/
-
     }
 }
