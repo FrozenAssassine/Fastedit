@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>A1EC1AD61F8CDEA8EE7364F01601022530CC16F8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>60A33BFE7178012CD331A63E323BCA9D055BAEA5</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -132,7 +132,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
     <IntermediateOutputPath>C:\Users\juliu\AppData\Local\Temp\vsA7B9.tmp\x64\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -341,7 +341,6 @@
     <Content Include="Assets\SocialIcons\GitHub-Mark-120px-plus.png" />
     <Content Include="Assets\SocialIcons\GitHub-Mark-Light-120px-plus.png" />
     <Content Include="Assets\SocialIcons\Instagram_Glyph_Gradient_RGB.png" />
-    <Content Include="Assets\todo_temp.txt" />
     <Content Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <PRIResource Include="Strings\en-US\Resources.resw">
@@ -485,11 +484,5 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.        Other similar extension points exist, see Microsoft.Common.targets.  <Target Name="BeforeBuild">  </Target>  <Target Name="AfterBuild">  </Target>  -->
 </Project>
