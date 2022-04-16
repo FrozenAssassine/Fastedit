@@ -1303,7 +1303,7 @@ namespace Fastedit.Controls.Textbox
                 {
                     Word = Word.Substring(0, 20) + "... ";
                 }
-                SelectionStart = 0;
+                SetSelection(0, 0);
                 ShowInfoToast(false, Word + " " + InfoBarMessages.SearchNotFound);
                 return false;
             }
