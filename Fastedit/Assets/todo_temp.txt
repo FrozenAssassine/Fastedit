@@ -1,3 +1,0 @@
-﻿Remove from settings:
-- SettingsPage7_DesignsAreDisabled
-- ThemeRightClickMenu_SaveAsThis
