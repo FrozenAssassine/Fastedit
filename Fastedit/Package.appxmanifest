@@ -34,7 +34,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="Fastedit.App"
+    <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="Fastedit.App">
       <uap:VisualElements
