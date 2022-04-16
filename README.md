@@ -9,8 +9,8 @@
     <a href="https://www.instagram.com/fastedit.texteditor/">
         <img src="https://img.shields.io/badge/Instagram-E4405F?style=flat&logo=instagram&logoColor=white">
     </a>
-    <img src="https://img.shields.io/github/stars/FrozenAssassine/Fastedit.svg?style=flat">
-    <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/Fastedit.svg?style=flat">
+    <img src="https://img.shields.io/github/stars/FrozenAssassine/Fastedit?style=flat">
+    <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/Fastedit?style=flat">
     <img src="https://img.shields.io/github/repo-size/FrozenAssassine/Fastedit?style=flat">
  </div>
 
