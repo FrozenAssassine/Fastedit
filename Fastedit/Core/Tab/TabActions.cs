@@ -207,7 +207,7 @@ namespace Fastedit.Core.Tab
         {
             TextControlBox tcb = NewTextBox();
             muxc.TabViewItem TabPage = NewTabPage();
-            
+
             tcb.TextBeforeLastSaved = string.Empty;
             tcb.FontSizeWithoutZoom = appsettings.GetSettingsAsInt("FontSize", DefaultValues.DefaultFontsize);
             tcb.IsModified = document.TabModified;
@@ -227,8 +227,9 @@ namespace Fastedit.Core.Tab
             {
                 tcb.Storagefile = file;
             }
+            
+            tcb.SetEncoding(Encodings.IntToEncoding(document.TabEncoding));
 
-            tcb.Encoding = Encodings.IntToEncoding(document.TabEncoding);
             TabPage.Content = tcb;
             TabPage.Name = $"{tcb.IdentifierName}.Tab";
             TabPage.Header = tcb.Header;
@@ -244,6 +245,8 @@ namespace Fastedit.Core.Tab
                     };
 
             tcb.Margin = mainpage.TextBoxMargin();
+
+
             if (AddToTabControl == true)
             {
                 TextTabControl.TabItems.Add(TabPage);
@@ -258,7 +261,7 @@ namespace Fastedit.Core.Tab
             tcb.PointerPressed += Tcb_PointerPressed;
             tcb.FilePath = string.Empty;
             tcb.FontFamily = new FontFamily(appsettings.GetSettingsAsString("FontFamily", DefaultValues.DefaultFontFamily));
-            tcb.Encoding = Encoding.Default;
+            tcb.SetEncoding(Encoding.Default);
             tcb.TabSaveMode = TabSaveMode.SaveAsTemp;
             tcb.Storagefile = null;
             tcb.WordWrap = TextWrapping.NoWrap;
@@ -595,9 +598,10 @@ namespace Fastedit.Core.Tab
                         var result = await getTabtext(textbox);
                         if (result.succed)
                         {
-                            await textbox.ChangeText(result.Text);
-
-                            //Set Selstart / Selend
+                            await textbox.SetText(result.Text, DataItem.TabModified);
+                            //To update the tab header:
+                            tabpagehelper.SetTabModified(Tab, DataItem.TabModified);
+                            
                             textbox.SetSelection(DataItem.TabSelStart, DataItem.TabSelLenght);
                             textbox.MarkdownPreview = DataItem.Markdown;
                             if(DataItem.TabToken != string.Empty)
@@ -606,8 +610,6 @@ namespace Fastedit.Core.Tab
                                 if (file != null)
                                     textbox.Storagefile = file;
                             }
-                            tabpagehelper.SetTabModified(Tab, false);
-                            
                             LastSelectedTabIndex = DataItem.CurrentSelectedTabIndex;
                             TabItemList.Add(Tab);
                         }
@@ -946,7 +948,7 @@ namespace Fastedit.Core.Tab
                     if (textbox != null)
                     {
                         await Task.Run(() => textbox.SetText(Text));
-                        textbox.Encoding = encoding;
+                        textbox.SetEncoding(encoding);
                         textbox.TabSaveMode = tabsavemode;
                         textbox.FilePath = file.Path;
                         textbox.DataBaseName = file.Name;

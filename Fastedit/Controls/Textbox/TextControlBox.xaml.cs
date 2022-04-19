@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Security.Cryptography.Certificates;
@@ -321,6 +322,18 @@ namespace Fastedit.Controls.Textbox
         }
         public StorageFile Storagefile { get; set; } = null;
         public string TextBeforeLastSaved { get; set; } = "";
+        
+        //Just for setting the Encoding, without affecting the Modified state
+        public void SetEncoding(Encoding encoding)
+        {
+            if (_Encoding != encoding)
+            {
+                _Encoding = encoding;
+                tabdatafromdatabase.TabEncoding = Encodings.EncodingToInt(encoding);
+                EncodingChangedEvent?.Invoke(this, encoding);
+            }
+        }
+
 
         //TextModes:
         public TextWrapping WordWrap
@@ -1196,7 +1209,7 @@ namespace Fastedit.Controls.Textbox
         /// Set text to textbox
         /// </summary>
         /// <param name="text">The text to set to</param>
-        public async Task SetText(string text)
+        public async Task SetText(string text, bool ismodified = false)
         {
             await this.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
@@ -1207,7 +1220,7 @@ namespace Fastedit.Controls.Textbox
                 textbox.Document.SetText(TextSetOptions.None, text);
                 TextBeforeLastSaved = GetText();
                 textbox.TextDocument.ClearUndoRedoHistory();
-                IsModified = false;
+                IsModified = ismodified;
 
                 if (isreadonly == true)
                     textbox.IsReadOnly = isreadonly;
