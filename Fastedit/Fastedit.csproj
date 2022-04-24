@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>60A33BFE7178012CD331A63E323BCA9D055BAEA5</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>01FF34FCAB2E9004534BA39AA07EB89B5358CFAE</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -159,7 +159,6 @@
     </Compile>
     <Compile Include="Controls\Textbox\TextControlBoxFlyoutMenu.cs" />
     <Compile Include="Core\DefaultValues.cs" />
-    <Compile Include="Core\RunCommandWindowClass.cs" />
     <Compile Include="Core\Tab\TabActions.cs" />
     <Compile Include="Core\Tab\TabDataBase.cs" />
     <Compile Include="Core\Tab\TabPageFlyout.cs" />
@@ -181,6 +180,7 @@
     <Compile Include="Extensions\KeyboardCommands.cs" />
     <Compile Include="Extensions\StringBuilder.cs" />
     <Compile Include="Extensions\Utilities.cs" />
+    <Compile Include="Helper\SecondaryView.cs" />
     <Compile Include="Helper\ThemeHelper.cs" />
     <Compile Include="ExternalData\CustomDesigns.cs" />
     <Compile Include="ExternalData\ExportImportSettings.cs" />
@@ -450,7 +450,7 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.7.0</Version>
+      <Version>2.7.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
