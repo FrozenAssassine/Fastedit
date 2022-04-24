@@ -667,13 +667,12 @@ namespace Fastedit.Core.Tab
 
                 var token = tabpagehelper.GetTabToken(Tab);
                 //Remove Token from futureaccesslist
-                if (StorageApplicationPermissions.FutureAccessList.ContainsItem(token) && token.Length != 0)
+                if (StorageApplicationPermissions.FutureAccessList.ContainsItem(token) && token.Length > 0)
                 {
                     StorageApplicationPermissions.FutureAccessList.Remove(token);
                 }
 
-                TextTabControl.TabItems.Remove(Tab);
-                return true;
+                return TextTabControl.TabItems.Remove(Tab);
             }
             catch (Exception e)
             {
@@ -687,30 +686,27 @@ namespace Fastedit.Core.Tab
             {
                 if (Tab.Visibility == Visibility.Collapsed)
                     return true;
-
-                //When the tab is newly created and has no content
-                if (GetTextBoxFromTabPage(Tab) != null)
+                var textbox = GetTextBoxFromTabPage(Tab);
+                if (textbox != null)
                 {
-                    if (GetTextBoxFromTabPage(Tab).GetText().Length == 0 && tabpagehelper.GetIsModified(Tab) == false && tabpagehelper.GetTabFilepath(Tab).Length == 0 && tabpagehelper.GetDataBaseName(Tab).Length == 0)
+                    //If the tab is newly created and has no content
+                    if (textbox.GetText().Length == 0 && textbox.IsModified == false && textbox.FilePath.Length == 0 && textbox.DataBaseName.Length == 0)
                     {
                         return await RemoveTab(Tab);
                     }
                     else
                     {
-                        if (tabpagehelper.GetTabSaveMode(Tab) == TabSaveMode.SaveAsTemp)
+                        var tabsavemode = textbox.TabSaveMode;
+                        if (tabsavemode == TabSaveMode.SaveAsTemp)
                         {
                             ContentDialogResult dlgres;
                             //Choose whether use the AskSaveDialogNeverSaved or AskSaveDialog
-                            if (tabpagehelper.GetTabToken(Tab).Length == 0)
-                            {
+                            if (textbox.FileToken.Length == 0)
                                 dlgres = await SaveDialogs.AskSaveDialogNeverSaved(Tab);
-                            }
                             else
-                            {
                                 dlgres = await SaveDialogs.AskSaveDialog(Tab);
-                            }
 
-                            //When Save-button is pressed:
+                            //If Save-button is pressed:
                             if (dlgres == ContentDialogResult.Primary)
                             {
                                 if (await savefilehelper.Save(Tab))
@@ -719,20 +715,20 @@ namespace Fastedit.Core.Tab
                                 }
                                 return false;
                             }
-                            //When Don't-save-button is pressed:
+                            //If don't-save-button is pressed:
                             else if (dlgres == ContentDialogResult.Secondary)
                             {
                                 return await RemoveTab(Tab);
                             }
-                            //when cancel-button is pressed:
+                            //If cancel-button is pressed:
                             return false;
                         }
-                        else if (tabpagehelper.GetTabSaveMode(Tab) == TabSaveMode.SaveAsFile || tabpagehelper.GetTabSaveMode(Tab) == TabSaveMode.SaveAsDragDrop)
+                        else if (tabsavemode == TabSaveMode.SaveAsFile || tabsavemode == TabSaveMode.SaveAsDragDrop)
                         {
-                            //When the file exists
+                            //If the file exists
                             if (await FileExist(Tab))
                             {
-                                if (tabpagehelper.GetIsModified(Tab))
+                                if (textbox.IsModified)
                                 {
                                     bool res = await savefilehelper.ShowAskSaveDialogForTab(Tab, false);
                                     if (res)
@@ -745,7 +741,7 @@ namespace Fastedit.Core.Tab
                                     return await RemoveTab(Tab);
                                 }
                             }
-                            //When the file doesn't exist
+                            //If the file doesn't exist
                             else
                             {
                                 bool res = await savefilehelper.ShowAskSaveDialogForTab(Tab, true);
@@ -769,81 +765,70 @@ namespace Fastedit.Core.Tab
         }
         public async Task CloseAllButThis(muxc.TabViewItem Tab)
         {
-            var tabitems = GetTabItems();
-            for (int i = 0; i < tabitems.Count; i++)
+            List<object> tabs = TextTabControl.TabItems.ToList();
+            for (int i = 0; i < tabs.Count; i++)
             {
-                if (tabitems[i] is muxc.TabViewItem TabPage && Tab != tabitems[i])
-                    if (await CloseTab(TabPage) == false)
+                if (tabs[i] != null && tabs[i] != Tab)
+                    if (await CloseTab(tabs[i] as muxc.TabViewItem) == false)
                         return;
             }
             await SaveAllTabChanges();
         }
         public async Task CloseAllLeft(muxc.TabViewItem Tab)
         {
-            List<object> Tabs = TextTabControl.TabItems.ToList();
-            //Get the index of the current Tab:
-            int CurrentTabIndex = 0;
-            foreach (muxc.TabViewItem tab in Tabs)
+            int CurrentTabIndex = TextTabControl.TabItems.IndexOf(Tab);
+            var tabrange = TextTabControl.TabItems.ToList().GetRange(0, CurrentTabIndex);
+            for (int i = 0; i < tabrange.Count; i++)
             {
-                if (tab != Tab)
+                if (tabrange[i] != null)
                 {
-                    CurrentTabIndex++;
+                    if (await CloseTab(tabrange[i] as muxc.TabViewItem) == false)
+                        return;
                 }
-                else
-                {
-                    break;
-                }
-            }
-            foreach (muxc.TabViewItem newtab in Tabs.GetRange(0, CurrentTabIndex))
-            {
-                if (await CloseTab(newtab) == false)
-                    return;
             }
 
             await SaveAllTabChanges();
         }
-        public async Task CloseAllRight(muxc.TabViewItem Tab)
+        public async Task<bool> CloseAllRight(muxc.TabViewItem Tab)
         {
-            //Get the index of the current Tab:
-            int CurrentTabIndex = 0;
-            List<object> Tabs = TextTabControl.TabItems.ToList();
-            foreach (muxc.TabViewItem tab in Tabs)
+            int CurrentTabIndex = TextTabControl.TabItems.IndexOf(Tab);
+            var TabItemCount = GetTabItemCount();
+            if (CurrentTabIndex < 0 || CurrentTabIndex >= TabItemCount)
+                return false;
+            var tabrange = TextTabControl.TabItems.ToList().GetRange(CurrentTabIndex + 1, TabItemCount - CurrentTabIndex -1);
+            for (int i = 0; i< tabrange.Count; i++)
             {
-                if (tab != Tab)
+                if (tabrange[i] != null)
                 {
-                    CurrentTabIndex++;
-                }
-                else
-                {
-                    break;
+                    if (await CloseTab(tabrange[i] as muxc.TabViewItem) == false)
+                        return false;
                 }
             }
-            CurrentTabIndex += 1;
-            foreach (muxc.TabViewItem newtab in Tabs.GetRange(CurrentTabIndex, GetTabItemCount() - CurrentTabIndex))
-            {
-                if (await CloseTab(newtab) == false)
-                    return;
-            }
-
-            await SaveAllTabChanges();
+            return await SaveAllTabChanges();
         }
         public async Task CloseAllWithoutSave()
         {
-            foreach (muxc.TabViewItem Tab in TextTabControl.TabItems.ToList())
+            var tabs = GetTabItems();
+            for (int i = 0; i<tabs.Count; i++)
             {
-                await RemoveTab(Tab);
+                if(tabs[i] != null)
+                    await RemoveTab(tabs[i] as muxc.TabViewItem);
             }
 
             await SaveAllTabChanges();
         }
         public async Task CloseAllTabs()
         {
-            foreach (muxc.TabViewItem Tab in TextTabControl.TabItems.ToList())
+            List<object> TabsToRemove = TextTabControl.TabItems.ToList();
+            for (int i = 0; i < TabsToRemove.Count; i++)
             {
-                if (await CloseTab(Tab) == false)
-                    return;
+                var tab = TabsToRemove[i];
+                if(tab != null)
+                {
+                    if (await CloseTab(tab as muxc.TabViewItem) == false)
+                        return;
+                }
             }
-
             await SaveAllTabChanges();
         }
 
