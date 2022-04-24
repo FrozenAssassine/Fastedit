@@ -34,6 +34,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Convert = Fastedit.Extensions.Convert;
+using MenuBarItem = Microsoft.UI.Xaml.Controls.MenuBarItem;
 using muxc = Microsoft.UI.Xaml.Controls;
 using StringBuilder = Fastedit.Extensions.StringBuilder;
 
@@ -486,24 +487,7 @@ namespace Fastedit
             var tabpage = tabactions.GetSelectedTabPage();
             if (tabpage != null && tabpage.Content is TextControlBox textbox)
             {
-                //If Spellcheckingitem is not enabled enable all:
-                if (!DropDownMenu_Redo.IsEnabled || !DropDownMenu_New.IsEnabled )
-                {
-                    for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
-                    {
-                        if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
-                        {
-                            if (item.Name != "DropDownMenu_New" && item.Name != "DropDownMenu_Open" && item.Name != "DropDownMenu_Settings")
-                            {
-                                item.IsEnabled = true;
-                            }
-                        }
-                        if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
-                        {
-                            subitem.IsEnabled = true;
-                        }
-                    }
-                }
+                ShowHideControlsOnSelectionChanged(true);
 
                 CurrentlySelectedTabPage = tabpage;
                 CurrentlySelectedTabPage_Textbox = textbox;
@@ -537,7 +521,7 @@ namespace Fastedit
                     RenameTextBox.IsEnabled = false;
                     RenameFileButton.IsEnabled = false;
                 }
-                
+
                 //Show /hide the OpenWithEncoding Button when the file was not even saved
                 OpenWithEncodingButton.IsEnabled = textbox.TabSaveMode == TabSaveMode.SaveAsTemp ? false : true;
 
@@ -555,13 +539,15 @@ namespace Fastedit
                 //Check wordwrapbutton
                 DropDownMenu_WordWrap.IsChecked = textbox.WordWrap == TextWrapping.Wrap;
             }
-            else if (tabpage is muxc.TabViewItem tab)
+            else
             {
+                ShowHideControlsOnSelectionChanged(false);
                 CurrentlySelectedTabPage = null;
                 CurrentlySelectedTabPage_Textbox = null;
-                if (tab.Content is Frame)
+                SettingsWindowSelected = true;
+
+                if (tabpage != null && tabpage.Content is Frame)
                 {
-                    SettingsWindowSelected = true;
                     if (ShowMenubar)
                     {
                         MainMenuBar.Visibility = Visibility.Collapsed;
@@ -1098,6 +1084,64 @@ namespace Fastedit
                 Package.Current.Id.Version.Build;
             NewVersionInfobar.Message = $"{appsettings.GetResourceString("InfoBarMessage_NewVersion_Text1/Text")} {version}";
             NewVersionInfobar.IsOpen = true;
+        }
+
+        private void ShowHideControlsOnSelectionChanged(bool isEnabled)
+        {
+            //DropDownMenu:
+            if (DropDownMenu.Visibility == Visibility.Visible)
+            {
+                for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
+                {
+                    if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
+                    {
+                        if (item.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        {
+                            item.IsEnabled = isEnabled;
+                        }
+                    }
+                    if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
+                    {
+                        if (subitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        {
+                            subitem.IsEnabled = isEnabled;
+                        }
+                    }
+                }
+            }
+            //Menubar:
+            if (!ShowMenubar)
+                return;
+            for (int i = 0; i < MainMenuBar.Items.Count; i++)
+            {
+                if (MainMenuBar.Items[i] is MenuBarItem mbitem)
+                {
+                    if (mbitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                    {
+                        mbitem.IsEnabled = isEnabled;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < mbitem.Items.Count; j++)
+                        {
+                            if (mbitem.Items[j] is MenuFlyoutItem mfi)
+                            {
+                                if (mfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
+                                {
+                                    mfi.IsEnabled = isEnabled;
+                                }
+                            }
+                            else if (mbitem.Items[j] is ToggleMenuFlyoutItem tmfi)
+                            {
+                                if (tmfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
+                                {
+                                    tmfi.IsEnabled = isEnabled;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         //Drag-Drop

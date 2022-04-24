@@ -72,7 +72,7 @@
                                 <MenuFlyout ShowMode="TransientWithDismissOnPointerMoveAway" x:Name="ToolbarFlyout" Placement="BottomEdgeAlignedLeft">
                                     <MenuFlyoutItem Icon="Page" x:Uid="DropDownMenu_New" Click="NewDocumentButton" Text="New" x:Name="DropDownMenu_New">
                                         <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="N" Modifiers="Control" IsEnabled="False"/>
+                                            <KeyboardAccelerator Key="N" Modifiers="Control" IsEnabled="False" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Icon="OpenFile" x:Uid="DropDownMenu_Open" Click="OpenFileButton" Text="Open" x:Name="DropDownMenu_Open">
@@ -80,57 +80,57 @@
                                             <KeyboardAccelerator Key="O" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Icon="Save" x:Uid="DropDownMenu_Save" Click="SaveFileButton" Text="Save" x:Name="DropDownMenu_Save">
+                                    <MenuFlyoutItem Icon="Save" x:Uid="DropDownMenu_Save" Click="SaveFileButton" Text="Save" x:Name="DropDownMenu_Save" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Icon="SaveLocal" x:Uid="DropDownMenu_SaveAs" Click="SaveAsAppBarButtonName_Click" Text="Save as" x:Name="DropDownMenu_SaveAs">
+                                    <MenuFlyoutItem Icon="SaveLocal" x:Uid="DropDownMenu_SaveAs" Click="SaveAsAppBarButtonName_Click" Text="Save as" x:Name="DropDownMenu_SaveAs" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="S" Modifiers="Control, Shift" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Icon="Undo" x:Uid="DropDownMenu_Undo" Click="UndoButton" Text="Undo" x:Name="DropDownMenu_Undo">
+                                    <MenuFlyoutItem Icon="Undo" x:Uid="DropDownMenu_Undo" Click="UndoButton" Text="Undo" x:Name="DropDownMenu_Undo" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Z" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Icon="Redo" x:Uid="DropDownMenu_Redo" Click="RedoButton" Text="Redo" x:Name="DropDownMenu_Redo">
+                                    <MenuFlyoutItem Icon="Redo" x:Uid="DropDownMenu_Redo" Click="RedoButton" Text="Redo" x:Name="DropDownMenu_Redo" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Y" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Icon="Copy" x:Uid="DropDownMenu_Copy" Click="CopyButton" Text="Copy" x:Name="DropDownMenu_Copy">
+                                    <MenuFlyoutItem Icon="Copy" x:Uid="DropDownMenu_Copy" Click="CopyButton" Text="Copy" x:Name="DropDownMenu_Copy" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="C" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Icon="Paste" x:Uid="DropDownMenu_Paste" Click="PasteButton" Text="Paste" x:Name="DropDownMenu_Paste">
+                                    <MenuFlyoutItem Icon="Paste" x:Uid="DropDownMenu_Paste" Click="PasteButton" Text="Paste" x:Name="DropDownMenu_Paste" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="V" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Icon="Cut" x:Uid="DropDownMenu_Cut" Click="CutButton" Text="Cut" x:Name="DropDownMenu_Cut">
+                                    <MenuFlyoutItem Icon="Cut" x:Uid="DropDownMenu_Cut" Click="CutButton" Text="Cut" x:Name="DropDownMenu_Cut" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="X" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Icon="ZoomIn" x:Uid="DropDownMenu_ZoomIn" Click="ZoomInAppBarButtonName_Click" Text="Zoom in" x:Name="DropDownMenu_ZoomIn">
+                                    <MenuFlyoutItem Icon="ZoomIn" x:Uid="DropDownMenu_ZoomIn" Click="ZoomInAppBarButtonName_Click" Text="Zoom in" x:Name="DropDownMenu_ZoomIn" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem  Icon="ZoomOut" x:Uid="DropDownMenu_ZoomOut" Click="ZoomOutAppBarButtonName_Click" Text="Zoom out" x:Name="DropDownMenu_ZoomOut">
+                                    <MenuFlyoutItem  Icon="ZoomOut" x:Uid="DropDownMenu_ZoomOut" Click="ZoomOutAppBarButtonName_Click" Text="Zoom out" x:Name="DropDownMenu_ZoomOut" Tag="HideIfNoTab">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutSubItem Text="Other" x:Uid="DropDownMenu_SubMenu_Tab">
-                                        <MenuFlyoutItem Icon="Cancel" x:Uid="DropDownMenu_Window_Close" Click="CloseTab_Click" Text="Close"/>
+                                    <MenuFlyoutSubItem Text="Other" x:Uid="DropDownMenu_SubMenu_Tab" Tag="HideIfNoTab">
+                                        <MenuFlyoutItem Icon="Cancel" x:Uid="DropDownMenu_Window_Close" Click="CloseTab_Click" Text="Close" />
                                         <ToggleMenuFlyoutItem  Text="WordWrap" Click="WordWrapButton_Click" x:Uid="DropDownMenu_WordWrap" x:Name="DropDownMenu_WordWrap">
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A4;"/>
@@ -153,23 +153,23 @@
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutSubItem x:Uid="DropDownMenu_SubMenu_Dialogs" Text="Dialogs">
                                         <MenuFlyoutItem x:Uid="DropDownMenu_Recyclebin" Icon="Delete" Click="RecycleBin_Click" Text="Recycle bin"/>
-                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Info" Text="Info" Click="FileInfoButton_Click">
+                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Info" Text="Info" Click="FileInfoButton_Click" Tag="HideIfNoTab">
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
                                             </MenuFlyoutItem.Icon>
                                         </MenuFlyoutItem>
-                                        <MenuFlyoutItem Icon="Find" x:Uid="DropDownMenu_Search" Click="SearchAppBarButtonName_Click" Text="Search">
+                                        <MenuFlyoutItem Icon="Find" x:Uid="DropDownMenu_Search" Click="SearchAppBarButtonName_Click" Text="Search" Tag="HideIfNoTab">
                                             <MenuFlyoutItem.KeyboardAccelerators>
                                                 <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
                                             </MenuFlyoutItem.KeyboardAccelerators>
                                         </MenuFlyoutItem>
-                                        <MenuFlyoutItem Icon="Go" x:Uid="DropDownMenu_GoToLine" Click="GoToLineButton_Click" Text="Go to">
+                                        <MenuFlyoutItem Icon="Go" x:Uid="DropDownMenu_GoToLine" Click="GoToLineButton_Click" Text="Go to" Tag="HideIfNoTab">
                                             <MenuFlyoutItem.KeyboardAccelerators>
                                                 <KeyboardAccelerator Key="G" Modifiers="Control" IsEnabled="False"/>
                                             </MenuFlyoutItem.KeyboardAccelerators>
                                         </MenuFlyoutItem>
-                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Share" Text="Share" Click="ShareAppBarButtonName_Click" Icon="Share"/>
-                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Encoding" Text="Encoding" Click="EncodingAppBarButtonName_Click" Icon="Edit"/>
+                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Share" Text="Share" Click="ShareAppBarButtonName_Click" Icon="Share" Tag="HideIfNoTab"/>
+                                        <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Encoding" Text="Encoding" Click="EncodingAppBarButtonName_Click" Icon="Edit" Tag="HideIfNoTab"/>
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutSeparator/>
                                     <MenuFlyoutItem x:Name="DropDownMenu_Settings" x:Uid="DropDownMenu_Settings" Icon="Setting" Click="Settingsbutton" Text="Settings">
@@ -213,12 +213,12 @@
                         <KeyboardAccelerator Key="O" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="DropDownMenu_Save" Click="SaveFileButton" Text="Save">
+                <MenuFlyoutItem x:Uid="DropDownMenu_Save" Click="SaveFileButton" Text="Save" Tag="HideIfNoTab">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="DropDownMenu_SaveAs" Click="SaveAsAppBarButtonName_Click" Text="Save as">
+                <MenuFlyoutItem x:Uid="DropDownMenu_SaveAs" Click="SaveAsAppBarButtonName_Click" Text="Save as" Tag="HideIfNoTab">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="S" Modifiers="Control, Shift" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -232,7 +232,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="Edit" x:Uid="DropDownMenu_Title_Edit">
+            <muxc:MenuBarItem Title="Edit" x:Uid="DropDownMenu_Title_Edit" Tag="HideIfNoTab">
                 <MenuFlyoutItem  x:Uid="DropDownMenu_Undo" Click="UndoButton" Text="Undo">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Z" Modifiers="Control" IsEnabled="False"/>
@@ -270,7 +270,7 @@
                         <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="DropDownMenu_Replace" Text="Replace" Click="ExpandSearchBoxForReplaceButton_Click">
+                <MenuFlyoutItem x:Uid="DropDownMenu_Replace" Text="Replace" Click="ExpandSearchBoxForReplaceButton_Click" >
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -287,7 +287,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="Document" x:Uid="DropDownMenu_Title_Document">
+            <muxc:MenuBarItem Title="Document" x:Uid="DropDownMenu_Title_Document" Tag="HideIfNoTab">
                 <MenuFlyoutItem Text="Close" Click="CloseTab_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="W" Modifiers="Control" IsEnabled="False"/>
@@ -319,7 +319,7 @@
                 <MenuFlyoutItem Text="Close all but this" Tag="3" Click="Close_Click"/>
                 <MenuFlyoutItem Text="Close all without save" Tag="4" Click="Close_Click"/>
             </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="Advanced" x:Uid="DropDownMenu_Title_Advanced">
+            <muxc:MenuBarItem Title="Advanced" x:Uid="DropDownMenu_Title_Advanced" Tag="HideIfNoTab">
                 <MenuFlyoutSubItem Text="Format code" x:Uid="DropDownMenu_FormatCode">
                     <MenuFlyoutItem Text="Json" Tag="0" Click="FormatCode_Click"/>
                     <MenuFlyoutItem Text="Xml" Tag="1" Click="FormatCode_Click"/>
@@ -336,15 +336,15 @@
                 </MenuFlyoutItem>
             </muxc:MenuBarItem>
             <muxc:MenuBarItem Title="View" x:Uid="DropDownMenu_Title_View">
-                <ToggleMenuFlyoutItem IsChecked="{x:Bind DropDownMenu_WordWrap.IsChecked, Mode=TwoWay}" Text="WordWrap" Click="WordWrapButton_Click" x:Uid="DropDownMenu_WordWrap"/>
-                <ToggleMenuFlyoutItem IsChecked="{x:Bind DropDownMenu_SpellChecking.IsChecked, Mode=TwoWay}" Text="Spellchecking" Click="SpellcheckingButton_Click" x:Uid="DropDownMenu_SpellChecking" x:Name="Menubar_SpellChecking"/>
+                <ToggleMenuFlyoutItem Tag="HideIfNoTab" IsChecked="{x:Bind DropDownMenu_WordWrap.IsChecked, Mode=TwoWay}" Text="WordWrap" Click="WordWrapButton_Click" x:Uid="DropDownMenu_WordWrap"/>
+                <ToggleMenuFlyoutItem Tag="HideIfNoTab" IsChecked="{x:Bind DropDownMenu_SpellChecking.IsChecked, Mode=TwoWay}" Text="Spellchecking" Click="SpellcheckingButton_Click" x:Uid="DropDownMenu_SpellChecking" x:Name="Menubar_SpellChecking"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="DropDownMenu_ZoomIn" Click="ZoomInAppBarButtonName_Click" Text="Zoom in">
+                <MenuFlyoutItem Tag="HideIfNoTab" x:Uid="DropDownMenu_ZoomIn" Click="ZoomInAppBarButtonName_Click" Text="Zoom in">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="DropDownMenu_ZoomOut" Click="ZoomOutAppBarButtonName_Click" Text="Zoom out">
+                <MenuFlyoutItem Tag="HideIfNoTab" x:Uid="DropDownMenu_ZoomOut" Click="ZoomOutAppBarButtonName_Click" Text="Zoom out">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
