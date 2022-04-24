@@ -43,7 +43,7 @@
                 </muxc:Expander>
                 <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
                     <muxc:Expander.Header>
-                        <TextBlock Margin="0,20,0,20" x:Uid="SettingsPage6_Header_Backup" Text="Backup:" Width="170" FontSize="24" HorizontalAlignment="Left"/>
+                        <TextBlock Margin="0,20,0,20" x:Uid="SettingsPage6_Header_Backup" Text="Backup:" FontSize="24" HorizontalAlignment="Left"/>
                     </muxc:Expander.Header>
                     <muxc:Expander.Content>
                         <StackPanel Margin="20,0,0,0">

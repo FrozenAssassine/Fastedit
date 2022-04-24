@@ -148,10 +148,10 @@
                                         </MenuFlyoutSubItem>
                                         <MenuFlyoutItem x:Uid="DropDownMenu_Window_MarkdownPreview" Click="MarkdownPreview_Click" Text="Markdown preview"/>
                                     </MenuFlyoutSubItem>
-                                    <MenuFlyoutSubItem x:Uid="DropDownMenu_SubMenu_Window" Text="Window">
+                                    <MenuFlyoutSubItem x:Uid="DropDownMenu_SubMenu_Window" Text="Window" Tag="HideIfNoTab">
                                         <MenuFlyoutItem x:Uid="DropDownMenu_Window_Fullscreen" Icon="Fullscreen" Click="FullScreenButton_Click" Text="Fullscreen" KeyboardAcceleratorTextOverride="F11"/>
                                     </MenuFlyoutSubItem>
-                                    <MenuFlyoutSubItem x:Uid="DropDownMenu_SubMenu_Dialogs" Text="Dialogs">
+                                    <MenuFlyoutSubItem x:Uid="DropDownMenu_SubMenu_Dialogs" Text="Dialogs" Tag="HideIfNoTab">
                                         <MenuFlyoutItem x:Uid="DropDownMenu_Recyclebin" Icon="Delete" Click="RecycleBin_Click" Text="Recycle bin"/>
                                         <MenuFlyoutItem x:Uid="DropDownMenu_Dialogs_Info" Text="Info" Click="FileInfoButton_Click" Tag="HideIfNoTab">
                                             <MenuFlyoutItem.Icon>
