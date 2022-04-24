@@ -12,9 +12,7 @@
         </Border.Background>
         <FlyoutBase.AttachedFlyout>
             <Flyout x:Name="flyout" Closed="flyout_Closed">
-                <Grid>
-                    <ColorPicker Margin="0,0,0,0" IsMoreButtonVisible="True" x:Name="ColorPickerFlyout" IsAlphaEnabled="True" ColorChanged="ColorPickerFlyout_ColorChanged_1" ColorSpectrumShape="Ring" HorizontalAlignment="Left"/>
-                </Grid>
+                <ColorPicker Margin="0,0,0,0" IsMoreButtonVisible="True" x:Name="ColorPickerFlyout" IsAlphaEnabled="True" ColorChanged="ColorPickerFlyout_ColorChanged_1" ColorSpectrumShape="Ring" HorizontalAlignment="Left"/>
             </Flyout>
         </FlyoutBase.AttachedFlyout>
     </Border>

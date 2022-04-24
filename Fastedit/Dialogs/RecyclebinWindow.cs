@@ -3,8 +3,10 @@ using Fastedit.Core.Tab;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Contacts;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace Fastedit.Dialogs
 {
@@ -30,8 +32,9 @@ namespace Fastedit.Dialogs
             listview = new ListView()
             {
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch,
-                VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Stretch
+                VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Stretch,
             };
+
             dialog = new ContentDialog()
             {
                 CornerRadius = DefaultValues.DefaultDialogCornerRadius,
@@ -41,12 +44,18 @@ namespace Fastedit.Dialogs
                 Title = "Recycle bin",
                 CloseButtonText = "Cancel",
                 PrimaryButtonText = "Delete",
-                Content = listview
+                Content = listview,
             };
+            dialog.Closing += Dialog_Closing;
             listview.SelectionChanged += Listview_SelectionChanged;
             dialog.PrimaryButtonClick += RecyclebinWindow_PrimaryButtonClick;
             dialog.SecondaryButtonClick += RecyclebinWindow_SecondaryButtonClick;
             UpdateListViewItems(listview);
+        }
+
+        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        {
+            listview.Items.Clear();
         }
 
         private async void RecyclebinWindow_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -57,13 +66,12 @@ namespace Fastedit.Dialogs
                 try
                 {
                     await selecteditem.file.DeleteAsync();
+                    listview.Items.Remove(selecteditem);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine("Exception in RecyclebinWindow --> RecyclebinWindow_PrimaryButtonClick:" + "\n" + ex.Message);
                 }
-
-                UpdateListViewItems(listview);
             }
         }
         private async void RecyclebinWindow_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -72,11 +80,11 @@ namespace Fastedit.Dialogs
             {
                 args.Cancel = true;
 
-                if (await tabactions.OpenFileFromRecylceBin(selecteditem.file, selecteditem.Filename) == true)
+                if (await tabactions.OpenFileFromRecylceBin(selecteditem.file, selecteditem.file.Name) == true)
                 {
                     await selecteditem.file.DeleteAsync();
+                    listview.Items.Remove(selecteditem);
                 }
-                UpdateListViewItems(listview);
             }
         }
         private void Listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -107,7 +115,7 @@ namespace Fastedit.Dialogs
             var files = await folder.GetFilesAsync();
             for (int i = 0; i< files.Count; i++)
             {
-                listview.Items.Add(new RecycleBinListViewItem(files[i], files[i].Name, files[i].DateCreated.UtcDateTime.ToString()));
+                listview.Items.Add(new RecycleBinListViewItem(files[i]));
             }
         }
         public static async Task<ClearRecycleBinResult> ClearRecycleBin()
@@ -147,19 +155,15 @@ namespace Fastedit.Dialogs
     }
     public class RecycleBinListViewItem : ListViewItem
     {
-        public string Filename;
-        public StorageFile file;
-        public string DeletionTime;
+        public StorageFile file { get; set; }
 
-        public RecycleBinListViewItem(StorageFile file, string Filename, string DeletionTime)
-        {
-            var MainStackPanel = new StackPanel();
-            MainStackPanel.Children.Add(new TextBlock { Text = Filename, FontSize = 20 });
-            MainStackPanel.Children.Add(new TextBlock { Text = DeletionTime, Margin = new Windows.UI.Xaml.Thickness(0, 5, 0, 0) });
-            Content = new ScrollViewer { Content = MainStackPanel };
-            this.Filename = Filename;
+        public RecycleBinListViewItem(StorageFile file)
+        { 
             this.file = file;
-            this.DeletionTime = DeletionTime;
+            this.Content = new TextBlock
+            {
+                Text = file.Name + "\n" + file.DateCreated.UtcDateTime.ToString()
+            };
         }
     }
 }

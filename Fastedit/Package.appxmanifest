@@ -34,7 +34,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="Fastedit.App"
+    <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="Fastedit.App">
       <uap:VisualElements
@@ -60,7 +60,7 @@
 		<Extensions>
 				<uap5:Extension
 				  Category="windows.appExecutionAlias"
-				  Executable="Fastedit.exe"
+				  Executable="fastedit.exe"
 				  EntryPoint="Fastedit.App">
 					<uap5:AppExecutionAlias>
 						<uap5:ExecutionAlias Alias="fastedit.exe" />

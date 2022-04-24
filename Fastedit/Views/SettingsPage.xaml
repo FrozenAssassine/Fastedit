@@ -14,7 +14,7 @@
             OpenPaneLength="200" 
             IsPaneOpen="True" 
             CompositeMode="Inherit" 
-            ItemInvoked="NavigationView_ItemInvoked_1"
+            ItemInvoked="NavigationView_ItemInvoked"
             x:Name="NavigationView" 
             IsSettingsVisible="False" Background="Transparent"
             >

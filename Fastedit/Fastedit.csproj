@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>A1EC1AD61F8CDEA8EE7364F01601022530CC16F8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>60A33BFE7178012CD331A63E323BCA9D055BAEA5</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -132,7 +132,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
     <IntermediateOutputPath>C:\Users\juliu\AppData\Local\Temp\vsA7B9.tmp\x64\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -159,7 +159,6 @@
     </Compile>
     <Compile Include="Controls\Textbox\TextControlBoxFlyoutMenu.cs" />
     <Compile Include="Core\DefaultValues.cs" />
-    <Compile Include="Core\RunCommandWindowClass.cs" />
     <Compile Include="Core\Tab\TabActions.cs" />
     <Compile Include="Core\Tab\TabDataBase.cs" />
     <Compile Include="Core\Tab\TabPageFlyout.cs" />
@@ -181,7 +180,6 @@
     <Compile Include="Extensions\KeyboardCommands.cs" />
     <Compile Include="Extensions\StringBuilder.cs" />
     <Compile Include="Extensions\Utilities.cs" />
-    <Compile Include="ExternalData\DatabaseImportExport.cs" />
     <Compile Include="Helper\ThemeHelper.cs" />
     <Compile Include="ExternalData\CustomDesigns.cs" />
     <Compile Include="ExternalData\ExportImportSettings.cs" />
@@ -339,8 +337,9 @@
     <Content Include="Assets\ExtensionIcons\XML\xml.png" />
     <Content Include="Assets\ExtensionIcons\XML\xml.svg" />
     <Content Include="Assets\news.txt" />
+    <Content Include="Assets\SocialIcons\GitHub-Mark-120px-plus.png" />
+    <Content Include="Assets\SocialIcons\GitHub-Mark-Light-120px-plus.png" />
     <Content Include="Assets\SocialIcons\Instagram_Glyph_Gradient_RGB.png" />
-    <Content Include="Assets\todo_temp.txt" />
     <Content Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <PRIResource Include="Strings\en-US\Resources.resw">
