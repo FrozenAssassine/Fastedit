@@ -94,6 +94,7 @@ namespace Fastedit
         private muxc.FontIconSource TabPageFontIconSource = null;
         private List<OpenedSecondaryViewItem> OpenedSecondaryViews = new List<OpenedSecondaryViewItem>();
         private muxc.TabViewItem SettingsTabPage = null;
+        private NavigationEventArgs navigaionEvent = null;
 
         public MainPage()
         {
@@ -185,7 +186,7 @@ namespace Fastedit
                 ShowInfobar("Could not load Themes to the folder\n" + e.Message, "", muxc.InfoBarSeverity.Error);
             }
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        private async Task LoadTabs(NavigationEventArgs e)
         {
             await Initialisation();
 
@@ -214,6 +215,11 @@ namespace Fastedit
                 tabactions.NewTab();
 
             AfterInitialisation();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.navigaionEvent = e;
+            base.OnNavigatedTo(e);
         }
 
         //MainPage-Events:
@@ -601,9 +607,11 @@ namespace Fastedit
         }
 
         //Titlebar
-        private void Titlebar_Loaded(object sender, RoutedEventArgs e)
+        private async void Titlebar_Loaded(object sender, RoutedEventArgs e)
         {
             SetTitlebar();
+            //Load tabs
+            await LoadTabs(navigaionEvent);
         }
         private void SetTitlebar()
         {
