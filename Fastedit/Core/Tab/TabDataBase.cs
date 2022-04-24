@@ -42,8 +42,8 @@ namespace Fastedit.Core.Tab
             }
         }
 
-        //Create the data from tabs to save
-        private string CreateTabDataBase(muxc.TabView TabView)
+        //Create the data to save
+        public string CreateTabDataBase(muxc.TabView TabView)
         {
             string outputtext = string.Empty;
             int CurrentSelectedTabPageIndex = TabView.SelectedIndex;
@@ -61,18 +61,15 @@ namespace Fastedit.Core.Tab
             }
             return outputtext;
         }
-        //Creates the database in a specified folder
-        public async Task<bool> SaveTabPages(muxc.TabView TabView, string FolderName = "")
+        //Creates the database-file in a specified folder
+        public async Task<bool> SaveTabPageData(muxc.TabView TabView)
         {
             try
             {
                 if (TabView.TabItems.Count == 0)
                     return true;
-
-                if (FolderName.Length == 0)
-                    FolderName = DefaultValues.Database_FolderName;
-
-                var FilePath = Path.Combine(DefaultValues.LocalFolderPath, FolderName, DataBaseName);
+                
+                var FilePath = Path.Combine(DefaultValues.LocalFolderPath, DefaultValues.Database_FolderName, DataBaseName);
                 return await WriteToFile(FilePath, CreateTabDataBase(TabView));
             }
             catch (Exception e)
@@ -90,9 +87,7 @@ namespace Fastedit.Core.Tab
                 List<TabDataForDatabase> databaseData = new List<TabDataForDatabase>();
 
                 string DataBaseFileName =
-                    Path.Combine(DefaultValues.LocalFolderPath,
-                    FromBackup ? DefaultValues.Backup_FolderName : DefaultValues.Database_FolderName,
-                    DataBaseName);
+                    Path.Combine(DefaultValues.LocalFolderPath, FromBackup ? DefaultValues.Backup_FolderName : DefaultValues.Database_FolderName, DataBaseName);
 
                 if (File.Exists(DataBaseFileName))
                 {
