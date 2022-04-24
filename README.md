@@ -24,6 +24,7 @@ You can edit mutliple documents using tabs, move document into its own instances
 - Menubar
 - Cool designs
 - Linenumbering
+- Linehighlighter
 - Fast search
 - Secondary view
 - Session snapshot
