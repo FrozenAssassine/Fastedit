@@ -17,7 +17,6 @@ namespace Fastedit.ExternalData
         private MainPage mainpage = null;
         private muxc.TabView TextTabControl = null;
         private TabActions tabactions = null;
-        private TabDataBase tabdatabase = new TabDataBase();
 
         public DatabaseImportExport(MainPage mainpage, muxc.TabView tabview)
         {
@@ -28,7 +27,7 @@ namespace Fastedit.ExternalData
 
         public async Task<bool> CreateDatabaseBackup()
         {
-            if(await tabactions.SaveAllTabChanges())
+            if (await tabactions.SaveAllTabChanges())
             {
                 var databasefolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Database_FolderName, CreationCollisionOption.OpenIfExists);
                 var backupfolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.Backup_FolderName, CreationCollisionOption.OpenIfExists);
@@ -46,9 +45,9 @@ namespace Fastedit.ExternalData
                         }
                     }
                     var files = await databasefolder.GetFilesAsync();
-                    for (int i = 0; i< files.Count; i++)
+                    for (int i = 0; i < files.Count; i++)
                     {
-                        if(files[i] is StorageFile file)
+                        if (files[i] is StorageFile file)
                         {
                             if (file != null)
                                 if (await file.CopyAsync(backupfolder, file.Name, NameCollisionOption.ReplaceExisting) == null)
