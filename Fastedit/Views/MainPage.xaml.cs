@@ -48,6 +48,7 @@ namespace Fastedit
         private readonly SaveFileHelper savefilehelper = new SaveFileHelper();
         private readonly TabPageHelper tabpagehelper = new TabPageHelper();
         private readonly CustomDesigns customdesigns = null;
+        private readonly DatabaseImportExport databaseimportexport = null;
 
         //Settings entrys:
         private FontFamily TextBoxFontfamily = new FontFamily(DefaultValues.DefaultFontFamily);
@@ -105,6 +106,9 @@ namespace Fastedit
                 tabactions = new TabActions(TextTabControl, this);
             if(customdesigns == null)
                 customdesigns = new CustomDesigns(null, this);
+
+            if (databaseimportexport == null)
+                databaseimportexport = new DatabaseImportExport(this, TextTabControl);
 
             //Subscribe to the events:
             SizeChanged += MainPage_SizeChanged;
@@ -650,7 +654,7 @@ namespace Fastedit
                 var dp = new DispatcherTimer();
                 dp.Tick += async delegate
                 {
-                    await tabactions.SaveAllTabChangesToBackup();
+                    await databaseimportexport.CreateDatabaseBackup();
                 };
                 dp.Interval = new TimeSpan(0, 0, BackupTimeInMinutes, 0);
                 dp.Start();
@@ -1437,20 +1441,17 @@ namespace Fastedit
         }
         public void NewTab_Action()
         {
-            if (tabactions.GetTabItemCount() > -1)
+            muxc.TabViewItem tab = tabactions.NewTab();
+            newTabSaveTime.Tick += async delegate
             {
-                muxc.TabViewItem tab = tabactions.NewTab();
-                newTabSaveTime.Tick += async delegate
-                {
-                    await tabactions.SaveAllTabChanges();
-                    newTabSaveTime.Stop();
-                };
-                newTabSaveTime.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-                newTabSaveTime.Start();
-                if (tab != null)
-                {
-                    SetSettingsToTabPage(tab, TextBoxMargin());
-                }
+                await tabactions.SaveAllTabChanges();
+                newTabSaveTime.Stop();
+            };
+            newTabSaveTime.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            newTabSaveTime.Start();
+            if (tab != null)
+            {
+                SetSettingsToTabPage(tab, TextBoxMargin());
             }
         }
         private void OpenSettings_Action()

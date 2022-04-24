@@ -1,4 +1,5 @@
 ﻿using Fastedit.Core;
+using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.ExternalData;
 using System;
@@ -14,6 +15,7 @@ namespace Fastedit.Views.SettingsPage
     {
         private AppSettings appsettings = new AppSettings();
         private ExportImportSettings exportimportsettings = new ExportImportSettings();
+        private DatabaseImportExport databaseimportexport = null;
 
         public Page6()
         {
@@ -23,9 +25,12 @@ namespace Fastedit.Views.SettingsPage
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if(e.Parameter is SettingsNavigationParameter navparam)
+            {
+                databaseimportexport = new DatabaseImportExport(navparam.Mainpage, navparam.Tabcontrol);
+            }
             base.OnNavigatedTo(e);
         }
-
         //Show infobar with content
         private void ShowInfobar(string Content, muxc.InfoBarSeverity Severity)
         {
@@ -34,7 +39,7 @@ namespace Fastedit.Views.SettingsPage
             SettingsInfoBar.IsOpen = true;
         }
 
-        //Export appsettings
+        //Import/Export settings
         private async void ExportSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (await exportimportsettings.ExportSettings() == true)
@@ -46,7 +51,6 @@ namespace Fastedit.Views.SettingsPage
                 ShowInfobar("Couldn't save settings", muxc.InfoBarSeverity.Error);
             }
         }
-        //Import appsettings
         private async void ImportSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (await exportimportsettings.ImportSettings() == true)
@@ -59,7 +63,7 @@ namespace Fastedit.Views.SettingsPage
             }
         }
 
-        //Clear the recyclebin
+        //Clear recylcebin
         private async void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
             var res =await RecyclebinWindow.ClearRecycleBin();
@@ -71,6 +75,24 @@ namespace Fastedit.Views.SettingsPage
                 ShowInfobar("Could not clear the Recyclebin, something returned null", muxc.InfoBarSeverity.Error);
             else if (res == ClearRecycleBinResult.Exception)
                 ShowInfobar("Could not clear the Recylcebin, an exception occured", muxc.InfoBarSeverity.Error);
+        }
+
+        //Import/Export database
+        private async void LoadLastBackupButton_Click(object sender, RoutedEventArgs e)
+        {
+            var res = await databaseimportexport.LoadDatabaseFromBackup();
+            if (res == true)
+                ShowInfobar("Backup loading succeed", muxc.InfoBarSeverity.Success);
+            else
+                ShowInfobar("Could not load backup, please try again", muxc.InfoBarSeverity.Error);
+        }
+        private async void BackupNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            var res = await databaseimportexport.CreateDatabaseBackup();
+            if(res == true)
+                ShowInfobar("Backup succeed", muxc.InfoBarSeverity.Success);
+            else
+                ShowInfobar("Could not backup, please try again", muxc.InfoBarSeverity.Error);
         }
     }
 }
