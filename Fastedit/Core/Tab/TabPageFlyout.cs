@@ -114,7 +114,7 @@ namespace Fastedit.Core.Tab
                     };
                     ExpandToSecondaryView.Click += async delegate
                     {
-                        await mainpage.ExpandTabPageToNewView(TabPage);
+                        await mainpage.secondaryeditinginstance.ExpandTabPageToNewView(TabPage);
                     };
 
                     myFlyout.Items.Add(CloseItem);

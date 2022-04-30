@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>60A33BFE7178012CD331A63E323BCA9D055BAEA5</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>01FF34FCAB2E9004534BA39AA07EB89B5358CFAE</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -181,6 +181,7 @@
     <Compile Include="Extensions\StringBuilder.cs" />
     <Compile Include="Extensions\Utilities.cs" />
     <Compile Include="ExternalData\DatabaseImportExport.cs" />
+    <Compile Include="Helper\SecondaryEditingInstance.cs" />
     <Compile Include="Helper\ThemeHelper.cs" />
     <Compile Include="ExternalData\CustomDesigns.cs" />
     <Compile Include="ExternalData\ExportImportSettings.cs" />

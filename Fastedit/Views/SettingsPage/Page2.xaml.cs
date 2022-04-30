@@ -54,8 +54,8 @@ namespace Fastedit.Views.SettingsPage
                         Content = designs[i].Name.Replace(DefaultValues.Extension_FasteditDesign, ""),
                         Tag = designs[i]
                     });
-                ThemeCombobox1.SelectedItem = ThemeCombobox1.FindName(appsettings.GetSettingsAsString("ThemeForLightMode", DefaultValues.DefaultThemeName) + "1");
-                ThemeCombobox2.SelectedItem = ThemeCombobox2.FindName(appsettings.GetSettingsAsString("ThemeForDarkMode", DefaultValues.DefaultThemeName) + "2");
+                ThemeCombobox1.SelectedItem = ThemeCombobox1.FindName(appsettings.GetSettingsAsString("DesignForLightMode", DefaultValues.DefaultThemeName) + "1");
+                ThemeCombobox2.SelectedItem = ThemeCombobox2.FindName(appsettings.GetSettingsAsString("DesignForDarkMode", DefaultValues.DefaultThemeName) + "2");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Fastedit.Views.SettingsPage
             {
                 if (cbitem.Tag is StorageFile file)
                 {
-                    appsettings.SaveSettings("ThemeForLightMode", file.Name);
+                    appsettings.SaveSettings("DesignForLightMode", file.Name);
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace Fastedit.Views.SettingsPage
             {
                 if (cbitem.Tag is StorageFile file)
                 {
-                    appsettings.SaveSettings("ThemeForDarkMode", file.Name);
+                    appsettings.SaveSettings("DesignForDarkMode", file.Name);
                 }
             }
         }
