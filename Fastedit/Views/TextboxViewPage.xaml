@@ -16,6 +16,7 @@
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
             <Button Click="ReturnToOldWindowButton_Click" x:Name="ReturnToOldWindowButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE944;" FontFamily="Segoe MDL2 Assets"/>
             <Button Click="FullscreenButton_Click" x:Name="FullscreenButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE740;" FontFamily="Segoe MDL2 Assets"/>
+            <Button Click="CompactOverlayButton_Click" x:Name="CompactOverlayButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xEE49;" FontFamily="Segoe MDL2 Assets"/>
             <!--<Button Click="Save_Click" x:Name="SaveButton" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Content="&#xE74E;" FontFamily="Segoe MDL2 Assets"/>-->
         </StackPanel>
         <Grid Margin="0,30,0,0" HorizontalAlignment="Stretch" Height="2" x:Name="OverTextboxLine"/>
