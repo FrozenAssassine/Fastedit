@@ -1,1 +1,92 @@
-﻿Fastedit Newslist:-------------------------------------------------------Version 1.4.2 []	• Fixed a bug, where the tabs overlayed the Minimize, Maximize and Close button	• Fixed a bug, where a tab wasn't saved when reopening after closing saved-------------------------------------------------------Version 1.3.2 [04/16/2022]	• Added surround with function when pressing Control + Q	• Change the shortcut for the settings to F1	• Added a menubar right below the tabs, you can align it Left, Right, Center, or disable it	• Added a format Json and format XML function	• Added a setting to hide the line under the tab control	• Added a linehighlighter with customizable colors and the option to	  disable it	• Fixed a bug, where you couldn't change the transparency of the textbox background 	• Fixed a bug, which showed the encoding flyout if the user wanted to enter a €-sign	• Moved all customization settings into one place	• Updated the designs UI and experience	• Updated and renewed all designs	• Fixed a bug, where the textbox overlapped the status bar when the settings are opened	• Fixed a bug, which caused the tabs to overlap the title bar on the very first start	• Updated the "Running on new version"- infobar, not to show up on very first start	• Added a github button to the About section to link to the Fastedit repository-------------------------------------------------------Version 1.2.2 [03/17/2022]	• Updated the Search and Goto line UI	• Added an option to center or align the Search and Goto line dialog left	• Added more encodings	• Added open with Encoding	• Fixed a bug which always closed the selected tab, also when you closed another	-------------------------------------------------------Version 1.1.2 [03/02/2022]	• Fixed a minor bug which caused the app to crashes	  when opening settings when they were already opened-------------------------------------------------------Version 1.1.1 - [03/01/2022]- Features and improvements:	• Added markdown preview with customizable preview-window position	  You will find this feature in the Hamburger menu -> Tab -> Markdown 	  or by pressing Ctrl + M	• Added markdown file extension	• Added text to livetile	• Added a selectionflyout with Copy, Cut, Search and Share button	  You can disable this in the settings	• Added a message when updated to a new version	• Added a new setting where you can enable Handwriting in the Editor- Bugfixes:	• Fixed a bug, which showed the Goto line dialog when settings 	  were opened	• Fixed a bug, where the checked indicator of the Wordwrap button	  was reversed-------------------------------------------------------Version 1.0.1  -  02/09/2022- Features and improvements:	• Added the ability to expand the current Document 	  to a secondary window by dragging the tab out of 	  the tabcontrol or by pressing Ctrl + B		• Added a setting to change the icon for all 	  tabpages you can find it under 	  Settings -> TabControl -> Tab Icon		• You can now open files via the commandline	• Added some more German and English translations	• Added a feature which automatically changes the 	  design when Windows changes the theme.	  Settings -> App -> Theme- Bugfixes:	• Fixed some layout bugs in the settings	• Fixed a bug, that prevented turning	  off linenumbers	• Fixed a bug, which sometimes showed the search in	  the settings tab	• Fixed a bug, that made the titlebar unusable after opening	  a file via Drag/Drop- Removed: 	• Removed the ability to export and import the database	  because it caused too many crashes -> I will add this in the future-------------------------------------------------------Version 1.0.0  -  01/24/2022
+Fastedit Changelog:
+
+-------------------------------------------------------
+Version 1.4.2 [04/25/2022]
+	• Fixed a bug, where the tabs overlayed the Minimize, Maximize and Close button
+	• Fixed a bug, where a saved document was unsaved after reopening
+	• Added an option, to load a backup of your database
+	• Added an option, to create a backup of your database
+
+-------------------------------------------------------
+Version 1.3.2 [04/16/2022]
+	• Added surround with function when pressing Control + Q
+	• Change the shortcut for the settings to F1
+	• Added a menubar right below the tabs, you can align it Left, Right, Center, or disable it
+	• Added a format Json and format XML function
+	• Added a setting to hide the line under the tab control
+	• Added a linehighlighter with customizable colors and the option to
+	  disable it
+	• Fixed a bug, where you couldn't change the transparency of the textbox background 
+	• Fixed a bug, which showed the encoding flyout if the user wanted to enter a €-sign
+	• Moved all customization settings into one place
+	• Updated the designs UI and experience
+	• Updated and renewed all designs
+	• Fixed a bug, where the textbox overlapped the status bar when the settings are opened
+	• Fixed a bug, which caused the tabs to overlap the title bar on the very first start
+	• Updated the "Running on new version"- infobar, not to show up on very first start
+	• Added a github button to the About section to link to the Fastedit repository
+
+-------------------------------------------------------
+Version 1.2.2 [03/17/2022]
+	• Updated the Search and Goto line UI
+	• Added an option to center or align the Search and Goto line dialog left
+	• Added more encodings
+	• Added open with Encoding
+	• Fixed a bug which always closed the selected tab, also when you closed another
+	
+-------------------------------------------------------
+Version 1.1.2 [03/02/2022]
+	• Fixed a minor bug which caused the app to crashes
+	  when opening settings when they were already opened
+
+-------------------------------------------------------
+Version 1.1.1 - [03/01/2022]
+
+- Features and improvements:
+	• Added markdown preview with customizable preview-window position
+	  You will find this feature in the Hamburger menu -> Tab -> Markdown 
+	  or by pressing Ctrl + M
+	• Added markdown file extension
+	• Added text to livetile
+	• Added a selectionflyout with Copy, Cut, Search and Share button
+	  You can disable this in the settings
+	• Added a message when updated to a new version
+	• Added a new setting where you can enable Handwriting in the Editor
+
+- Bugfixes:
+	• Fixed a bug, which showed the Goto line dialog when settings 
+	  were opened
+	• Fixed a bug, where the checked indicator of the Wordwrap button
+	  was reversed
+
+-------------------------------------------------------
+Version 1.0.1  -  02/09/2022
+
+- Features and improvements:
+	• Added the ability to expand the current Document 
+	  to a secondary window by dragging the tab out of 
+	  the tabcontrol or by pressing Ctrl + B	
+	• Added a setting to change the icon for all 
+	  tabpages you can find it under 
+	  Settings -> TabControl -> Tab Icon	
+	• You can now open files via the commandline
+	• Added some more German and English translations
+	• Added a feature which automatically changes the 
+	  design when Windows changes the theme.
+	  Settings -> App -> Theme
+
+- Bugfixes:
+	• Fixed some layout bugs in the settings
+	• Fixed a bug, that prevented turning
+	  off linenumbers
+	• Fixed a bug, which sometimes showed the search in
+	  the settings tab
+	• Fixed a bug, that made the titlebar unusable after opening
+	  a file via Drag/Drop
+
+- Removed: 
+	• Removed the ability to export and import the database
+	  because it caused too many crashes -> I will add this in the future
+
+-------------------------------------------------------
+Version 1.0.0  -  01/24/2022

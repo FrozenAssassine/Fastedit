@@ -34,6 +34,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Convert = Fastedit.Extensions.Convert;
+using MenuBarItem = Microsoft.UI.Xaml.Controls.MenuBarItem;
 using muxc = Microsoft.UI.Xaml.Controls;
 using StringBuilder = Fastedit.Extensions.StringBuilder;
 
@@ -48,6 +49,7 @@ namespace Fastedit
         private readonly TabPageHelper tabpagehelper = new TabPageHelper();
         private readonly CustomDesigns customdesigns = null;
         public readonly SecondaryView secondaryviews = null;
+        private readonly DatabaseImportExport databaseimportexport = null;
 
         //Settings entrys:
         private FontFamily TextBoxFontfamily = new FontFamily(DefaultValues.DefaultFontFamily);
@@ -105,7 +107,10 @@ namespace Fastedit
             if(customdesigns == null)
                 customdesigns = new CustomDesigns(null, this);
             if (secondaryviews == null)
-                secondaryviews = new SecondaryView(this, tabactions, TextTabControl);
+                secondaryviews = new SecondaryView(this, tabactions, TextTabControl)
+            if (databaseimportexport == null)
+                databaseimportexport = new DatabaseImportExport(this, TextTabControl);
+
             //Subscribe to the events:
             SizeChanged += MainPage_SizeChanged;
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += Application_OnCloseRequest;
@@ -487,24 +492,7 @@ namespace Fastedit
             var tabpage = tabactions.GetSelectedTabPage();
             if (tabpage != null && tabpage.Content is TextControlBox textbox)
             {
-                //If Spellcheckingitem is not enabled enable all:
-                if (!DropDownMenu_Redo.IsEnabled || !DropDownMenu_New.IsEnabled )
-                {
-                    for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
-                    {
-                        if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
-                        {
-                            if (item.Name != "DropDownMenu_New" && item.Name != "DropDownMenu_Open" && item.Name != "DropDownMenu_Settings")
-                            {
-                                item.IsEnabled = true;
-                            }
-                        }
-                        if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
-                        {
-                            subitem.IsEnabled = true;
-                        }
-                    }
-                }
+                ShowHideControlsOnSelectionChanged(true);
 
                 CurrentlySelectedTabPage = tabpage;
                 CurrentlySelectedTabPage_Textbox = textbox;
@@ -538,7 +526,7 @@ namespace Fastedit
                     RenameTextBox.IsEnabled = false;
                     RenameFileButton.IsEnabled = false;
                 }
-                
+
                 //Show /hide the OpenWithEncoding Button when the file was not even saved
                 OpenWithEncodingButton.IsEnabled = textbox.TabSaveMode == TabSaveMode.SaveAsTemp ? false : true;
 
@@ -556,13 +544,15 @@ namespace Fastedit
                 //Check wordwrapbutton
                 DropDownMenu_WordWrap.IsChecked = textbox.WordWrap == TextWrapping.Wrap;
             }
-            else if (tabpage is muxc.TabViewItem tab)
+            else
             {
+                ShowHideControlsOnSelectionChanged(false);
                 CurrentlySelectedTabPage = null;
                 CurrentlySelectedTabPage_Textbox = null;
-                if (tab.Content is Frame)
+                SettingsWindowSelected = true;
+
+                if (tabpage != null && tabpage.Content is Frame)
                 {
-                    SettingsWindowSelected = true;
                     if (ShowMenubar)
                     {
                         MainMenuBar.Visibility = Visibility.Collapsed;
@@ -665,7 +655,7 @@ namespace Fastedit
                 var dp = new DispatcherTimer();
                 dp.Tick += async delegate
                 {
-                    await tabactions.SaveAllTabChangesToBackup();
+                    await databaseimportexport.CreateDatabaseBackup();
                 };
                 dp.Interval = new TimeSpan(0, 0, BackupTimeInMinutes, 0);
                 dp.Start();
@@ -1101,6 +1091,64 @@ namespace Fastedit
             NewVersionInfobar.IsOpen = true;
         }
 
+        private void ShowHideControlsOnSelectionChanged(bool isEnabled)
+        {
+            //DropDownMenu:
+            if (DropDownMenu.Visibility == Visibility.Visible)
+            {
+                for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
+                {
+                    if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
+                    {
+                        if (item.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        {
+                            item.IsEnabled = isEnabled;
+                        }
+                    }
+                    if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
+                    {
+                        if (subitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                        {
+                            subitem.IsEnabled = isEnabled;
+                        }
+                    }
+                }
+            }
+            //Menubar:
+            if (!ShowMenubar)
+                return;
+            for (int i = 0; i < MainMenuBar.Items.Count; i++)
+            {
+                if (MainMenuBar.Items[i] is MenuBarItem mbitem)
+                {
+                    if (mbitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
+                    {
+                        mbitem.IsEnabled = isEnabled;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < mbitem.Items.Count; j++)
+                        {
+                            if (mbitem.Items[j] is MenuFlyoutItem mfi)
+                            {
+                                if (mfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
+                                {
+                                    mfi.IsEnabled = isEnabled;
+                                }
+                            }
+                            else if (mbitem.Items[j] is ToggleMenuFlyoutItem tmfi)
+                            {
+                                if (tmfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
+                                {
+                                    tmfi.IsEnabled = isEnabled;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         //Drag-Drop
         private async Task<bool> OpenStorageFiles(IReadOnlyList<IStorageItem> StorageItems, TabSaveMode savemode = TabSaveMode.SaveAsDragDrop)
         {
@@ -1394,20 +1442,17 @@ namespace Fastedit
         }
         public void NewTab_Action()
         {
-            if (tabactions.GetTabItemCount() > -1)
+            muxc.TabViewItem tab = tabactions.NewTab();
+            newTabSaveTime.Tick += async delegate
             {
-                muxc.TabViewItem tab = tabactions.NewTab();
-                newTabSaveTime.Tick += async delegate
-                {
-                    await tabactions.SaveAllTabChanges();
-                    newTabSaveTime.Stop();
-                };
-                newTabSaveTime.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-                newTabSaveTime.Start();
-                if (tab != null)
-                {
-                    SetSettingsToTabPage(tab, TextBoxMargin());
-                }
+                await tabactions.SaveAllTabChanges();
+                newTabSaveTime.Stop();
+            };
+            newTabSaveTime.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            newTabSaveTime.Start();
+            if (tab != null)
+            {
+                SetSettingsToTabPage(tab, TextBoxMargin());
             }
         }
         private void OpenSettings_Action()
