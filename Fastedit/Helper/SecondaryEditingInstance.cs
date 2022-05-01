@@ -4,6 +4,7 @@ using Fastedit.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -46,6 +47,28 @@ namespace Fastedit.Helper
             }
             return returnval;
         }
+        public async Task ApplySettingToAllViews()
+        {
+            if (OpenedSecondaryViews.Count == 0)
+                return;
+           
+            for (int i = 0; i < OpenedSecondaryViews.Count; i++)
+{
+                var view = OpenedSecondaryViews[i];
+                await view.CoreApplicationView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    if (Window.Current.Content is Frame frame)
+                    {
+                        if (frame.Content is TextboxViewPage tbvp)
+                        {
+                            tbvp.SetSettingsToTextBox();
+                        }
+                    }
+                });
+            }
+
+        }
+
         public async Task ExpandTabPageToNewView(muxc.TabViewItem TabPage)
         {
             var textcontrolbox = tabactions.GetTextBoxFromTabPage(TabPage);
@@ -184,6 +207,5 @@ namespace Fastedit.Helper
         {
             await CloseExpandedView(sender);
         }
-
     }
 }
