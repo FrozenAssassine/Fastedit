@@ -480,6 +480,21 @@ namespace Fastedit.Core.Tab
             }
         }
 
+        public async Task SetTextFromBuffer(muxc.TabViewItem Tab)
+        {
+            var textbox = GetTextBoxFromTabPage(Tab);
+            if (textbox != null)
+            {
+                if (!textbox.IsLoaded)
+                {
+                    Debug.WriteLine("SetTextFromBuffer: " + Tab.Header);
+                    textbox.IsLoaded = true;
+                    await textbox.SetText(textbox.TextBuffer, textbox.IsModified);
+                    textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
+                    textbox.ScrollIntoView();
+                }
+            }
+        }
         /// <summary>
         /// Close tabs and save to database on application exit
         /// </summary>
@@ -591,11 +606,9 @@ namespace Fastedit.Core.Tab
                         var result = await getTabtext(textbox);
                         if (result.succed)
                         {
-                            await textbox.SetText(result.Text, DataItem.TabModified);
+                            textbox.TextBuffer = result.Text;
                             //To update the tab header:
                             tabpagehelper.SetTabModified(Tab, DataItem.TabModified);
-                            
-                            textbox.SetSelection(DataItem.TabSelStart, DataItem.TabSelLenght);
                             textbox.MarkdownPreview = DataItem.Markdown;
                             if(DataItem.TabToken != string.Empty)
                             {
@@ -634,6 +647,7 @@ namespace Fastedit.Core.Tab
                 {
                     TextTabControl.SelectedIndex = LastSelectedTabIndex;
                 }
+                await SetTextFromBuffer(GetSelectedTabPage());
 
                 return MethodeSucced;
             }
@@ -1280,4 +1294,5 @@ namespace Fastedit.Core.Tab
             }
         }
     }
+
 }

@@ -47,6 +47,8 @@ namespace Fastedit.Controls.Textbox
         private int OldLineNumber = 0;
         private int OldWordCount = 0;
         private bool MarkdownRoatation = false;
+        public string TextBuffer = string.Empty;
+        public bool IsLoaded = false;
 
         public TextControlBox()
         {
@@ -1057,6 +1059,14 @@ namespace Fastedit.Controls.Textbox
                 MainContentScrollViewer.ChangeView(pos.ScrollbarPositionHorizontal, pos.ScrollbarPositionVertical, null, DisableAnimations);
             }
         }
+        public void ScrollIntoView()
+        {
+            if (MainContentScrollViewer != null)
+            {
+                double vOffset = MainContentScrollViewer.VerticalOffset + this.ActualHeight / 2;
+                MainContentScrollViewer.ChangeView(null, vOffset, null, true);
+            }
+        }
 
         //Undo-Redo
         public void Undo()
@@ -1196,6 +1206,10 @@ namespace Fastedit.Controls.Textbox
         /// <returns>The text</returns>
         public string GetText()
         {
+            if (!IsLoaded)
+            {
+                return TextBuffer;
+            }
             textbox.Document.GetText(TextGetOptions.None, out string out1);
             if (out1.Length != 0)
             {

@@ -468,7 +468,7 @@ namespace Fastedit
         }
 
         //TextTabControl-Events:
-        private void TextTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void TextTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //If tabitems equals zero, disable all items:
             if (TextTabControl.TabItems.Count == 0)
@@ -492,8 +492,10 @@ namespace Fastedit
             var tabpage = tabactions.GetSelectedTabPage();
             if (tabpage != null && tabpage.Content is TextControlBox textbox)
             {
-                ShowHideControlsOnSelectionChanged(true);
+                if (!textbox.IsLoaded)
+                    await tabactions.SetTextFromBuffer(tabpage);
 
+                ShowHideControlsOnSelectionChanged(true);
                 CurrentlySelectedTabPage = tabpage;
                 CurrentlySelectedTabPage_Textbox = textbox;
 
