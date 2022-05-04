@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -486,12 +487,13 @@ namespace Fastedit.Core.Tab
             var textbox = GetTextBoxFromTabPage(Tab);
             if (textbox != null)
             {
-                if (!textbox.IsLoaded)
+                if (!textbox.TextLoaded)
                 {
-                    textbox.IsLoaded = true;
+                    textbox.TextLoaded = true;
                     await textbox.SetText(textbox.TextBuffer, textbox.IsModified);
                     textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
                     textbox.ScrollIntoView();
+                    textbox.UpdateRendering();
                 }
             }
         }
@@ -605,7 +607,18 @@ namespace Fastedit.Core.Tab
                         var result = await getTabtext(textbox);
                         if (result.succed)
                         {
-                            textbox.TextBuffer = result.Text;
+                            //Load the text just for the selected tab
+                            if(i == DataItem.CurrentSelectedTabIndex)
+                            {
+                                textbox.TextLoaded = true;
+                                await textbox.SetText(result.Text, textbox.IsModified);
+                                textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
+                                textbox.ScrollIntoView();
+                                textbox.UpdateRendering();
+                            }
+                            else
+                                textbox.TextBuffer = result.Text;
+
                             //To update the tab header:
                             tabpagehelper.SetTabModified(Tab, DataItem.TabModified);
                             textbox.MarkdownPreview = DataItem.Markdown;
@@ -646,7 +659,6 @@ namespace Fastedit.Core.Tab
                 {
                     TextTabControl.SelectedIndex = LastSelectedTabIndex;
                 }
-                await SetTextFromBuffer(GetSelectedTabPage());
 
                 return MethodeSucced;
             }

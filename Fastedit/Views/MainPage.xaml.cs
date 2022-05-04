@@ -104,15 +104,15 @@ namespace Fastedit
 
             if (tabactions == null)
                 tabactions = new TabActions(TextTabControl, this);
-            if(customdesigns == null)
+            if (customdesigns == null)
                 customdesigns = new CustomDesigns(null, this);
             if (databaseimportexport == null)
                 databaseimportexport = new DatabaseImportExport(this, TextTabControl);
 
             if (secondaryeditinginstance == null)
                 secondaryeditinginstance = new SecondaryEditingInstance(this, tabactions, TextTabControl);
-           //Subscribe to the events:
-           SizeChanged += MainPage_SizeChanged;
+            //Subscribe to the events:
+            SizeChanged += MainPage_SizeChanged;
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += Application_OnCloseRequest;
             new ThemeListener().ThemeChanged += Application_ThemeChanged;
         }
@@ -219,7 +219,7 @@ namespace Fastedit
 
             if (tabactions.GetTabItemCount() < 1)
                 tabactions.NewTab();
-
+            
             AfterInitialisation();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -492,7 +492,7 @@ namespace Fastedit
             var tabpage = tabactions.GetSelectedTabPage();
             if (tabpage != null && tabpage.Content is TextControlBox textbox)
             {
-                if (!textbox.IsLoaded)
+                if (!textbox.TextLoaded)
                     await tabactions.SetTextFromBuffer(tabpage);
 
                 ShowHideControlsOnSelectionChanged(true);
@@ -740,6 +740,7 @@ namespace Fastedit
                 textbox.LineHighlighterForeground = LineHighlighterForeground;
                 textbox.ShowLineNumbers = ShowLineNumbers;
                 textbox.LineHighlighter = ShowLineHighlighter;
+
                 textbox.FontSizeWithoutZoom = TextBoxFontSize;
                 textbox.SetFontZoomFactor(textbox._zoomFactor);
                 textbox.UpdateLayout();
