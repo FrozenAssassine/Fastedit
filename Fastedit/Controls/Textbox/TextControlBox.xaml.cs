@@ -48,7 +48,7 @@ namespace Fastedit.Controls.Textbox
         private int OldWordCount = 0;
         private bool MarkdownRoatation = false;
         public string TextBuffer = string.Empty;
-        public bool IsLoaded = false;
+        public new bool IsLoaded = false;
 
         public TextControlBox()
         {
@@ -335,7 +335,6 @@ namespace Fastedit.Controls.Textbox
                 EncodingChangedEvent?.Invoke(this, encoding);
             }
         }
-
 
         //TextModes:
         public TextWrapping WordWrap
@@ -1233,8 +1232,8 @@ namespace Fastedit.Controls.Textbox
 
                 textbox.Document.SetText(TextSetOptions.None, text);
                 TextBeforeLastSaved = GetText();
-                textbox.TextDocument.ClearUndoRedoHistory();
                 IsModified = ismodified;
+                textbox.TextDocument.ClearUndoRedoHistory();
 
                 if (isreadonly == true)
                     textbox.IsReadOnly = isreadonly;

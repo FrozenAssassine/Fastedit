@@ -15,6 +15,7 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -487,7 +488,6 @@ namespace Fastedit.Core.Tab
             {
                 if (!textbox.IsLoaded)
                 {
-                    Debug.WriteLine("SetTextFromBuffer: " + Tab.Header);
                     textbox.IsLoaded = true;
                     await textbox.SetText(textbox.TextBuffer, textbox.IsModified);
                     textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
@@ -540,13 +540,12 @@ namespace Fastedit.Core.Tab
             }
             catch
             {
-                var mb = new InfoBox(AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError/Text"), appsettings.GetResourceString("ErrorDialogs_Title_DataBaseError/Text"))
+                var dlgres = await new InfoBox(AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError/Text"), appsettings.GetResourceString("ErrorDialogs_Title_DataBaseError/Text"))
                 {
                     CloseButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_Close/Text"),
                     PrimaryButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_Retry/Text"),
                     SecondaryButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_CloseAnyway/Text"),
-                };
-                var dlgres = await mb.ShowAsync();
+                }.ShowAsync();
                 if (dlgres == ContentDialogResult.Primary)
                 {
                     return await CloseTabs();
@@ -872,8 +871,8 @@ namespace Fastedit.Core.Tab
                     {
                         //I really don't know why this happens, but every time I just use the first CreateFileAsync methode for the file Tab1, it wont be created.
                         //But all the other files are. So this is the simplest solution to fix this, because I DON'T know :(
-                        
-                        if(textbox.Name == "Tab1")
+
+                        if (textbox.Name == "Tab1")
                             file = await folder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
 
                         await System.IO.File.WriteAllTextAsync(Path.Combine(folder.Path, filename), textbox.GetText());
@@ -886,7 +885,7 @@ namespace Fastedit.Core.Tab
             }
             catch (Exception e)
             {
-                await new InfoBox("Error while saving temporary file to database\n" + e.Message, "Error").ShowAsync();
+                ShowInfobar("Error while saving temporary file to database\n" + e.Message, "Error");
             }
             return false;
         }
