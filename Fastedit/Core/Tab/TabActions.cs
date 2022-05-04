@@ -871,11 +871,10 @@ namespace Fastedit.Core.Tab
                     {
                         //I really don't know why this happens, but every time I just use the first CreateFileAsync methode for the file Tab1, it wont be created.
                         //But all the other files are. So this is the simplest solution to fix this, because I DON'T know :(
-
                         if (textbox.Name == "Tab1")
                             file = await folder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
 
-                        await System.IO.File.WriteAllTextAsync(Path.Combine(folder.Path, filename), textbox.GetText());
+                        System.IO.File.WriteAllText(Path.Combine(folder.Path, filename), textbox.GetText());
                         textbox.TempFile = file.Name;
                         if (textbox.TabSaveMode == TabSaveMode.SaveAsTemp)
                             textbox.Storagefile = file;
