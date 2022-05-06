@@ -54,7 +54,6 @@ namespace Fastedit.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetSettingsToTextBox();
-            BackgroundHelper.SetBackgroundToPage(this);
             base.OnNavigatedTo(e);
         }
 
@@ -187,8 +186,9 @@ namespace Fastedit.Views
         //return whether the textbox is modfied
         public bool IsModified { get => MainTextbox.IsModified; }
 
-        private void SetSettingsToTextBox()
+        public void SetSettingsToTextBox()
         {
+            BackgroundHelper.SetBackgroundToPage(this);
             Titlebar.Background = new SolidColorBrush(appsettings.GetSettingsAsColorWithDefault("TabColorFocused", DefaultValues.DefaultTabColorFocused));
             MainTextbox.FontFamily = new FontFamily(appsettings.GetSettingsAsString("FontFamily", DefaultValues.DefaultFontFamily));
             MainTextbox.TextColor = appsettings.GetSettingsAsColorWithDefault("TextColor", DefaultValues.DefaultTextColor);

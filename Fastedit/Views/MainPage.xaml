@@ -52,6 +52,7 @@
                       AddTabButtonClick="TextTabControl_AddTabButtonClick"
                       TabCloseRequested="TextTabControl_TabCloseRequested"
                       TabDroppedOutside="TextTabControl_TabDroppedOutside"
+                      Loaded="TextTabControl_Loaded"
                       >
             <muxc:TabView.TabStripHeader>
                 <Grid>
