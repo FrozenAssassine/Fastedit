@@ -108,7 +108,7 @@ namespace Fastedit.Core.Tab
             }
         }
         //Get the number of actual visible tabpages:
-        public int GetShownTabPages(bool WithSettingsTab = false)
+        public int GetShownTabPagesCount()
         {
             int VisibleItemCount = 0;
             for (int i = 0; i < TextTabControl.TabItems.Count; i++)
@@ -117,11 +117,22 @@ namespace Fastedit.Core.Tab
                 {
                     if (Tab.Visibility == Visibility.Visible)
                         VisibleItemCount++;
-                    if (WithSettingsTab && SettingsTabPage != null)
-                        VisibleItemCount++;
                 }
             }
             return VisibleItemCount;
+        }
+        public List<object> GetShownTabPages()
+        {
+            List<object> visibleItems = new List<object>();
+            for (int i = 0; i < TextTabControl.TabItems.Count; i++)
+            {
+                if (TextTabControl.TabItems[i] is muxc.TabViewItem Tab)
+                {
+                    if (Tab.Visibility == Visibility.Visible)
+                        visibleItems.Add(Tab);
+                }
+            }
+            return visibleItems;
         }
 
         //Events
@@ -783,7 +794,7 @@ namespace Fastedit.Core.Tab
         }
         public async Task CloseAllButThis(muxc.TabViewItem Tab)
         {
-            List<object> tabs = TextTabControl.TabItems.ToList();
+            List<object> tabs = GetShownTabPages();
             for (int i = 0; i < tabs.Count; i++)
             {
                 if (tabs[i] != null && tabs[i] != Tab)
@@ -795,7 +806,7 @@ namespace Fastedit.Core.Tab
         public async Task CloseAllLeft(muxc.TabViewItem Tab)
         {
             int CurrentTabIndex = TextTabControl.TabItems.IndexOf(Tab);
-            var tabrange = TextTabControl.TabItems.ToList().GetRange(0, CurrentTabIndex);
+            var tabrange = GetShownTabPages().ToList().GetRange(0, CurrentTabIndex);
             for (int i = 0; i < tabrange.Count; i++)
             {
                 if (tabrange[i] != null)
@@ -810,10 +821,10 @@ namespace Fastedit.Core.Tab
         public async Task<bool> CloseAllRight(muxc.TabViewItem Tab)
         {
             int CurrentTabIndex = TextTabControl.TabItems.IndexOf(Tab);
-            var TabItemCount = GetTabItemCount();
-            if (CurrentTabIndex < 0 || CurrentTabIndex >= TabItemCount)
+            List<object> tabpages = GetShownTabPages().ToList();
+            if (CurrentTabIndex < 0 || CurrentTabIndex >= tabpages.Count)
                 return false;
-            var tabrange = TextTabControl.TabItems.ToList().GetRange(CurrentTabIndex + 1, TabItemCount - CurrentTabIndex -1);
+            var tabrange = tabpages.GetRange(CurrentTabIndex + 1, tabpages.Count - CurrentTabIndex -1);
             for (int i = 0; i< tabrange.Count; i++)
             {
                 if (tabrange[i] != null)
@@ -826,7 +837,7 @@ namespace Fastedit.Core.Tab
         }
         public async Task CloseAllWithoutSave()
         {
-            List<object> tabs = TextTabControl.TabItems.ToList();
+            List<object> tabs = GetShownTabPages();
             for (int i = 0; i < tabs.Count; i++)
             {
                 if (tabs[i] != null)
@@ -837,7 +848,7 @@ namespace Fastedit.Core.Tab
         }
         public async Task CloseAllTabs()
         {
-            List<object> TabsToRemove = TextTabControl.TabItems.ToList();
+            List<object> TabsToRemove = GetShownTabPages();
             for (int i = 0; i < TabsToRemove.Count; i++)
             {
                 var tab = TabsToRemove[i];

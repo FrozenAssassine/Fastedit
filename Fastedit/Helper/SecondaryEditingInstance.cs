@@ -113,7 +113,7 @@ namespace Fastedit.Helper
             TabPage.Visibility = Visibility.Collapsed;
 
             //if all tabs are in a secondary view, create a new tab
-            if (tabactions.GetShownTabPages() < 1)
+            if (tabactions.GetShownTabPagesCount() < 1)
             {
                 muxc.TabViewItem tab = tabactions.NewTab();
                 if (tab != null)
