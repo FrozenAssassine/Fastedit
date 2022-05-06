@@ -1093,4 +1093,7 @@
   <data name="Toast_SaveSucced.Text" xml:space="preserve">
     <value>Saved!</value>
   </data>
+  <data name="FileInfo_Lines.Text" xml:space="preserve">
+    <value>Lines:</value>
+  </data>
 </root>
