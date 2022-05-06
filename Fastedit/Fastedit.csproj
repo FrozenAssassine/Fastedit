@@ -177,6 +177,7 @@
     <Compile Include="Extensions\Encodings.cs" />
     <Compile Include="Extensions\Enum.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
+    <Compile Include="Extensions\Extension.cs" />
     <Compile Include="Extensions\KeyboardCommands.cs" />
     <Compile Include="Extensions\StringBuilder.cs" />
     <Compile Include="Extensions\Utilities.cs" />

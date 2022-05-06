@@ -8,6 +8,7 @@ using Fastedit.Helper;
 using Fastedit.Views;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -91,12 +92,15 @@ namespace Fastedit
         private bool HasAlreadyNavigatedTo = false; 
         private bool SettingsWindowSelected = false;
         private bool preventZoomOnFactorChanged = false;
+
+        //Controls and Objects
         private readonly DispatcherTimer newTabSaveTime = new DispatcherTimer();
         private TextControlBox CurrentlySelectedTabPage_Textbox = null;
         private muxc.TabViewItem CurrentlySelectedTabPage = null;
         private muxc.FontIconSource TabPageFontIconSource = null;
         private muxc.TabViewItem SettingsTabPage = null;
         private NavigationEventArgs navigaionEvent = null;
+        private TabViewListView tabviewlistview = null;
 
         public MainPage()
         {
@@ -570,6 +574,9 @@ namespace Fastedit
                     }
                 }
             }
+
+            //Highlight the selected tabpage in the tabbar, because it wont get scrolled to it if the Tabcontrol is in overflow
+            ScrollToSelectedTabPage();
         }
         private void TextTabControl_AddTabButtonClick(muxc.TabView sender, object args)
         {
@@ -596,6 +603,11 @@ namespace Fastedit
             if (args.Tab != null)
                 await secondaryeditinginstance.ExpandTabPageToNewView(args.Tab);
         }
+        private void TextTabControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            tabviewlistview = TextTabControl.FindElementByName("TabListView") as TabViewListView;
+        }
+
 
         //Titlebar
         private async void Titlebar_Loaded(object sender, RoutedEventArgs e)
@@ -997,7 +1009,7 @@ namespace Fastedit
         }
 
         /// <summary>
-        ///Used for the keyevent when ESC-Key is pressed. Hides the flyout when it is opened
+        ///Used for the keyevent if the ESC-Key is pressed. Hides the flyout if it is open
         /// </summary>
         private void HideFlyoutIfOpened(Flyout flyout)
         {
@@ -1090,7 +1102,6 @@ namespace Fastedit
             NewVersionInfobar.Message = $"{appsettings.GetResourceString("InfoBarMessage_NewVersion_Text1/Text")} {version}";
             NewVersionInfobar.IsOpen = true;
         }
-
         private void ShowHideControlsOnSelectionChanged(bool isEnabled)
         {
             //DropDownMenu:
@@ -1279,6 +1290,10 @@ namespace Fastedit
             if(!TextTabControl.TabItems.Contains(SettingsTabPage))
                 TextTabControl.TabItems.Add(SettingsTabPage);
             TextTabControl.SelectedItem = SettingsTabPage;
+        }
+        public void ScrollToSelectedTabPage()
+        {
+            tabviewlistview.ScrollIntoView(TextTabControl.SelectedItem);
         }
 
         //Actions
@@ -2185,7 +2200,7 @@ namespace Fastedit
             }
         }
     }
-    
+
     public class SettingsNavigationParameter
     {
         public muxc.TabView Tabcontrol { get; set; }
