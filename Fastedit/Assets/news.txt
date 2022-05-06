@@ -1,6 +1,16 @@
 Fastedit Changelog:
 
 -------------------------------------------------------
+Version 1.5.2 [05/06/2022]
+	• Added number of lines to fileinfo
+	• Added a compact overlay mode for secondary instance
+	• Improved startup performance mostly for a larger amount of tabs
+	• Designchange now changes the design of all instances
+	• Fixed a bug, where the line under your cursor got copied if nothing selected
+	• Fixed a bug, where you could not open a file using the Windows-rightlickmenu,
+	  if the app was already running
+
+-------------------------------------------------------
 Version 1.4.2 [04/25/2022]
 	• Fixed a bug, where the tabs overlayed the Minimize, Maximize and Close button
 	• Fixed a bug, where a saved document was unsaved after reopening
