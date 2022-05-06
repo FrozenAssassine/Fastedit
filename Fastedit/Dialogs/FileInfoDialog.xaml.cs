@@ -78,6 +78,8 @@ namespace Fastedit.Dialogs
                     DialogContent += Resloader.GetString("FileInfo_WordCount/Text") + " " + NbrOfWords + "\n" +
                         Resloader.GetString("FileInfo_CharacterCount/Text") + " " + tabtext.Length + "\n";
 
+                    DialogContent += Resloader.GetString("FileInfo_Lines/Text") + " " + textbox.GetLinesCount + "\n";
+
                     return DialogContent;
                 }
                 return "";
