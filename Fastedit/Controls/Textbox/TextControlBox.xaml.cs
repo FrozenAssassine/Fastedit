@@ -1093,7 +1093,7 @@ namespace Fastedit.Controls.Textbox
             }
             if (textbox.Document.Selection.Length == 0)
             {
-                DoCopy(GetLineNumberContent[GetCurrentLineNumber]);
+                DoCopy(GetLineNumberContent[GetCurrentLineNumber-1]);
             }
             else
             {
