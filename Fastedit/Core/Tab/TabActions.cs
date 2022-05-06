@@ -826,10 +826,10 @@ namespace Fastedit.Core.Tab
         }
         public async Task CloseAllWithoutSave()
         {
-            var tabs = GetTabItems();
-            for (int i = 0; i<tabs.Count; i++)
+            List<object> tabs = TextTabControl.TabItems.ToList();
+            for (int i = 0; i < tabs.Count; i++)
             {
-                if(tabs[i] != null)
+                if (tabs[i] != null)
                     await RemoveTab(tabs[i] as muxc.TabViewItem);
             }
 
