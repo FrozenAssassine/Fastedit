@@ -196,9 +196,10 @@ namespace Fastedit
                 ShowInfobar("Could not load Themes to the folder\n" + e.Message, "", muxc.InfoBarSeverity.Error);
             }
         }
-        private async Task LoadTabs(NavigationEventArgs e)
+        private async Task LoadTabs(NavigationEventArgs e, bool LoadTabs = true)
         {
-            await Initialisation();
+            if(LoadTabs)
+                await Initialisation();
 
             //If the app was started by the fileactivationevent:
             if (e != null && e.Parameter is FileActivatedEventArgs fae)
@@ -221,14 +222,22 @@ namespace Fastedit
                 }
             }
 
-            if (tabactions.GetTabItemCount() < 1)
+
+            if (LoadTabs && tabactions.GetTabItemCount() < 1)
                 tabactions.NewTab();
 
-            AfterInitialisation();
+            if(LoadTabs)
+                AfterInitialisation();
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigaionEvent = e;
+            //If the event is called,because another file
+            //wants to get opened after the app is already running
+            if (HasAlreadyNavigatedTo)
+            {
+                await LoadTabs(e, false);
+            }
             base.OnNavigatedTo(e);
         }
 
