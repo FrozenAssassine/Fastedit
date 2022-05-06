@@ -987,11 +987,15 @@ namespace Fastedit
 
                 //Spellcheckingbutton
                 DropDownMenu_SpellChecking.IsChecked = appsettings.GetSettingsAsBool("Spellchecking", DefaultValues.SpellCheckingEnabled);
+                
                 //Fullscreenbutton
                 Utilities.FullScreen(appsettings.GetSettingsAsBool("FullScreen", false), appsettings);
 
                 //Searchdialog
                 SetSettingsToSearchDialog();
+
+                //Set settings to secondary views
+                await secondaryeditinginstance.ApplySettingToAllViews();
 
                 if (ApplyToAllTabPages)
                 {
