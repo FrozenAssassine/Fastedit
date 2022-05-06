@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -480,6 +482,21 @@ namespace Fastedit.Core.Tab
             }
         }
 
+        public async Task SetTextFromBuffer(muxc.TabViewItem Tab)
+        {
+            var textbox = GetTextBoxFromTabPage(Tab);
+            if (textbox != null)
+            {
+                if (!textbox.TextLoaded)
+                {
+                    textbox.TextLoaded = true;
+                    await textbox.SetText(textbox.TextBuffer, textbox.IsModified);
+                    textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
+                    textbox.ScrollIntoView();
+                    textbox.UpdateRendering();
+                }
+            }
+        }
         /// <summary>
         /// Close tabs and save to database on application exit
         /// </summary>
@@ -525,13 +542,12 @@ namespace Fastedit.Core.Tab
             }
             catch
             {
-                var mb = new InfoBox(AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError/Text"), appsettings.GetResourceString("ErrorDialogs_Title_DataBaseError/Text"))
+                var dlgres = await new InfoBox(AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError/Text"), appsettings.GetResourceString("ErrorDialogs_Title_DataBaseError/Text"))
                 {
                     CloseButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_Close/Text"),
                     PrimaryButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_Retry/Text"),
                     SecondaryButtonText = AppSettings.GetResourceStringStatic("ErrorDialogs_SaveDataBaseError_CloseAnyway/Text"),
-                };
-                var dlgres = await mb.ShowAsync();
+                }.ShowAsync();
                 if (dlgres == ContentDialogResult.Primary)
                 {
                     return await CloseTabs();
@@ -591,11 +607,20 @@ namespace Fastedit.Core.Tab
                         var result = await getTabtext(textbox);
                         if (result.succed)
                         {
-                            await textbox.SetText(result.Text, DataItem.TabModified);
+                            //Load the text just for the selected tab
+                            if(i == DataItem.CurrentSelectedTabIndex)
+                            {
+                                textbox.TextLoaded = true;
+                                await textbox.SetText(result.Text, textbox.IsModified);
+                                textbox.SetSelection(textbox.tabdatafromdatabase.TabSelStart, textbox.tabdatafromdatabase.TabSelLenght);
+                                textbox.ScrollIntoView();
+                                textbox.UpdateRendering();
+                            }
+                            else
+                                textbox.TextBuffer = result.Text;
+
                             //To update the tab header:
                             tabpagehelper.SetTabModified(Tab, DataItem.TabModified);
-                            
-                            textbox.SetSelection(DataItem.TabSelStart, DataItem.TabSelLenght);
                             textbox.MarkdownPreview = DataItem.Markdown;
                             if(DataItem.TabToken != string.Empty)
                             {
@@ -858,11 +883,10 @@ namespace Fastedit.Core.Tab
                     {
                         //I really don't know why this happens, but every time I just use the first CreateFileAsync methode for the file Tab1, it wont be created.
                         //But all the other files are. So this is the simplest solution to fix this, because I DON'T know :(
-                        
-                        if(textbox.Name == "Tab1")
+                        if (textbox.Name == "Tab1")
                             file = await folder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
 
-                        await System.IO.File.WriteAllTextAsync(Path.Combine(folder.Path, filename), textbox.GetText());
+                        System.IO.File.WriteAllText(Path.Combine(folder.Path, filename), textbox.GetText());
                         textbox.TempFile = file.Name;
                         if (textbox.TabSaveMode == TabSaveMode.SaveAsTemp)
                             textbox.Storagefile = file;
@@ -872,7 +896,7 @@ namespace Fastedit.Core.Tab
             }
             catch (Exception e)
             {
-                await new InfoBox("Error while saving temporary file to database\n" + e.Message, "Error").ShowAsync();
+                ShowInfobar("Error while saving temporary file to database\n" + e.Message, "Error");
             }
             return false;
         }
@@ -1280,4 +1304,5 @@ namespace Fastedit.Core.Tab
             }
         }
     }
+
 }

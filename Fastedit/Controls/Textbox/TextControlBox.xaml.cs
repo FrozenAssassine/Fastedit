@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Buffers.Text;
 using System.Diagnostics;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -47,6 +48,8 @@ namespace Fastedit.Controls.Textbox
         private int OldLineNumber = 0;
         private int OldWordCount = 0;
         private bool MarkdownRoatation = false;
+        public string TextBuffer = string.Empty;
+        public bool TextLoaded = false;
 
         public TextControlBox()
         {
@@ -69,7 +72,7 @@ namespace Fastedit.Controls.Textbox
             ScrollViewer.SetHorizontalScrollMode(textbox, ScrollMode.Enabled);
             ScrollViewer.SetVerticalScrollMode(textbox, ScrollMode.Enabled);
             base.Focus(FocusState.Programmatic);
-            linenumbers.UpdateLinenumberRendering();
+            UpdateRendering();
         }
 
         //Events
@@ -106,7 +109,7 @@ namespace Fastedit.Controls.Textbox
             LineNumberGrid = textbox.FindDependencyObject("LineNumberGrid") as Grid;
             MainContentScrollViewer = textbox.FindDependencyObject("ContentElement") as ScrollViewer;
 
-            linenumbers.UpdateLinenumberRendering();
+            UpdateRendering();
             textbox.Focus(FocusState.Programmatic);
         }
         private void Textbox_TextChanged(object sender, RoutedEventArgs e)
@@ -289,7 +292,8 @@ namespace Fastedit.Controls.Textbox
             get => tabdatafromdatabase.TabHeader;
             set
             {
-                DocumentTitleChangedEvent?.Invoke(this, value);
+                if (TextLoaded)
+                    DocumentTitleChangedEvent?.Invoke(this, value);
                 tabdatafromdatabase.TabHeader = value;
             }
         }
@@ -316,7 +320,8 @@ namespace Fastedit.Controls.Textbox
                     _Encoding = value;
                     tabdatafromdatabase.TabEncoding = Encodings.EncodingToInt(value);
                     IsModified = true;
-                    EncodingChangedEvent?.Invoke(this, value);
+                    if (TextLoaded)
+                        EncodingChangedEvent?.Invoke(this, value);
                 }
             }
         }
@@ -330,10 +335,10 @@ namespace Fastedit.Controls.Textbox
             {
                 _Encoding = encoding;
                 tabdatafromdatabase.TabEncoding = Encodings.EncodingToInt(encoding);
-                EncodingChangedEvent?.Invoke(this, encoding);
+                if (TextLoaded)
+                    EncodingChangedEvent?.Invoke(this, encoding);
             }
         }
-
 
         //TextModes:
         public TextWrapping WordWrap
@@ -382,7 +387,8 @@ namespace Fastedit.Controls.Textbox
                 {
                     _zoomFactor = newZoomFactor;
                 }
-                ZoomChangedEvent?.Invoke(this, newZoomFactor);
+                if (TextLoaded)
+                    ZoomChangedEvent?.Invoke(this, newZoomFactor);
             });
         }
         private double _textfontsize = DefaultValues.DefaultFontsize;
@@ -543,6 +549,15 @@ namespace Fastedit.Controls.Textbox
                 if (LineHighlighterControl != null)
                     LineHighlighterControl.Background = new SolidColorBrush(value);
             }
+        }
+
+        /// <summary>
+        /// Update text, Linenumbers and Linehighlighter -rendering
+        /// </summary>
+        public void UpdateRendering()
+        {
+            UpdateLineHighlighter();
+            UpdateLineNumber();
         }
 
         //Rightclickmenu
@@ -1057,6 +1072,14 @@ namespace Fastedit.Controls.Textbox
                 MainContentScrollViewer.ChangeView(pos.ScrollbarPositionHorizontal, pos.ScrollbarPositionVertical, null, DisableAnimations);
             }
         }
+        public void ScrollIntoView()
+        {
+            if (MainContentScrollViewer != null)
+            {
+                double vOffset = MainContentScrollViewer.VerticalOffset + this.ActualHeight / 2;
+                MainContentScrollViewer.ChangeView(null, vOffset, null, true);
+            }
+        }
 
         //Undo-Redo
         public void Undo()
@@ -1196,6 +1219,10 @@ namespace Fastedit.Controls.Textbox
         /// <returns>The text</returns>
         public string GetText()
         {
+            if (!TextLoaded)
+            {
+                return TextBuffer;
+            }
             textbox.Document.GetText(TextGetOptions.None, out string out1);
             if (out1.Length != 0)
             {
@@ -1219,9 +1246,8 @@ namespace Fastedit.Controls.Textbox
 
                 textbox.Document.SetText(TextSetOptions.None, text);
                 TextBeforeLastSaved = GetText();
-                textbox.TextDocument.ClearUndoRedoHistory();
                 IsModified = ismodified;
-
+                textbox.TextDocument.ClearUndoRedoHistory();
                 if (isreadonly == true)
                     textbox.IsReadOnly = isreadonly;
             });
