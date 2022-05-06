@@ -5,6 +5,7 @@ using Fastedit.Helper;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -203,6 +204,18 @@ namespace Fastedit.Views
             MainTextbox.LineHighlighterBackground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterBackground", Colors.Transparent);
             MainTextbox.LineHighlighterForeground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterForeground", DefaultValues.SystemAccentColor);
             MainTextbox.LineHighlighter = appsettings.GetSettingsAsBool("LineHighlighter", true);
+        }
+
+        private async void CompactOverlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewmode = ApplicationView.GetForCurrentView().ViewMode;
+            viewmode = viewmode == ApplicationViewMode.CompactOverlay ?
+                ApplicationViewMode.Default : ApplicationViewMode.CompactOverlay;
+
+            var res = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(viewmode);
+
+            viewmode = ApplicationView.GetForCurrentView().ViewMode;
+            CompactOverlayButton.Content = viewmode == ApplicationViewMode.CompactOverlay ? "\uEE47" : "\uEE49";
         }
     }
 }
