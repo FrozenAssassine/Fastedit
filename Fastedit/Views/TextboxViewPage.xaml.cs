@@ -3,6 +3,7 @@ using Fastedit.Core.Tab;
 using Fastedit.Extensions;
 using Fastedit.Helper;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -22,10 +23,13 @@ namespace Fastedit.Views
     {
         private readonly AppSettings appsettings = new AppSettings();
 
-        public void SetTitlebar(string Text)
+        public void SetTitlebar(string Text = "")
         {
-            TitleDisplay.Text = Text;
-            ApplicationView.GetForCurrentView().Title = Text;
+            if (Text != "")
+            {
+                TitleDisplay.Text = Text;
+                ApplicationView.GetForCurrentView().Title = Text;
+            }
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             var currentView = SystemNavigationManager.GetForCurrentView();
 
@@ -52,15 +56,10 @@ namespace Fastedit.Views
             return await ApplicationView.GetForCurrentView().TryConsolidateAsync();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            SetSettingsToTextBox();
-            base.OnNavigatedTo(e);
-        }
-
         public TextboxViewPage()
         {
             this.InitializeComponent();
+            MainTextbox.TextLoaded = true;
             this.SizeChanged += TextboxViewPage_SizeChanged;
             this.KeyDown += TextboxViewPage_KeyDown;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size { Height = 100, Width = 250 });
@@ -186,10 +185,16 @@ namespace Fastedit.Views
         }
         //return whether the textbox is modfied
         public bool IsModified { get => MainTextbox.IsModified; }
-
+        
         public void SetSettingsToTextBox()
         {
+            ThemeHelper.RootTheme =
+                this.RequestedTheme =
+                (ElementTheme)Enum.Parse(typeof(ElementTheme), appsettings.GetSettingsAsInt("ThemeIndex", 0).ToString());
+            
             BackgroundHelper.SetBackgroundToPage(this);
+            SetTitlebar();
+
             Titlebar.Background = new SolidColorBrush(appsettings.GetSettingsAsColorWithDefault("TabColorFocused", DefaultValues.DefaultTabColorFocused));
             MainTextbox.FontFamily = new FontFamily(appsettings.GetSettingsAsString("FontFamily", DefaultValues.DefaultFontFamily));
             MainTextbox.TextColor = appsettings.GetSettingsAsColorWithDefault("TextColor", DefaultValues.DefaultTextColor);
@@ -212,7 +217,7 @@ namespace Fastedit.Views
             viewmode = viewmode == ApplicationViewMode.CompactOverlay ?
                 ApplicationViewMode.Default : ApplicationViewMode.CompactOverlay;
 
-            var res = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(viewmode);
+            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(viewmode);
 
             viewmode = ApplicationView.GetForCurrentView().ViewMode;
             CompactOverlayButton.Content = viewmode == ApplicationViewMode.CompactOverlay ? "\uEE47" : "\uEE49";

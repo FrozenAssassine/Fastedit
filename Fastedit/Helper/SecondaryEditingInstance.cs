@@ -85,7 +85,6 @@ namespace Fastedit.Helper
             int SelectionStart = textcontrolbox.SelectionStart;
             ApplicationView appview = null;
             CoreApplicationView newView = CoreApplication.CreateNewView();
-
             int newViewId = 0;
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -103,6 +102,7 @@ namespace Fastedit.Helper
                     tbviewpage.Textwrapping = wrapping;
                     tbviewpage.ZoomFactor = tbZoomFactor;
                     tbviewpage.IsReadonly = IsReadOnly;
+                    tbviewpage.SetSettingsToTextBox();
                 }
 
                 appview = ApplicationView.GetForCurrentView();
