@@ -152,6 +152,9 @@
       <DependentUpon>ShortCutInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Textbox\Linenumbers.cs" />
+    <Compile Include="Controls\Textbox\Searchdialog.xaml.cs">
+      <DependentUpon>Searchdialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Textbox\TabKey.cs" />
     <Compile Include="Controls\Textbox\TextControlBox.xaml.cs">
       <DependentUpon>TextControlBox.xaml</DependentUpon>
@@ -367,6 +370,10 @@
     <Page Include="Controls\ShortCutInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Textbox\Searchdialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Textbox\TextControlBox.xaml">
       <Generator>MSBuild:Compile</Generator>
