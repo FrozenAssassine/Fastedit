@@ -152,7 +152,6 @@
       <DependentUpon>ShortCutInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Textbox\Linenumbers.cs" />
-    <Compile Include="Controls\Textbox\RtfFormatter.cs" />
     <Compile Include="Controls\Textbox\TabKey.cs" />
     <Compile Include="Controls\Textbox\TextControlBox.xaml.cs">
       <DependentUpon>TextControlBox.xaml</DependentUpon>
