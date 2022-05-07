@@ -34,5 +34,6 @@ You can edit mutliple documents using tabs, move document into its own instances
 #
 <div align="center">
     <img src="images/image1.png" alt="mainimage">
+    <img src="images/image3.jpg" alt="mainimage">
     <img src="images/image2.jpg" alt="mainimage">
 </div>
