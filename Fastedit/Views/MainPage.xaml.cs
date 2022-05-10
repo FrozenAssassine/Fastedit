@@ -117,7 +117,8 @@ namespace Fastedit
                 secondaryeditinginstance = new SecondaryEditingInstance(this, tabactions, TextTabControl);
             if (searchdialog == null)
             {
-                searchdialog = new Searchdialog(CurrentlySelectedTabPage, tabactions);
+                searchdialog = new Searchdialog(CurrentlySelectedTabPage_Textbox);
+                searchdialog.Visibility = Visibility.Collapsed;
                 SearchReplaceWindowDisplay.Children.Add(searchdialog);
             }
             
@@ -305,12 +306,12 @@ namespace Fastedit
 
                     if (searchdialog.SearchIsOpen && !GoToLineWindowIsOpen)
                     {
-                        searchdialog.CloseSearchWindow();
+                        searchdialog.Close();
                     }
 
                     if (searchdialog.SearchIsOpen && GoToLineWindowIsOpen)
                     {
-                        searchdialog.CloseSearchWindow();
+                        searchdialog.Close();
                         CloseGoToLineDialog();
                     }
                     
@@ -327,8 +328,8 @@ namespace Fastedit
                     if (Tab != null)
                     {
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.G, ShowGoToLineWindow);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F, searchdialog.ToggleSearchWnd, false);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.R, searchdialog.ToggleSearchWnd, true);
+                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F, searchdialog.Toggle, false);
+                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.R, searchdialog.Toggle, true);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.W, CloseSelectedTab_SaveDatabase);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.J, ShowFileInfoDialog);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.E, ShowEncodingDialog);
@@ -516,7 +517,6 @@ namespace Fastedit
                 CurrentlySelectedTabPage = tabpage;
                 CurrentlySelectedTabPage_Textbox = textbox;
                 searchdialog.textbox = textbox;
-                searchdialog.tabpage = tabpage;
 
                 SettingsWindowSelected = false;
 
@@ -910,12 +910,12 @@ namespace Fastedit
 
             //Search dialog:
             if (appsettings.GetSettingsAsBool("SearchOpen", false))
-                searchdialog.ShowSearchWindow("");
+                searchdialog.Show("");
             else
-                searchdialog.CloseSearchWindow();
+                searchdialog.Close();
 
             //Expand the search for replacing: 
-            searchdialog.ShowReplace(!(appsettings.GetSettingsAsInt("SearchExpanded", 1) == 1));
+            searchdialog.Replace(!(appsettings.GetSettingsAsInt("SearchExpanded", 1) == 1));
         }
         private void SetSettingsToTabControl()
         {
@@ -1432,12 +1432,12 @@ namespace Fastedit
         {
             if (!searchdialog.SearchIsOpen && CurrentlySelectedTabPage_Textbox != null)
             {
-                searchdialog.ShowSearchWindow(CurrentlySelectedTabPage_Textbox.SelectedText);
-                searchdialog.ShowReplace(false);
+                searchdialog.Show(CurrentlySelectedTabPage_Textbox.SelectedText);
+                searchdialog.Replace(false);
             }
             else
             {
-                searchdialog.CloseSearchWindow();
+                searchdialog.Close();
             }
         }
         private void Share_Action()
@@ -1766,8 +1766,8 @@ namespace Fastedit
         //Search-Dialog
         private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            searchdialog.ShowSearchWindow();
-            searchdialog.ShowReplace(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
+            searchdialog.Show();
+            searchdialog.Replace(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
         }
 
         //Go to line dialog

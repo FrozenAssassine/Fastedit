@@ -1,4 +1,5 @@
-﻿using Fastedit.Core;
+﻿using Fastedit.Controls.Textbox;
+using Fastedit.Core;
 using Fastedit.Core.Tab;
 using Fastedit.Extensions;
 using Fastedit.Helper;
@@ -22,6 +23,7 @@ namespace Fastedit.Views
     public sealed partial class TextboxViewPage : Page
     {
         private readonly AppSettings appsettings = new AppSettings();
+        private Searchdialog searchDialog = null;
 
         public void SetTitlebar(string Text = "")
         {
@@ -63,6 +65,15 @@ namespace Fastedit.Views
             this.SizeChanged += TextboxViewPage_SizeChanged;
             this.KeyDown += TextboxViewPage_KeyDown;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size { Height = 100, Width = 250 });
+
+            if (searchDialog == null)
+            {
+                searchDialog = new Searchdialog(MainTextbox);
+                searchDialog.Visibility = Visibility.Collapsed;
+                searchDialog.SaveToSettings = false;
+                searchDialog.Background = DefaultValues.ContentDialogBackgroundColor();
+                SearchGoToLineViewWindow.Children.Add(searchDialog);
+            }
         }
 
         /*private async void Save(bool SaveAs = false)
@@ -101,6 +112,14 @@ namespace Fastedit.Views
                 {
                     Utilities.ToggleFullscreen();
                 }
+                if(e.Key == VirtualKey.F)
+                {
+                    searchDialog.Show();
+                }
+                if(e.Key == VirtualKey.R)
+                {
+                    searchDialog.Replace(!searchDialog.ReplaceIsOpen);
+                }
 
                 //if (e.Key == VirtualKey.S)
                 //{
@@ -115,6 +134,16 @@ namespace Fastedit.Views
                 //        Save(true);
                 //    }
                 //}
+            }
+            else
+            {
+                if (e.Key == VirtualKey.F3)
+                {
+                    if (searchDialog.SearchIsOpen)
+                    {
+                        searchDialog.Find();
+                    }
+                }
             }
         }
         private void TextboxViewPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -137,6 +166,17 @@ namespace Fastedit.Views
         private void FullscreenButton_Click(object sender, RoutedEventArgs e)
         {
             FullscreenButton.Content = Utilities.ToggleFullscreen() ? "\uE73F" : "\uE740";
+        }
+        private async void CompactOverlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewmode = ApplicationView.GetForCurrentView().ViewMode;
+            viewmode = viewmode == ApplicationViewMode.CompactOverlay ?
+                ApplicationViewMode.Default : ApplicationViewMode.CompactOverlay;
+
+            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(viewmode);
+
+            viewmode = ApplicationView.GetForCurrentView().ViewMode;
+            CompactOverlayButton.Content = viewmode == ApplicationViewMode.CompactOverlay ? "\uEE47" : "\uEE49";
         }
         //private async void Save_Click(object sender, RoutedEventArgs e)
         //{
@@ -209,18 +249,8 @@ namespace Fastedit.Views
             MainTextbox.LineHighlighterBackground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterBackground", Colors.Transparent);
             MainTextbox.LineHighlighterForeground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterForeground", DefaultValues.SystemAccentColor);
             MainTextbox.LineHighlighter = appsettings.GetSettingsAsBool("LineHighlighter", true);
-        }
-
-        private async void CompactOverlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            var viewmode = ApplicationView.GetForCurrentView().ViewMode;
-            viewmode = viewmode == ApplicationViewMode.CompactOverlay ?
-                ApplicationViewMode.Default : ApplicationViewMode.CompactOverlay;
-
-            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(viewmode);
-
-            viewmode = ApplicationView.GetForCurrentView().ViewMode;
-            CompactOverlayButton.Content = viewmode == ApplicationViewMode.CompactOverlay ? "\uEE47" : "\uEE49";
+            if (searchDialog != null)
+                searchDialog.Background = DefaultValues.ContentDialogBackgroundColor();
         }
     }
 }
