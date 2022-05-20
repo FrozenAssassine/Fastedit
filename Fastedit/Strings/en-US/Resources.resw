@@ -1096,4 +1096,10 @@
   <data name="FileInfo_Lines.Text" xml:space="preserve">
     <value>Lines:</value>
   </data>
+  <data name="MainPage_SearchWindow_FindMatchCase.Text" xml:space="preserve">
+    <value>Match case</value>
+  </data>
+  <data name="MainPage_SearchWindow_FindWholeWordButton.Text" xml:space="preserve">
+    <value>Whole word</value>
+  </data>
 </root>
