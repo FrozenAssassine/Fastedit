@@ -26,16 +26,12 @@ namespace Fastedit.Controls.Textbox
     public sealed partial class Searchdialog : UserControl
     {
         private AppSettings appsettings = new AppSettings();
-        public TabViewItem tabpage = null;
-        private TabActions tabactions = null;
         public TextControlBox textbox = null;
-
-        public Searchdialog(TabViewItem tabpage, TabActions tabactions)
+       
+        public Searchdialog(TextControlBox textbox)
         {
             this.InitializeComponent();
-            this.tabpage = tabpage;
-            this.tabactions = tabactions;
-            textbox = tabactions.GetTextBoxFromTabPage(tabpage);
+            this.textbox = textbox;
         }
 
         public new Brush Background
@@ -45,45 +41,45 @@ namespace Fastedit.Controls.Textbox
         }
         public bool SearchIsOpen
         {
-            get => SearchWindow.Visibility == Visibility.Visible;
-            set { SearchWindow.Visibility = Convert.BoolToVisibility(value); }
+            get => this.Visibility == Visibility.Visible;
+            set { this.Visibility = Convert.BoolToVisibility(value); }
         }
-        public void ShowReplace(bool Show)
+        private bool _ReplaceIsOpen = false;
+        public bool ReplaceIsOpen
         {
-            if (Show == true)
+            get => _ReplaceIsOpen;
+            set
             {
-                ExpandSearch.Begin();
-                SearchWindow.Height = 125;
-                ExpandSearchBoxForReplaceButton.Content = "\uF0AD";
-                appsettings.SaveSettings("SearchExpanded", 0);
-                TextToReplaceTextBox.Visibility = Visibility.Visible;
-                ReplaceAllButton.Visibility = Visibility.Visible;
-                StartReplaceButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                if (SearchWindow.Height > 45)
+                if (value)
                 {
-                    CollapseSearch.Begin();
+                    ExpandSearch.Begin();
+                    SearchWindow.Height = 125;
+                    ExpandSearchBoxForReplaceButton.Content = "\uF0AD";
+                    if(SaveToSettings)
+                        appsettings.SaveSettings("SearchExpanded", 0);
                 }
-                ExpandSearchBoxForReplaceButton.Content = "\uF0AE";
-                appsettings.SaveSettings("SearchExpanded", 1);
-                TextToReplaceTextBox.Visibility = Visibility.Collapsed;
-                ReplaceAllButton.Visibility = Visibility.Collapsed;
-                StartReplaceButton.Visibility = Visibility.Collapsed;
+                else
+                {
+                    if (SearchWindow.Height > 45)
+                        CollapseSearch.Begin();
+                    ExpandSearchBoxForReplaceButton.Content = "\uF0AE";
+                    if(SaveToSettings)
+                        appsettings.SaveSettings("SearchExpanded", 1);
+                }
+                _ReplaceIsOpen = value;
+                TextToReplaceTextBox.Visibility = ReplaceAllButton.Visibility =
+                StartReplaceButton.Visibility = Convert.BoolToVisibility(value);
             }
         }
         public void Find(bool Up = false)
         {
-            var tb = tabactions.GetTextBoxFromSelectedTabPage();
-            if (tb != null)
+            if (textbox != null)
             {
-                var res = tb.FindInText(TextToFindTextbox.Text, Up, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
-
-                SearchWindow.BorderBrush = res ? DefaultValues.CorrectInput_Color : SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
+                var res = textbox.FindInText(TextToFindTextbox.Text, Up, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
+                ColorWindowBorder(res);
             }
         }
-        public void ShowSearchWindow(string text = "")
+        public void Show(string text = "")
         {
             if (textbox == null)
                 return;
@@ -91,31 +87,45 @@ namespace Fastedit.Controls.Textbox
             TextToFindTextbox.Text = text.Length == 0 ? textbox.SelectedText : text;
             SearchIsOpen = true;
 
-            appsettings.SaveSettings("SearchOpen", true);
-            FindMatchCaseButton.IsChecked = appsettings.GetSettingsAsBool("FindMatchCase", false);
-            FindWholeWordButton.IsChecked = appsettings.GetSettingsAsBool("FindWholeWord", false);
+            if (SaveToSettings)
+            {
+                appsettings.SaveSettings("SearchOpen", true);
+                FindMatchCaseButton.IsChecked = appsettings.GetSettingsAsBool("FindMatchCase", false);
+                FindWholeWordButton.IsChecked = appsettings.GetSettingsAsBool("FindWholeWord", false);
+            }
 
             TextToFindTextbox.Focus(FocusState.Keyboard);
             TextToFindTextbox.SelectAll();
         }
-        public void CloseSearchWindow()
+        public void Close()
         {
             SearchIsOpen = false;
-            appsettings.SaveSettings("SearchOpen", false);
+            if(SaveToSettings)
+                appsettings.SaveSettings("SearchOpen", false);
         }
-        public void ToggleSearchWnd(bool Replace)
+        public void Toggle(bool Replace)
         {
             if (!SearchIsOpen)
             {
-                ShowSearchWindow("");
-                this.ShowReplace(Replace);
+                Show("");
+                this.Replace(Replace);
             }
             else
             {
-                CloseSearchWindow();
+                Close();
             }
         }
+        public void Replace(bool IsOn)
+        {
+            ReplaceIsOpen = IsOn;
+        }
+        public bool SaveToSettings { get; set; } = true;
 
+        private void ColorWindowBorder(bool state)
+        {
+            if (SaveToSettings)
+                SearchWindow.BorderBrush = state ? DefaultValues.CorrectInput_Color : DefaultValues.WrongInput_Color;
+        }
         private void ReplaceTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
@@ -142,52 +152,40 @@ namespace Fastedit.Controls.Textbox
         }
         private void FindMatchCaseButton_Click(object sender, RoutedEventArgs e)
         {
-            appsettings.SaveSettings("FindMatchCase", FindMatchCaseButton.IsChecked);
+            if(SaveToSettings)
+                appsettings.SaveSettings("FindMatchCase", FindMatchCaseButton.IsChecked);
         }
         private void FindWholeWordButton_Click(object sender, RoutedEventArgs e)
         {
-            appsettings.SaveSettings("FindWholeWord", FindWholeWordButton.IsChecked);
-
+            if(SaveToSettings)
+                appsettings.SaveSettings("FindWholeWord", FindWholeWordButton.IsChecked);
         }
         private void ReplaceAllButton_Click(object sender, RoutedEventArgs e)
         {
             if (textbox != null)
             {
-                if (tabactions.GetTextBoxFromSelectedTabPage().ReplaceAll(
-                    TextToFindTextbox.Text, TextToReplaceTextBox.Text, false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false))
-                {
-                    SearchWindow.BorderBrush = DefaultValues.CorrectInput_Color;
-                }
-                else
-                {
-                    SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
-                }
+                var res = textbox.ReplaceAll(TextToFindTextbox.Text, TextToReplaceTextBox.Text,
+                    false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
+                ColorWindowBorder(res);
             }
         }
         private void ReplaceCurrentButton_Click(object sender, RoutedEventArgs e)
         {
             if (textbox != null)
             {
-                if (textbox.ReplaceInText(
+                var res = textbox.ReplaceInText(
                     TextToFindTextbox.Text, TextToReplaceTextBox.Text,
-                    false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false))
-                {
-                    SearchWindow.BorderBrush = DefaultValues.CorrectInput_Color;
-                }
-                else
-                {
-                    SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
-                }
+                    false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
+                ColorWindowBorder(res);
             }
         }
         private void SearchWindow_CloseButtonClick(object sender, RoutedEventArgs e)
         {
-            CloseSearchWindow();
+            Close();
         }
         private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowSearchWindow();
-            ShowReplace(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
+            Replace(SaveToSettings ? appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1 : !ReplaceIsOpen);
         }
         private void TextBoxes_GotFocus(object sender, RoutedEventArgs e)
         {

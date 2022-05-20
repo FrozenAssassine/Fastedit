@@ -1164,4 +1164,10 @@
   <data name="FileInfo_Lines.Text" xml:space="preserve">
     <value>Zeilen:</value>
   </data>
+  <data name="MainPage_SearchWindow_FindMatchCase.Text" xml:space="preserve">
+    <value>Groß/Kleinschreibung</value>
+  </data>
+  <data name="MainPage_SearchWindow_FindWholeWordButton.Text" xml:space="preserve">
+    <value>Ganzes Wort</value>
+  </data>
 </root>

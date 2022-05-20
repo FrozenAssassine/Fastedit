@@ -36,7 +36,7 @@
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
                         <StackPanel CornerRadius="5" Orientation="Vertical">
-                            <ToggleButton x:Uid="MainPage_SearchWindow_ReplaceAllButton" Width="110" Click="FindMatchCaseButton_Click" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
+                            <ToggleButton x:Uid="MainPage_SearchWindow_FindMatchCase" Width="110" Click="FindMatchCaseButton_Click" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
                             <ToggleButton x:Uid="MainPage_SearchWindow_FindWholeWordButton" Width="110" Click="FindWholeWordButton_Click" x:Name="FindWholeWordButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Whole word"/>
                         </StackPanel>
                     </Flyout>

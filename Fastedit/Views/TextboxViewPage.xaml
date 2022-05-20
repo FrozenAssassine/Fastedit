@@ -21,5 +21,8 @@
         </StackPanel>
         <Grid Margin="0,30,0,0" HorizontalAlignment="Stretch" Height="2" x:Name="OverTextboxLine"/>
         <textbox:TextControlBox LineNumberForeground="purple" Margin="0,32,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainTextbox"/>
+        <StackPanel x:Name="SearchGoToLineViewWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0">
+            
+        </StackPanel>
     </Grid>
 </Page>
