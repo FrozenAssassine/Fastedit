@@ -114,11 +114,12 @@ namespace Fastedit.Views
                 }
                 if(e.Key == VirtualKey.F)
                 {
-                    searchDialog.Show();
+                    searchDialog.SearchIsOpen = !searchDialog.SearchIsOpen;
                 }
                 if(e.Key == VirtualKey.R)
                 {
                     searchDialog.Replace(!searchDialog.ReplaceIsOpen);
+                    searchDialog.Focus(FocusState.Programmatic);
                 }
 
                 //if (e.Key == VirtualKey.S)

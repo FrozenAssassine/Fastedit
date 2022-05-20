@@ -1,6 +1,12 @@
 Fastedit Changelog:
 
 -------------------------------------------------------
+Version 1.6.2 [05/20/2022]
+	• Added a searchbox to the secondary instance
+	• Fixed very small bugs
+	• Improved search experience
+
+-------------------------------------------------------
 Version 1.5.2 [05/06/2022]
 	• Added number of lines to fileinfo
 	• Added a compact overlay mode for secondary instance

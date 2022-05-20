@@ -42,7 +42,15 @@ namespace Fastedit.Controls.Textbox
         public bool SearchIsOpen
         {
             get => this.Visibility == Visibility.Visible;
-            set { this.Visibility = Convert.BoolToVisibility(value); }
+            set
+            {
+                this.Visibility = Convert.BoolToVisibility(value);
+                if (value)
+                {
+                    TextToFindTextbox.Focus(FocusState.Keyboard);
+                    TextToFindTextbox.SelectAll();
+                }
+            }
         }
         private bool _ReplaceIsOpen = false;
         public bool ReplaceIsOpen
@@ -55,20 +63,23 @@ namespace Fastedit.Controls.Textbox
                     ExpandSearch.Begin();
                     SearchWindow.Height = 125;
                     ExpandSearchBoxForReplaceButton.Content = "\uF0AD";
-                    if(SaveToSettings)
+                    if (SaveToSettings)
                         appsettings.SaveSettings("SearchExpanded", 0);
+
                 }
                 else
                 {
                     if (SearchWindow.Height > 45)
                         CollapseSearch.Begin();
                     ExpandSearchBoxForReplaceButton.Content = "\uF0AE";
-                    if(SaveToSettings)
+                    if (SaveToSettings)
                         appsettings.SaveSettings("SearchExpanded", 1);
                 }
                 _ReplaceIsOpen = value;
                 TextToReplaceTextBox.Visibility = ReplaceAllButton.Visibility =
                 StartReplaceButton.Visibility = Convert.BoolToVisibility(value);
+                TextToReplaceTextBox.Focus(FocusState.Keyboard);
+                TextToReplaceTextBox.SelectAll();
             }
         }
         public void Find(bool Up = false)
@@ -111,15 +122,15 @@ namespace Fastedit.Controls.Textbox
                 this.Replace(Replace);
             }
             else
-            {
                 Close();
-            }
         }
         public void Replace(bool IsOn)
         {
             ReplaceIsOpen = IsOn;
         }
         public bool SaveToSettings { get; set; } = true;
+
+
 
         private void ColorWindowBorder(bool state)
         {
