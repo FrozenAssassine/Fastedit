@@ -87,6 +87,7 @@ namespace Fastedit
             }
         }
         private bool ShowLineHighlighter = true;
+        private readonly Searchdialog searchdialog = null;
 
         //Variables
         private bool HasAlreadyNavigatedTo = false; 
@@ -112,9 +113,14 @@ namespace Fastedit
                 customdesigns = new CustomDesigns(null, this);
             if (databaseimportexport == null)
                 databaseimportexport = new DatabaseImportExport(this, TextTabControl);
-
             if (secondaryeditinginstance == null)
                 secondaryeditinginstance = new SecondaryEditingInstance(this, tabactions, TextTabControl);
+            if (searchdialog == null)
+            {
+                searchdialog = new Searchdialog(CurrentlySelectedTabPage, tabactions);
+                SearchReplaceWindowDisplay.Children.Add(searchdialog);
+            }
+            
             //Subscribe to the events:
             SizeChanged += MainPage_SizeChanged;
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += Application_OnCloseRequest;
@@ -292,28 +298,26 @@ namespace Fastedit
             {
                 if (e.Key == VirtualKey.Escape)
                 {
-                    if (GoToLineWindow != null && SearchWindow != null)
+                    if (GoToLineWindowIsOpen && !searchdialog.SearchIsOpen)
                     {
-                        if (GoToLineWindowIsOpen && !SearchIsOpen)
-                        {
-                            CloseGoToLineDialog();
-                        }
-
-                        if (SearchIsOpen && !GoToLineWindowIsOpen)
-                        {
-                            CloseSearchWindow();
-                        }
-
-                        if (SearchIsOpen && GoToLineWindowIsOpen)
-                        {
-                            CloseSearchWindow();
-                            CloseGoToLineDialog();
-                        }
+                        CloseGoToLineDialog();
                     }
+
+                    if (searchdialog.SearchIsOpen && !GoToLineWindowIsOpen)
+                    {
+                        searchdialog.CloseSearchWindow();
+                    }
+
+                    if (searchdialog.SearchIsOpen && GoToLineWindowIsOpen)
+                    {
+                        searchdialog.CloseSearchWindow();
+                        CloseGoToLineDialog();
+                    }
+                    
                     tabactions.GetTextBoxFromSelectedTabPage().Focus(FocusState.Programmatic);
                 }
 
-                KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F3, Find, false);
+                KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F3, searchdialog.Find, false);
                 KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F2, OpenRenameFlyout);
 
                 //Call every time the shortcut is pressed
@@ -323,8 +327,8 @@ namespace Fastedit
                     if (Tab != null)
                     {
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.G, ShowGoToLineWindow);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F, ToggleSearchWnd, false);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.R, ToggleSearchWnd, true);
+                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F, searchdialog.ToggleSearchWnd, false);
+                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.R, searchdialog.ToggleSearchWnd, true);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.W, CloseSelectedTab_SaveDatabase);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.J, ShowFileInfoDialog);
                         KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.E, ShowEncodingDialog);
@@ -511,6 +515,8 @@ namespace Fastedit
                 ShowHideControlsOnSelectionChanged(true);
                 CurrentlySelectedTabPage = tabpage;
                 CurrentlySelectedTabPage_Textbox = textbox;
+                searchdialog.textbox = textbox;
+                searchdialog.tabpage = tabpage;
 
                 SettingsWindowSelected = false;
 
@@ -523,7 +529,7 @@ namespace Fastedit
                 {
                     Statusbar.Visibility = Visibility.Visible;
                 }
-                SearchIsOpen = appsettings.GetSettingsAsBool("SearchOpen", false);
+                searchdialog.SearchIsOpen = appsettings.GetSettingsAsBool("SearchOpen", false);
                 GoToLineWindowIsOpen = appsettings.GetSettingsAsBool("GoToLineWindowOpened", false);
 
                 if (textbox.TabSaveMode == TabSaveMode.SaveAsFile || textbox.TabSaveMode == TabSaveMode.SaveAsTemp)
@@ -576,8 +582,8 @@ namespace Fastedit
                     {
                         Statusbar.Visibility = Visibility.Collapsed;
                     }
-                    if (SearchIsOpen)
-                        SearchIsOpen = false;
+                    if (searchdialog.SearchIsOpen)
+                        searchdialog.SearchIsOpen = false;
 
                     if (GoToLineWindowIsOpen)
                     {
@@ -896,7 +902,7 @@ namespace Fastedit
         private void SetSettingsToSearchDialog()
         {
             SearchReplaceWindowDisplay.Margin = new Thickness(10, 40 + (MainMenuBar != null ? MainMenuBar.Height : 0), 10, 0);
-            GoToLineWindow.Background = SearchWindow.Background = DefaultValues.ContentDialogBackgroundColor();
+            GoToLineWindow.Background = searchdialog.Background = DefaultValues.ContentDialogBackgroundColor();
 
             //Align the searchwindow either to the right or in the center
             GoToLineWindow.HorizontalAlignment = SearchReplaceWindowDisplay.HorizontalAlignment =
@@ -904,12 +910,12 @@ namespace Fastedit
 
             //Search dialog:
             if (appsettings.GetSettingsAsBool("SearchOpen", false))
-                ShowSearchWindow("");
+                searchdialog.ShowSearchWindow("");
             else
-                CloseSearchWindow();
+                searchdialog.CloseSearchWindow();
 
             //Expand the search for replacing: 
-            ShowReplaceOnSearch(!(appsettings.GetSettingsAsInt("SearchExpanded", 1) == 1));
+            searchdialog.ShowReplace(!(appsettings.GetSettingsAsInt("SearchExpanded", 1) == 1));
         }
         private void SetSettingsToTabControl()
         {
@@ -1424,14 +1430,14 @@ namespace Fastedit
         }
         private void SearchWindow_Action()
         {
-            if (!SearchIsOpen && CurrentlySelectedTabPage_Textbox != null)
+            if (!searchdialog.SearchIsOpen && CurrentlySelectedTabPage_Textbox != null)
             {
-                ShowSearchWindow(CurrentlySelectedTabPage_Textbox.SelectedText);
-                ShowReplaceOnSearch(false);
+                searchdialog.ShowSearchWindow(CurrentlySelectedTabPage_Textbox.SelectedText);
+                searchdialog.ShowReplace(false);
             }
             else
             {
-                CloseSearchWindow();
+                searchdialog.CloseSearchWindow();
             }
         }
         private void Share_Action()
@@ -1758,157 +1764,10 @@ namespace Fastedit
 
 
         //Search-Dialog
-        private bool SearchIsOpen
-        {
-            get => SearchWindow.Visibility == Visibility.Visible;
-            set { SearchWindow.Visibility = Convert.BoolToVisibility(value); }
-        }
-        private void Find(bool Up = false)
-        {
-            var tb = tabactions.GetTextBoxFromSelectedTabPage();
-            if (tb != null)
-            {
-                var res = tb.FindInText(TextToFindTextbox.Text, Up, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
-                if (res)
-                {
-                    SearchWindow.BorderBrush = DefaultValues.CorrectInput_Color;
-                }
-                else
-                {
-                    SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
-                }
-            }
-        }
-        private void ShowReplaceOnSearch(bool Show)
-        {
-            if (Show == true)
-            {
-                ExpandSearch.Begin();
-                SearchWindow.Height = 125;
-                ExpandSearchBoxForReplaceButton.Content = "\uF0AD";
-                appsettings.SaveSettings("SearchExpanded", 0);
-                TextToReplaceTextBox.Visibility = Visibility.Visible;
-                ReplaceAllButton.Visibility = Visibility.Visible;
-                StartReplaceButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                if(SearchWindow.Height > 45)
-                {
-                    CollapseSearch.Begin();
-                }
-                ExpandSearchBoxForReplaceButton.Content = "\uF0AE";
-                appsettings.SaveSettings("SearchExpanded", 1);
-                TextToReplaceTextBox.Visibility = Visibility.Collapsed;
-                ReplaceAllButton.Visibility = Visibility.Collapsed;
-                StartReplaceButton.Visibility = Visibility.Collapsed;
-            }
-        }
-        public void ShowSearchWindow(string text = "")
-        {
-            if (CurrentlySelectedTabPage_Textbox == null)
-                return;
-
-            TextToFindTextbox.Text = text.Length == 0 ? CurrentlySelectedTabPage_Textbox.SelectedText : text;
-            SearchIsOpen = true;
-
-            appsettings.SaveSettings("SearchOpen", true);
-            FindMatchCaseButton.IsChecked = appsettings.GetSettingsAsBool("FindMatchCase", false);
-            FindWholeWordButton.IsChecked = appsettings.GetSettingsAsBool("FindWholeWord", false);
-
-            TextToFindTextbox.Focus(FocusState.Keyboard);
-            TextToFindTextbox.SelectAll();
-        }
-        private void CloseSearchWindow()
-        {
-            SearchIsOpen = false;
-            appsettings.SaveSettings("SearchOpen", false);
-        }
-        private void ToggleSearchWnd(bool Replace)
-        {
-            if (!SearchIsOpen)
-            {
-                ShowSearchWindow("");
-                ShowReplaceOnSearch(Replace);
-            }
-            else
-            {
-                CloseSearchWindow();
-            }
-        }
-        //Search-Dialog Events:
-        private void ReplaceTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                ReplaceCurrentButton_Click(null, null);
-            }
-        }
-        private void SearchTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            //Search down on Enter and up on Shift + Enter//
-            var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-            if (e.Key == VirtualKey.Enter)
-            {
-                Find(shift.HasFlag(CoreVirtualKeyStates.Down));
-            }
-        }
-        private void SearchUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            Find(true);
-        }
-        private void SearchDownButton_Click(object sender, RoutedEventArgs e)
-        {
-            Find(false);
-        }
-        private void FindMatchCaseButton_Click(object sender, RoutedEventArgs e)
-        {
-            appsettings.SaveSettings("FindMatchCase", FindMatchCaseButton.IsChecked);
-        }
-        private void FindWholeWordButton_Click(object sender, RoutedEventArgs e)
-        {
-            appsettings.SaveSettings("FindWholeWord", FindWholeWordButton.IsChecked);
-
-        }
-        private void ReplaceAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                if (tabactions.GetTextBoxFromSelectedTabPage().ReplaceAll(
-                    TextToFindTextbox.Text, TextToReplaceTextBox.Text, false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false))
-                {
-                    SearchWindow.BorderBrush = DefaultValues.CorrectInput_Color;
-                }
-                else
-                {
-                    SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
-                }
-            }
-        }
-        private void ReplaceCurrentButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                if (CurrentlySelectedTabPage_Textbox.ReplaceInText(
-                    TextToFindTextbox.Text, TextToReplaceTextBox.Text,
-                    false, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false))
-                {
-                    SearchWindow.BorderBrush = DefaultValues.CorrectInput_Color;
-                }
-                else
-                {
-                    SearchWindow.BorderBrush = DefaultValues.WrongInput_Color;
-                }
-            }
-        }
-        private void SearchWindow_CloseButtonClick(object sender, RoutedEventArgs e)
-        {
-            CloseSearchWindow();
-        }
         private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowSearchWindow();
-            ShowReplaceOnSearch(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
+            searchdialog.ShowSearchWindow();
+            searchdialog.ShowReplace(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
         }
 
         //Go to line dialog

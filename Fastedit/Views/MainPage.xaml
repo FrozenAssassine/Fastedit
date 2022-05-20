@@ -7,18 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:core="using:Fastedit.Core"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" xmlns:textbox="using:Fastedit.Controls.Textbox" xmlns:fastedit="using:Fastedit"
     mc:Ignorable="d"
     RequestedTheme="Dark"
     KeyDown="MainPage_KeyDown">
 
     <Page.Resources>
-        <Storyboard x:Name="CollapseSearch" Storyboard.TargetName="SearchWindow">
-            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="80.0" To="45.0" Duration="0:0:0.1" />
-        </Storyboard>
-        <Storyboard x:Name="ExpandSearch" Storyboard.TargetName="SearchWindow">
-            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45.0" To="80.0" Duration="0:0:0.1" />
-        </Storyboard>
         <Flyout x:Name="SurroundWithFlyout" Placement="Bottom">
             <Grid Padding="0">
                 <Button TabIndex="3" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="1" Margin="4,0,0,0">
@@ -423,44 +417,6 @@
         </Grid>
 
         <StackPanel Margin="10,45,10,0" Orientation="Vertical" x:Name="SearchReplaceWindowDisplay" HorizontalAlignment="Center">
-            <!--SearchDialog-->
-            <Grid x:Name="SearchWindow"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                VerticalAlignment="Top"
-                Height="45" Margin="0,0,0,5"
-                Visibility="Collapsed"
-                CornerRadius="4">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Margin="5" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets" Content="&#xF0AE;" FontSize="14" Padding="0" Height="30" Width="30" BorderThickness="0" Background="Transparent" x:Name="ExpandSearchBoxForReplaceButton" Click="ExpandSearchBoxForReplaceButton_Click"/>
-                        <TextBox Margin="0,0,0,0" KeyDown="SearchTextBox_KeyDown" x:Uid="MainPageSearchWindow_FindTextBox_Placeholder" GotFocus="TextBoxes_GotFocus" PlaceholderText="Find..." x:Name="TextToFindTextbox" Width="150" Height="30"/>
-                        <StackPanel CornerRadius="4" Orientation="Horizontal" Width="75">
-                            <Button Padding="0" Margin="5,0,5,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70D;" Click="SearchDownButton_Click"/>
-                            <Button Padding="0" Margin="0,0,0,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70E;" Click="SearchUpButton_Click"/>
-                        </StackPanel>
-                        <Button Margin="0,0,5,0" Height="30" Width="30" Padding="0" Content="&#xE9E9;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" >
-                            <Button.Flyout>
-                                <Flyout Placement="Bottom">
-                                    <StackPanel CornerRadius="5" Orientation="Vertical">
-                                        <ToggleButton x:Uid="MainPage_SearchWindow_ReplaceAllButton" Width="110" Click="FindMatchCaseButton_Click" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
-                                        <ToggleButton x:Uid="MainPage_SearchWindow_FindWholeWordButton" Width="110" Click="FindWholeWordButton_Click" x:Name="FindWholeWordButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Whole word"/>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                        <Button Margin="0,0,0,0" Padding="0" Height="30" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Click="SearchWindow_CloseButtonClick">
-                            <SymbolIcon Symbol="Cancel"/>
-                        </Button>
-                    </StackPanel>
-
-                    <StackPanel CornerRadius="4" Orientation="Horizontal">
-                        <TextBox Margin="40,0,0,0" HorizontalAlignment="Left" KeyDown="ReplaceTextBox_KeyDown" x:Uid="MainPageSearchWindow_ReplaceTextBox_Placeholder" GotFocus="TextBoxes_GotFocus" PlaceholderText="Replace..." x:Name="TextToReplaceTextBox" Width="150" Height="30"/>
-                        <Button CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="StartReplaceButton" FontFamily="Segoe MDL2 Assets" Content="&#xF0AF;" Height="30" ToolTipService.ToolTip="Replace" Click="ReplaceCurrentButton_Click"/>
-                        <Button CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="ReplaceAllButton" Content="All" Height="30" ToolTipService.ToolTip="Replace all" Click="ReplaceAllButton_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
 
             <!--GoToLineDialog-->
             <Grid x:Name="GoToLineWindow"
