@@ -1099,4 +1099,10 @@
   <data name="MainPage_SearchWindow_FindMatchCase.Content" xml:space="preserve">
     <value>Match case</value>
   </data>
+  <data name="AboutPage_ReportBugSubmitFeature.Content" xml:space="preserve">
+    <value>Report bug | submit feature</value>
+  </data>
+  <data name="AboutPage_Other.Text" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>
