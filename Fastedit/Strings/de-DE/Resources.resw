@@ -1167,4 +1167,10 @@
   <data name="MainPage_SearchWindow_FindMatchCase.Content" xml:space="preserve">
     <value>Groß/Kleinschreibung</value>
   </data>
+  <data name="AboutPage_ReportBugSubmitFeature.Content" xml:space="preserve">
+    <value>Bug melden | Feature vorschlagen</value>
+  </data>
+  <data name="AboutPage_Other.Text" xml:space="preserve">
+    <value>Andere</value>
+  </data>
 </root>
