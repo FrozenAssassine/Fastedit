@@ -283,6 +283,7 @@ namespace Fastedit.Core.Tab
             tcb.IsHandWritingEnabled = appsettings.GetSettingsAsBool("HandwritingEnabled", DefaultValues.HandWritingEnabled);
             tcb.ShowSelectionFlyout = appsettings.GetSettingsAsBool("TextboxShowSelectionFlyout", false);
             //Designs
+            tcb.LineHighlighter = appsettings.GetSettingsAsBool("LineHighlighter");
             tcb.FontSize = appsettings.GetSettingsAsInt("FontSize", DefaultValues.DefaultFontsize);
             tcb.LineNumberForeground = appsettings.GetSettingsAsColorWithDefault("LineNumberForegroundColor", DefaultValues.DefaultLineNumberForegroundColor);
             tcb.LineNumberBackground = appsettings.GetSettingsAsColorWithDefault("LineNumberBackgroundColor", DefaultValues.DefaultLineNumberBackgroundColor);
