@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="Fastedit.Controls.SearchControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Storyboard x:Name="collapseSearchAnimation" >
+            <DoubleAnimation Completed="collapseSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="80.0" To="45.0" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetName="expandSearchButtonRotation" EnableDependentAnimation="True" Storyboard.TargetProperty="RotationZ" From="-180" To="0" Duration="0:0:0.1" />
+        </Storyboard>
+        <Storyboard x:Name="expandSearchAnimation">
+            <DoubleAnimation Completed="expandSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45.0" To="80.0" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetName="expandSearchButtonRotation" EnableDependentAnimation="True" Storyboard.TargetProperty="RotationZ" From="0" To="-180.0" Duration="0:0:0.1" />
+        </Storyboard>
+        <Storyboard x:Name="showSearchAnimation">
+            <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="0" To="45" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Width" From="0" To="340" Duration="0:0:0.2" />
+        </Storyboard>
+        <Storyboard x:Name="hideSearchAnimation" Completed="hideSearchAnimation_Completed">
+            <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45" To="0" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Width" From="340" To="0" Duration="0:0:0.2" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid
+        x:Name="SearchWindow"
+        BorderBrush="Gray"
+        BorderThickness="2"
+        VerticalAlignment="Top"
+        Margin="0,0,0,5"
+        CornerRadius="4"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="35"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets" Content="&#xF0AE;" FontSize="14" Padding="0" Height="30" Width="30" BorderThickness="0" Background="Transparent" x:Name="ExpandSearchBoxForReplaceButton" Click="ExpandSearchBoxForReplaceButton_Click">
+            <Button.Projection>
+                <PlaneProjection RotationZ="0" x:Name="expandSearchButtonRotation"/>
+            </Button.Projection>
+        </Button>
+        <TextBox Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" TextChanged="textToFindTextbox_TextChanged" KeyDown="SearchTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Find..." x:Name="textToFindTextbox" Width="150" Height="30"/>
+
+        <Button Grid.Row="1" Grid.Column="3" Padding="0" Margin="5,0,0,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70D;" Click="SearchDownButton_Click"/>
+        <Button Grid.Row="1" Grid.Column="4" Padding="0" Margin="5,0,0,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70E;" Click="SearchUpButton_Click"/>
+
+        <Button Grid.Row="1" Grid.Column="6"  Margin="0,0,0,0" Height="30" Width="30" Padding="0"  HorizontalAlignment="Right" VerticalAlignment="Top" Click="SearchWindow_CloseButtonClick">
+            <SymbolIcon Symbol="Cancel"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="5" Margin="0,0,5,0" Height="30" Width="30" Padding="0" Content="&#xE9E9;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" >
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <StackPanel Padding="0" CornerRadius="5" Orientation="Vertical">
+                        <ToggleButton Width="110" Click="FindMatchCaseButton_Click" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
+                        <ToggleButton Width="110" Click="FindWholeWordButton_Click" x:Name="FindWholeWordButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Whole word"/>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+
+        <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" KeyDown="ReplaceTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Replace..." x:Name="textToReplaceTextBox" Width="150" Height="30"/>
+        <Button Grid.Row="3" Grid.Column="3" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="StartReplaceButton" FontFamily="Segoe MDL2 Assets" Content="&#xF0AF;" Height="30" ToolTipService.ToolTip="Replace" Click="ReplaceCurrentButton_Click"/>
+        <Button Grid.Row="3" Grid.Column="4" Padding="0" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="ReplaceAllButton" Content="All" Height="30" ToolTipService.ToolTip="Replace all" Click="ReplaceAllButton_Click"/>
+    </Grid>
+</UserControl>

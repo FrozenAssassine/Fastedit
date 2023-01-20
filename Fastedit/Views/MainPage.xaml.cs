@@ -1,2095 +1,604 @@
-﻿using Fastedit.Controls.Textbox;
-using Fastedit.Core;
-using Fastedit.Core.Tab;
+﻿using Fastedit.Controls;
 using Fastedit.Dialogs;
-using Fastedit.Extensions;
-using Fastedit.ExternalData;
 using Fastedit.Helper;
-using Fastedit.Views;
-using Microsoft.Toolkit.Uwp.UI.Helpers;
+using Fastedit.Settings;
+using Fastedit.Storage;
+using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Storage;
 using Windows.System;
-using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Core.Preview;
-using Windows.UI.Popups;
-using Windows.UI.Text;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Convert = Fastedit.Extensions.Convert;
-using MenuBarItem = Microsoft.UI.Xaml.Controls.MenuBarItem;
-using muxc = Microsoft.UI.Xaml.Controls;
-using StringBuilder = Fastedit.Extensions.StringBuilder;
 
 namespace Fastedit
 {
     public sealed partial class MainPage : Page
     {
-        //Other Classes
-        private TabActions tabactions = null;
-        private readonly AppSettings appsettings = new AppSettings();
-        private readonly SaveFileHelper savefilehelper = new SaveFileHelper();
-        private readonly TabPageHelper tabpagehelper = new TabPageHelper();
-        private readonly CustomDesigns customdesigns = null;
-        private readonly DatabaseImportExport databaseimportexport = null;
-        public readonly SecondaryEditingInstance secondaryeditinginstance = null;
-
-        //Settings entrys:
-        private FontFamily TextBoxFontfamily = new FontFamily(DefaultValues.DefaultFontFamily);
-        private int TextBoxFontSize = DefaultValues.DefaultFontsize;
-        private Color TextBoxBackgroundcolor = Colors.Transparent;
-        private Color TextColor = Colors.Transparent;
-        private Color TitleBarBackgroundColor = Colors.Transparent;
-        private Color TextSelectionColor = Colors.Transparent;
-        private Color TabColorNotFocused = Colors.Transparent;
-        private Color TabColorFocused = Colors.Transparent;
-        private Color LineNumberForegroundColor = Colors.Transparent;
-        private Color LineNumberBackgroundColor = Colors.Transparent;
-        private Color StatusbarBackgroundColor = Colors.Transparent;
-        private Color StatusbarForegroundColor = Colors.Transparent;
-        private Color LineHighlighterForeground = Colors.Blue;
-        private Color LineHighlighterBackground = Colors.Blue;
-        private bool ShowLineNumbers = true;
-        private bool ShowStatusBar = true;
-        private bool IsHandWritingEnabled = DefaultValues.HandWritingEnabled;
-        private bool ShowSelectionFlyout = false;
-        private bool ShowMenubar
-        {
-            get => MainMenuBar != null;
-            set
-            {
-                if (value && MainMenuBar == null)
-                {
-                    MainMenuBar = FindName("MainMenuBar") as muxc.MenuBar;
-                }
-                else if (value == false && MainMenuBar != null)
-                {
-                    UnloadObject(MainMenuBar);
-                }
-            }
-        }
-        private bool ShowLineHighlighter = true;
-        private readonly Searchdialog searchdialog = null;
-
-        //Variables
-        private bool HasAlreadyNavigatedTo = false; 
-        private bool SettingsWindowSelected = false;
-        private bool preventZoomOnFactorChanged = false;
-
-        //Controls and Objects
-        private readonly DispatcherTimer newTabSaveTime = new DispatcherTimer();
-        private TextControlBox CurrentlySelectedTabPage_Textbox = null;
-        private muxc.TabViewItem CurrentlySelectedTabPage = null;
-        private muxc.FontIconSource TabPageFontIconSource = null;
-        private muxc.TabViewItem SettingsTabPage = null;
-        private NavigationEventArgs navigaionEvent = null;
-        private TabViewListView tabviewlistview = null;
+        TitlebarHelper titlebarhelper;
+        TabDatabase tabdatabase = new TabDatabase();
+        public TabPageItem currentlySelectedTabPage = null;
+        bool FirstLoaded = false;
+        bool TabsLoaded = false;
+        public List<FrameworkElement> ControlsToHideInSettings = new List<FrameworkElement>();
+        Flyout ShowAllTabsFlyout = null;
+        ProgressWindowItem progressWindow;
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            if (tabactions == null)
-                tabactions = new TabActions(TextTabControl, this);
-            if (customdesigns == null)
-                customdesigns = new CustomDesigns(null, this);
-            if (databaseimportexport == null)
-                databaseimportexport = new DatabaseImportExport(this, TextTabControl);
-            if (secondaryeditinginstance == null)
-                secondaryeditinginstance = new SecondaryEditingInstance(this, tabactions, TextTabControl);
-            if (searchdialog == null)
-            {
-                searchdialog = new Searchdialog(CurrentlySelectedTabPage_Textbox);
-                searchdialog.Visibility = Visibility.Collapsed;
-                SearchReplaceWindowDisplay.Children.Add(searchdialog);
-            }
-            
-            //Subscribe to the events:
-            SizeChanged += MainPage_SizeChanged;
-            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += Application_OnCloseRequest;
-            new ThemeListener().ThemeChanged += Application_ThemeChanged;
+            TabPageHelper.mainPage = this;
+
+            //DesignHelper.LoadDesign(Path.Combine(DefaultValues.DesignPath, "temp.json"));
+
+            //events:
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += MainPage_CloseRequested;
+            SettingsTabPageHelper.SettingsTabClosed += SettingsUpdater_SettingsTabClosed;
+
+            //classes
+            if (titlebarhelper == null)
+                titlebarhelper = new TitlebarHelper(CustomDragRegion, ShellTitlebarInset, FlowDirection);
+
+            if (progressWindow == null)
+                progressWindow = new ProgressWindowItem(progressBar, progressInfo);
+
+            InfoMessages.InfoMessagePanel = infobarDisplay;
+
+            //Enable auto save database
+            AutoDatabaseSaveHelper.RegisterSave();
+
+            Initialise();
         }
 
-        //Initialisation
-        private async Task Initialisation()
+        //A function, that can be called from anywhere to update the settings
+        public void ApplySettings()
         {
-            //Only if application has started the very first time
-            bool IsFirstStart = false;
-            if (appsettings.GetSettingsAsBool("FirstStart", true))
-            {
-                IsFirstStart = true;
-                await CopyThemesToFolder();
-                appsettings.SaveSettings("FirstStart", false);
-            }
-
-            await SetSettings(false);
-
-            //Prevent repeated call of this functions:
-            if (HasAlreadyNavigatedTo == false)
-            {
-                HasAlreadyNavigatedTo = true;
-                //Only load the tabs from the database
-                if (appsettings.GetSettingsAsBool("LoadRecentTabs", DefaultValues.LoadRecentTabsOnStart))
-                {
-                    await tabactions.LoadTabs(false);
-                }
-
-                //Check if it is running on a new version and it is not the first start
-                //If yes show the infobar which leads to the changelog
-                if (IsOnNewVersion() && !IsFirstStart)
-                    ShowNewVersionInfobar();
-            }
+            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, null);
         }
-        private void AfterInitialisation()
+        private void Initialise()
         {
-            SetTitlebar();
-            ApplySettingsToAllTabPages();
-            AutoBackupDataBaseTimer();
-            TextTabControl_SelectionChanged(null, null);
-            //Add the buttons with encoding to the Statusbar
-            AddEncodingButtonsToStatusbar();
+            if (!FirstLoaded)
+            {
+                FirstLoaded = true;
+
+                //copy the designs only on first start or when forced by user
+                DesignHelper.CopyDefaultDesigns();
+
+                //Add all the controls, that need to be hidden when in settings
+                ControlsToHideInSettings.Add(mainMenubar);
+                ControlsToHideInSettings.Add(statusbar);
+
+                //Create additinal controls:
+                CreateMenubarFromLanguage();
+
+                titlebarhelper.SetTitlebar();
+
+                if (AppSettings.GetSettings(AppSettingsValues.App_FirstStart).Length == 0)
+                {
+                    AppSettings.SaveSettings(AppSettingsValues.App_FirstStart, "L");
+                    InfoMessages.WelcomeMessage();
+                }
+            }
+            ApplySettings();
         }
-        private async Task CopyThemesToFolder()
+        private void CreateMenubarFromLanguage()
         {
-            try
-            {
-                string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-                StorageFolder sourceFolder = await StorageFolder.GetFolderFromPathAsync($"{root}\\Assets\\Designs");
+            //items already added
+            if (CodeLanguageSelector.Items.Count > 1)
+                return;
 
-                var files = await sourceFolder.GetFilesAsync();
-                for (int i = 0; i < files.Count; i++)
-                {
-                    StorageFile file = files[i];
-                    if (file != null)
-                    {
-                        await file.CopyAsync(customdesigns.DesignsFolder, file.Name, NameCollisionOption.ReplaceExisting);
-                    }
-                }
-
-                //Decide to either load a theme with Mica or Acrylic  
-                if(VersionHelper.GetWindowsVersion() == WindowsVersion.Windows11)
-                {
-                    appsettings.SaveSettings("SelectedDesign", 5);
-                    await customdesigns.LoadDesignFromFile(
-                        await customdesigns.GetFileFromDesignsFolder(DefaultValues.DefaultWindows11ThemeName));
-                }
-                else
-                {
-                    appsettings.SaveSettings("SelectedDesign", 1);
-                    await customdesigns.LoadDesignFromFile(
-                        await customdesigns.GetFileFromDesignsFolder(DefaultValues.DefaultThemeName));
-                }
-            }
-            catch (Exception e)
+            foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
             {
-                ShowInfobar("Could not load Themes to the folder\n" + e.Message, "", muxc.InfoBarSeverity.Error);
+                var menuItem = new MenuFlyoutItem
+                {
+                    Text = item.Value.Name,
+                    Tag = item.Key,
+                };
+                menuItem.Click += CodeLanguage_Click;
+                CodeLanguageSelector.Items.Add(menuItem);
+
+                var runCommandWindowItem = new RunCommandWindowItem
+                {
+                    Command = item.Value.Name,
+                    Tag = item.Key,
+                };
+                runCommandWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
+                RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
             }
+
+            var noneItem = new MenuFlyoutItem
+            {
+                Text = "None",
+                Tag = "",
+            };
+            noneItem.Click += CodeLanguage_Click;
+            CodeLanguageSelector.Items.Add(noneItem);
+
+            var noneCmdWindowItem = new RunCommandWindowItem
+            {
+                Command = "None",
+                Tag = "",
+            };
+            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
+            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
         }
-        private async Task LoadTabs(NavigationEventArgs e, bool LoadTabs = true)
+        public void UpdateStatubar()
         {
-            if(LoadTabs)
-                await Initialisation();
+            if (currentlySelectedTabPage == null || statusbar.Visibility == Visibility.Collapsed)
+                return;
 
-            //If the app was started by the fileactivationevent:
-            if (e != null && e.Parameter is FileActivatedEventArgs fae)
-            {
-                //Dont create a new Tab cause a file is opened on start
-                if (e != null)
-                {
-                    await tabactions.OpenFilesFromEvent(fae);
-                }
-            }
-            else if (e.Parameter is CommandLineLaunchNavigationParameter args)
-            {
-                try
-                {
-                    await tabactions.OpenFileFromCommandLine(args);
-                }
-                catch (Exception ex)
-                {
-                    await new MessageDialog(ex.Message).ShowAsync();
-                }
-            }
-
-
-            if (LoadTabs && tabactions.GetTabItemCount() < 1)
-                tabactions.NewTab();
-
-            if(LoadTabs)
-                AfterInitialisation();
+            Statusbar_Column.ChangingText = currentlySelectedTabPage.textbox.CursorPosition.CharacterPosition.ToString();
+            Statusbar_Line.ChangingText = (currentlySelectedTabPage.textbox.CursorPosition.LineNumber + 1).ToString();
+            Statusbar_FilePath.ChangingText = currentlySelectedTabPage.DatabaseItem.FileName.ToString();
+            Statusbar_Zoom.ChangingText = currentlySelectedTabPage.textbox.ZoomFactor + "%";
+            Statusbar_Encoding.ChangingText = EncodingHelper.GetEncodingName(currentlySelectedTabPage.Encoding);
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        public void SelectedTabChanged()
         {
-            this.navigaionEvent = e;
-            //If the event is called,because another file
-            //wants to get opened after the app is already running
-            if (HasAlreadyNavigatedTo)
+            TabView_SelectionChanged(tabControl, null);
+        }
+        public void ChangeSelectedTab(TabPageItem tab)
+        {
+            tabControl.SelectedItem = tab;
+        }
+        public async Task SaveDatabase(bool ShowProgress = true)
+        {
+            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null);
+        }
+        public void ShowSettings(string page = null)
+        {
+            SettingsTabPageHelper.OpenSettings(this, tabControl, page);
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            //Save back the value and read from it after all tabs are loaded
+            AppActivationHelper.NavigationEvent = e;
+
+            //handle activation from files and commandline after the tabs are already loaded
+            if (TabsLoaded)
             {
-                await LoadTabs(e, false);
+                await AppActivationHelper.HandleAppActivation(tabControl);
             }
+
             base.OnNavigatedTo(e);
         }
-
-        //MainPage-Events:
-        private void MainPage_DragOver(object sender, DragEventArgs e)
+        private async void tabControl_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
         {
-            DragOver(e);
+            if (currentlySelectedTabPage == null)
+                return;
+
+            await SaveFileHelper.DragFileToPath(currentlySelectedTabPage, args);
         }
-        private async void MainPage_Drop(object sender, DragEventArgs e)
+        private void SettingsUpdater_SettingsTabClosed()
         {
-            await DropFile(sender, e);
+            //Event when the settings page got closed
+            ApplySettings();
         }
-        private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            TextTabControl.Width = Statusbar.Width = e.NewSize.Width;
-            if (e.NewSize.Width < 700 && WordCountDisplay.Margin.Left != 3)
-            {
-                WordCountDisplay.Margin = SaveStatusDisplay.Margin =
-                EncodingDisplay.Margin = LineNumberDisplay.Margin =
-                ZoomDisplay.Margin = FileNameDisplay.Margin = new Thickness(0, 0, 0, 0);
-            }
-            else if (e.NewSize.Width >= 700 && WordCountDisplay.Margin.Left == 0)
-            {
-                WordCountDisplay.Margin = SaveStatusDisplay.Margin =
-                EncodingDisplay.Margin = LineNumberDisplay.Margin =
-                ZoomDisplay.Margin = FileNameDisplay.Margin = new Thickness(10, 0, 10, 0);
-            }
-        }
-        private async void MainPage_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
-            var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-            var alt = Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu);
-
-            //Commands without modifierkey:
-            KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F11, Fullscreen_Action);
-            KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F1, OpenSettings_Action);
-
-            //Call everytime control is pressed:
-            if (ctrl.HasFlag(CoreVirtualKeyStates.Down) && !alt.HasFlag(CoreVirtualKeyStates.Down))
-            {
-                if (!SettingsWindowSelected)
-                {
-                    KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.N, NewTab_Action);
-                    KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.T, NewTab_Action);
-                    KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.O, Open_Action);
-                }
-            }
-
-            //Call only if a tab exists and the settingswindow is not opened:
-            if (tabactions.GetTabItemCount() > 0 && !SettingsWindowSelected)
-            {
-                if (e.Key == VirtualKey.Escape)
-                {
-                    if (GoToLineWindowIsOpen && !searchdialog.SearchIsOpen)
-                    {
-                        CloseGoToLineDialog();
-                    }
-
-                    if (searchdialog.SearchIsOpen && !GoToLineWindowIsOpen)
-                    {
-                        searchdialog.Close();
-                    }
-
-                    if (searchdialog.SearchIsOpen && GoToLineWindowIsOpen)
-                    {
-                        searchdialog.Close();
-                        CloseGoToLineDialog();
-                    }
-                    
-                    tabactions.GetTextBoxFromSelectedTabPage().Focus(FocusState.Programmatic);
-                }
-
-                KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F3, searchdialog.Find, false);
-                KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F2, OpenRenameFlyout);
-
-                //Call every time the shortcut is pressed
-                if (ctrl.HasFlag(CoreVirtualKeyStates.Down) && !alt.HasFlag(CoreVirtualKeyStates.Down))
-                {
-                    muxc.TabViewItem Tab = tabactions.GetSelectedTabPage();
-                    if (Tab != null)
-                    {
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.G, ShowGoToLineWindow);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.F, searchdialog.Toggle, false);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.R, searchdialog.Toggle, true);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.W, CloseSelectedTab_SaveDatabase);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.J, ShowFileInfoDialog);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.E, ShowEncodingDialog);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.B, ExpandTabToNewWindow_Action);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.M, ToggleMarkdown_Action);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.Q, SurroundWithText_Action);
-
-                        //Ctrl + S
-                        if (e.Key == VirtualKey.S)
-                        {
-                            try
-                            {
-                                if (shift.HasFlag(CoreVirtualKeyStates.Down))
-                                {
-                                    await savefilehelper.SaveFileAs(Tab);
-                                }
-                                else
-                                {
-                                    await savefilehelper.Save(Tab);
-                                }
-
-                            }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine("Exception in MainPage --> Page_KeyDown --> e.Key == VirtualKey.S :\n" + ex.Message);
-                            }
-                        }
-                    }
-
-                    //Select tabs
-                    int tabtoselect = 0;
-                    switch (e.Key)
-                    {
-                        case VirtualKey.Number1:
-                            tabtoselect = 1;
-                            break;
-                        case VirtualKey.Number2:
-                            tabtoselect = 2;
-                            break;
-                        case VirtualKey.Number3:
-                            tabtoselect = 3;
-                            break;
-                        case VirtualKey.Number4:
-                            tabtoselect = 4;
-                            break;
-                        case VirtualKey.Number5:
-                            tabtoselect = 5;
-                            break;
-                        case VirtualKey.Number6:
-                            tabtoselect = 6;
-                            break;
-                        case VirtualKey.Number7:
-                            tabtoselect = 7;
-                            break;
-                        case VirtualKey.Number8:
-                            tabtoselect = 8;
-                            break;
-                        case VirtualKey.Number9:
-                            tabtoselect = tabactions.GetTabItemCount();
-                            break;
-                    }
-                    if (tabtoselect != 0 && tabactions.GetTabItemCount() >= tabtoselect)
-                    {
-                        TextTabControl.SelectedIndex = tabtoselect - 1;
-                    }
-                }
-            }
-
-            //Call only if a tab exists
-            if (tabactions.GetTabItemCount() > 0)
-            {
-                if (ctrl.HasFlag(CoreVirtualKeyStates.Down))
-                {
-                    if (alt.HasFlag(CoreVirtualKeyStates.Down))
-                    {
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.Left, NavigateToPreviousTab_Action);
-                        KeyboardCommands.KeyboardCommand(e.Key, VirtualKey.Right, NavigateToNextTab_Action);
-                    }
-                    if (e.Key == VirtualKey.Tab)
-                    {
-                        if (shift.HasFlag(CoreVirtualKeyStates.Down))
-                        {
-                            NavigateToPreviousTab_Action();
-                        }
-                        else
-                        {
-                            NavigateToNextTab_Action();
-                        }
-                    }
-                }
-            }
-        }
-        private async void Application_OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        private async void MainPage_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
             var deferral = e.GetDeferral();
 
-            if (IsContentDialogOpen())
-                e.Handled = true;
-
-            if (secondaryeditinginstance.OpenedSecondaryViews.Count > 0)
-            {
-                ShowInfobar(InfoBarMessages.CloseAllInstances, InfoBarMessages.CloseAllInstances_Title, muxc.InfoBarSeverity.Warning);
-                e.Handled = true;
-            }
-            else
-            {
-                if (tabactions != null)
-                {
-                    if (await tabactions.CloseTabs() == false)
-                        e.Handled = true;
-                }
-                else
-                    Debug.WriteLine("MainPage -> Application_OnCloseRequest : TabActions is null");
-            }
-
-            if (IsContentDialogOpen())
-                e.Handled = true;
+            await SaveDatabase();
 
             deferral.Complete();
         }
-        private async void Application_ThemeChanged(ThemeListener sender)
+        private async void CustomDragRegion_Loaded(object sender, RoutedEventArgs e)
         {
-            await ChangeDesign(sender.CurrentTheme);
-            await SetSettings(true);
-        }
-        private async Task ChangeDesign(ApplicationTheme sender)
-        {
-            void ReportError()
+            if (!TabsLoaded)
             {
-                ShowInfobar(ErrorDialogs.LoadDesignError());
-            }
-            
-            string DesignName;
-            StorageFolder outputFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(DefaultValues.CustomDesigns_FolderName, CreationCollisionOption.OpenIfExists);
-            if (outputFolder == null)
-            {
-                ReportError();
-                return;
-            }
+                TabsLoaded = true;
 
-            if (sender == ApplicationTheme.Dark)
-            {
-                DesignName = appsettings.GetSettingsAsString("DesignForDarkMode", DefaultValues.DefaultThemeName);
-            }
-            else
-            {
-                DesignName = appsettings.GetSettingsAsString("DesignForLightMode", DefaultValues.DefaultThemeName);
-            }
-            if (await customdesigns.LoadDesignFromFile(
-                await customdesigns.GetFileFromDesignsFolder(DesignName)) == false)
-            {
-                ReportError();
+                progressBar.IsActive = true;
+
+                //load the database
+                await TabPageHelper.LoadTabDatabase(tabControl, tabdatabase);
+
+                //handle activation from files and commandline on start
+                await AppActivationHelper.HandleAppActivation(tabControl);
+
+                //apply the settings
+                SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, DesignHelper.CurrentDesign);
+
+                //Show new-version info
+                VersionHelper.CheckNewVersion(infobarDisplay);
+
+                progressBar.IsActive = false;
             }
         }
-
-        //TextTabControl-Events:
-        private async void TextTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-            //If tabitems equals zero, disable all items:
-            if (TextTabControl.TabItems.Count == 0)
+            var ctrl = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+            var shift = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+
+            if (ctrl && args.VirtualKey == Windows.System.VirtualKey.Tab)
+                TabPageHelper.SelectNextTab(tabControl);
+            else if (ctrl && shift && args.VirtualKey == Windows.System.VirtualKey.Tab)
+                TabPageHelper.SelectPreviousTab(tabControl);
+
+            if (ctrl)
             {
-                for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
+                switch (args.VirtualKey)
                 {
-                    if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
-                    {
-                        if (item.Name != "DropDownMenu_New" && item.Name != "DropDownMenu_Open" && item.Name != "DropDownMenu_Settings")
-                        {
-                            item.IsEnabled = false;
-                        }
-                    }
-                    if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
-                    {
-                        subitem.IsEnabled = false;
-                    }
+                    case VirtualKey.N:
+                        NewFile_Click(null, null);
+                        break;
+                    case VirtualKey.O:
+                        OpenFile_Click(null, null);
+                        break;
+                    case VirtualKey.S:
+                        if (shift)
+                            SaveFileAs_Click(null, null);
+                        else
+                            SaveFile_Click(null, null);
+                        break;
+                    case VirtualKey.F:
+                        Search_Click(null, null);
+                        break;
+                    case VirtualKey.R:
+                        Replace_Click(null, null);
+                        break;
+                    case VirtualKey.G:
+                        GoToLine_Click(null, null);
+                        break;
+                    case VirtualKey.Add:
+                        ZoomIn_Click(null, null);
+                        break;
+                    case VirtualKey.Subtract:
+                        ZoomOut_Click(null, null);
+                        break;
+                    case VirtualKey.I:
+                        FileInfo_Click(null, null);
+                        break;
+                    case VirtualKey.B:
+                        runCommandWindow.Toggle(tabControl);
+                        break;
+                    case VirtualKey.W:
+                        CloseTab_Click(null, null);
+                        break;
+                    case VirtualKey.T:
+                        AddTabButton_Click(null, null);
+                        break;
+                    case VirtualKey.E:
+                        ChangeEncoding_Click(null, null);
+                        break;
+                    case VirtualKey.L:
+                        ShowTabInNewWindow_Click(null, null);
+                        break;
+                    case VirtualKey.K:
+                        CompactOverlayMode_Click(null, null);
+                        break;
+                    case VirtualKey.D:
+                        DuplicateLine_Click(null, null);
+                        break;
                 }
             }
 
-            var tabpage = tabactions.GetSelectedTabPage();
-            if (tabpage != null && tabpage.Content is TextControlBox textbox)
+            switch (args.VirtualKey)
             {
-                if (!textbox.TextLoaded)
-                    await tabactions.SetTextFromBuffer(tabpage);
-
-                ShowHideControlsOnSelectionChanged(true);
-                CurrentlySelectedTabPage = tabpage;
-                CurrentlySelectedTabPage_Textbox = textbox;
-                searchdialog.textbox = textbox;
-
-                SettingsWindowSelected = false;
-
-                if (ShowMenubar && MainMenuBar != null)
-                {
-                    MainMenuBar.Visibility = Visibility.Visible;
-                }
-
-                if (ShowStatusBar)
-                {
-                    Statusbar.Visibility = Visibility.Visible;
-                }
-                searchdialog.SearchIsOpen = appsettings.GetSettingsAsBool("SearchOpen", false);
-                GoToLineWindowIsOpen = appsettings.GetSettingsAsBool("GoToLineWindowOpened", false);
-
-                if (textbox.TabSaveMode == TabSaveMode.SaveAsFile || textbox.TabSaveMode == TabSaveMode.SaveAsTemp)
-                {
-                    if (IsControlNOTNull(CanNotRenameFileInfo))
-                    {
-                        CanNotRenameFileInfo.Visibility = Visibility.Collapsed;
-                        RenameTextBox.IsEnabled = true;
-                        RenameFileButton.IsEnabled = true;
-                    }
-                }
-                else if (textbox.TabSaveMode == TabSaveMode.SaveAsDragDrop)
-                {
-                    CanNotRenameFileInfo.Visibility = Visibility.Visible;
-                    RenameTextBox.IsEnabled = false;
-                    RenameFileButton.IsEnabled = false;
-                }
-
-                //Show /hide the OpenWithEncoding Button when the file was not even saved
-                OpenWithEncodingButton.IsEnabled = textbox.TabSaveMode == TabSaveMode.SaveAsTemp ? false : true;
-
-                TextControlBox_ZoomChangedEvent(textbox, textbox._zoomFactor);
-                TextControlBox_LineNumberchangedEvent(textbox, textbox.GetCurrentLineNumber);
-                TextControlBox_DocumentTitleChangedEvent(textbox, textbox.Header);
-                Content_EncodingChangedEvent(textbox, textbox.Encoding);
-                Textbox_WordCountChangedEvent(textbox, textbox.CountWords());
-                //Content_ColumnChangedEvent(textbox, textbox.GetCurrentColumn);
-                Content_SaveStatusChangedEvent(textbox, textbox.IsModified);
-
-                SetTitlebarText(tabpagehelper.GetTabFileName(tabpage));
-
-                EncodingButton_Click(FindName(Encodings.EncodingToString(textbox.Encoding).Replace("-", "_") + "_EncodingButton"), null);
-                //Check wordwrapbutton
-                DropDownMenu_WordWrap.IsChecked = textbox.WordWrap == TextWrapping.Wrap;
-            }
-            else
-            {
-                ShowHideControlsOnSelectionChanged(false);
-                CurrentlySelectedTabPage = null;
-                CurrentlySelectedTabPage_Textbox = null;
-                SettingsWindowSelected = true;
-
-                if (tabpage != null && tabpage.Content is Frame)
-                {
-                    if (ShowMenubar)
-                    {
-                        MainMenuBar.Visibility = Visibility.Collapsed;
-                    }
-                    if (Statusbar != null)
-                    {
-                        Statusbar.Visibility = Visibility.Collapsed;
-                    }
-                    if (searchdialog.SearchIsOpen)
-                        searchdialog.SearchIsOpen = false;
-
-                    if (GoToLineWindowIsOpen)
-                    {
-                        GoToLineWindowIsOpen = false;
-                    }
-                }
-            }
-
-            //Highlight the selected tabpage in the tabbar, because it wont get scrolled to it if the Tabcontrol is in overflow
-            ScrollToSelectedTabPage();
-        }
-        private void TextTabControl_AddTabButtonClick(muxc.TabView sender, object args)
-        {
-            NewTab_Action();
-        }
-        private async void TextTabControl_TabCloseRequested(muxc.TabView sender, muxc.TabViewTabCloseRequestedEventArgs args)
-        {
-            if (tabactions.GetTextBoxFromTabPage(args.Tab) != null)
-            {
-                await tabactions.CloseTabAndSaveDataBase(args.Tab);
-            }
-            else if (SettingsWindowSelected || args.Tab.Content is Frame)
-            {
-                CloseSettingsTabPage();
-            }
-            //Create a new tab when no tab exists
-            if (tabactions.GetTabItemCount() == 0)
-            {
-                NewTab_Action();
-            }
-        }
-        private async void TextTabControl_TabDroppedOutside(muxc.TabView sender, muxc.TabViewTabDroppedOutsideEventArgs args)
-        {
-            if (args.Tab != null)
-                await secondaryeditinginstance.ExpandTabPageToNewView(args.Tab);
-        }
-        private void TextTabControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            tabviewlistview = TextTabControl.FindElementByName("TabListView") as TabViewListView;
-        }
-
-
-        //Titlebar
-        private async void Titlebar_Loaded(object sender, RoutedEventArgs e)
-        {
-            SetTitlebar();
-            //Load tabs
-            await LoadTabs(navigaionEvent);
-        }
-        private void SetTitlebar()
-        {
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Convert.WhiteOrBlackFromColorBrightness(StatusbarBackgroundColor);
-
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            Window.Current.SetTitleBar(Titlebar);
-            Titlebar.UpdateLayout();
-        }
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            if (FlowDirection == FlowDirection.LeftToRight)
-            {
-                Titlebar.MinWidth = sender.SystemOverlayRightInset;
-                ShellTitlebarInset.MinWidth = sender.SystemOverlayLeftInset;
-            }
-            else
-            {
-                Titlebar.MinWidth = sender.SystemOverlayLeftInset;
-                ShellTitlebarInset.MinWidth = sender.SystemOverlayRightInset;
-            }
-            Titlebar.Height = ShellTitlebarInset.Height = sender.Height;
-        }
-
-        //Autosave temp files / AutoBackup Database
-        //private void AutosaveTempfilesTimer()
-        //{
-        //    var BackupTimeInMinutes = appsettings.GetSettingsAsInt("AutoSaveFileTime", DefaultValues.AutoSaveTempFileMinutes);
-        //    if (BackupTimeInMinutes > 0)
-        //    {
-        //        var AutosaveTempfilesTimer = new DispatcherTimer();
-        //        AutosaveTempfilesTimer.Tick += async delegate
-        //        {
-        //            await tabactions.SaveAllTabChanges();
-        //        };
-        //        AutosaveTempfilesTimer.Interval = new TimeSpan(0, 0, BackupTimeInMinutes, 0);
-        //        AutosaveTempfilesTimer.Start();
-        //    }
-        //}
-        private void AutoBackupDataBaseTimer()
-        {
-            var BackupTimeInMinutes = appsettings.GetSettingsAsInt("AutoBackupDatabaseTime", DefaultValues.AutoBackupDataBaseMinutes);
-            if (BackupTimeInMinutes > 0)
-            {
-                var dp = new DispatcherTimer();
-                dp.Tick += async delegate
-                {
-                    await databaseimportexport.CreateDatabaseBackup();
-                };
-                dp.Interval = new TimeSpan(0, 0, BackupTimeInMinutes, 0);
-                dp.Start();
+                case VirtualKey.F1:
+                    Settings_Click(null, null);
+                    break;
+                case VirtualKey.F11:
+                    Fullscreen_Click(null, null);
+                    break;
             }
         }
 
-        //Settings
-        public async Task SetSettingsToTheme()
+        //TabControl
+        private void AddTabButton_Click(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
         {
-            ThemeHelper.RootTheme =
-                this.RequestedTheme =
-                (ElementTheme)Enum.Parse(typeof(ElementTheme), appsettings.GetSettingsAsInt("ThemeIndex", 0).ToString());
-
-            if (appsettings.GetSettingsAsBool("AutomaticThemeChange", false))
-            {
-                await ChangeDesign(App.Current.RequestedTheme);
-            }
+            TabPageHelper.AddNewTab(tabControl, true);
         }
-        public void SetSettingsToTabPage(muxc.TabViewItem Tab, Thickness ContentThickness)
+        private async void TabView_CloseTabButtonClick(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            if (tabactions == null || Tab == null) return;
-            if (tabactions.GetTextBoxFromTabPage(Tab) is TextControlBox textbox)
+            await TabPageHelper.CloseTab(tabControl, args.Item);
+        }
+        private async void TabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabControl.SelectedItem is TabPageItem tab)
             {
-                if (textbox == null)
+                currentlySelectedTabPage = tab;
+                if (tab == null)
                     return;
 
-                textbox.ZoomChangedEvent += TextControlBox_ZoomChangedEvent;
-                textbox.DocumentTitleChangedEvent += TextControlBox_DocumentTitleChangedEvent;
-                textbox.LineNumberchangedEvent += TextControlBox_LineNumberchangedEvent;
-                textbox.EncodingChangedEvent += Content_EncodingChangedEvent;
-                textbox.SaveStatusChangedEvent += Content_SaveStatusChangedEvent;
-                textbox.WordCountChangedEvent += Textbox_WordCountChangedEvent;
-                
-                if (textbox.FontFamily != TextBoxFontfamily)
-                {
-                    textbox.FontFamily = TextBoxFontfamily;
-                }
+                SettingsTabPageHelper.SettingsSelected = false;
 
-                if (textbox.TextColor != TextColor)
-                {
-                    textbox.TextColor = TextColor;
-                }
+                UpdateStatubar();
 
-                if (textbox.Background != TextBoxBackgroundcolor)
-                {
-                    textbox.Background = TextBoxBackgroundcolor;
-                }
+                //set the focus to the textbox:
+                tab.textbox.Focus(FocusState.Programmatic);
 
-                if (textbox.TextSelectionColor != TextSelectionColor)
-                {
-                    textbox.TextSelectionColor = TextSelectionColor;
-                }
-
-                if (textbox.LineNumberBackground != LineNumberBackgroundColor)
-                {
-                    textbox.LineNumberBackground = LineNumberBackgroundColor;
-                }
-
-                if (textbox.LineNumberForeground != LineNumberForegroundColor)
-                {
-                    textbox.LineNumberForeground = LineNumberForegroundColor;
-                }
-
-                if (textbox.Margin != ContentThickness)
-                {
-                    textbox.Margin = ContentThickness;
-                }
-
-                if(textbox.IsHandWritingEnabled != IsHandWritingEnabled)
-                {
-                    textbox.IsHandWritingEnabled = IsHandWritingEnabled;
-                }
-
-                if(textbox.ShowSelectionFlyout != ShowSelectionFlyout)
-                {
-                    textbox.ShowSelectionFlyout = ShowSelectionFlyout;
-                }
-
-                textbox.LineHighlighterBackground = LineHighlighterBackground;
-                textbox.LineHighlighterForeground = LineHighlighterForeground;
-                textbox.ShowLineNumbers = ShowLineNumbers;
-                textbox.LineHighlighter = ShowLineHighlighter;
-
-                textbox.FontSizeWithoutZoom = TextBoxFontSize;
-                textbox.SetFontZoomFactor(textbox._zoomFactor);
-                textbox.UpdateLayout();
-                
-                //Change the tabicon
-                //Generate new icon if buffer is null
-                if (TabPageFontIconSource == null)
-                {
-                    TabPageFontIconSource = new muxc.FontIconSource
-                    {
-                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                        Glyph = appsettings.GetSettingsAsString("TabIconId", DefaultValues.DefaultTabIconId)
-                    };
-                    Debug.WriteLine(Tab.Name + "=" + TabPageFontIconSource.Glyph);
-                }
-                if (textbox.IsReadOnly)
-                    Tab.IconSource = new muxc.SymbolIconSource() { Symbol = Symbol.ProtectedDocument };
-                else
-                    Tab.IconSource = TabPageFontIconSource;
-
-                Tab.UpdateLayout();
+                await TabPageHelper.LoadUnloadedTab(tab, progressWindow);
             }
-        }
-        public void ApplySettingsToAllTabPages()
-        {
-            //Apply settings to all TabPages
-            Thickness textboxmargin = TextBoxMargin();
-            var TabItems = tabactions.GetTabItems();
-            for (int i = 0; i < TabItems.Count; i++)
+            else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
             {
-                if (TabItems[i] is muxc.TabViewItem Tab)
-                {
-                    SetSettingsToTabPage(Tab, textboxmargin);
-                }
-            }
-        }
-        private void SetControlColors()
-        {
-            //TextBackgroundColor --> Page1
-            TextBoxBackgroundcolor = appsettings.GetSettingsAsColorWithDefault("TextBackgroundColor", DefaultValues.DefaultTextBackgroundColor);
-            //TitleBarBackgroundColor --> Page4
-            TitleBarBackgroundColor = appsettings.GetSettingsAsColorWithDefault("TitleBarBackgroundColor", DefaultValues.DefaultTitleBarBackgroundColor);
-            //TextColor --> Page1
-            TextColor = appsettings.GetSettingsAsColorWithDefault("TextColor", DefaultValues.DefaultTextColor);
-            //TextSelectionColor --> Page1
-            TextSelectionColor = appsettings.GetSettingsAsColorWithDefault("TextSelectionColor", DefaultValues.DefaultTextSelectionColor);
-            //Tabcolor not focused --> Page4
-            TabColorNotFocused = appsettings.GetSettingsAsColorWithDefault("TabColorNotFocused", DefaultValues.DefaultTabColorNotFocused);
-            //Tab color focused --> Page4
-            TabColorFocused = appsettings.GetSettingsAsColorWithDefault("TabColorFocused", DefaultValues.DefaultTabColorFocused);
-            //LineNumberForeground --> Page1
-            LineNumberForegroundColor = appsettings.GetSettingsAsColorWithDefault("LineNumberForegroundColor", DefaultValues.DefaultLineNumberForegroundColor);
-            //LineNumberBackground --> Page1
-            LineNumberBackgroundColor = appsettings.GetSettingsAsColorWithDefault("LineNumberBackgroundColor", DefaultValues.DefaultLineNumberBackgroundColor);
-            //StatusbarForeground --> Page8
-            StatusbarForegroundColor = appsettings.GetSettingsAsColorWithDefault("StatusbarForegroundColor", DefaultValues.DefaultStatusbarForegroundColor);
-            //StatusbarBackground --> Page8
-            StatusbarBackgroundColor = appsettings.GetSettingsAsColorWithDefault("StatusbarBackgroundColor", DefaultValues.DefaultStatusbarBackgroundColor);
-            //LineHighlighterColor --> Page 1
-            LineHighlighterBackground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterBackground", Colors.Transparent);
-            LineHighlighterForeground = appsettings.GetSettingsAsColorWithDefault("LineHighlighterForeground", DefaultValues.SystemAccentColor);
-
-            //If user wants the text color and line color to be the same
-            if (appsettings.GetSettingsAsInt("LineNumberForegroundColorIndex", 1) == 1)
-            {
-                LineNumberForegroundColor = appsettings.GetSettingsAsColorWithDefault("TextColor", DefaultValues.SystemAccentColorLight2);
-            }
-        }
-        private void SetSettingsToStatusbar()
-        {
-            if (ShowStatusBar = appsettings.GetSettingsAsBool("ShowStatusbar", true))
-            {
-                if (!SettingsWindowSelected)
-                {
-                    Statusbar.Visibility = Visibility.Visible;
-                }
-
-                if (appsettings.GetSettingsAsBool("StatusbarInBoldFont", false))
-                {
-                    LineNumberDisplay.FontWeight = ZoomDisplay.FontWeight = WordCountDisplay.FontWeight =
-                    FileNameDisplay.FontWeight = EncodingDisplay.FontWeight = SaveStatusDisplay.FontWeight
-                    = FontWeights.Bold;
-                }
-                else
-                {
-                    LineNumberDisplay.FontWeight = ZoomDisplay.FontWeight = WordCountDisplay.FontWeight =
-                    FileNameDisplay.FontWeight = EncodingDisplay.FontWeight = SaveStatusDisplay.FontWeight
-                    = FontWeights.Normal;
-                }
-
-                Statusbar.Background = new SolidColorBrush(StatusbarBackgroundColor);
-                SaveStatusDisplay.Foreground = WordCountDisplay.Foreground = LineNumberDisplay.Foreground = ZoomDisplay.Foreground =
-                    FileNameDisplay.Foreground = EncodingDisplay.Foreground =
-                    new SolidColorBrush(StatusbarForegroundColor);
-
-                WordCountDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowWordCountButtonOn_SBar", false));
-                SaveStatusDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowSaveStatusButtonOn_SBar", true));
-                EncodingDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowEncodingButtonOn_SBar", true));
-                LineNumberDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowLinenumberButtonOn_SBar", true));
-                ZoomDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowZoomButtonOn_SBar", true));
-                FileNameDisplay.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowRenameButtonOn_SBar", true));
-            }
-            Statusbar.Visibility = Convert.BoolToVisibility(ShowStatusBar);
-        }
-        private void SetSettingsToTitlebarButtons()
-        {
-            //Check if DropdownMenu is hidden, and when the are show the Settingsbutton in the corner
-            //Apply dark/light themes to all buttons:
-            var titlebarbuttonTheme = Convert.ThemeFromColorBrightness(TitleBarBackgroundColor);
-
-            DropDownMenu.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowDropdown", true));
-            DropDownMenu.RequestedTheme = titlebarbuttonTheme;
-
-            NavigateToPreviousTab.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowNavigateToPreviousTab", false));
-            NavigateToPreviousTab.RequestedTheme = titlebarbuttonTheme;
-
-            NavigateToNextTab.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowNavigateToNextTab", false));
-            NavigateToNextTab.RequestedTheme = titlebarbuttonTheme;
-        }
-        private void SetSettingsToEditor()
-        {
-            //LineHighlighter
-            ShowLineHighlighter = appsettings.GetSettingsAsBool("LineHighlighter", true);            
-            //LineNumbers
-            ShowLineNumbers = appsettings.GetSettingsAsBool("ShowLineNumbers", true);
-            ShowSelectionFlyout = appsettings.GetSettingsAsBool("TextboxShowSelectionFlyout", false);
-            IsHandWritingEnabled = appsettings.GetSettingsAsBool("HandwritingEnabled", DefaultValues.HandWritingEnabled);
-            //Get data for Fontsize and Fontfamily and store in local variable to use it in SetSettingsToTabPage function
-            TextBoxFontfamily = new FontFamily(appsettings.GetSettingsAsString("FontFamily", DefaultValues.DefaultFontFamily));
-            TextBoxFontSize = appsettings.GetSettingsAsInt("FontSize", DefaultValues.DefaultFontsize);
-        }
-        private void SetSettingsToSearchDialog()
-        {
-            SearchReplaceWindowDisplay.Margin = new Thickness(10, 40 + (MainMenuBar != null ? MainMenuBar.Height : 0), 10, 0);
-            GoToLineWindow.Background = searchdialog.Background = DefaultValues.ContentDialogBackgroundColor();
-
-            //Align the searchwindow either to the right or in the center
-            GoToLineWindow.HorizontalAlignment = SearchReplaceWindowDisplay.HorizontalAlignment =
-                appsettings.GetSettingsAsBool("SearchPanelCenterAlign", true) ? HorizontalAlignment.Center : HorizontalAlignment.Right;
-
-            //Search dialog:
-            if (appsettings.GetSettingsAsBool("SearchOpen", false))
-                searchdialog.Show("");
-            else
-                searchdialog.Close();
-
-            //Expand the search for replacing: 
-            searchdialog.Replace(!(appsettings.GetSettingsAsInt("SearchExpanded", 1) == 1));
-        }
-        private void SetSettingsToTabControl()
-        {
-            Color UnselectedTabViewItemColor;
-
-            if (appsettings.GetSettingsAsBool("UseMica", false))
-            {
-                TextTabControl.Background = new SolidColorBrush(Colors.Transparent);
-                UnselectedTabViewItemColor = Convert.GetColorFromThemeReversed(ThemeHelper.RootTheme);
-            }
-            else
-            {
-                TextTabControl.Background = appsettings.CreateBrushWithOrWithoutAcrylic(TitleBarBackgroundColor);
-                UnselectedTabViewItemColor = Convert.WhiteOrBlackFromColorBrightness(TabColorNotFocused.A > 50 ? TabColorNotFocused : TitleBarBackgroundColor);
-            }
-
-            //Set the Icon for the tabpage:
-            TabPageFontIconSource = new muxc.FontIconSource
-            {
-                FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                Glyph = appsettings.GetSettingsAsString("TabIconId", DefaultValues.DefaultTabIconId)
-            };
-
-            TextTabControl.RequestedTheme = Convert.ThemeFromColorBrightness(TitleBarBackgroundColor);
-            (TextTabControl.Resources["TabViewItemHeaderBackground"] as SolidColorBrush).Color = TabColorNotFocused;
-            (TextTabControl.Resources["TabViewItemHeaderBackgroundSelected"] as SolidColorBrush).Color = TabColorFocused;
-            (TextTabControl.Resources["TabViewItemHeaderForeground"] as SolidColorBrush).Color = UnselectedTabViewItemColor;
-            (TextTabControl.Resources["TabViewItemHeaderForegroundSelected"] as SolidColorBrush).Color = Convert.WhiteOrBlackFromColorBrightness(TabColorFocused);
-            UnderTabControlLine.Background = new SolidColorBrush(TabColorFocused);
-            UnderTabControlLine.Visibility = Convert.BoolToVisibility(appsettings.GetSettingsAsBool("ShowUnderTabLine", true));
-            TextTabControl.TabWidthMode = 
-                (muxc.TabViewWidthMode)Enum.Parse(typeof(muxc.TabViewWidthMode),
-                appsettings.GetSettingsAsString("TabSizeModeIndex", DefaultValues.defaultTabSizeMode.ToString()));
-
-            TextTabControl.Margin = new Thickness(0, 0, 0, Statusbar.Visibility == Visibility.Collapsed && !SettingsWindowSelected ? 0 : Statusbar.Height);
-            TextTabControl.UpdateLayout();
-        }
-        private void SetSettingsToMenubar()
-        {
-            ShowMenubar = appsettings.GetSettingsAsBool("ShowMenubar", true);
-            if(ShowMenubar)
-            {
-                int index = appsettings.GetSettingsAsInt("MenuBarAlignment", 1);
-                if (index > 2 || index < 0)
-                    index = 0;
-
-                MainMenuBar.HorizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), index.ToString()); 
-            }
-        }
-        public async Task SetSettings(bool ApplyToAllTabPages = true)
-        {
-            try
-            {
-                //Set the theme and do the automatic theme change
-                await SetSettingsToTheme();
-                               
-                //App-Background:
-                BackgroundHelper.SetBackgroundToPage(this);
-                
-                //Application Language
-                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = appsettings.GetSettingsAsString("AppLanguage", "en-US");
-
-                //Load the colors for the controls from settings, right at the beginning
-                SetControlColors();
-
-                //Menubar
-                SetSettingsToMenubar();
-
-                //Statusbar
-                SetSettingsToStatusbar();
-
-                //Tabcontrol
-                SetSettingsToTabControl();
-
-                SetSettingsToTitlebarButtons();
-
-                SetSettingsToEditor();
-
-                //Spellcheckingbutton
-                DropDownMenu_SpellChecking.IsChecked = appsettings.GetSettingsAsBool("Spellchecking", DefaultValues.SpellCheckingEnabled);
-                
-                //Fullscreenbutton
-                Utilities.FullScreen(appsettings.GetSettingsAsBool("FullScreen", false), appsettings);
-
-                //Searchdialog
-                SetSettingsToSearchDialog();
-
-                //Set settings to secondary views
-                await secondaryeditinginstance.ApplySettingToAllViews();
-
-                if (ApplyToAllTabPages)
-                {
-                    ApplySettingsToAllTabPages();
-                }
-
-                TextTabControl_SelectionChanged(null, null);
-                SetTitlebar();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("EXCEPTION in Mainpage -> SetSettings\n" + e.StackTrace);
-                ShowInfobar(ErrorDialogs.LoadSettingsError(e));
-            }
-        }
-        public Thickness TextBoxMargin()
-        {
-            return new Thickness(
-                0,
-                UnderTabControlLine.Height + (ShowMenubar ? (MainMenuBar.ActualHeight == 0 ? MainMenuBar.Height : MainMenuBar.ActualHeight) : 0),
-                0,
-                0
-                );
-        }
-
-        /// <summary>
-        ///Used for the keyevent if the ESC-Key is pressed. Hides the flyout if it is open
-        /// </summary>
-        private void HideFlyoutIfOpened(Flyout flyout)
-        {
-            if (flyout.IsOpen)
-            {
-                flyout.Hide();
-            }
-        }
-        private bool IsControlNOTNull(object Control)
-        {
-            return Control != null;
-        }
-        private void SetTitlebarText(string title)
-        {
-            ApplicationView.GetForCurrentView().Title = title;
-        }
-        public muxc.InfoBar ShowInfobar(string Content = "", string Title = "", muxc.InfoBarSeverity severity = muxc.InfoBarSeverity.Warning, int VisibilityTime = 5, object content = null)
-        {
-            var MainInformationInfobar = new muxc.InfoBar
-            {
-                Severity = severity,
-                Title = Title,
-                Message = Content,
-                IsOpen = true,
-                Content = content,
-                Margin = new Thickness(0, 0, 0, 5),
-                Name = "Infobar" + InfoBarDisplay.Children.Count
-            };
-            var HideInfobarTimer = new DispatcherTimer();
-            HideInfobarTimer.Interval = TimeSpan.FromSeconds(VisibilityTime);
-            HideInfobarTimer.Tick += delegate
-            {
-                MainInformationInfobar.IsOpen = false;
-                InfoBarDisplay.Children.Remove(MainInformationInfobar);
-
-                HideInfobarTimer.Stop();
-                InfoBarDisplay.UpdateLayout();
-            };
-            HideInfobarTimer.Start();
-            InfoBarDisplay.Children.Add(MainInformationInfobar);
-            return MainInformationInfobar;
-        }
-        public muxc.InfoBar ShowInfobar(muxc.InfoBar infobar, int VisibilityTime = 5)
-        {
-            if (infobar.Margin.Bottom != 5)
-                infobar.Margin = new Thickness(0, 0, 0, 5);
-
-            infobar.Name = "Infobar" + InfoBarDisplay.Children.Count;
-            var HideInfobarTimer = new DispatcherTimer();
-            HideInfobarTimer.Interval = TimeSpan.FromSeconds(VisibilityTime);
-            HideInfobarTimer.Tick += delegate
-            {
-                infobar.IsOpen = false;
-                InfoBarDisplay.Children.Remove(infobar);
-
-                HideInfobarTimer.Stop();
-                InfoBarDisplay.UpdateLayout();
-            };
-            HideInfobarTimer.Start();
-            InfoBarDisplay.Children.Add(infobar);
-            return infobar;
-        }
-        private bool IsOnNewVersion()
-        {
-            string version = Package.Current.Id.Version.Major + "." +
-                Package.Current.Id.Version.Minor + "." +
-                Package.Current.Id.Version.Build;
-            if (version != appsettings.GetSettings("AppVersion"))
-            {
-                appsettings.SaveSettings("AppVersion", version);
-                return true;
-            }
-            return false;
-        }
-        private void ShowNewVersionInfobar()
-        {
-            if (NewVersionInfobar == null)
-                NewVersionInfobar = FindName("NewVersionInfobar") as muxc.InfoBar;
-
-            NewVersionInfobar.Background = DefaultValues.ContentDialogBackgroundColor();
-            NewVersionInfobar.Foreground = DefaultValues.ContentDialogForegroundColor();
-            NewVersionInfobar.Closed += delegate
-            {
-                if(NewVersionInfobar != null)
-                    UnloadObject(NewVersionInfobar);
-            };
-            string version = Package.Current.Id.Version.Major + "." +
-                Package.Current.Id.Version.Minor + "." +
-                Package.Current.Id.Version.Build;
-            NewVersionInfobar.Message = $"{appsettings.GetResourceString("InfoBarMessage_NewVersion_Text1/Text")} {version}";
-            NewVersionInfobar.IsOpen = true;
-        }
-        private void ShowHideControlsOnSelectionChanged(bool isEnabled)
-        {
-            //DropDownMenu:
-            if (DropDownMenu.Visibility == Visibility.Visible)
-            {
-                for (int i = 0; i < ToolbarFlyout.Items.Count; i++)
-                {
-                    if (ToolbarFlyout.Items[i] is MenuFlyoutItem item)
-                    {
-                        if (item.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
-                        {
-                            item.IsEnabled = isEnabled;
-                        }
-                    }
-                    if (ToolbarFlyout.Items[i] is MenuFlyoutSubItem subitem)
-                    {
-                        if (subitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
-                        {
-                            subitem.IsEnabled = isEnabled;
-                        }
-                    }
-                }
-            }
-            //Menubar:
-            if (!ShowMenubar)
+                SettingsTabPageHelper.SettingsSelected = true;
+                SettingsTabPageHelper.HideControls();
                 return;
-            for (int i = 0; i < MainMenuBar.Items.Count; i++)
+            }
+
+            //show hidden controls
+            if (!SettingsTabPageHelper.SettingsSelected)
             {
-                if (MainMenuBar.Items[i] is MenuBarItem mbitem)
-                {
-                    if (mbitem.Tag is string str && str.Equals("HideIfNoTab", StringComparison.Ordinal))
-                    {
-                        mbitem.IsEnabled = isEnabled;
-                    }
-                    else
-                    {
-                        for (int j = 0; j < mbitem.Items.Count; j++)
-                        {
-                            if (mbitem.Items[j] is MenuFlyoutItem mfi)
-                            {
-                                if (mfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
-                                {
-                                    mfi.IsEnabled = isEnabled;
-                                }
-                            }
-                            else if (mbitem.Items[j] is ToggleMenuFlyoutItem tmfi)
-                            {
-                                if (tmfi.Tag is string str2 && str2.Equals("HideIfNoTab", StringComparison.Ordinal))
-                                {
-                                    tmfi.IsEnabled = isEnabled;
-                                }
-                            }
-                        }
-                    }
-                }
+                SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, statusbar);
             }
         }
 
-        //Drag-Drop
-        private async Task<bool> OpenStorageFiles(IReadOnlyList<IStorageItem> StorageItems, TabSaveMode savemode = TabSaveMode.SaveAsDragDrop)
+        //Drag drop
+        private async void Page_Drop(object sender, DragEventArgs e)
         {
-            bool result = false;
-            Thickness textboxmargin = TextBoxMargin();
-            for (int i = 0; i < StorageItems.Count; i++)
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                if (StorageItems[i] is StorageFile file)
-                {
-                    if (tabactions.GetTabItemCount() == 1)
-                    {
-                        if (TextTabControl.TabItems[0] is muxc.TabViewItem tab)
-                        {
-                            //override first created tab, only if it is emty
-                            if (tabpagehelper.GetIsModified(tab) == false && tabpagehelper.GetTabText(tab).Length == 0 && tabpagehelper.GetTabFilepath(tab).Length == 0)
-                            {
-                                await tabactions.RemoveTab(tab);
-                            }
-                        }
-                    }
-                    var (Succed, TabPage) = await tabactions.DoOpenFile(null, file, savemode, false, false, "", false, true, true);
-                    if (Succed == true)
-                        SetSettingsToTabPage(TabPage, textboxmargin);
-                    else
-                        result = false;
-                }
-            }
-            if (await tabactions.SaveAllTabChanges() == false)
-                result = false;
-            TextTabControl_SelectionChanged(null, null);
-            return result;
-        }
-        public async Task DropFile(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.DataView.Contains(StandardDataFormats.Text))
-                {
-                    if (CurrentlySelectedTabPage_Textbox != null)
-                    {
-                        CurrentlySelectedTabPage_Textbox.SelectedText = await e.DataView.GetTextAsync();
-                    }
-                }
-                if (e.DataView.Contains(StandardDataFormats.StorageItems))
-                {
-                    var items = await e.DataView.GetStorageItemsAsync();
-                    await OpenStorageFiles(items);
-                }
-            }
-            catch (Exception exception)
-            {
-                ShowInfobar(appsettings.GetResourceString("ErrorDialogs_DragDropError/Text") + "\n" + exception.Message, appsettings.GetResourceString("ErrorDialogs_Header_Error.Text"), muxc.InfoBarSeverity.Error);
+                var files = await e.DataView.GetStorageItemsAsync();
+                await TabPageHelper.OpenFiles(tabControl, files);
             }
         }
-        public new void DragOver(DragEventArgs e)
+        private void Page_DragOver(object sender, DragEventArgs e)
         {
-            e.AcceptedOperation = DataPackageOperation.Copy;
-
-            if (e.DragUIOverride != null)
+            //only accept files
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                e.DragUIOverride.Caption = "Open";
-                e.DragUIOverride.SetContentFromSoftwareBitmap(new Windows.Graphics.Imaging.SoftwareBitmap(Windows.Graphics.Imaging.BitmapPixelFormat.Rgba8, 400, 400));
-                e.DragUIOverride.IsContentVisible = true;
-            }
-        }
-        
-        //Dialogs:
-        public async void ShowEncodingDialog()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                await new EncodingDialog(CurrentlySelectedTabPage).ShowDialog();
-            }
-        }
-        public async void ShowRecyclebinDialog()
-        {
-            await new RecyclebinWindow(tabactions).ShowDialog();
-        }
-        private async void ShowFileInfoDialog()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                await new FileInfoDialog(CurrentlySelectedTabPage).ShowAsync();
-            }
-        }
-        private bool IsContentDialogOpen()
-        {
-            var openedpopups = VisualTreeHelper.GetOpenPopups(Window.Current);
-            for (int i = 0; i < openedpopups.Count; i++)
-            {
-                if (openedpopups[i].Child is ContentDialog)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public async void CloseSettingsTabPage()
-        {
-            if (SettingsTabPage != null)
-            {
-                TextTabControl.TabItems.Remove(SettingsTabPage);
-                tabactions.SettingsTabPage = null;
-                SettingsWindowSelected = false;
-                await SetSettings();
-            }
-        }
-        public void ShowSettingsTabPage(string tabforpage = "")
-        {
-            //Create only if null otherwise select it
-            if (SettingsTabPage == null)
-            {
-                var frame = new Frame
-                {
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch
-                };
-                frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameter { Mainpage = this, Tabcontrol = TextTabControl, PageToNavigateTo = tabforpage });
-                tabactions.SettingsTabPage =  SettingsTabPage = new muxc.TabViewItem
-                {
-                    Content = frame,
-                    Header = "Settings",
-                    Tag = "Settings",
-                    IconSource = new muxc.SymbolIconSource { Symbol = Symbol.Setting }
-                };
-            }
-            if(!TextTabControl.TabItems.Contains(SettingsTabPage))
-                TextTabControl.TabItems.Add(SettingsTabPage);
-            TextTabControl.SelectedItem = SettingsTabPage;
-        }
-        public void ScrollToSelectedTabPage()
-        {
-            tabviewlistview.ScrollIntoView(TextTabControl.SelectedItem);
-        }
-
-        //Actions
-        private void Copy_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.Copy();
-            }
-        }
-        private void Cut_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.Cut();
-            }
-        }
-        private void Paste_Action()
-        {
-            if (CurrentlySelectedTabPage != null && CurrentlySelectedTabPage_Textbox != null)
-            {
-                if (tabpagehelper.GetTabReadOnly(CurrentlySelectedTabPage) == false)
-                {
-                    CurrentlySelectedTabPage_Textbox.Paste();
-                }
-            }
-        }
-        private void Redo_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                if (tabpagehelper.GetTabReadOnly(CurrentlySelectedTabPage) == false)
-                {
-                    CurrentlySelectedTabPage_Textbox.Redo();
-                }
-            }
-        }
-        private void Undo_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                if (tabpagehelper.GetTabReadOnly(CurrentlySelectedTabPage) == false)
-                {
-                    CurrentlySelectedTabPage_Textbox.Undo();
-                }
-            }
-        }
-        private async void Save_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                await savefilehelper.Save(CurrentlySelectedTabPage);
-            }
-        }
-        private async void Open_Action()
-        {
-
-            var tabs = await tabactions.OpenFile();
-            if (tabs != null)
-            {
-                for (int i = 0; i < tabs.Count; i++)
-                {
-                    if (tabs[i] != null)
-                    {
-                        SetSettingsToTabPage(tabs[i], TextBoxMargin());
-                    }
-                }
-            }
-        }
-        private async void SaveAs_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                await savefilehelper.SaveFileAs(CurrentlySelectedTabPage);
-            }
-        }
-        private void SelectAll_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.SelectAll();
-            }
-        }
-        private void WordWrap_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.WordWrap =
-                    CurrentlySelectedTabPage_Textbox.WordWrap == TextWrapping.Wrap ? TextWrapping.NoWrap : TextWrapping.Wrap;
-            }
-        }
-        private async void Encoding_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                await new EncodingDialog(CurrentlySelectedTabPage).ShowDialog();
-            }
-        }
-        private void ZoomIn_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                tabpagehelper.ZoomIn(CurrentlySelectedTabPage);
-            }
-        }
-        private void ZoomOut_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                tabpagehelper.ZoomOut(CurrentlySelectedTabPage);
-            }
-        }
-        private void SearchWindow_Action()
-        {
-            if (!searchdialog.SearchIsOpen && CurrentlySelectedTabPage_Textbox != null)
-            {
-                searchdialog.Show(CurrentlySelectedTabPage_Textbox.SelectedText);
-                searchdialog.Replace(false);
-            }
-            else
-            {
-                searchdialog.Close();
-            }
-        }
-        private void Share_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                new ShareFile(CurrentlySelectedTabPage_Textbox);
-            }
-        }
-        private void SpellChecking_Action()
-        {
-            var tabitems = tabactions.GetTabItems();
-            for (int i = 0; i < tabitems.Count; i++)
-            {
-                if (tabitems[i] is muxc.TabViewItem Tab)
-                {
-                    if (Tab.Content is TextControlBox textbox)
-                    {
-                        textbox.SpellChecking = !textbox.SpellChecking;
-                        appsettings.SaveSettings("Spellchecking", textbox.SpellChecking);
-                    }
-                }
-            }
-        }
-        private void NavigateToNextTab_Action()
-        {
-            tabactions.SelectNextTab();
-        }
-        private void NavigateToPreviousTab_Action()
-        {
-            tabactions.SelectPreviousTab();
-        }
-        private void DuplicateLine_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.DuplicateLine();
-            }
-        }
-        public void NewTab_Action()
-        {
-            muxc.TabViewItem tab = tabactions.NewTab();
-            newTabSaveTime.Tick += async delegate
-            {
-                await tabactions.SaveAllTabChanges();
-                newTabSaveTime.Stop();
-            };
-            newTabSaveTime.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-            newTabSaveTime.Start();
-            if (tab != null)
-            {
-                SetSettingsToTabPage(tab, TextBoxMargin());
-            }
-        }
-        private void OpenSettings_Action()
-        {
-            ShowSettingsTabPage();
-        }
-        private async void CloseSelectedTab_SaveDatabase()
-        {
-            if (tabactions.GetTextBoxFromTabPage(CurrentlySelectedTabPage) != null)
-            {
-                await tabactions.CloseTabAndSaveDataBase(CurrentlySelectedTabPage);
-            }
-            else if (SettingsWindowSelected)
-            {
-                CloseSettingsTabPage();
-            }
-            //Create a new tab when no tab exists
-            if(tabactions.GetTabItemCount() == 0)
-            {
-                NewTab_Action();
-            }
-        }
-        private async void ExpandTabToNewWindow_Action()
-        {
-            if (CurrentlySelectedTabPage != null)
-                await secondaryeditinginstance.ExpandTabPageToNewView(CurrentlySelectedTabPage);
-        }
-        private void Fullscreen_Action()
-        {
-            Utilities.ToggleFullscreen(appsettings);
-        }
-        private void ToggleMarkdown_Action()
-        {
-            if (CurrentlySelectedTabPage != null && CurrentlySelectedTabPage_Textbox != null)
-            {
-                CurrentlySelectedTabPage_Textbox.MarkdownPreview = !CurrentlySelectedTabPage_Textbox.MarkdownPreview;
-            }
-        }
-        private void SurroundWithText_Action()
-        {
-            if (CurrentlySelectedTabPage_Textbox == null)
-                return;
-            //reset to default state
-            SurroundWith_Textbox2.Visibility = Visibility.Collapsed;
-            SurroundWith_Textbox1.Text = SurroundWith_Textbox2.Text = "";
-            var rect = CurrentlySelectedTabPage_Textbox.GetSelectionRect();
-
-            SurroundWithFlyout.ShowAt(
-                CurrentlySelectedTabPage_Textbox,
-                new FlyoutShowOptions {
-                    Position = new Point { X = rect.X + (rect.Width / 2) + 20, Y = rect.Y + (rect.Height / 2) - 40 - CurrentlySelectedTabPage_Textbox.GetScrollbarPositions().ScrollbarPositionVertical},
-                    Placement = FlyoutPlacementMode.Auto}
-                );
-            SurroundWith_Textbox1.Focus(FocusState.Programmatic);
-        }
-        private void LockTab_Action()
-        {
-            if(CurrentlySelectedTabPage != null)
-            {
-                tabpagehelper.SetTabReadOnly(CurrentlySelectedTabPage, !tabpagehelper.GetTabReadOnly(CurrentlySelectedTabPage));
+                e.AcceptedOperation = DataPackageOperation.Copy;
             }
         }
 
-        //Click-Events
-        private void NewDocumentButton(object sender, RoutedEventArgs e)
+        //File
+        private void NewFile_Click(object sender, RoutedEventArgs e)
         {
-            NewTab_Action();
+            TabPageHelper.AddNewTab(tabControl, true);
         }
-        private void SaveFileButton(object sender, RoutedEventArgs e)
+        private async void OpenFile_Click(object sender, RoutedEventArgs e)
         {
-            Save_Action();
+            await TabPageHelper.OpenFile(tabControl);
         }
-        private void Save_Click(object sender, PointerRoutedEventArgs e)
+        private async void SaveFile_Click(object sender, RoutedEventArgs e)
         {
-            Save_Action();
+            await TabPageHelper.SaveFile(currentlySelectedTabPage);
         }
-        private void UndoButton(object sender, RoutedEventArgs e)
+        private async void SaveFileAs_Click(object sender, RoutedEventArgs e)
         {
-            Undo_Action();
+            await TabPageHelper.SaveFileAs(currentlySelectedTabPage);
         }
-        private void RedoButton(object sender, RoutedEventArgs e)
+        private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            Redo_Action();
+            SettingsTabPageHelper.OpenSettings(this, tabControl);
         }
-        private void CutButton(object sender, RoutedEventArgs e)
+        private async void RecycleBin_Click(object sender, RoutedEventArgs e)
         {
-            Cut_Action();
+            await new RecycleBinDialog(tabControl).ShowDialog();
         }
-        private void CopyButton(object sender, RoutedEventArgs e)
+        //Edit
+        private void Undo_Click(object sender, RoutedEventArgs e)
         {
-            Copy_Action();
+            EditActions.Undo(currentlySelectedTabPage);
         }
-        private void PasteButton(object sender, RoutedEventArgs e)
+        private void Redo_Click(object sender, RoutedEventArgs e)
         {
-            Paste_Action();
+            EditActions.Redo(currentlySelectedTabPage);
         }
-        public void Settingsbutton(object sender, RoutedEventArgs e)
+        private void Cut_Click(object sender, RoutedEventArgs e)
         {
-            OpenSettings_Action();
+            EditActions.Cut(currentlySelectedTabPage);
         }
-        private void OpenFileButton(object sender, RoutedEventArgs e)
+        private void Copy_Click(object sender, RoutedEventArgs e)
         {
-            Open_Action();
+            EditActions.Copy(currentlySelectedTabPage);
         }
-        private void SaveAsAppBarButtonName_Click(object sender, RoutedEventArgs e)
+        private void Paste_Click(object sender, RoutedEventArgs e)
         {
-            SaveAs_Action();
+            EditActions.Paste(currentlySelectedTabPage);
         }
-        private void SelectAllAppBarButtonName_Click(object sender, RoutedEventArgs e)
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            SelectAll_Action();
-        }
-        private void WordWrapButton_Click(object sender, RoutedEventArgs e)
-        {
-            WordWrap_Action();
-        }
-        private void EncodingAppBarButtonName_Click(object sender, RoutedEventArgs e)
-        {
-            Encoding_Action();
-        }
-        private void FullScreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            Fullscreen_Action();
-        }
-        private void ZoomInAppBarButtonName_Click(object sender, RoutedEventArgs e)
-        {
-            ZoomIn_Action();
-        }
-        private void ZoomOutAppBarButtonName_Click(object sender, RoutedEventArgs e)
-        {
-            ZoomOut_Action();
-        }
-        private void SearchAppBarButtonName_Click(object sender, RoutedEventArgs e)
-        {
-            SearchWindow_Action();
-        }
-        private void ShareAppBarButtonName_Click(object sender, RoutedEventArgs e)
-        {
-            Share_Action();
-        }
-        private void SpellcheckingButton_Click(object sender, RoutedEventArgs e)
-        {
-            SpellChecking_Action();
-        }
-        private void GoToLineButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowGoToLineWindow();
-        }
-        private void FileInfoButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowFileInfoDialog();
-        }
-        private void RecycleBin_Click(object sender, RoutedEventArgs e)
-        {
-            ShowRecyclebinDialog();
-            ApplySettingsToAllTabPages();
-        }
-        private void NavigateToPreviousTab_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToPreviousTab_Action();
-        }
-        private void NavigateToNextTab_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToNextTab_Action();
-        }
-        private void ViewChangelog_Click(object sender, RoutedEventArgs e)
-        {
-            ShowSettingsTabPage("Changelog");
-        }
-        private void CloseTab_Click(object sender, RoutedEventArgs e)
-        {
-            CloseSelectedTab_SaveDatabase();
-        }
-        private void MarkdownPreview_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleMarkdown_Action();
-        }
-        private void LockTab_Click(object sender, RoutedEventArgs e)
-        {
-            LockTab_Action();
-        }
-        private async void Close_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is MenuFlyoutItem item && CurrentlySelectedTabPage != null)
-            {
-                switch (Convert.ToInt(item.Tag))
-                {
-                    case 0:
-                        await tabactions.CloseAllTabs();
-                        break;
-                    case 1:
-                        await tabactions.CloseAllLeft(CurrentlySelectedTabPage);
-                        break;
-                    case 2:
-                        await tabactions.CloseAllRight(CurrentlySelectedTabPage);
-                        break;
-                    case 3:
-                        await tabactions.CloseAllButThis(CurrentlySelectedTabPage);
-                        break;
-                    case 4:
-                        await tabactions.CloseAllWithoutSave();
-                        break;
-                }
-            }
-        }
-        private void OpenInNewView_Click(object sender, RoutedEventArgs e)
-        {
-            ExpandTabToNewWindow_Action();
-        }
-        private async void FormatCode_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentlySelectedTabPage_Textbox == null)
-                return;
-
-            if (sender is MenuFlyoutItem item)
-            {
-                string text = CurrentlySelectedTabPage_Textbox.GetText();
-                switch (Convert.ToInt(item.Tag, 0))
-                {
-                    case 0: //Json
-                        text = CodeFormatter.FormatJson(text);
-                        break;
-                    case 1: //Xml
-                        var res = CodeFormatter.FormatXml(text, out string output);
-                        if (res != null)
-                            ShowInfobar(res.Message, "Could not format you code:", InfoBarSeverity.Error);
-                        else
-                            text = output;
-                        break;
-                    case 2: //C#
-                        text = CodeFormatter.FormatCs(text);
-                        break;
-                }
-                await CurrentlySelectedTabPage_Textbox.ChangeText(text);
-            }
-        }
-        private void SurroundWith_Click(object sender, RoutedEventArgs e)
-        {
-            SurroundWithText_Action();
-        }
-        private void SurroundWith_Textbox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (sender is TextBox tb)
-            {
-                if (tb.Name == SurroundWith_Textbox1.Name)
-                {
-                    if (e.Key == VirtualKey.Enter)
-                    {
-                        CurrentlySelectedTabPage_Textbox.SurroundSelectionBy(SurroundWith_Textbox1.Text);
-                        SurroundWithFlyout.Hide();
-                    }
-                    else if (e.Key == VirtualKey.Tab)
-                    {
-                        SurroundWith_Textbox2.Visibility = Visibility.Visible;
-                    }
-                }
-                else if (tb.Name == SurroundWith_Textbox2.Name)
-                {
-                    if (e.Key == VirtualKey.Enter)
-                    {
-                        CurrentlySelectedTabPage_Textbox.SurroundSelectionBy(SurroundWith_Textbox1.Text, SurroundWith_Textbox2.Text);
-                        SurroundWithFlyout.Hide();
-                    }
-                }
-            }
+            EditActions.SelectAll(currentlySelectedTabPage);
         }
         private void DuplicateLine_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentlySelectedTabPage_Textbox != null)
-                CurrentlySelectedTabPage_Textbox.DuplicateLine();
+            EditActions.DuplicateLine(currentlySelectedTabPage);
         }
+        private void CodeLanguage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentlySelectedTabPage == null)
+                return;
 
-
-        //Search-Dialog
-        private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
-        {
-            searchdialog.Show();
-            searchdialog.Replace(appsettings.GetSettingsAsInt("SearchExpanded", 0) == 1);
-        }
-
-        //Go to line dialog
-        private bool GoToLineWindowIsOpen { get => GoToLineWindow.Visibility == Visibility.Visible; set { GoToLineWindow.Visibility = Convert.BoolToVisibility(value); } }
-        private void CloseGoToLineDialog()
-        {
-            GoToLineWindowIsOpen = false;
-            appsettings.SaveSettings("GoToLineWindowOpened", false);
-        }
-        private void GoToLinebutton2_Click(object sender, RoutedEventArgs e)
-        {
-            bool Succed = DoGoToLine(GoToLineTextBox);
-            GoToLineWindow.BorderBrush = Succed ? DefaultValues.CorrectInput_Color : DefaultValues.WrongInput_Color;
-            if (appsettings.GetSettingsAsBool("HideGoToLineDialogAfterEntering", true) && Succed)
+            if (sender is MenuFlyoutItem item)
             {
-                GoToLineWindowIsOpen = false;
-            }
-        }
-        private void ShowGoToLineWindow()
-        {
-            if (!SettingsWindowSelected)
-            {
-                GoToLineWindowIsOpen = !GoToLineWindowIsOpen;
-                appsettings.SaveSettings("GoToLineWindowOpened", GoToLineWindowIsOpen);
-                GoToLineTextBox.Focus(FocusState.Programmatic);
-            }
-        }
-        private void GoToLineWindow_CloseClick(object sender, RoutedEventArgs e)
-        {
-            CloseGoToLineDialog();
-        }
-        private void TextBoxes_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb)
-            {
-                tb.SelectAll();
-            }
-        }
-
-        ////////Statusbar////////
-        //EVENTS//
-        private void TextControlBox_ZoomChangedEvent(TextControlBox sender, double ZoomFactor)
-        {
-            if (Statusbar != null)
-            {
-                preventZoomOnFactorChanged = true;
-                ZoomDisplay.Content = appsettings.GetResourceString("Statusbar_Display_Zoom/Text") + " " + (int)ZoomFactor + "%";
-                ZoomFlyoutSlider.Value = (int)ZoomFactor;
-                ZoomFlyoutSlider.Header = ZoomFactor + "%";
-                preventZoomOnFactorChanged = false;
-            }
-        }
-        private void TextControlBox_DocumentTitleChangedEvent(TextControlBox sender, string Header)
-        {
-            if (Statusbar != null && FileNameDisplay != null)
-            {
-                FileNameDisplay.Content = Header.Replace("*", "");
-            }
-        }
-        private void TextControlBox_LineNumberchangedEvent(TextControlBox sender, int CurrentLine)
-        {
-            if (Statusbar != null)
-            {
-                LineNumberDisplay.Content = appsettings.GetResourceString("Statusbar_Display_Line/Text") + " " + CurrentLine;
-                //LineNumberDisplay.Content = appsettings.GetResourceString("Statusbar_Display_Line/Text") + " " + CurrentLine + " " + appsettings.GetResourceString("Statusbar_Display_Column/Text") + " " + sender.GetCurrentColumn;
-            }
-        }
-        private void Content_EncodingChangedEvent(TextControlBox sender, Encoding e)
-        {
-            if (Statusbar != null)
-            {
-                EncodingDisplay.Content = Encodings.EncodingToString(e);
-            }
-        }
-        private void Content_SaveStatusChangedEvent(TextControlBox sender, bool IsModified)
-        {
-            if (Statusbar != null)
-            {
-                //if (appsettings.GetSettingsAsBool("ShowColorsForSaveStatusButton", true))
-                //    SaveStatusDisplay.Foreground = IsModified ? DefaultValues.WrongInput_Color : DefaultValues.CorrectInput_Color;
-                SaveStatusDisplay.Content = IsModified ? appsettings.GetResourceString("MainPage_Statusbar_Unsaved/Text") : appsettings.GetResourceString(" MainPage_Statusbar_Saved/Text");
-            }
-        }
-        private void StatusbarButton_PointerEnterExit(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Button btn)
-            {
-                btn.Foreground = new SolidColorBrush(StatusbarForegroundColor);
-                Statusbar.Background = new SolidColorBrush(StatusbarBackgroundColor);
-            }
-            //if (appsettings.GetSettingsAsBool("ShowColorsForSaveStatusButton", true))
-            //  SaveStatusDisplay.Foreground = tabActions.GetTextBoxFromSelectedTabPage().IsModified ? DefaultValues.WrongInput_Color : DefaultValues.CorrectInput_Color;
-            //else SaveStatusDisplay.Foreground = LineNumberDisplay.Foreground;
-        }
-        private void ZoomDisplay_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
-        {
-            if (CurrentlySelectedTabPage != null)
-            {
-                int delta = e.GetCurrentPoint((UIElement)sender).Properties.MouseWheelDelta;
-
-                if (delta < 0)
+                if (item != null && item.Tag != null)
                 {
-                    tabpagehelper.ZoomOut(CurrentlySelectedTabPage);
+                    if (item.Tag.ToString().Length == 0)
+                        currentlySelectedTabPage.CodeLanguage = null;
+
+                    currentlySelectedTabPage.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(item.Tag.ToString());
                 }
-
-                if (delta > 0)
+            }
+            else if (sender is RunCommandWindowItem rcwitem)
+            {
+                if (rcwitem != null && rcwitem.Tag != null)
                 {
-                    tabpagehelper.ZoomIn(CurrentlySelectedTabPage);
+                    if (rcwitem.Tag.ToString().Length == 0)
+                        currentlySelectedTabPage.CodeLanguage = null;
+
+                    currentlySelectedTabPage.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(rcwitem.Tag.ToString());
                 }
             }
         }
-        private void Textbox_WordCountChangedEvent(TextControlBox sender, int Words)
+        private void Search_Click(object sender, RoutedEventArgs e)
         {
-            WordCountDisplay.Content = appsettings.GetResourceString("MainPage_Statusbar_Wordcount/Text") + ": " + Words;
+            searchControl.ShowSearch(currentlySelectedTabPage.textbox);
+        }
+        private void Replace_Click(object sender, RoutedEventArgs e)
+        {
+            searchControl.ShowReplace(currentlySelectedTabPage.textbox);
+        }
+        private async void GoToLine_Click(object sender, RoutedEventArgs e)
+        {
+            await GoToLineDialog.Show(currentlySelectedTabPage);
         }
 
-        //Zoom-flyout//
-        private void ZoomFlyoutSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        //Document
+        private async void CloseTab_Click(object sender, RoutedEventArgs e)
         {
-            if (tabactions != null && preventZoomOnFactorChanged == false)
+            await TabPageHelper.CloseTab(tabControl, currentlySelectedTabPage);
+        }
+        private async void FileInfo_Click(object sender, RoutedEventArgs e)
+        {
+            await FileInfoDialog.Show(currentlySelectedTabPage);
+        }
+        private async void ChangeEncoding_Click(object sender, RoutedEventArgs e)
+        {
+            await EncodingDialog.Show(currentlySelectedTabPage);
+            UpdateStatubar();
+        }
+        private void ShareDocument_Click(object sender, RoutedEventArgs e)
+        {
+            ShareDialog.Share(currentlySelectedTabPage);
+        }
+        private async void ShowTabInNewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            await TabWindowHelper.ShowInNewWindow(tabControl, currentlySelectedTabPage);
+        }
+
+        //View
+        private void ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            EditActions.ZoomIn(currentlySelectedTabPage);
+        }
+        private void ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            EditActions.ZoomOut(currentlySelectedTabPage);
+        }
+        private void TabSpaces_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentlySelectedTabPage == null)
+                return;
+
+            if (sender is MenuFlyoutItem item)
             {
-                if (e.OldValue != e.NewValue && ZoomFlyoutSlider.Value != 0)
-                {
-                    TextControlBox textbox = tabactions.GetTextBoxFromSelectedTabPage();
-                    if (textbox != null)
-                    {
-                        textbox.SetFontZoomFactor(ZoomFlyoutSlider.Value);
-                    }
-                }
+                TabPageHelper.TabsOrSpaces(tabControl, item.Tag);
+            }
+            else if (sender is RunCommandWindowItem runitem)
+            {
+                TabPageHelper.TabsOrSpaces(tabControl, runitem.Tag);
             }
         }
-        
-        //Rename-flyout//
-        private async void TryRenameFile()
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
         {
-            if (StringBuilder.IsValidFilename(RenameTextBox.Text))
+            WindowHelper.ToggleFullscreen();
+        }
+        private void CompactOverlayMode_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ToggleCompactOverlay();
+        }
+        private void ShowRunCommandWindow_Click(object sender, RoutedEventArgs e)
+        {
+            runCommandWindow.Toggle(tabControl);
+        }
+
+        private void ShowAllTabsFlyout_Opened(object sender, object e)
+        {
+            void update()
             {
-                RenameTextBox.BorderBrush = DefaultValues.CorrectInput_Color;
-                if (CurrentlySelectedTabPage != null)
+                if (ShowAllTabsFlyout.Content is ListView listView)
                 {
-                    if (RenameTextBox.Text != tabpagehelper.GetTabHeader(CurrentlySelectedTabPage))
-                    {
-                        if (await tabactions.RenameFile(RenameTextBox.Text))
-                        {
-                            RenameFlyout.Hide();
-                        }
-                    }
+                    AllTabsFlyout.UpdateFlyout(tabControl, listView);
+                    listView.Tag = null;
+                    listView.Focus(FocusState.Programmatic);
+                    listView.SelectedIndex = tabControl.SelectedIndex > listView.Items.Count ? 0 : -1;
+                }
+            }
+
+            //fixes flyout not showing up on first button press
+            if (ShowAllTabsFlyout == null)
+            {
+                if (sender is Flyout fl)
+                {
+                    ShowAllTabsFlyout = fl;
+                    update();
                 }
             }
             else
             {
-                RenameTextBox.BorderBrush = DefaultValues.WrongInput_Color;
-                RenameFileButton.IsEnabled = false;
-            }
-        }
-        private void RenameTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            e.Handled = true;
-            if (TextTabControl != null && e.Key == VirtualKey.Enter)
-            {
-                TryRenameFile();
-                RenameFlyout.Hide();
-            }
-            if (e.Key == VirtualKey.Escape)
-            {
-                HideFlyoutIfOpened(RenameFlyout);
-            }
-        }
-        private void RenameFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            TryRenameFile();
-        }
-        private void RenameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (sender is TextBox)
-            {
-                TextBox tb = sender as TextBox;
-                if (StringBuilder.IsValidFilename(tb.Text))
+                if (ShowAllTabsFlyout.Content is ListView)
                 {
-                    tb.BorderBrush = DefaultValues.CorrectInput_Color;
-                    RenameFileButton.IsEnabled = true;
-                }
-                else
-                {
-                    tb.BorderBrush = DefaultValues.WrongInput_Color;
-                    RenameFileButton.IsEnabled = false;
+                    update();
                 }
             }
         }
-        private void RenameFlyout_Opened(object sender, object e)
+        private void AllTabsFlyout_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TextControlBox textbox = tabactions.GetTextBoxFromSelectedTabPage();
-            if (textbox != null)
-            {
-                RenameTextBox.Text = textbox.Header;
-                string ext = Path.GetExtension(RenameTextBox.Text);
-                RenameTextBox.Select(0, RenameTextBox.Text.Length - ext.Length);
-            }
-        }
-        private void RenameTextBox_FocusEngaged(Control sender, FocusEngagedEventArgs args)
-        {
-            RenameTextBox.BorderBrush = new SolidColorBrush(Colors.Gray);
-        }
-        private void OpenRenameFlyout()
-        {
-            RenameFlyout.ShowAt(FileNameDisplay);
-        }
-
-        //Go to line-flyout / Go to line dialog//
-        private bool DoGoToLine(TextBox sender)
-        {
-            TextControlBox textbox = tabactions.GetTextBoxFromSelectedTabPage();
-            if (StringBuilder.IsAllNumber(sender.Text) && textbox != null)
-            {
-                if (!sender.Text.Equals("0", StringComparison.Ordinal) && sender.Text.Length != 0)
-                {
-                    int EnteredLineNumber = Convert.ToInt(sender.Text);
-                    if (EnteredLineNumber <= textbox.GetLinesCount && EnteredLineNumber > 0)
-                    {
-                        GoToLineWindow.BorderBrush = new SolidColorBrush(Colors.Gray);
-                        textbox.GoToLine(EnteredLineNumber);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private void GoToLinebuttonClick(object sender, RoutedEventArgs e)
-        {
-            DoGoToLine(LineNumberTextBox);
-        }
-        private void LineNumberTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                DoGoToLine(sender as TextBox);
-            }
-        }
-        private void LineNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (sender is TextBox)
-            {
-                bool succed = false;
-                TextBox tb = sender as TextBox;
-                TextControlBox textbox = tabactions.GetTextBoxFromSelectedTabPage();
-                if (StringBuilder.IsAllNumber(tb.Text) && textbox != null)
-                {
-                    if (!tb.Text.Equals("0", StringComparison.Ordinal) && tb.Text.Length != 0)
-                    {
-                        int EnteredLineNumber = Convert.ToInt(tb.Text);
-                        if (EnteredLineNumber <= textbox.GetLinesCount && EnteredLineNumber > 0)
-                        {
-                            succed = true;
-                        }
-                    }
-                }
-                GoToLineWindow.BorderBrush = succed ? DefaultValues.CorrectInput_Color : DefaultValues.WrongInput_Color;
-
-            }
-        }
-        
-        //Encoding-flyout
-        private void AddEncodingButtonsToStatusbar()
-        {
-            //if the Encodingflyout has more then the two default buttons return and don't add them again
-            if (EncodingFlyout.Items.Count > 2)
+            if (ShowAllTabsFlyout == null)
                 return;
 
-            for (int i = 0; i < Encodings.AllEncodingNames.Count; i++)
+            if (sender is ListView listView && listView.SelectedItem is TabFlyoutItem tabFlyoutItem)
             {
-                var openwithitem = new MenuFlyoutItem
+                //Don't hide the flyout when the tag has a value -> for searching and up/down using arrow keys
+                if (listView.Tag == null)
                 {
-                    Text = Encodings.AllEncodingNames[i]
-                };
-                openwithitem.Click += Openwithitem_Click;
-                OpenWithEncodingButton.Items.Add(openwithitem);
-                var item = new MenuFlyoutItem
-                {
-                    Text = Encodings.AllEncodingNames[i]
-                };
-                item.Click += EncodingButton_Click;
-                EncodingFlyout.Items.Add(item);
-            }
-        }
-        private void EncodingButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is MenuFlyoutItem selecteditem)
-            {
-                if (CurrentlySelectedTabPage_Textbox != null)
-                {
-                    CurrentlySelectedTabPage_Textbox.Encoding = Encodings.StringToEncoding(selecteditem.Text);
-                    tabpagehelper.SetTabModified(CurrentlySelectedTabPage, true);
+                    tabControl.SelectedItem = tabFlyoutItem.Tab;
+
+                    //hide the flyout
+                    ShowAllTabsFlyout.Hide();
                 }
             }
         }
-        private async void Openwithitem_Click(object sender, RoutedEventArgs e)
+        private void AllTabsFlyout_CharacterReceived(UIElement sender, CharacterReceivedRoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem item)
+            if (sender is ListView listView)
             {
-                LoadingProgressRing.Visibility = Visibility.Visible;
-
-                await Task.Delay(100); //idk. why but without it the Progressbar is hidden
-                await tabactions.OpenFileWithEncoding(CurrentlySelectedTabPage, Encodings.StringToEncoding(item.Text));
-                LoadingProgressRing.Visibility = Visibility.Collapsed;
+                AllTabsFlyout.Flyout_CharacterReceived(args.Character, listView);
             }
         }
-    }
+        private void AllTabsFlyout_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (ShowAllTabsFlyout == null)
+                return;
 
-    public class SettingsNavigationParameter
-    {
-        public muxc.TabView Tabcontrol { get; set; }
-        public MainPage Mainpage { get; set; }
-        public string PageToNavigateTo { get; set; } = "";
-    }
-    public class OpenedSecondaryViewItem
-    {
-        public CoreApplicationView CoreApplicationView { get; set; }
-        public ApplicationView ApplicationView { get; set; }
-    }
-    public class CommandLineLaunchNavigationParameter
-    {
-        public string Arguments { get; set; }
-        public string CurrentDirectoryPath { get; set; }
+            if (sender is ListView listView)
+            {
+                if (e.Key == VirtualKey.Enter)
+                {
+                    if (listView.Tag != null && listView.SelectedItem is TabFlyoutItem tabFlyoutItem)
+                        tabControl.SelectedItem = tabFlyoutItem.Tab;
+
+                    //hide the flyout
+                    ShowAllTabsFlyout.Hide();
+                }
+                else if (e.Key == Windows.System.VirtualKey.Down)
+                {
+                    if (listView.SelectedIndex < listView.Items.Count - 1)
+                    {
+                        listView.Tag = "";
+                    }
+                }
+                else if (e.Key == Windows.System.VirtualKey.Up)
+                {
+                    if (listView.SelectedIndex > 0)
+                    {
+                        listView.Tag = "";
+                    }
+                }
+            }
+        }
+
+        private void Statusbar_GoToLineTextbox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                int res = ConvertHelper.ToInt(Statusbar_GoToLineTextbox.Text, -1) - 1;
+                if (res == -1)
+                    return;
+
+                EditActions.GoToLine(currentlySelectedTabPage, res);
+                Statusbar_Line.HideFlyout();
+            }
+        }
     }
 }

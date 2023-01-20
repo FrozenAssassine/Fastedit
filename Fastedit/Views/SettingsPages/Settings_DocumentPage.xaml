@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPages.Settings_DocumentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Fastedit.Controls"
+    xmlns:settings ="using:Fastedit.Settings"
+    mc:Ignorable="d">
+
+    <StackPanel VerticalAlignment="Top">
+        <controls:SetingsItemSeparator Header="Text"/>
+        <controls:SettingsControl Header="Fontfamily" >
+            <controls:SettingsControl.Content>
+                <ComboBox ItemsSource="{x:Bind Fonts}" SelectionChanged="FontFamilyCombobox_SelectionChanged" x:Name="FontFamilyCombobox" Width="120">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock FontFamily="{x:Bind }" Text="{x:Bind}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Fontsize">
+            <controls:SettingsControl.Content>
+                <muxc:NumberBox x:Name="FontSizeNumberBox" Width="120" SpinButtonPlacementMode="Inline" ValueChanged="FontSizeNumberBox_ValueChanged" />
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SetingsItemSeparator Header="Features"/>
+        <controls:SettingsControl Header="Show linenumbers" >
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinenumbersSwitch" Toggled="ShowLinenumbersSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Show linehighlighter">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinehighlighterSwitch" Toggled="ShowLinehighlighterSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Syntaxhighlighting" >
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="EnableSyntaxhighlightingSwitch" Toggled="EnableSyntaxhighlightingSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SetingsItemSeparator Header="Tab key"/>
+        <controls:SettingsControl Header="Use spaces instead tabs(\t)" >
+            <controls:SettingsControl.Content>
+                <ToggleSwitch x:Name="SpacesOrTabsSwitch" Toggled="SpacesOrTabsSwitch_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Number of spaces per tab" >
+            <controls:SettingsControl.Content>
+                <Slider IsEnabled="{x:Bind SpacesOrTabsSwitch.IsOn, Mode=TwoWay}" Value="{x:Bind settings:DefaultValues.NumberOfSpacesPerTab, Mode=OneTime}" StepFrequency="2" Maximum="16" Minimum="2" TickPlacement="Inline" Width="120" x:Name="SpacesPerTabSlider" ValueChanged="SpacesPerTabSlider_ValueChanged"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+    </StackPanel>
+</Page>

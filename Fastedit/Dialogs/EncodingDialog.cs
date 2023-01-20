@@ -1,76 +1,56 @@
-﻿using Fastedit.Controls.Textbox;
-using Fastedit.Core;
-using Fastedit.Extensions;
+﻿using Fastedit.Helper;
+using Fastedit.Storage;
+using Fastedit.Tab;
 using System;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using mucx = Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
     public class EncodingDialog
     {
-        ContentDialog dialog = null;
-        Encoding selectedEncoding = null;
+        private static ComboBox encodingCombobox;
 
-        private int GetIndexOfSelected(ComboBox cb, Encoding enc)
+        public static async Task Show(TabPageItem tab)
         {
-            var name = Encodings.EncodingToString(enc);
-            var lst = cb.Items.ToList();
-            return lst.IndexOf(lst.Find(item => ((ComboBoxItem)item).Content.ToString() == name));
-        }
+            if (tab == null)
+                return;
 
-        public EncodingDialog(mucx.TabViewItem TabPage)
-        {
-            if (TabPage.Content is TextControlBox textbox)
+            //create the combobox:
+            if (encodingCombobox == null)
             {
-                var encodingcombobox = new ComboBox
+                encodingCombobox = new ComboBox
                 {
-                    Width = 150,
+                    Header = "Encoding:",
+                    HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center,
+                    VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center
                 };
-
-                for(int i = 0; i<Encodings.AllEncodingNames.Count; i++)
-                {
-                    encodingcombobox.Items.Add(new ComboBoxItem { Content = Encodings.AllEncodingNames[i] });
-                }
-               
-                encodingcombobox.HorizontalAlignment = HorizontalAlignment.Center;
-                encodingcombobox.VerticalAlignment = VerticalAlignment.Center;
-                encodingcombobox.SelectedIndex = GetIndexOfSelected(encodingcombobox, textbox.Encoding);
-                encodingcombobox.SelectionChanged += delegate
-                {
-                    if (encodingcombobox.SelectedItem is ComboBoxItem item)
-                    {
-                        selectedEncoding = Encodings.StringToEncoding(item.Content.ToString());
-                    }
-                };
-                dialog = new ContentDialog
-                {
-                    Background = DefaultValues.ContentDialogBackgroundColor(),
-                    Foreground = DefaultValues.ContentDialogForegroundColor(),
-                    RequestedTheme = DefaultValues.ContentDialogTheme(),
-                    CornerRadius = DefaultValues.DefaultDialogCornerRadius,
-                    CloseButtonText = AppSettings.GetResourceStringStatic("EncodingDialog_Button_Cancel/Text"),
-                    PrimaryButtonText = AppSettings.GetResourceStringStatic("EncodingDialog_Button_Done/Text"),
-                    Content = encodingcombobox,
-                    Width = 200,
-                    Title = AppSettings.GetResourceStringStatic("EncodingDialog_Title/Text"),
-                };
-                dialog.PrimaryButtonClick += delegate
-                {
-                    if (selectedEncoding != null)
-                    {
-                        textbox.Encoding = selectedEncoding;
-                    }
-                };
+                encodingCombobox.ItemsSource = EncodingHelper.AllEncodingNames;
             }
-        }
-        public async Task ShowDialog()
-        {
-            await dialog.ShowAsync();
+
+            encodingCombobox.SelectedIndex = EncodingHelper.GetIndexByEncoding(tab.Encoding);
+            var dialog = new ContentDialog
+            {
+                Background = DialogHelper.ContentDialogBackground(),
+                Foreground = DialogHelper.ContentDialogForeground(),
+                RequestedTheme = DialogHelper.DialogDesign,
+                Title = "Encoding",
+                Content = encodingCombobox,
+                PrimaryButtonText = "Done",
+                SecondaryButtonText = tab.DatabaseItem.FileToken.Length > 0 ? "Reopen" : "", //only when tab is a local file
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+            };
+            var res = await dialog.ShowAsync();
+            dialog.Content = null;
+
+            if (res == ContentDialogResult.Primary)
+                tab.Encoding = EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex);
+            else if (res == ContentDialogResult.Secondary)
+            {
+                //reopen the file with the encoding specified
+                await OpenFileHelper.ReopenWithEncoding(tab, EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex));
+            }
         }
     }
 }

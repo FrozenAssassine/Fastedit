@@ -1,26 +1,23 @@
 ﻿using Windows.UI.Xaml;
 
-namespace Fastedit.Extensions
+namespace Fastedit.Helper
 {
-    public static class ThemeHelper
+    public class ThemeHelper
     {
-        public static ElementTheme RootTheme
+        public static ElementTheme CurrentTheme
         {
-            get
-            {
-                if (Window.Current.Content is FrameworkElement rootElement)
-                {
-                    return rootElement.RequestedTheme;
-                }
-
-                return ElementTheme.Light;
-            }
             set
             {
                 if (Window.Current.Content is FrameworkElement rootElement)
                 {
                     rootElement.RequestedTheme = value;
                 }
+            }
+            get
+            {
+                if (Window.Current.Content is FrameworkElement rootElement)
+                    return rootElement.RequestedTheme;
+                return ElementTheme.Default;
             }
         }
     }

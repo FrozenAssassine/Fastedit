@@ -4,252 +4,140 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fastedit.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
-    <ScrollViewer HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Width="80" Height="80" Source="ms-appx:///Assets/App_Icon/Icon.png"/>
-                    <StackPanel Margin="20,0,0,5" HorizontalAlignment="Center">
-                        <TextBlock Margin="0,5,0,0" FontSize="24" Text="Fastedit:"/>
-                        <TextBlock FontSize="16" Margin="0,5,0,0" x:Name="VersionDisplay" Text="Version:"/>
-                        <TextBlock FontSize="16" Margin="0,5,0,0" x:Name="DeveloperDisplay" Text="Developer:"/>
-                    </StackPanel>
+    <Grid>
+        <StackPanel>
+            <controls:SetingsItemSeparator/>
+            <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
+                <StackPanel Height="70" Padding="0" Orientation="Horizontal">
+                    <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Width="50" Height="50" Source="ms-appx:///Assets/AppIcon/Icon.png"/>
+                    <TextBlock Text="Fastedit" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 </StackPanel>
-
-            </StackPanel>
-
-            <StackPanel Margin="0,50,0,0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock FontSize="24" Text="NuGet-packages used:" x:Uid="AboutPage_NugetPackagesUsed"/>
-                <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/Microsoft/microsoft-ui-xaml" Content="Microsoft Ui Xaml"/>
-                <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/Microsoft/Win2D" Content="Win2D"/>
-                <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/CommunityToolkit/WindowsCommunityToolkit" Content="Windows Community Toolkit"/>
-                <HyperlinkButton FontSize="16" HorizontalAlignment="Center" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
-            </StackPanel>
-
-            <TextBlock FontSize="24" Margin="0,50,0,0" Text="Other" x:Uid="AboutPage_Other" HorizontalAlignment="Center"/>
-            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <HyperlinkButton BorderThickness="0" Background="{ThemeResource SystemAccentColorDark3}" NavigateUri="https://github.com/FrozenAssassine/Fastedit/issues/new" Content="Report bug | Submit feature" Height="40"  Margin="5" FontSize="16" x:Uid="AboutPage_ReportBugSubmitFeature"/>
-                <Button Background="{ThemeResource SystemAccentColorDark3}" BorderThickness="0" Width="150" Height="40" x:Uid="AboutPage_ContactButton" FontSize="16" Content="Contact" Margin="5">
-                    <Button.Flyout>
-                        <Flyout>
-                            <StackPanel>
-                                <TextBlock x:Uid="AboutPage_ContactViaEmail" FontSize="20" FontWeight="Bold" Text="You can contact me via email:"/>
-                                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" FontSize="16" Text="FasteditSoftware@gmail.com"/>
-                                    <Button ToolTipService.ToolTip="Copy" Click="CopyEmailAddress_Click" VerticalAlignment="Center" FontSize="16" Margin="20,0,0,0" Content="&#xE8C8;" FontFamily="Segoe MDL2 Assets"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" >
-                    <HyperlinkButton Margin="10" NavigateUri="https://www.instagram.com/fastedit.texteditor/">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="40" Height="40" Source="ms-appx:///Assets/SocialIcons/Instagram_Glyph_Gradient_RGB.png"/>
-                        <TextBlock Margin="10,0,0,0" FontSize="30" VerticalAlignment="Center" Text="Instagram"/>
+                <Grid Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Margin="0,0,5,0" Grid.Column="0" Glyph="&#xE946;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock FontSize="16" TextAlignment="Center" Text="Version"/>
+                        <TextBlock TextAlignment="Center" Text="{x:Bind AppVersion}"/>
                     </StackPanel>
-                </HyperlinkButton>
-    
-                <HyperlinkButton Margin="20,0,0,0"  NavigateUri="https://github.com/FrozenAssassine/Fastedit">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="40" x:Name="GithubIconDisplay" Height="40"/>
-                        <TextBlock Margin="10,0,0,0" FontSize="30" VerticalAlignment="Center" Text="Github"/>
+
+                    <FontIcon Margin="0,0,5,0" Grid.Column="3" Glyph="&#xE77B;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                    <StackPanel Grid.Column="4">
+                        <TextBlock FontSize="16" TextAlignment="Center" Text="Developer"/>
+                        <TextBlock TextAlignment="Center" Text="{x:Bind DeveloperName}"/>
                     </StackPanel>
-                </HyperlinkButton> 
-            </StackPanel>
-            
-            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,50,0,20" Fill="Black" Height="3" />
+                </Grid>
+            </Grid>
 
-            <StackPanel Orientation="Vertical" Margin="50,50,50,0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                <RichTextBlock IsTextSelectionEnabled="False" HorizontalAlignment="Center" TextAlignment="left">
-                    
-                    <Paragraph FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content1">Disclaimer</Run>
-                    </Paragraph>
+            <controls:SetingsItemSeparator Header="More"/>
+            <controls:SettingsControl Tag="https://github.com/FrozenAssassine/Fastedit" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE946;" Header="Github" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <controls:SettingsControl.Content>
+                    <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
 
+            <muxc:Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xf6fa;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Additional dependencies used"/>
+                    </StackPanel>
+                </muxc:Expander.Header>
+                <muxc:Expander.Content>
+                    <StackPanel>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/Microsoft/microsoft-ui-xaml" Content="Microsoft Ui Xaml"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/FrozenAssassine/TextControlBox-UWP" Content="TextControlBox"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
+                    </StackPanel>
+                </muxc:Expander.Content>
+            </muxc:Expander>
+            <muxc:Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE9D5;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Changelog"/>
+                    </StackPanel>
+                </muxc:Expander.Header>
+                <muxc:Expander.Content>
+                    <TextBlock Text="{x:Bind ChangelogText}"/>
+                </muxc:Expander.Content>
+            </muxc:Expander>
+            <controls:SetingsItemSeparator Header="Legal"/>
+
+            <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock FontSize="20" VerticalAlignment="Center" Margin="0,4,10,0" Text="&#xE72E;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Privacy Policy"/>
+                    </StackPanel>
+                </muxc:Expander.Header>
+                <RichTextBlock HorizontalAlignment="Center">
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content2">Last updated: January 14, 2022</Run>
+                        <Run  x:Uid="PrivacyPolicy_Part1">By using the app you are consenting to our policies regarding the collection, use and disclosure of personal information set out in this privacy policy.</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="0,25,0,0" FontSize="28" FontWeight="Bold">
-                        <Run x:Uid="Disclaimer_Content3">Interpretation and Definitions</Run>
+                    <Paragraph Margin="0,20,0,0" FontSize="20">
+                        <Run x:Uid="PrivacyPolicy_Title2">Collection of Personal Information</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="20,10,0,0" FontSize="22" FontWeight="SemiBold" >
-                        <Run x:Uid="Disclaimer_Content4">Interpretation</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="16">
+                        <Run x:Uid="PrivacyPolicy_Part2">We do not collect, store, use or share any information, personal or otherwise.</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="20,5,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content5">The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="20">
+                        <Run x:Uid="PrivacyPolicy_Title3">Email</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="20,10,0,0" FontSize="22" FontWeight="SemiBold">
-                        <Run x:Uid="Disclaimer_Content6">Definitions</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="16">
+                        <Run x:Uid="PrivacyPolicy_Part3">If you email the developer for support or other feedback, the emails with email addresses will be retained for quality assurance purposes. The email addresses will be used only to reply to the concerns or suggestions raised and will never be used for any marketing purpose.</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="20,5,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content7">For the purposes of this Disclaimer:</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="20">
+                        <Run x:Uid="PrivacyPolicy_Title4">Disclosure of Personal Information</Run>
                     </Paragraph>
-
-                    <Paragraph Margin="40,15,0,0">•
-                        <Run FontWeight="Bold" x:Uid="Disclaimer_Content8">Company</Run>
-                        <Run x:Uid="Disclaimer_Content9">(referred to as either "the Company", "We", "Us" or "Our" in this Disclaimer) refers to Fastedit.</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="16">
+                        <Run x:Uid="PrivacyPolicy_Part4">We will not disclose your information to any third party except if you expressly consent or where required by law.</Run>
                     </Paragraph>
-
-                    <Paragraph FontSize="15" Margin="40,15,0,0">•
-                        <Run FontWeight="Bold" x:Uid="Disclaimer_Content10">Service</Run>
-                        <Run x:Uid="Disclaimer_Content11">refers to the Application.</Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="20">
+                        <Run x:Uid="PrivacyPolicy_Title5">Contacting Us</Run>
                     </Paragraph>
-
-                    <Paragraph FontSize="15" Margin="40,15,0,0">•
-                        <Run FontWeight="Bold" x:Uid="Disclaimer_Content12">You</Run>
-                        <Run x:Uid="Disclaimer_Content13">
-                            means the individual accessing the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
-                        </Run>
+                    <Paragraph Margin="0,10,0,0" FontSize="16">
+                        <Run x:Uid="PrivacyPolicy_Part5">If you have any questions regarding this privacy policy, you can email</Run>
                     </Paragraph>
-
-                    <Paragraph FontSize="15" Margin="40,15,0,0">•
-                        <Run FontWeight="Bold" x:Uid="Disclaimer_Content14">Application</Run>
-                        <Run x:Uid="Disclaimer_Content15">
-                            means the software program provided by the Company downloaded by You on any electronic device named Fastedit.
-                        </Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content16">Disclaimer</Run>
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,15,0,0">
-                        <Run x:Uid="Disclaimer_Content17">
-                            The information contained on the Service is for general information purposes only.
-                        </Run>
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,15,0,0">
-                        <Run x:Uid="Disclaimer_Content18">
-                            The Company assumes no responsibility for errors or omissions in the contents of the Service.
-                        </Run>
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,15,0,0">
-                        <Run x:Uid="Disclaimer_Content19">
-                            In no event shall the Company be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. The Company reserves the right to make additions, deletions, or modifications to the contents on the Service at any time without prior notice. This Disclaimer has been created with the help of the
-                        </Run>
-                        <Hyperlink NavigateUri="https://www.termsfeed.com/blog/sample-disclaimer-template/">
-                            <Run x:Uid="Disclaimer_Content20"> Disclaimer Template</Run>
-                        </Hyperlink> .
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,10,0,0">
-                        <Run x:Uid="Disclaimer_Content21">
-                            The Company does not warrant that the Service is free of viruses or other harmful components.
-                        </Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content22">
-                            External Links Disclaimer
-                        </Run>
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,10,0,0">
-                        <Run x:Uid="Disclaimer_Content23">
-                            The Service may contain links to external websites that are not provided or maintained by or in any way affiliated with the Company.</Run>
-                    </Paragraph>
-
-                    <Paragraph FontSize="16" Margin="0,10,0,0">
-                        <Run x:Uid="Disclaimer_Content24">
-                            Please note that the Company does not guarantee the accuracy, relevance, timeliness, or completeness of any information on these external websites.</Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content25">Errors and Omissions Disclaimer</Run>
-                    </Paragraph>
-                    
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content26">
-                            The information given by the Service is for general guidance on matters of interest only. Even if the Company takes every precaution to insure that the content of the Service is both current and accurate, errors can occur. Plus, given the changing nature of laws, rules and regulations, there may be delays, omissions or inaccuracies in the information contained on the Service.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content27">
-                            The Company is not responsible for any errors or omissions, or for the results obtained from the use of this information.</Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content28">Fair Use Disclaimer</Run>
-                    </Paragraph>
-                    
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content29">
-                            The Company may use copyrighted material which has not always been specifically authorized by the copyright owner. The Company is making such material available for criticism, comment, news reporting, teaching, scholarship, or research.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content30">
-                            The Company believes this constitutes a "fair use" of any such copyrighted material as provided for in section 107 of the United States Copyright law.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content31">
-                            If You wish to use copyrighted material from the Service for your own purposes that go beyond fair use, You must obtain permission from the copyright owner.</Run>
-                    </Paragraph>
-
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content32">Views Expressed Disclaimer</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content33">
-                            The Service may contain views and opinions which are those of the authors and do not necessarily reflect the official policy or position of any other author, agency, organization, employer or company, including the Company.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content34">
-                            Comments published by users are their sole responsibility and the users will take full responsibility, liability and blame for any libel or litigation that results from something written in or as a direct result of something written in a comment. The Company is not liable for any comment published by users and reserves the right to delete any comment for any reason whatsoever.</Run>
-                    </Paragraph>
-
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content35">No Responsibility Disclaimer</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content36">
-                            The information on the Service is provided with the understanding that the Company is not herein engaged in rendering legal, accounting, tax, or other professional advice and services. As such, it should not be used as a substitute for consultation with professional accounting, tax, legal or other competent advisers.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content37">
-                            In no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever arising out of or in connection with your access or use or inability to access or use the Service.</Run>
-                    </Paragraph>
-
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content38">"Use at Your Own Risk" Disclaimer</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content39">
-                            All information in the Service is provided "as is", with no guarantee of completeness, accuracy, timeliness or of the results obtained from the use of this information, and without warranty of any kind, express or implied, including, but not limited to warranties of performance, merchantability and fitness for a particular purpose.</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content40">
-                            The Company will not be liable to You or anyone else for any decision made or action taken in reliance on the information given by the Service or for any consequential, special or similar damages, even if advised of the possibility of such damages.</Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold" FontSize="32">
-                        <Run x:Uid="Disclaimer_Content41">
-                            Contact Us</Run>
-                    </Paragraph>
-                    <Paragraph Margin="0,20,0,0" FontSize="16">
-                        <Run x:Uid="Disclaimer_Content42">If you have any questions about this Disclaimer, You can contact Us:</Run>
+                    <Paragraph FontSize="16">
+                        <Run>fasteditsoftware@gmail.com</Run>
                     </Paragraph>
                 </RichTextBlock>
-                <StackPanel>
-                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                        <TextBlock FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="16" Text="FasteditSoftware@gmail.com"/>
-                        <Button ToolTipService.ToolTip="Copy" Click="CopyEmailAddress_Click" VerticalAlignment="Center" FontSize="16" Margin="20,0,0,0" Content="&#xE8C8;" FontFamily="Segoe MDL2 Assets"/>
+            </muxc:Expander>
+
+            <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock FontSize="20" VerticalAlignment="Center" Margin="0,4,10,0" Text="&#xF0EF;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Disclaimer"/>
                     </StackPanel>
-                </StackPanel>
-            </StackPanel>
+                </muxc:Expander.Header>
+                <RichTextBlock FontSize="18" IsTextSelectionEnabled="False">
+                    <Paragraph Margin="0,30,0,0">
+                        <Run>
+                            We are doing our best to prepare the content of this app. However, Fastedit cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Fastedit shall not be responsible for any losses and/or damages due to the usage of the information on our app. Our Disclaimer was generated with the help of the App Disclaimer Generator from App-Privacy-Policy.com                 
+                        </Run>
+                    </Paragraph>
+                    <Paragraph Margin="0,30,0,0">
+                        <Run>
+                            By using our app, you hereby consent to our disclaimer and agree to its terms.
+                        </Run>
+                    </Paragraph>
+                    <Paragraph Margin="0,30,0,0">
+                        <Run>
+                            Any links contained in our app may lead to external sites are provided for convenience only. Any information or statements that appeared in these sites or app are not sponsored, endorsed, or otherwise approved by Fastedit. For these external sites, Fastedit cannot be held liable for the availability of, or the content located on or through it. Plus, any losses or damages occurred from using these contents or the internet generally.
+                        </Run>
+                    </Paragraph>
+                </RichTextBlock>
+            </muxc:Expander>
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </Page>
