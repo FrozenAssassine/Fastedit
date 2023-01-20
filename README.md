@@ -1,13 +1,10 @@
  <p align="center">
-    <img src="images/appicon.png" height="150px" width="auto" alt="alternate text">
+    <img src="Fastedit/Assets/AppIcon/Icon.png" height="150px" width="auto" alt="alternate text">
  </p>
  <h1  align="center">Fastedit</h1>
 <div align="center">
      <a href="https://www.microsoft.com/en-us/p/fastedit/9ntq53w18dpw?activetab=pivot:overviewtab">
          <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat">
-    </a>
-    <a href="https://www.instagram.com/fastedit.texteditor/">
-        <img src="https://img.shields.io/badge/Instagram-E4405F?style=flat&logo=instagram&logoColor=white">
     </a>
     <img src="https://img.shields.io/github/stars/FrozenAssassine/Fastedit?style=flat">
     <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/Fastedit?style=flat">
@@ -15,25 +12,22 @@
  </div>
 
 ### What is Fastedit?
-Fastedit is a good looking and easy to use Texteditor for Windows. It is made in C# using UWP.
-You can edit mutliple documents using tabs, move document into its own instances, access your editing options via a Menubar and/or a Dropdown-menu, customize the design, the way you like it. It saves all your documents everytime your close it and reopens them the way you left it. A linehighlighter and linenumbers are also included
+Introducing Fastedit, designed to make editing and organizing your documents effortless. With the ability to open multiple tabs, you can easily edit or view multiple documents at once. The app also features line numbering and custom designs to personalize your experience. A session snapshot feature ensures your work is saved and opens up exactly as you left it. Additionally, our line highlighter and syntax highlighting features make editing code or important information a breeze. Plus, the ability to edit documents in a second instance and a recycle bin to recover deleted files, ensure that you never lose any important work. Upgrade your editing experience with Fastedit.
 
 ### Features:
 - Tabs
-- Markdown preview
-- Menubar
 - Cool designs
+- Syntaxhighlighting
 - Linenumbering
 - Linehighlighter
 - Fast search
 - Secondary view
 - Session snapshot
 - Recyclebin
-- Open via commandline
 
 #
 <div align="center">
-    <img src="images/image1.png" alt="mainimage">
-    <img src="images/image3.jpg" alt="mainimage">
-    <img src="images/image2.jpg" alt="mainimage">
+    <img src="Screenshots/Screenshot (13).png" alt="mainimage">
+    <img src="Screenshots/Screenshot (14).png" alt="mainimage">
+    <img src="Screenshots/Screenshot (15).png" alt="mainimage">
 </div>
