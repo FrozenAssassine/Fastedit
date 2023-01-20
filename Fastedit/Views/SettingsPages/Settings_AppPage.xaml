@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPages.Settings_AppPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls" xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:SetingsItemSeparator/>
+            <controls:SettingsControl Header="Show Menubar">
+                <controls:SettingsControl.Content>
+                    <ToggleSwitch x:Name="ShowMenubarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowMenubar_Toggled"/>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Show Statusbar">
+                <controls:SettingsControl.Content>
+                    <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Language">
+                <controls:SettingsControl.Content>
+                    <ComboBox Width="120" x:Name="LanguageCombobox" SelectionChanged="LanguageCombobox_SelectionChanged">
+                        <ComboBoxItem Content="English" Tag="en-US"/>
+                    </ComboBox>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+        </StackPanel>
+    </Grid>
+</Page>

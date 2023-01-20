@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPages.Settings_Data"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Fastedit.Controls"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <controls:SetingsItemSeparator/>
+        <controls:SettingsControl Header="Import/Export app settings">
+            <controls:SettingsControl.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Export settings" Margin="5,0,0,0" Click="ExportSettingsButton_Click" />
+                    <Button Content="Import settings" Margin="5,0,0,0" Click="ImportSettingsButton_Click" />
+                </StackPanel>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        
+        <controls:SetingsItemSeparator Header="Clear folders"/>
+        <controls:SettingsControl Header="Clear recycle bin files">
+            <controls:SettingsControl.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0" x:Name="recyclebinFilesizeDisplay"/>
+                    <Button Content="Clear" Style="{ThemeResource AccentButtonStyle}">
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel>
+                                    <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items in the Recyclebin will be deleted" Margin="0,0,0,12" />
+                                    <Button Style="{ThemeResource AccentButtonStyle}" Click="ClearRecyclebin_Click" Content="Clear" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        
+        <controls:SettingsControl Header="Clear temporary files">
+            <controls:SettingsControl.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0" x:Name="temporaryFileSizeDisplay"/>
+                    <Button Style="{ThemeResource AccentButtonStyle}" Click="ClearTemporaryFiles_Click" Content="Clear"/>
+                </StackPanel>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+    </StackPanel>
+</Page>

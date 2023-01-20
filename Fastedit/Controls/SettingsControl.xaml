@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="Fastedit.Controls.SettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" >
+
+    <Grid PointerEntered="UserControl_PointerEntered" 
+          PointerExited="UserControl_PointerExited"
+          PointerPressed="mainGrid_PointerPressed" 
+          VerticalAlignment="Stretch" 
+          HorizontalAlignment="Stretch" 
+          MinWidth="{ThemeResource FlyoutThemeMinWidth}" 
+          Background="{ThemeResource ExpanderHeaderBackground}" 
+          CornerRadius="5" 
+          BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" 
+          BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+          Margin="0,5,0,0" 
+          Padding="{StaticResource ExpanderHeaderPadding}" 
+          x:Name="mainGrid">
+
+        <Grid.Resources>
+            <Storyboard x:Name="EnterStoryboard">
+                <DoubleAnimation Storyboard.TargetName="mainGrid" EnableDependentAnimation="True" Storyboard.TargetProperty="Opacity" From="1" To="0.7" Duration="0:0:0.1"/>
+            </Storyboard>
+            <Storyboard x:Name="ExitStoryboard">
+                <DoubleAnimation Storyboard.TargetName="mainGrid" EnableDependentAnimation="True" Storyboard.TargetProperty="Opacity" From="0.7" To="1" Duration="0:0:0.1"/>
+            </Storyboard>
+        </Grid.Resources>
+        
+        <StackPanel Height="70" Padding="0" Orientation="Horizontal" x:Name="headerContent">
+            <FontIcon Margin="0,4,10,0" Glyph="{x:Bind Glyph, Mode=OneWay}" x:Name="iconDisplay" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="{x:Bind Header, Mode=TwoWay}" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <ContentControl Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="contentHost"/>
+    </Grid>
+</UserControl>

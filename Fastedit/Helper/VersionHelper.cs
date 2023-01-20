@@ -1,40 +1,43 @@
-﻿using Fastedit.Extensions;
+﻿using Fastedit.Controls;
+using Fastedit.Settings;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Helper
 {
     public class VersionHelper
     {
-        public static WindowsVersion GetWindowsVersion()
+        private static bool IsOnNewVersion(string version)
         {
-            try
-            {
-                string Version = Environment.OSVersion.ToString();
-                if (Version.Length == 0)
-                    return WindowsVersion.Windows10;
+            string lastSavedVersion = AppSettings.GetSettings(AppSettingsValues.App_Version);
+            AppSettings.SaveSettings(AppSettingsValues.App_Version, version);
 
-                Version = Version.Remove(0, 26);
-                if (Version.Length == 0)
-                    return WindowsVersion.Windows10;
+            //no version saved -> first start
+            if (lastSavedVersion.Length == 0)
+                return false;
 
-                int indexof = Version.IndexOf(".");
-                if (indexof > -1)
-                    Version = Version.Remove(indexof, Version.Length - indexof);
-                int res = 0;
-                int.TryParse(Version, out res);
-                if (res >= 22000)
-                    return WindowsVersion.Windows11;
-                else
-                    return WindowsVersion.Windows10;
-            }
-            catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is ArgumentNullException || ex is InvalidOperationException)
+            if (!version.Equals(lastSavedVersion, StringComparison.Ordinal))
+                return true;
+
+            return false;
+        }
+
+        public static void CheckNewVersion(StackPanel infobarDisplay)
+        {
+            string version = Package.Current.Id.Version.Major + "." +
+                Package.Current.Id.Version.Minor + "." +
+                Package.Current.Id.Version.Build;
+
+            if (IsOnNewVersion(version))
             {
-                return WindowsVersion.Windows10;
+                ShowNewVersionInfo(infobarDisplay, version);
             }
+        }
+
+        private static void ShowNewVersionInfo(StackPanel infobarDisplay, string version)
+        {
+            infobarDisplay.Children.Add(new InfobarMessage("New version", "Welcome to Fastedit version " + version, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
         }
     }
 }

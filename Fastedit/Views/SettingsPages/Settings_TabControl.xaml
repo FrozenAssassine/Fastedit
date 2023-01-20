@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="Fastedit.Views.SettingsPages.Settings_TabControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
+    mc:Ignorable="d">
+ 
+    <StackPanel>
+        <controls:SetingsItemSeparator Header=""/>
+        <controls:SettingsControl Header="Tab sizing mode">
+            <controls:SettingsControl.Content>
+                <ComboBox Width="120" x:Name="TabSizecombobox" SelectionChanged="TabSizecombobox_SelectionChanged">
+                    <ComboBoxItem Content="Equals"/>
+                    <ComboBoxItem Content="Size to title"/>
+                    <ComboBoxItem Content="Compact"/>
+                </ComboBox>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SettingsControl Header="New tab title">
+            <controls:SettingsControl.Content>
+                <TextBox Width="120" x:Name="newTabTitleTextbox" TextChanged="NewTabTitle_TextChanged"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+    </StackPanel>
+</Page>
