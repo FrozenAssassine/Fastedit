@@ -7,6 +7,7 @@ using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
@@ -34,8 +35,7 @@ namespace Fastedit
             this.InitializeComponent();
 
             TabPageHelper.mainPage = this;
-
-            //DesignHelper.LoadDesign(Path.Combine(DefaultValues.DesignPath, "temp.json"));
+            InfoMessages.InfoMessagePanel = infobarDisplay;
 
             //events:
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
@@ -49,12 +49,8 @@ namespace Fastedit
             if (progressWindow == null)
                 progressWindow = new ProgressWindowItem(progressBar, progressInfo);
 
-            InfoMessages.InfoMessagePanel = infobarDisplay;
-
             //Enable auto save database
             AutoDatabaseSaveHelper.RegisterSave();
-
-            Initialise();
         }
 
         //A function, that can be called from anywhere to update the settings
@@ -62,14 +58,22 @@ namespace Fastedit
         {
             SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, null);
         }
-        private void Initialise()
+        private async Task Initialise()
         {
             if (!FirstLoaded)
             {
                 FirstLoaded = true;
 
+                //Create all needed folders when they don't exist:
+                if (!Directory.Exists(DefaultValues.DatabasePath))
+                    Directory.CreateDirectory(DefaultValues.DatabasePath);
+                if (!Directory.Exists(DefaultValues.DesignPath))
+                    Directory.CreateDirectory(DefaultValues.DesignPath);
+
                 //copy the designs only on first start or when forced by user
-                DesignHelper.CopyDefaultDesigns();
+                await DesignHelper.CopyDefaultDesigns();
+
+                await DesignHelper.LoadDesign();
 
                 //Add all the controls, that need to be hidden when in settings
                 ControlsToHideInSettings.Add(mainMenubar);
@@ -94,23 +98,30 @@ namespace Fastedit
             if (CodeLanguageSelector.Items.Count > 1)
                 return;
 
-            foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
+            try
             {
-                var menuItem = new MenuFlyoutItem
+                foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
                 {
-                    Text = item.Value.Name,
-                    Tag = item.Key,
-                };
-                menuItem.Click += CodeLanguage_Click;
-                CodeLanguageSelector.Items.Add(menuItem);
+                    var menuItem = new MenuFlyoutItem
+                    {
+                        Text = item.Value.Name,
+                        Tag = item.Key,
+                    };
+                    menuItem.Click += CodeLanguage_Click;
+                    CodeLanguageSelector.Items.Add(menuItem);
 
-                var runCommandWindowItem = new RunCommandWindowItem
-                {
-                    Command = item.Value.Name,
-                    Tag = item.Key,
-                };
-                runCommandWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
-                RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
+                    var runCommandWindowItem = new RunCommandWindowItem
+                    {
+                        Command = item.Value.Name,
+                        Tag = item.Key,
+                    };
+                    runCommandWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
+                    RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
+                }
+            }
+            catch
+            {
+
             }
 
             var noneItem = new MenuFlyoutItem
@@ -197,6 +208,8 @@ namespace Fastedit
                 TabsLoaded = true;
 
                 progressBar.IsActive = true;
+
+                await Initialise();
 
                 //load the database
                 await TabPageHelper.LoadTabDatabase(tabControl, tabdatabase);

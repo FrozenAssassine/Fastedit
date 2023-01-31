@@ -5,7 +5,12 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,7 +21,7 @@ namespace Fastedit.Helper
     {
         public static FasteditDesign CurrentDesign = null;
 
-        public static void LoadDesign()
+        public static async Task LoadDesign()
         {
             var designName = AppSettings.GetSettings(AppSettingsValues.Settings_DesignName, DefaultValues.DefaultDesignName);
             string path = Path.Combine(DefaultValues.DesignPath, designName);
@@ -28,31 +33,68 @@ namespace Fastedit.Helper
             //When the design could not get loaded, load alternative design:
             if (CurrentDesign == null)
             {
-                Debug.WriteLine("Load default design");
-                CurrentDesign = LoadDefaultDesign();
+                CurrentDesign = await LoadDefaultDesign();
+
+                //When the design still could not get loaded, load some data
+                if (CurrentDesign == null)
+                {
+                    CurrentDesign = new FasteditDesign
+                    {
+                        BackgroundColor = Color.FromArgb(100, 0, 0, 0),
+                        BackgroundType = BackgroundType.Solid,
+                        CursorColor = Color.FromArgb(255, 255, 255, 255),
+                        DialogBackgroundColor = Color.FromArgb(30, 20, 20, 20),
+                        DialogBackgroundType = ControlBackgroundType.Acrylic,
+                        DialogTextColor = Color.FromArgb(255, 255, 255, 255),
+                        LineHighlighterBackground = Color.FromArgb(50, 0, 0, 0),
+                        LineNumberBackground = Color.FromArgb(0, 0, 0, 0),
+                        LineNumberColor = Color.FromArgb(0, 0, 0, 0),
+                        SearchHighlightColor = Color.FromArgb(0, 0, 0, 0),
+                        SelectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
+                        SelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
+                        SelectionColor = Color.FromArgb(0, 0, 0, 0),
+                        StatusbarBackgroundColor = Color.FromArgb(0, 0, 0, 0),
+                        StatusbarBackgroundType = ControlBackgroundType.Acrylic,
+                        StatusbarTextColor = Color.FromArgb(0, 0, 0, 0),
+                        TextBoxBackground = Color.FromArgb(0, 0, 0, 0),
+                        TextboxBackgroundType = ControlBackgroundType.Acrylic,
+                        TextColor = Color.FromArgb(0, 0, 0, 0),
+                        Theme = ElementTheme.Dark,
+                        UnselectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
+                        UnSelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
+                    }; // await LoadDefaultDesign();
+                }
             }
         }
-        public static void CopyDefaultDesigns()
+        public static async Task CopyDefaultDesigns()
         {
             if (AppSettings.GetSettingsAsInt(AppSettingsValues.DesignLoaded) == 0)
             {
                 //the designs are not loaded into the folder
                 AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 1);
 
-                //load them:                
-                var destinationPath = DefaultValues.DesignPath;
-
-                //Check whether the path exists and create it if not
-                if (!Directory.Exists(destinationPath))
-                    Directory.CreateDirectory(destinationPath);
-
-                var files = Directory.GetFiles("Designs");
-                for (int i = 0; i < files.Length; i++)
+                try
                 {
-                    File.Copy(files[i], Path.Combine(destinationPath, Path.GetFileName(files[i])), true);
+                    string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+                    StorageFolder sourceFolder = await StorageFolder.GetFolderFromPathAsync($"{root}\\Assets\\Designs");
+                    StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
+
+                    var files = await sourceFolder.GetFilesAsync();
+                    foreach (var file in files) {
+
+                        if (file != null)
+                        {
+                            await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
+                        }
+                    }
+                }
+                catch
+                {
+                    AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);                
                 }
             }
         }
+
         public static string GetDesingNameFromPath(string path)
         {
             return Path.GetFileName(path);
@@ -73,9 +115,12 @@ namespace Fastedit.Helper
             return null;
         }
 
-        public static FasteditDesign LoadDefaultDesign()
+        public static async Task<FasteditDesign> LoadDefaultDesign()
         {
-            return JsonConvert.DeserializeObject<FasteditDesign>(File.ReadAllText(Path.Combine("Designs" + DefaultValues.DefaultDesignName)));
+            string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+            var file = await StorageFile.GetFileFromPathAsync($"{root}\\Assets\\Designs" + DefaultValues.DefaultDesignName);
+
+            return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file));
         }
 
         public static void SetBackground(Control element, Color color, BackgroundType type)

@@ -1,38 +1,36 @@
 ﻿using Fastedit.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 
 namespace Fastedit.Controls
 {
-    public class InfobarMessage : InfoBar
+    public static class InfobarMessage
     {
-        public InfobarMessage(string title, string message, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 5)
         {
-            Show(title, message, null, severity, showSeconds);
+            Show(infobar, title, message, null, severity, showSeconds);
         }
-        public InfobarMessage(string title, string message, UIElement content, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, UIElement content, InfoBarSeverity severity, int showSeconds = 5)
         {
-            Show(title, message, content, severity, showSeconds);
-        }
-
-        private void Show(string title, string message, UIElement content, InfoBarSeverity severity, int showSeconds = 5)
-        {
-            this.Title = title;
-            this.Message = message;
-            this.Content = content;
-            this.Severity = severity;
-            this.IsOpen = true;
+            infobar.Title = title;
+            infobar.Message = message;
+            infobar.Content = content;
+            infobar.Severity = severity;
+            infobar.IsOpen = true;
             //this.Background = DialogHelper.ContentDialogBackground();
             //this.Foreground = DialogHelper.ContentDialogForeground();
-            this.RequestedTheme = DialogHelper.DialogDesign;
+            infobar.RequestedTheme = DialogHelper.DialogDesign;
+
+            InfoMessages.InfoMessagePanel.Children.Add(infobar);
 
             DispatcherTimer autoCloseTimer = new DispatcherTimer();
             autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);
             autoCloseTimer.Start();
             autoCloseTimer.Tick += delegate
             {
-                this.IsOpen = false;
+                infobar.IsOpen = false;
                 autoCloseTimer.Stop();
             };
         }

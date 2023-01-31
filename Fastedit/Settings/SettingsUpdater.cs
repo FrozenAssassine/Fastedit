@@ -126,11 +126,11 @@ namespace Fastedit.Settings
             }
         }
 
-        public static void UpdateSettings(MainPage mainPage, TabView tabView, Microsoft.UI.Xaml.Controls.MenuBar menuBar, Grid statusbar, FasteditDesign currentDesign)
+        public static async void UpdateSettings(MainPage mainPage, TabView tabView, Microsoft.UI.Xaml.Controls.MenuBar menuBar, Grid statusbar, FasteditDesign currentDesign)
         {
             //Load the desing from file
             if (currentDesign == null)
-                DesignHelper.LoadDesign();
+                await DesignHelper.LoadDesign();
 
             //update the design
             currentDesign = DesignHelper.CurrentDesign;

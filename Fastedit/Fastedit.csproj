@@ -23,10 +23,10 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Auto</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>060B3D422BFABBF8BDDED3DEC51487DBAD4CC468</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>01FF34FCAB2E9004534BA39AA07EB89B5358CFAE</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -121,6 +121,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -332,7 +333,7 @@
     <Content Include="Assets\ExtensionIcons\VB\vb.svg" />
     <Content Include="Assets\ExtensionIcons\XML\xml.png" />
     <Content Include="Assets\ExtensionIcons\XML\xml.svg" />
-    <Content Include="Designs\Design1.json" />
+    <Content Include="Assets\Designs\Design1.json" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Package.StoreAssociation.xml" />
   </ItemGroup>
@@ -409,18 +410,18 @@
       <Version>13.0.2</Version>
     </PackageReference>
     <PackageReference Include="TextControlBox.JuliusKirsch">
-      <Version>1.4.2</Version>
+      <Version>1.5.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Designs\Design2.json" />
-    <Content Include="Designs\Design4.json" />
-    <Content Include="Designs\Design5.json" />
-    <Content Include="Designs\Design3.json" />
-    <Content Include="Designs\Design6.json" />
-    <Content Include="Designs\Design7.json" />
-    <Content Include="Designs\Design8.json" />
-    <Content Include="Designs\Design9.json" />
+    <Content Include="Assets\Designs\Design2.json" />
+    <Content Include="Assets\Designs\Design4.json" />
+    <Content Include="Assets\Designs\Design5.json" />
+    <Content Include="Assets\Designs\Design3.json" />
+    <Content Include="Assets\Designs\Design6.json" />
+    <Content Include="Assets\Designs\Design7.json" />
+    <Content Include="Assets\Designs\Design8.json" />
+    <Content Include="Assets\Designs\Design9.json" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-US\Resources.resw" />
