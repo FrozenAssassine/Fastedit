@@ -17,9 +17,9 @@ namespace Fastedit.Views.SettingsPages
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            DesignGridViewHelper.LoadItems(designGridView);
+            await DesignGridViewHelper.LoadItems(designGridView);
             base.OnNavigatedTo(e);
         }
         private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)

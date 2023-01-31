@@ -1,6 +1,7 @@
 ﻿using Fastedit.Settings;
 using Fastedit.Tab;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -24,12 +25,12 @@ namespace Fastedit.Helper
                 Height = height
             };
         }
-        public static void LoadItems(GridView designGridView, int width = 200, int height = 130)
+        public static async Task LoadItems(GridView designGridView, int width = 200, int height = 130)
         {
             if (!Directory.Exists(DefaultValues.DesignPath))
             {
                 AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, "0");
-                DesignHelper.CopyDefaultDesigns();
+                await DesignHelper.CopyDefaultDesigns();
                 return;
             }
 
@@ -58,10 +59,10 @@ namespace Fastedit.Helper
                 TabPageHelper.mainPage.ApplySettings();
             }
         }
-        public static void UpdateItems(GridView designGridView)
+        public static async void UpdateItems(GridView designGridView)
         {
             designGridView.Items.Clear();
-            LoadItems(designGridView);
+            await LoadItems(designGridView);
         }
     }
 

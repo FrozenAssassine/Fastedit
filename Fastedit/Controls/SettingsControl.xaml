@@ -33,7 +33,7 @@
         </Grid.Resources>
         
         <StackPanel Height="70" Padding="0" Orientation="Horizontal" x:Name="headerContent">
-            <FontIcon Margin="0,4,10,0" Glyph="{x:Bind Glyph, Mode=OneWay}" x:Name="iconDisplay" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <FontIcon Margin="0,4,10,0" Glyph="{x:Bind Glyph}" x:Name="iconDisplay" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <TextBlock Text="{x:Bind Header, Mode=TwoWay}" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </StackPanel>
         <ContentControl Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="contentHost"/>

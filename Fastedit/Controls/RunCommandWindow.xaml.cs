@@ -40,6 +40,7 @@ namespace Fastedit.Controls
             this.Visibility = Visibility.Visible;
             showControlAnimation.Begin();
             searchbox.Focus(FocusState.Programmatic);
+            searchbox_TextChanged(null, null);
         }
         public void Hide()
         {
