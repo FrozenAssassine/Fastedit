@@ -1,6 +1,13 @@
 ﻿Fastedit Changelog:
 
 -------------------------------------------------------
+Version 2.0.1 [01/31/2023]
+	• Fixed a bug where the app crashed on first start
+	• Updated to TextControlBox V1.5.0 
+	• Fixed a bug where the app crashed when a infobar was shown
+	• Fixed a bug where saving a file did some weird things with the file
+
+-------------------------------------------------------
 Version 2.0.0 [01/17/2023]
 	• rebuilt the app from the ground up
 	• faster and way more stable database
@@ -16,7 +23,6 @@ Version 2.0.0 [01/17/2023]
 	• search sometimes has some weird behaviour
 	• replace not implemented yet
 	• Close all not implemented
-
 
 -------------------------------------------------------
 Version 1.6.2 [05/20/2022]
