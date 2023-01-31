@@ -1,6 +1,8 @@
 ﻿using Fastedit.Controls;
 using Fastedit.Tab;
+using Microsoft.UI.Xaml.Controls;
 using System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
@@ -9,27 +11,23 @@ namespace Fastedit.Dialogs
     {
         public static StackPanel InfoMessagePanel = null;
 
-        public static void Add(InfobarMessage message)
-        {
-            InfoMessagePanel.Children.Add(message);
-        }
-        public static void NoAccesToSaveFile() => Add(new InfobarMessage("No access", "No access to write to file", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void NoAccesToReadFile() => Add(new InfobarMessage("No access", "No access to read from file", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void UnhandledException(string message) => Add(new InfobarMessage("Exception", "Unhandled exception: \n" + message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void ClearRecyclebinError() => Add(new InfobarMessage("Clear recyclebin", "Error occured while clearing the recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void DeleteFromRecyclebinError() => Add(new InfobarMessage("Delete from recyclebin", "Error occured while deleting the file from recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void RecyclebinClearSucceed() => Add(new InfobarMessage("Clear recyclebin", "Successfully cleared recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
-        public static void MoveToRecyclebinError() => Add(new InfobarMessage("Move to recyclebin", "Error occured while moving the file to recyclebin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void OpenFromRecyclebinError() => Add(new InfobarMessage("Open from recyclebin", "Error occured while opening the file from the recyclebin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void FileNameInvalidCharacters() => Add(new InfobarMessage("Invalid character", "The text entered contains invalid characters for a file name", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void DesignLoadError(string designName, Exception ex) => Add(new InfobarMessage("Design load failed", "Could not load the design " + designName + "\n" + ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void DetectEncodingError(Exception ex) => Add(new InfobarMessage("Detect encoding", "Could not detect the encoding\n" + ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void SettingsExportSucceed() => Add(new InfobarMessage("Settings export", "Settings successfully exported", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
-        public static void SettingsImportSucceed() => Add(new InfobarMessage("Settings import", "Settings successfully imported", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
-        public static void SettingsExportFailed() => Add(new InfobarMessage("Settings export", "Failed while exporting settings", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void SettingsImportFailed() => Add(new InfobarMessage("Settings import", "Faild while importing settings", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void ClearTemporaryFilesFailed() => Add(new InfobarMessage("Temporary files", "Failed while clearing temporary files", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error));
-        public static void ClearTemporaryFilesSucceed() => Add(new InfobarMessage("Temporary files", "Successfully cleared temporary files", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
+        public static void NoAccesToSaveFile() => new InfoBar().Show("No access", "No access to write to file", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void NoAccesToReadFile() => new InfoBar().Show("No access", "No access to read from file", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void UnhandledException(string message) => new InfoBar().Show("Exception", "Unhandled exception: \n" + message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void ClearRecyclebinError() => new InfoBar().Show("Clear recyclebin", "Error occured while clearing the recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void DeleteFromRecyclebinError() => new InfoBar().Show("Delete from recyclebin", "Error occured while deleting the file from recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void RecyclebinClearSucceed() => new InfoBar().Show("Clear recyclebin", "Successfully cleared recycle bin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+        public static void MoveToRecyclebinError() => new InfoBar().Show("Move to recyclebin", "Error occured while moving the file to recyclebin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void OpenFromRecyclebinError() => new InfoBar().Show("Open from recyclebin", "Error occured while opening the file from the recyclebin", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void FileNameInvalidCharacters() => new InfoBar().Show("Invalid character", "The text entered contains invalid characters for a file name", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void DesignLoadError(string designName, Exception ex) => new InfoBar().Show("Design load failed", "Could not load the design " + designName + "\n" + ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void DetectEncodingError(Exception ex) => new InfoBar().Show("Detect encoding", "Could not detect the encoding\n" + ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void SettingsExportSucceed() => new InfoBar().Show("Settings export", "Settings successfully exported", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+        public static void SettingsImportSucceed() => new InfoBar().Show("Settings import", "Settings successfully imported", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+        public static void SettingsExportFailed() => new InfoBar().Show("Settings export", "Failed while exporting settings", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void SettingsImportFailed() => new InfoBar().Show("Settings import", "Faild while importing settings", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void ClearTemporaryFilesFailed() => new InfoBar().Show("Temporary files", "Failed while clearing temporary files", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+        public static void ClearTemporaryFilesSucceed() => new InfoBar().Show("Temporary files", "Successfully cleared temporary files", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
 
         public static void WelcomeMessage()
         {
@@ -38,7 +36,7 @@ namespace Fastedit.Dialogs
             {
                 TabPageHelper.mainPage.ShowSettings("DesignPage");
             };
-            Add(new InfobarMessage("Welcome to Fastedit", "To customize your experience,\npress the button below", btn, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success, 8));
+            new InfoBar().Show("Welcome to Fastedit", "To customize your experience,\npress the button below", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success, 8);
         }
 
     }

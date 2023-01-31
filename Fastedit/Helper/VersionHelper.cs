@@ -1,5 +1,6 @@
 ﻿using Fastedit.Controls;
 using Fastedit.Settings;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
@@ -37,7 +38,7 @@ namespace Fastedit.Helper
 
         private static void ShowNewVersionInfo(StackPanel infobarDisplay, string version)
         {
-            infobarDisplay.Children.Add(new InfobarMessage("New version", "Welcome to Fastedit version " + version, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success));
+            new InfoBar().Show("New version", "Welcome to Fastedit version " + version, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
         }
     }
 }

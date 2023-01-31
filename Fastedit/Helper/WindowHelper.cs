@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
 
@@ -6,6 +9,21 @@ namespace Fastedit.Helper
 {
     internal class WindowHelper
     {
+        public static async Task<bool> RestartAsync()
+        {
+            var result = await CoreApplication.RequestRestartAsync("Application Restart Programmatically ");
+
+            if (result == AppRestartFailureReason.NotInForeground ||
+                result == AppRestartFailureReason.RestartPending ||
+                result == AppRestartFailureReason.Other)
+            {
+                var msgBox = new MessageDialog("Restart Failed", result.ToString());
+                await msgBox.ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
         private static bool FullScreen(bool Fullscreen)
         {
             try

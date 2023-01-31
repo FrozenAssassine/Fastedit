@@ -131,7 +131,7 @@ namespace Fastedit.Tab
                 }
 
                 tabView.SelectedIndex = -1;
-                await Task.Delay(5); //textbox does not load without the delay
+                await Task.Delay(20); //textbox sometimes does not load without the delay
                 int selectingIndex = tabData.ElementAt(0).DatabaseItem.SelectedIndex;
                 tabView.SelectedIndex = selectingIndex < 0 ? 0 : selectingIndex >= tabView.TabItems.Count ? tabView.TabItems.Count - 1 : selectingIndex;
             }
