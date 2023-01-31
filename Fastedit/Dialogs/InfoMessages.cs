@@ -31,12 +31,12 @@ namespace Fastedit.Dialogs
 
         public static void WelcomeMessage()
         {
-            var btn = new Button { Content = "Designs", Margin = new Windows.UI.Xaml.Thickness(0, 0, 0, 10) };
+            var btn = new Button { Content = "Designs" };
             btn.Click += delegate
             {
                 TabPageHelper.mainPage.ShowSettings("DesignPage");
             };
-            new InfoBar().Show("Welcome to Fastedit", "To customize your experience,\npress the button below", Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success, 8);
+            new InfoBar().Show("Welcome to Fastedit", "To customize your experience,\npress the button below", btn, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success, 8);
         }
 
     }

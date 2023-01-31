@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Fastedit.Controls
 {
@@ -12,11 +13,11 @@ namespace Fastedit.Controls
         {
             Show(infobar, title, message, null, severity, showSeconds);
         }
-        public static void Show(this InfoBar infobar, string title, string message, UIElement content, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, int showSeconds = 5)
         {
             infobar.Title = title;
             infobar.Message = message;
-            infobar.Content = content;
+            infobar.ActionButton = actionButton;
             infobar.Severity = severity;
             infobar.IsOpen = true;
             //this.Background = DialogHelper.ContentDialogBackground();
