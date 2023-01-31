@@ -22,6 +22,7 @@ namespace Fastedit.Storage
                 if (file == null)
                     return false;
 
+                await FileIO.WriteTextAsync(file, "");
                 using (var stream = await file.OpenStreamForWriteAsync())
                 {
                     using (var writer = new StreamWriter(stream, encoding))
@@ -31,7 +32,7 @@ namespace Fastedit.Storage
                     }
                 }
             }
-            catch (IOException)
+            catch (Exception)
             {
                 try
                 {
@@ -44,10 +45,6 @@ namespace Fastedit.Storage
                 {
                     InfoMessages.NoAccesToSaveFile();
                 }
-            }
-            catch (Exception ex)
-            {
-                InfoMessages.UnhandledException(ex.Message);
             }
             return false;
         }
