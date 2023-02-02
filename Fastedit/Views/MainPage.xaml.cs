@@ -231,6 +231,7 @@ namespace Fastedit
         {
             var ctrl = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
             var shift = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+            var menu = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
 
             if (ctrl && args.VirtualKey == Windows.System.VirtualKey.Tab)
                 TabPageHelper.SelectNextTab(tabControl);
@@ -239,6 +240,16 @@ namespace Fastedit
 
             if (ctrl)
             {
+                if (menu)
+                {
+                    switch (args.VirtualKey)
+                    {
+                        case VirtualKey.R:
+                            ApplySettings();
+                            return;
+                    }
+                }
+
                 switch (args.VirtualKey)
                 {
                     case VirtualKey.N:
