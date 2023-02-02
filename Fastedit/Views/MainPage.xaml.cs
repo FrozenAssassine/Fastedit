@@ -38,6 +38,7 @@ namespace Fastedit
             InfoMessages.InfoMessagePanel = infobarDisplay;
 
             //events:
+            this.PointerPressed += MainPage_PointerPressed;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += MainPage_CloseRequested;
             SettingsTabPageHelper.SettingsTabClosed += SettingsUpdater_SettingsTabClosed;
@@ -303,6 +304,14 @@ namespace Fastedit
                     Fullscreen_Click(null, null);
                     break;
             }
+        }
+        private void MainPage_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            //Navigate back and forward using mousebutton 4 and 5
+            if (e.GetCurrentPoint(sender as UIElement).Properties.IsXButton1Pressed)
+                TabPageHelper.SelectPreviousTab(tabControl);
+            else if (e.GetCurrentPoint(sender as UIElement).Properties.IsXButton2Pressed)
+                TabPageHelper.SelectNextTab(tabControl);
         }
 
         //TabControl
