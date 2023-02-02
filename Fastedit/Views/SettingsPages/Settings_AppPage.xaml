@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fastedit.Views.SettingsPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls" xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Fastedit.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -21,14 +23,44 @@
                     <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
+            
+            <muxc:Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0" >
+                <muxc:Expander.Header>
+                    <Grid Height="70">
+                        <TextBlock Margin="10,0,0,0" Text="Statusbar" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </Grid>
+                </muxc:Expander.Header>
+                <muxc:Expander.Content>
+                    <Grid HorizontalAlignment="Stretch" x:Name="StatusbarItemGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
 
-            <controls:SettingsControl Header="Language">
-                <controls:SettingsControl.Content>
-                    <ComboBox Width="120" x:Name="LanguageCombobox" SelectionChanged="LanguageCombobox_SelectionChanged">
-                        <ComboBoxItem Content="English" Tag="en-US"/>
-                    </ComboBox>
-                </controls:SettingsControl.Content>
-            </controls:SettingsControl>
+                        <TextBlock FontSize="16" Text="File name" Grid.Row="0" Grid.Column="0"/>
+                        <ToggleSwitch Tag="0" Grid.Row="0" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+
+                        <TextBlock FontSize="16" Text="Zoom" Grid.Row="1" Grid.Column="0"/>
+                        <ToggleSwitch Tag="1" Grid.Row="1" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+
+                        <TextBlock FontSize="16" Text="Linenumber" Grid.Row="2" Grid.Column="0"/>
+                        <ToggleSwitch Tag="2" Grid.Row="2" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+
+                        <TextBlock FontSize="16" Text="Column" Grid.Row="3" Grid.Column="0"/>
+                        <ToggleSwitch Tag="3" Grid.Row="3" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+
+                        <TextBlock FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
+                        <ToggleSwitch Tag="4" Grid.Row="4" Grid.Column="1"  Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                    </Grid>
+                </muxc:Expander.Content>
+            </muxc:Expander>
         </StackPanel>
     </Grid>
 </Page>

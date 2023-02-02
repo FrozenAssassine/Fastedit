@@ -21,6 +21,7 @@
         public const string Settings_ShowStatusbar = "ShowStatusbar";
         public const string Settings_ShowMenubar = "ShowMenubar";
         public const string Settings_Language = "Language";
+        public const string Settings_StatusbarSorting = "StatusbarSorting";
 
         public const string Settings_TabViewWidthMode = "TabWidthMode";
 
