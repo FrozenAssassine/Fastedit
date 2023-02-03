@@ -318,6 +318,11 @@ namespace Fastedit
         }
         private void MainPage_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            //Dismiss the RunCommandWindow
+            var pos = e.GetCurrentPoint(runCommandWindow).Position;
+            if (pos.X < 0 || pos.Y < 0 || pos.X > runCommandWindow.ActualWidth || pos.Y > runCommandWindow.ActualHeight)
+                runCommandWindow.Hide();
+
             //Navigate back and forward using mousebutton 4 and 5
             if (e.GetCurrentPoint(sender as UIElement).Properties.IsXButton1Pressed)
                 TabPageHelper.SelectPreviousTab(tabControl);
