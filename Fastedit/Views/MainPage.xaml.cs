@@ -79,6 +79,8 @@ namespace Fastedit
                 //Add all the controls, that need to be hidden when in settings
                 ControlsToHideInSettings.Add(mainMenubar);
                 ControlsToHideInSettings.Add(statusbar);
+                ControlsToHideInSettings.Add(searchControl);
+                ControlsToHideInSettings.Add(runCommandWindow);
 
                 //Create additinal controls:
                 CreateMenubarFromLanguage();
@@ -283,6 +285,8 @@ namespace Fastedit
                         FileInfo_Click(null, null);
                         break;
                     case VirtualKey.B:
+                        if (currentlySelectedTabPage == null)
+                            return;
                         runCommandWindow.Toggle(tabControl);
                         break;
                     case VirtualKey.W:
@@ -358,6 +362,7 @@ namespace Fastedit
             }
             else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
             {
+                currentlySelectedTabPage = null;
                 SettingsTabPageHelper.SettingsSelected = true;
                 SettingsTabPageHelper.HideControls();
                 return;
@@ -470,10 +475,16 @@ namespace Fastedit
         }
         private void Search_Click(object sender, RoutedEventArgs e)
         {
+            if (currentlySelectedTabPage == null)
+                return;
+
             searchControl.ShowSearch(currentlySelectedTabPage.textbox);
         }
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
+            if (currentlySelectedTabPage == null)
+                return;
+
             searchControl.ShowReplace(currentlySelectedTabPage.textbox);
         }
         private async void GoToLine_Click(object sender, RoutedEventArgs e)
