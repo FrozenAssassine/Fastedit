@@ -1,7 +1,6 @@
 ﻿using Fastedit.Controls;
 using Fastedit.Helper;
 using Fastedit.Tab;
-using Fastedit.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.UI.Xaml;
@@ -97,7 +96,7 @@ namespace Fastedit.Settings
             {
                 if (statusbar.Children[i] is StatusbarItem item)
                 {
-                    if(i < splitted.Length)
+                    if (i < splitted.Length)
                         item.Visibility = ConvertHelper.BoolToVisibility(splitted[i].Equals("1"));
                     item.Foreground = foreground;
                 }

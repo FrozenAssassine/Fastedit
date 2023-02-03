@@ -65,17 +65,6 @@ namespace Fastedit.Tab
             }
         }
 
-        /*public static async Task<bool> CloseWindow(TabPageItem tab)
-        {
-            Debug.WriteLine("CLose Window: "  +  tab.DatabaseItem.FileName);
-            //Find the AppWindow that matches to the tab
-            var res = AppWindows.Where(x => x.Value == tab);
-            if(res.Count() <= 0) return false;
-
-            await res.ElementAt(0).Key.CloseAsync();
-            return true;
-        }*/
-
         public static void UpdateSettings()
         {
             var gridBackground = new SolidColorBrush(ConvertHelper.ToColor(DesignHelper.CurrentDesign.SelectedTabPageHeaderBackground));

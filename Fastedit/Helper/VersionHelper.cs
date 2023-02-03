@@ -1,11 +1,7 @@
-﻿using Fastedit.Controls;
-using Fastedit.Dialogs;
+﻿using Fastedit.Dialogs;
 using Fastedit.Settings;
-using Fastedit.Tab;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Helper
 {

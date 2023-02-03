@@ -1,13 +1,11 @@
 ﻿using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Navigation;
 
 namespace Fastedit.Helper
@@ -25,7 +23,6 @@ namespace Fastedit.Helper
             {
                 if (args.Kind == ActivationKind.Launch)
                 {
-                    Debug.WriteLine("Launched app without special activation");
                     return true;
                 }
                 /*else if (args.Kind == ActivationKind.CommandLineLaunch)

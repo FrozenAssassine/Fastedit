@@ -1,8 +1,6 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Settings;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Security;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

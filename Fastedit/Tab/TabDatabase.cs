@@ -99,7 +99,6 @@ namespace Fastedit.Tab
 
         public static async Task SaveTempFile(StorageFolder folder, TabPageItem tab)
         {
-            Debug.WriteLine("SaveTempFile: " + tab.DatabaseItem.FileName);
             var file = await folder.CreateFileAsync(tab.DatabaseItem.Identifier, CreationCollisionOption.OpenIfExists);
             await FileIO.WriteTextAsync(file, tab.textbox.GetText());
         }

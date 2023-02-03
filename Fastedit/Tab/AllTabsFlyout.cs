@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -69,8 +68,6 @@ namespace Fastedit.Tab
             if (!timer.IsEnabled)
                 timer.Start();
             typedString += character;
-
-            Debug.WriteLine(typedString);
 
             var matches = listView.Items.Where(e => (e as TabFlyoutItem).Matches(typedString));
             if (matches.Count() > 0)

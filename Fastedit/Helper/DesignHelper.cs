@@ -3,14 +3,10 @@ using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -80,7 +76,8 @@ namespace Fastedit.Helper
                     StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
 
                     var files = await sourceFolder.GetFilesAsync();
-                    foreach (var file in files) {
+                    foreach (var file in files)
+                    {
 
                         if (file != null)
                         {
@@ -90,7 +87,7 @@ namespace Fastedit.Helper
                 }
                 catch
                 {
-                    AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);                
+                    AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);
                 }
             }
         }

@@ -2,7 +2,6 @@
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs

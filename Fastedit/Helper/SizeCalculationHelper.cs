@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fastedit.Helper
 {
@@ -9,7 +7,6 @@ namespace Fastedit.Helper
     {
         public static string SplitSize(ulong size)
         {
-            Debug.WriteLine("SIZE: " + size);
             if (size < 1_000)
                 return size + "B";
             else if (size > 1_000 && size < 1_000_000)

@@ -1,7 +1,6 @@
 ﻿using Fastedit.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 

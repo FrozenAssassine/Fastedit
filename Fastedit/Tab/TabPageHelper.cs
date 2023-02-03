@@ -5,7 +5,6 @@ using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -143,8 +142,6 @@ namespace Fastedit.Tab
             //Close all windows to get the tabs back to the tabcontrol:
             await TabWindowHelper.CloseAllWindows();
 
-            Debug.WriteLine("nbrOfTabs: " + tabView.TabItems.Count);
-
             //Create the file with the tab data:
             tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
 
@@ -161,7 +158,6 @@ namespace Fastedit.Tab
                     }
                 }
             }
-            Debug.WriteLine("Database saved");
 
             progressWindow?.HideProgress();
         }

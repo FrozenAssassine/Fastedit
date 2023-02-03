@@ -1,4 +1,14 @@
-﻿#Version 2.0.1 [01/31/2023]
+﻿#Version 2.1.0 [02/03/2023]
+	• Added statusbar customization (show/hide items)
+	• Added shortcut to reload settings and design [Ctrl + Alt + R]
+	• Added mousebutton 4 and 5 to switch between tabs
+	• Fixed a bug where the search could be opened in settings
+	• Fixed a bug where Quick Access could be opened in settings
+	• Updated changelog visual presentation
+	• Added light dismiss to Quick Access
+
+---
+#Version 2.0.1 [01/31/2023]
 	• Fixed a bug where the app crashed on first start
 	• Updated to TextControlBox V1.5.0 
 	• Fixed a bug where the app crashed when a infobar was shown
