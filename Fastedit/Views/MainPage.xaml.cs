@@ -34,6 +34,8 @@ namespace Fastedit
         {
             this.InitializeComponent();
 
+            AppSettings.SaveSettings(AppSettingsValues.App_Version, "0.0.0");
+
             TabPageHelper.mainPage = this;
             InfoMessages.InfoMessagePanel = infobarDisplay;
 
@@ -224,7 +226,7 @@ namespace Fastedit
                 SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, DesignHelper.CurrentDesign);
 
                 //Show new-version info
-                VersionHelper.CheckNewVersion(infobarDisplay);
+                VersionHelper.CheckNewVersion();
 
                 progressBar.IsActive = false;
             }

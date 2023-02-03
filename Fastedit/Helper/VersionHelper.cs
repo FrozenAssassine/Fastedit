@@ -1,5 +1,7 @@
 ﻿using Fastedit.Controls;
+using Fastedit.Dialogs;
 using Fastedit.Settings;
+using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.ApplicationModel;
@@ -24,7 +26,7 @@ namespace Fastedit.Helper
             return false;
         }
 
-        public static void CheckNewVersion(StackPanel infobarDisplay)
+        public static void CheckNewVersion()
         {
             string version = Package.Current.Id.Version.Major + "." +
                 Package.Current.Id.Version.Minor + "." +
@@ -32,13 +34,8 @@ namespace Fastedit.Helper
 
             if (IsOnNewVersion(version))
             {
-                ShowNewVersionInfo(infobarDisplay, version);
+                InfoMessages.NewVersionInfo(version);
             }
-        }
-
-        private static void ShowNewVersionInfo(StackPanel infobarDisplay, string version)
-        {
-            new InfoBar().Show("New version", "Welcome to Fastedit version " + version, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
         }
     }
 }
