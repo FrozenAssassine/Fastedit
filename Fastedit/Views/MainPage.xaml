@@ -386,7 +386,9 @@
                         <KeyboardAccelerator Key="S" Modifiers="Control,Shift" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Recycle bin" Click="RecycleBin_Click"/>
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Settings" Click="Settings_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1" IsEnabled="False" Modifiers="None"/>
