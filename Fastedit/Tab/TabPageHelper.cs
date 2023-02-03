@@ -5,6 +5,7 @@ using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -71,6 +72,7 @@ namespace Fastedit.Tab
                 progressWindow?.ShowProgress();
                 progressWindow?.SetText("Loading file " + tab.DatabaseItem.FileName + "...");
                 tab.textbox.LoadText(await TabDatabase.ReadTempFile(tab));
+                tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
                 progressWindow?.HideProgress();
                 tab.DataIsLoaded = true;
             }
@@ -110,7 +112,6 @@ namespace Fastedit.Tab
             {
                 while (sequence.MoveNext())
                 {
-                    currentCount++;
                     var tab = sequence.Current;
                     //Either load all tabs or only the selected
                     if (tab.DatabaseItem.HasOwnWindow ||
@@ -127,6 +128,8 @@ namespace Fastedit.Tab
                         await TabWindowHelper.ShowInNewWindow(tabView, tab);
                     else
                         tabView.TabItems.Add(tab);
+
+                    currentCount++;
                 }
 
                 tabView.SelectedIndex = -1;
