@@ -28,7 +28,7 @@ namespace Fastedit.Views.SettingsPages
 
             //Load the statusbar sorting:
             lockSave = true;
-            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting).Split('|');
+            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting, DefaultValues.StatusbarSorting).Split('|');
             for (int i = 0; i < StatusbarItemSorting.Length; i++)
             {
                 StatusbarItemSorting[i] = splitted[i].Equals("1") ? 1 : 0;

@@ -92,7 +92,7 @@ namespace Fastedit.Settings
             statusbar.Background = DesignHelper.CreateBackgroundBrush(ConvertHelper.ToColor(design.StatusbarBackgroundColor), design.StatusbarBackgroundType);
             var foreground = new SolidColorBrush(ConvertHelper.ToColor(design.StatusbarTextColor));
 
-            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting).Split('|');
+            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting, DefaultValues.StatusbarSorting).Split('|');
             for (int i = 0; i < statusbar.Children.Count; i++)
             {
                 if (statusbar.Children[i] is StatusbarItem item)

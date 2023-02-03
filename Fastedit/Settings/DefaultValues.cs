@@ -28,5 +28,6 @@ namespace Fastedit.Settings
         public static string DefaultDesignName = "Design4.json";
         public static Color wrongInputColor = Color.FromArgb(255, 255, 0, 0);
         public static Color correctInputColor = Color.FromArgb(255, 0, 255, 0);
+        public static string StatusbarSorting = "1|1|1|1|1";
     }
 }
