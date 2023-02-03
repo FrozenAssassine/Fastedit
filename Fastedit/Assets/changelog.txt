@@ -1,14 +1,11 @@
-﻿Fastedit Changelog:
-
--------------------------------------------------------
-Version 2.0.1 [01/31/2023]
+﻿#Version 2.0.1 [01/31/2023]
 	• Fixed a bug where the app crashed on first start
 	• Updated to TextControlBox V1.5.0 
 	• Fixed a bug where the app crashed when a infobar was shown
 	• Fixed a bug where saving a file did some weird things with the file
 
--------------------------------------------------------
-Version 2.0.0 [01/17/2023]
+---
+#Version 2.0.0 [01/17/2023]
 	• rebuilt the app from the ground up
 	• faster and way more stable database
 	• syntaxhighlighting
@@ -24,14 +21,14 @@ Version 2.0.0 [01/17/2023]
 	• replace not implemented yet
 	• Close all not implemented
 
--------------------------------------------------------
-Version 1.6.2 [05/20/2022]
+---
+#Version 1.6.2 [05/20/2022]
 	• Added a searchbox to the secondary instance
 	• Fixed very small bugs
 	• Improved search experience
 
--------------------------------------------------------
-Version 1.5.2 [05/06/2022]
+---
+#Version 1.5.2 [05/06/2022]
 	• Added number of lines to fileinfo
 	• Added a compact overlay mode for secondary instance
 	• Improved startup performance mostly for a larger amount of tabs
@@ -40,15 +37,15 @@ Version 1.5.2 [05/06/2022]
 	• Fixed a bug, where you could not open a file using the Windows-rignhtlickmenu,
 	  if the app was already running
 
--------------------------------------------------------
-Version 1.4.2 [04/25/2022]
+---
+#Version 1.4.2 [04/25/2022]
 	• Fixed a bug, where the tabs overlayed the Minimize, Maximize and Close button
 	• Fixed a bug, where a saved document was unsaved after reopening
 	• Added an option, to load a backup of your database
 	• Added an option, to create a backup of your database
 
--------------------------------------------------------
-Version 1.3.2 [04/16/2022]
+---
+#Version 1.3.2 [04/16/2022]
 	• Added surround with function when pressing Control + Q
 	• Change the shortcut for the settings to F1
 	• Added a menubar right below the tabs, you can align it Left, Right, Center, or disable it
@@ -66,21 +63,21 @@ Version 1.3.2 [04/16/2022]
 	• Updated the "Running on new version"- infobar, not to show up on very first start
 	• Added a github button to the About section to link to the Fastedit repository
 
--------------------------------------------------------
-Version 1.2.2 [03/17/2022]
+---
+#Version 1.2.2 [03/17/2022]
 	• Updated the Search and Goto line UI
 	• Added an option to center or align the Search and Goto line dialog left
 	• Added more encodings
 	• Added open with Encoding
 	• Fixed a bug which always closed the selected tab, also when you closed another
 	
--------------------------------------------------------
-Version 1.1.2 [03/02/2022]
+---
+#Version 1.1.2 [03/02/2022]
 	• Fixed a minor bug which caused the app to crashes
 	  when opening settings when they were already opened
 
--------------------------------------------------------
-Version 1.1.1 - [03/01/2022]
+---
+#Version 1.1.1 - [03/01/2022]
 
 - Features and improvements:
 	• Added markdown preview with customizable preview-window position
@@ -99,8 +96,8 @@ Version 1.1.1 - [03/01/2022]
 	• Fixed a bug, where the checked indicator of the Wordwrap button
 	  was reversed
 
--------------------------------------------------------
-Version 1.0.1  -  02/09/2022
+---
+#Version 1.0.1  -  02/09/2022
 
 - Features and improvements:
 	• Added the ability to expand the current Document 
@@ -128,5 +125,5 @@ Version 1.0.1  -  02/09/2022
 	• Removed the ability to export and import the database
 	  because it caused too many crashes -> I will add this in the future
 
--------------------------------------------------------
-Version 1.0.0  -  01/24/2022
+---
+#Version 1.0.0  -  01/24/2022

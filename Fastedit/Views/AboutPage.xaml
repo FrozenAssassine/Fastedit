@@ -59,7 +59,7 @@
                     </StackPanel>
                 </muxc:Expander.Content>
             </muxc:Expander>
-            <muxc:Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+            <muxc:Expander HorizontalContentAlignment="Stretch" Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <muxc:Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE9D5;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -67,7 +67,9 @@
                     </StackPanel>
                 </muxc:Expander.Header>
                 <muxc:Expander.Content>
-                    <TextBlock Text="{x:Bind ChangelogText}"/>
+                    <ScrollViewer HorizontalAlignment="Stretch" MaxHeight="400"  HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                        <RichTextBlock HorizontalAlignment="Stretch" x:Name="ChangelogDisplay"/>
+                    </ScrollViewer>
                 </muxc:Expander.Content>
             </muxc:Expander>
             <controls:SetingsItemSeparator Header="Legal"/>
