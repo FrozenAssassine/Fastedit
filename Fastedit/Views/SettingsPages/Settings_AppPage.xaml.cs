@@ -1,5 +1,8 @@
-﻿using Fastedit.Settings;
+﻿using Fastedit.Helper;
+using Fastedit.Settings;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Security;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,6 +15,9 @@ namespace Fastedit.Views.SettingsPages
     /// </summary>
     public sealed partial class Settings_AppPage : Page
     {
+        int[] StatusbarItemSorting = new int[] { 0, 0, 0, 0, 0 };
+        bool lockSave = false;
+
         public Settings_AppPage()
         {
             this.InitializeComponent();
@@ -19,7 +25,22 @@ namespace Fastedit.Views.SettingsPages
             //load:
             ShowMenubarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowMenubar, true);
             ShowStatusbarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowStatusbar, true);
-            LanguageCombobox.SelectedItem = LanguageCombobox.Items.Where(x => (x as ComboBoxItem).Tag.ToString() == AppSettings.GetSettings(AppSettingsValues.Settings_Language));
+
+            //Load the statusbar sorting:
+            lockSave = true;
+            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting).Split('|');
+            for (int i = 0; i < StatusbarItemSorting.Length; i++)
+            {
+                StatusbarItemSorting[i] = splitted[i].Equals("1") ? 1 : 0;
+
+                var res = StatusbarItemGrid.Children.FirstOrDefault(x => (x is ToggleSwitch tsw) && ConvertHelper.ToInt(tsw.Tag, -1) == i);
+                if (res == default(UIElement))
+                    continue;
+
+                if (res is ToggleSwitch sw)
+                    sw.IsOn = StatusbarItemSorting[i] == 1;
+            }
+            lockSave = false;
         }
 
         private void ShowStatusbar_Toggled(object sender, RoutedEventArgs e)
@@ -32,11 +53,26 @@ namespace Fastedit.Views.SettingsPages
             AppSettings.SaveSettings(AppSettingsValues.Settings_ShowMenubar, ShowMenubarToggleSwitch.IsOn);
         }
 
-        private void LanguageCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Statusbar_ShowItem_Toggled(object sender, RoutedEventArgs e)
         {
-            if (LanguageCombobox.SelectedItem is ComboBoxItem item)
+            if (lockSave)
+                return;
+
+            if (sender is ToggleSwitch swt && swt.Tag != null)
             {
-                AppSettings.SaveSettings(AppSettingsValues.Settings_Language, item.Tag);
+                int itemIndex = ConvertHelper.ToInt(swt.Tag, -1);
+                if (itemIndex < 0)
+                    return;
+
+                StatusbarItemSorting[itemIndex] = swt.IsOn ? 1 : 0;
+
+                string arrayStr = "";
+                for (int i = 0; i < StatusbarItemSorting.Length; i++)
+                {
+                    arrayStr += StatusbarItemSorting[i] + "|";
+                }
+
+                AppSettings.SaveSettings(AppSettingsValues.Settings_StatusbarSorting, arrayStr);
             }
         }
     }
