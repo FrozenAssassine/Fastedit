@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <muxc:NavigationView Margin="0,15,0,0" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" x:Name="navigationView" ItemInvoked="NavigationView_ItemInvoked">
+        <muxc:NavigationView OpenPaneLength="200" Margin="0,15,0,0" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" x:Name="navigationView" ItemInvoked="NavigationView_ItemInvoked">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Content="App" Tag="AppPage" >
                     <muxc:NavigationViewItem.Icon>
