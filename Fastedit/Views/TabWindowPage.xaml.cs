@@ -1,4 +1,5 @@
-﻿using Fastedit.Helper;
+﻿using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Fastedit.Storage;
 using Fastedit.Tab;
 using System;
@@ -61,6 +62,9 @@ namespace Fastedit.Views
         }
         private async void Open_Click(object sender, RoutedEventArgs e)
         {
+            if (tab.DatabaseItem.IsModified && !await AskSaveDialog.Show(tab, this.XamlRoot))
+                return;
+
             await OpenFileHelper.OpenFileForTab(tab);
         }
 
