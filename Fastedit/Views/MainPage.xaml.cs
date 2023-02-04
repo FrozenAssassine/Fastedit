@@ -285,7 +285,7 @@ namespace Fastedit
                         FileInfo_Click(null, null);
                         break;
                     case VirtualKey.B:
-                        if (currentlySelectedTabPage == null)
+                        if (SettingsTabPageHelper.SettingsPageOpen)
                             return;
                         runCommandWindow.Toggle(tabControl);
                         break;
@@ -367,6 +367,9 @@ namespace Fastedit
                 SettingsTabPageHelper.HideControls();
                 return;
             }
+
+            if (tabControl.TabItems.Count == 0)
+                currentlySelectedTabPage = null;
 
             //show hidden controls
             if (!SettingsTabPageHelper.SettingsSelected)
