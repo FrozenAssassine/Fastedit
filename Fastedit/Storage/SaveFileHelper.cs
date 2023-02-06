@@ -53,6 +53,10 @@ namespace Fastedit.Storage
             if (tab == null)
                 return false;
 
+            //the textbox does not has any data when the tab is not loaded -> file will be emty: (#77)
+            if (!tab.DataIsLoaded)
+                await TabPageHelper.LoadUnloadedTab(tab);
+
             //file was already saved
             if (tab.DatabaseItem.FileToken.Length > 0)
             {
