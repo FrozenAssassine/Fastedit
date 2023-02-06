@@ -10,6 +10,11 @@
     <Page.Resources>
         <DataTemplate x:Key="DesignGridViewItemTemplate_Large" x:DataType="helper:DesignGridViewItem">
             <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
+                <Grid.ContextFlyout>
+                    <MenuFlyout >
+                        <MenuFlyoutItem Text="Edit" Click="EditDesign_Click" Tag="{x:Bind DesignName}"/>
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
                 <Rectangle Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{x:Bind TabPageBackground}"/>
                 <Rectangle Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Left" Fill="{x:Bind LineNumberBackground}"/>
                 <Grid Background="{x:Bind TabPageBackground}" Width="40" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,0,0"/>

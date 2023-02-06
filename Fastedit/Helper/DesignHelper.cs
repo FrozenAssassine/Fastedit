@@ -3,7 +3,10 @@ using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
@@ -120,6 +123,20 @@ namespace Fastedit.Helper
             return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file));
         }
 
+        public static async Task<bool> SaveDesign(FasteditDesign design, StorageFile file)
+        {
+            try
+            {
+                string data = JsonConvert.SerializeObject(design);
+                await FileIO.WriteTextAsync(file, data);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static void SetBackground(Control element, Color color, BackgroundType type)
         {
             if (element == null)
@@ -176,7 +193,7 @@ namespace Fastedit.Helper
             return null;
         }
     }
-    public class FasteditDesign
+    public class FasteditDesign 
     {
         public ElementTheme Theme { get; set; }
         public Color? BackgroundColor { get; set; }
