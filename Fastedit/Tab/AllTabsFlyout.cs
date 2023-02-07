@@ -1,6 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Fastedit.Helper;
+using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Windows.Globalization.DateTimeFormatting;
+using Windows.Networking.NetworkOperators;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,46 +17,16 @@ namespace Fastedit.Tab
 
         public static void UpdateFlyout(TabView tabView, ListView listView)
         {
-            //remove items that are not getting used
-            while (listView.Items.Count > tabView.TabItems.Count)
+            List<TabFlyoutItem> items = new List<TabFlyoutItem>(tabView.TabItems.Count - (SettingsTabPageHelper.SettingsPageOpen ? 1 : 0));
+            foreach (var tab in tabView.TabItems)
             {
-                listView.Items.RemoveAt(listView.Items.Count - 1);
+                if (!SettingsTabPageHelper.IsSettingsPage(tab))
+                {
+                    items.Add(new TabFlyoutItem { Tab = tab as TabPageItem });
+                }
             }
 
-            //only update the names on same length
-            if (listView.Items.Count == tabView.TabItems.Count)
-            {
-                for (int i = 0; i < tabView.TabItems.Count; i++)
-                {
-                    if (tabView.TabItems[i] is TabPageItem tab && listView.Items[i] is TabFlyoutItem tabFlyoutItem)
-                    {
-                        tabFlyoutItem.Tab = tab;
-                    }
-                }
-            }
-            else if (listView.Items.Count < tabView.TabItems.Count)
-            {
-                //replace all possible ones
-                for (int i = 0; i < listView.Items.Count; i++)
-                {
-                    if (tabView.TabItems[i] is TabPageItem tab && listView.Items[i] is TabFlyoutItem tabFlyoutItem)
-                    {
-                        tabFlyoutItem.Tab = tab;
-                    }
-                }
-
-                //create new ones
-                for (int i = listView.Items.Count; i < tabView.TabItems.Count; i++)
-                {
-                    if (tabView.TabItems[i] is TabPageItem tab)
-                    {
-                        listView.Items.Add(new TabFlyoutItem
-                        {
-                            Tab = tab
-                        });
-                    }
-                }
-            }
+            listView.ItemsSource = items;
         }
         //type to search
         public static void Flyout_CharacterReceived(char character, ListView listView)
