@@ -1,8 +1,8 @@
 ﻿#Version 2.1.1 [02/07/2023]
-	• Fixed a bug where the settings was visible in open tab flyout
+	• Fixed a bug where the settings were visible in the open tab flyout
 	• Fixed a bug where the quick access flyout did not resize properly
-	• Fixed a bug where closing a not loaded tab, caused an emty file to be saved
-	• Fixed a bug that let user open a file in undocked tab without ask to save
+	• Fixed a bug where closing a not loaded tab, caused an empty file to be saved
+	• Fixed a bug that lets the user open a file in undocked tab without asking to save
 	• Renamed headline in settings from Design to Designs
 
 ---
