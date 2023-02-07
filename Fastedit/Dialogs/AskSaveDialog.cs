@@ -2,16 +2,18 @@
 using Fastedit.Tab;
 using System;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
     public class AskSaveDialog
     {
-        public static async Task<bool> Show(TabPageItem tab)
+        public static async Task<bool> Show(TabPageItem tab, XamlRoot root = null)
         {
             var SaveDialog = new ContentDialog
             {
+                XamlRoot = root,
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
