@@ -549,7 +549,7 @@
 
         <controls:SearchControl Visibility="Collapsed" Margin="0,50,0,0" HorizontalAlignment="Center" Width="350" x:Name="searchControl"/>
         
-        <controls:RunCommandWindow x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" Width="500" Height="300">
+        <controls:RunCommandWindow x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
             <controls:RunCommandWindow.Items>
                 <controls:RunCommandWindowItem Command="Close tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
                 <controls:RunCommandWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_CodeLanguages"/>
