@@ -249,6 +249,8 @@ namespace Fastedit
                         case VirtualKey.R:
                             ApplySettings();
                             return;
+                        default:
+                            return;
                     }
                 }
 
