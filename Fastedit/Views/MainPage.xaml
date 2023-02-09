@@ -298,19 +298,8 @@
                                 <primitiveContract7Present:TabViewListView Style="{StaticResource TabViewListViewStyle1}" x:Name="TabListView" AllowDrop="{TemplateBinding AllowDropTabs}" CanReorderItems="{TemplateBinding CanReorderTabs}" Grid.Column="1" CanDragItems="{TemplateBinding CanDragTabs}" ItemTemplate="{TemplateBinding TabItemTemplate}" ItemsSource="{TemplateBinding TabItemsSource}" ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}" Padding="{TemplateBinding Padding}"/>
                                 <Border Grid.Column="2" Padding="{ThemeResource TabViewItemAddButtonContainerPadding}" VerticalAlignment="Bottom" Visibility="{Binding IsAddTabButtonVisible, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <muxc:SplitButton VerticalAlignment="Center" FontSize="12" Click="AddTabButton_Click" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" ToolTipService.ToolTip="Show all Tabs (Type to search)" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" x:Name="AddButton" Command="{TemplateBinding AddTabButtonCommand}" CommandParameter="{TemplateBinding AddTabButtonCommandParameter}" HorizontalAlignment="Center" HighContrastAdjustment="None" IsTextScaleFactorEnabled="False">
-                                       <muxc:SplitButton.Flyout>
-                                            <Flyout Opened="ShowAllTabsFlyout_Opened" ShowMode="TransientWithDismissOnPointerMoveAway" AllowFocusOnInteraction="True" LightDismissOverlayMode="Off" Placement="Bottom">
-                                                <ListView UseSystemFocusVisuals="False" MaxWidth="250" PreviewKeyDown="AllTabsFlyout_KeyDown" CharacterReceived="AllTabsFlyout_CharacterReceived" SelectionChanged="AllTabsFlyout_SelectionChanged">
-                                                    <ListView.ItemTemplate>
-                                                        <DataTemplate x:DataType="tab:TabFlyoutItem">
-                                                            <Grid Height="40">
-                                                                <TextBlock Text="{x:Bind Tab.DatabaseItem.FileName}" x:Phase="1" Margin="0,5,0,0" VerticalAlignment="Top"/>
-                                                                <TextBlock Text="{x:Bind Tab.DatabaseItem.FilePath}" Foreground="Gray" FontSize="9" VerticalAlignment="Bottom" Margin="0,10,0,5" x:Phase="1" ToolTipService.ToolTip="{x:Bind Tab.DatabaseItem.FilePath}"/>
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ListView.ItemTemplate>
-                                                </ListView>
-                                            </Flyout>
+                                        <muxc:SplitButton.Flyout>
+                                            <controls:VerticalTabsFlyoutControl x:Name="verticalTabsFlyout"/>
                                         </muxc:SplitButton.Flyout>
                                     </muxc:SplitButton>
                                 </Border>

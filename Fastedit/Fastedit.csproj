@@ -158,6 +158,9 @@
     <Compile Include="Controls\StatusbarItem.xaml.cs">
       <DependentUpon>StatusbarItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VerticalTabsFlyoutControl.xaml.cs">
+      <DependentUpon>VerticalTabsFlyoutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AskSaveDialog.cs" />
     <Compile Include="Dialogs\DialogHelper.cs" />
     <Compile Include="Dialogs\EncodingDialog.cs" />
@@ -183,7 +186,6 @@
     <Compile Include="Settings\SettingsImportExport.cs" />
     <Compile Include="Settings\SettingsUpdater.cs" />
     <Compile Include="Storage\TemporaryFilesHandler.cs" />
-    <Compile Include="Tab\AllTabsFlyout.cs" />
     <Compile Include="Tab\TabFlyout.cs" />
     <Compile Include="Tab\TabWindowHelper.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
@@ -362,6 +364,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\VerticalTabsFlyoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -428,6 +434,12 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

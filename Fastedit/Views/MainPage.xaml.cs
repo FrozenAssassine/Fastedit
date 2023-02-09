@@ -7,6 +7,7 @@ using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
@@ -27,8 +28,9 @@ namespace Fastedit
         bool FirstLoaded = false;
         bool TabsLoaded = false;
         public List<FrameworkElement> ControlsToHideInSettings = new List<FrameworkElement>();
-        Flyout ShowAllTabsFlyout = null;
         ProgressWindowItem progressWindow;
+        public VerticalTabsFlyoutControl verticalTabsFlyout = null;
+        public TabView tabView => tabControl;
 
         public MainPage()
         {
@@ -338,10 +340,13 @@ namespace Fastedit
         private void AddTabButton_Click(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
         {
             TabPageHelper.AddNewTab(tabControl, true);
+
+            verticalTabsFlyout?.UpdateFlyoutIfOpen();
         }
         private async void TabView_CloseTabButtonClick(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             await TabPageHelper.CloseTab(tabControl, args.Item);
+            verticalTabsFlyout?.UpdateFlyoutIfOpen();
         }
         private async void TabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -399,6 +404,7 @@ namespace Fastedit
         //File
         private void NewFile_Click(object sender, RoutedEventArgs e)
         {
+            
             TabPageHelper.AddNewTab(tabControl, true);
         }
         private async void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -499,6 +505,7 @@ namespace Fastedit
         private async void CloseTab_Click(object sender, RoutedEventArgs e)
         {
             await TabPageHelper.CloseTab(tabControl, currentlySelectedTabPage);
+            verticalTabsFlyout?.UpdateFlyoutIfOpen();
         }
         private async void FileInfo_Click(object sender, RoutedEventArgs e)
         {
@@ -552,92 +559,6 @@ namespace Fastedit
         private void ShowRunCommandWindow_Click(object sender, RoutedEventArgs e)
         {
             runCommandWindow.Toggle(tabControl);
-        }
-
-        private void ShowAllTabsFlyout_Opened(object sender, object e)
-        {
-            void update()
-            {
-                if (ShowAllTabsFlyout.Content is ListView listView)
-                {
-                    AllTabsFlyout.UpdateFlyout(tabControl, listView);
-                    listView.Tag = null;
-                    listView.Focus(FocusState.Programmatic);
-                    listView.SelectedIndex = tabControl.SelectedIndex > listView.Items.Count ? 0 : -1;
-                }
-            }
-
-            //fixes flyout not showing up on first button press
-            if (ShowAllTabsFlyout == null)
-            {
-                if (sender is Flyout fl)
-                {
-                    ShowAllTabsFlyout = fl;
-                    update();
-                }
-            }
-            else
-            {
-                if (ShowAllTabsFlyout.Content is ListView)
-                {
-                    update();
-                }
-            }
-        }
-        private void AllTabsFlyout_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ShowAllTabsFlyout == null)
-                return;
-
-            if (sender is ListView listView && listView.SelectedItem is TabFlyoutItem tabFlyoutItem)
-            {
-                //Don't hide the flyout when the tag has a value -> for searching and up/down using arrow keys
-                if (listView.Tag == null)
-                {
-                    tabControl.SelectedItem = tabFlyoutItem.Tab;
-
-                    //hide the flyout
-                    ShowAllTabsFlyout.Hide();
-                }
-            }
-        }
-        private void AllTabsFlyout_CharacterReceived(UIElement sender, CharacterReceivedRoutedEventArgs args)
-        {
-            if (sender is ListView listView)
-            {
-                AllTabsFlyout.Flyout_CharacterReceived(args.Character, listView);
-            }
-        }
-        private void AllTabsFlyout_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (ShowAllTabsFlyout == null)
-                return;
-
-            if (sender is ListView listView)
-            {
-                if (e.Key == VirtualKey.Enter)
-                {
-                    if (listView.Tag != null && listView.SelectedItem is TabFlyoutItem tabFlyoutItem)
-                        tabControl.SelectedItem = tabFlyoutItem.Tab;
-
-                    //hide the flyout
-                    ShowAllTabsFlyout.Hide();
-                }
-                else if (e.Key == Windows.System.VirtualKey.Down)
-                {
-                    if (listView.SelectedIndex < listView.Items.Count - 1)
-                    {
-                        listView.Tag = "";
-                    }
-                }
-                else if (e.Key == Windows.System.VirtualKey.Up)
-                {
-                    if (listView.SelectedIndex > 0)
-                    {
-                        listView.Tag = "";
-                    }
-                }
-            }
         }
 
         private void Statusbar_GoToLineTextbox_KeyDown(object sender, KeyRoutedEventArgs e)
