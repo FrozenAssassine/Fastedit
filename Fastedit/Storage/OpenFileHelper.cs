@@ -110,7 +110,6 @@ namespace Fastedit.Storage
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
             picker.FileTypeFilter.Add("*");
 
             bool res = true;
@@ -148,7 +147,6 @@ namespace Fastedit.Storage
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
             picker.FileTypeFilter.Add("*");
 
             var file = await picker.PickSingleFileAsync();
@@ -163,7 +161,6 @@ namespace Fastedit.Storage
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
             picker.FileTypeFilter.Add(extension);
 
             return await picker.PickSingleFileAsync();

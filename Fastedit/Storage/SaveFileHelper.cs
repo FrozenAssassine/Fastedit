@@ -84,7 +84,6 @@ namespace Fastedit.Storage
                 return false;
 
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
-            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
 
             StorageFile OpenedFile = null;
             if (tab.DatabaseItem.FileToken.Length > 0)
@@ -148,7 +147,6 @@ namespace Fastedit.Storage
         public async static Task<StorageFile> PickFile(string fileName, string extension, string extensionDisplayName)
         {
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
-            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
             savePicker.FileTypeChoices.Add(extensionDisplayName, new List<string>() { extension });
 
             return await savePicker.PickSaveFileAsync();
