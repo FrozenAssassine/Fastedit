@@ -27,7 +27,11 @@ namespace Fastedit.Dialogs
         public static void SettingsImportFailed() => new InfoBar().Show("Settings import", "Faild while importing settings", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesFailed() => new InfoBar().Show("Temporary files", "Failed while clearing temporary files", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesSucceed() => new InfoBar().Show("Temporary files", "Successfully cleared temporary files", InfoBarSeverity.Success);
-
+        public static void DeleteDesignError() => new InfoBar().Show("Delete design", "Could not delete design", InfoBarSeverity.Error);
+        public static void ImportDesignError() => new InfoBar().Show("Import design", "Could not import design", InfoBarSeverity.Error);
+        public static void ExportDesignError() => new InfoBar().Show("Import design", "Could not export design", InfoBarSeverity.Error);
+        public static void OneDesignNeedsToBeLeft() => new InfoBar().Show("Could not delete", "Could not delete the design, because there always has to be at least one", InfoBarSeverity.Warning);
+        
         public static void WelcomeMessage()
         {
             var btn = new Button { Content = "Designs" };
