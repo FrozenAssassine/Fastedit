@@ -1,11 +1,17 @@
-﻿using Fastedit.Tab;
+﻿using Fastedit.Dialogs;
+using Fastedit.Storage;
+using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Navigation;
 
 namespace Fastedit.Helper
@@ -25,27 +31,19 @@ namespace Fastedit.Helper
                 {
                     return true;
                 }
-                /*else if (args.Kind == ActivationKind.CommandLineLaunch)
+                else if (args.Kind == ActivationKind.CommandLineLaunch)
                 {
-
-                    return false;
-                    var handler = args as CommandLineActivatedEventArgs;
-                    if (handler != null)
+                    if (args is CommandLineActivatedEventArgs handler)
                     {
-                        await new MessageDialog(handler.Operation.Arguments + ":" + handler.Operation.CurrentDirectoryPath, "").ShowAsync();
+                        var cmd_args = handler.Operation.Arguments.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                        string cmd_dir = handler.Operation.CurrentDirectoryPath;
 
-                        //var file = await HandleCommandLineLaunch(handler.Operation);
-                        //if (file == null)
-                        //    return false;
-
-                        return false;
-                        //return await TabPageHelper.OpenFile(tabView, file);
+                        await HandleCommandLineLaunch(tabView, cmd_args, cmd_dir);
                     }
-                }*/
+                }
                 else if (args.Kind == ActivationKind.File)
                 {
-                    var handler = args as FileActivatedEventArgs;
-                    if (handler != null)
+                    if (args is FileActivatedEventArgs handler)
                     {
                         return await TabPageHelper.OpenFiles(tabView, handler.Files);
                     }
@@ -55,36 +53,56 @@ namespace Fastedit.Helper
         }
 
         //Handle the commandline parameters
-        public static async Task<StorageFile> HandleCommandLineLaunch(CommandLineActivationOperation operation)
+        public static async Task HandleCommandLineLaunch(TabView tabView, string[] args, string curpath)
         {
             try
             {
-                if (operation.Arguments.Length < 1)
-                    return null;
+                if (args.Length == 0)
+                    return;
 
-                string path = GetAbsolutePath(operation.Arguments, operation.CurrentDirectoryPath);
-                if (path == null || path.Length < 1)
-                    return null;
+                string fileName = "";
 
-                return await StorageFile.GetFileFromPathAsync(path);
+                if (args.Contains("-n") && args.Length >= 1) //argument to create new tab
+                {
+                    if (args.Length > 1) //when the file has to be renamed
+                        fileName = args[1];
+
+                    TabPageHelper.AddNewTab(tabView, true, fileName);
+                    return;
+                }
+                else if (args.Contains("-r") && args.Length == 3) //argument to change the name of the opening file
+                {
+                    if (args.Length == 3)
+                        fileName = args[2];
+                }
+
+                string path = GetAbsolutePath(args[0], curpath);
+                if (path == null || path.Length == 0)
+                    return;
+
+                var file = await StorageFile.GetFileFromPathAsync(path);
+                if (file != null)
+                {
+                    var newTab = await OpenFileHelper.DoOpen(tabView, file);
+                    if (fileName.Length > 0)
+                    {
+                        newTab.SetHeader(fileName);
+                    }
+
+                    tabView.SelectedItem = newTab;
+                }
             }
             catch (FileNotFoundException)
             {
-                //ShowInfobar(InfoBarMessages.FileNotFound, InfoBarMessages.FileNotFoundTitle, muxc.InfoBarSeverity.Error);
+                InfoMessages.FileNotFound(args.Length > 0 ? args[0] : "");
             }
-            catch (UnauthorizedAccessException)
+            catch (Exception ex)
             {
-                //ShowInfobar(InfoBarMessages.FileNoAccess, InfoBarMessages.FileNoAccessTitle, muxc.InfoBarSeverity.Error);
+                InfoMessages.OpenFileFromCmdError(ex);
             }
-            catch (ArgumentException)
-            {
-                //ShowInfobar(InfoBarMessages.FileInvalidPath, InfoBarMessages.FileInvalidPathTitle, muxc.InfoBarSeverity.Error);
-            }
-            return null;
         }
 
-        //Get the path from the commandline parameters
-        public static string GetAbsolutePath(string path, string dir)
+        private static string GetAbsolutePath(string path, string dir)
         {
             if (path.StartsWith("\"") && path.Length > 1)
             {

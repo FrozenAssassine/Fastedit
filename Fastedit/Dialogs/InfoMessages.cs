@@ -27,6 +27,8 @@ namespace Fastedit.Dialogs
         public static void SettingsImportFailed() => new InfoBar().Show("Settings import", "Faild while importing settings", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesFailed() => new InfoBar().Show("Temporary files", "Failed while clearing temporary files", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesSucceed() => new InfoBar().Show("Temporary files", "Successfully cleared temporary files", InfoBarSeverity.Success);
+        public static void OpenFileFromCmdError(Exception ex) => new InfoBar().Show("Open cmd file", "Could not open file from cmd\n" + ex.Message, InfoBarSeverity.Error);
+        public static void FileNotFound(string file = "") => new InfoBar().Show("File not found", "The file was not found" + (file.Length > 0 ? $":\n\"{file}\"" : ""), InfoBarSeverity.Error);
 
         public static void WelcomeMessage()
         {
