@@ -21,10 +21,10 @@ namespace Fastedit.Dialogs
             StringBuilder content = new StringBuilder();
 
             //File extension
-            string fileExtension = Path.GetExtension(tab.DatabaseItem.FilePath.Length > 0 ? tab.DatabaseItem.FilePath : tab.DatabaseItem.FileName);
-            var ectension = FileExtensions.FindByExtension(fileExtension);
-            if (ectension != null)
-                content.AppendLine("Extension: " + fileExtension + " (" + ectension.ExtensionName + ")"); ;
+            var extension = Path.GetExtension(tab.DatabaseItem.FileName);
+            var fileExtension = FileExtensions.FindByExtension(extension);
+            if (fileExtension != null)
+                content.AppendLine("Extension: " + extension + " (" + fileExtension.ExtensionName + ")"); ;
 
             //only if the tab is based on a file
             if (tab.DatabaseItem.FileToken.Length > 0)
@@ -52,14 +52,12 @@ namespace Fastedit.Dialogs
             content.AppendLine("Lines: " + tab.textbox.NumberOfLines);
             content.AppendLine("Characters: " + tab.textbox.CharacterCount);
 
-            string FileName = tab.DatabaseItem.FileToken.Length == 0 ? tab.DatabaseItem.FileName : Path.GetFileName(tab.DatabaseItem.FilePath);
-
             var dialog = new ContentDialog
             {
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Info " + FileName,
+                Title = "Info " + tab.DatabaseItem.FileName,
                 Content = content.ToString(),
                 CloseButtonText = "Ok",
                 DefaultButton = ContentDialogButton.Close,
