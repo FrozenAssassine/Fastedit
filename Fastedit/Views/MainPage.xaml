@@ -545,7 +545,7 @@
             <TextBlock Margin="0,100,0,0" Text="" MinWidth="100" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="progressInfo"/>
         </Grid>
 
-        <StackPanel x:Name="infobarDisplay" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,50,10,0"/>
+        <StackPanel x:Name="infobarDisplay" MinWidth="400" MaxWidth="500" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,50,10,0"/>
 
         <controls:SearchControl Visibility="Collapsed" Margin="0,50,0,0" HorizontalAlignment="Center" Width="350" x:Name="searchControl"/>
         

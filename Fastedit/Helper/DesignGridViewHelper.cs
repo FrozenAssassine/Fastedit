@@ -1,6 +1,7 @@
 ﻿using Fastedit.Settings;
 using Fastedit.Tab;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -10,7 +11,7 @@ namespace Fastedit.Helper
     public class DesignGridViewHelper
     {
         //Manage the GridView with design items
-        public static DesignGridViewItem CreateItem(FasteditDesign design, string designName, int width = 200, int height = 130)
+        public static DesignGridViewItem CreateItem(FasteditDesign design, string designName)
         {
             return new DesignGridViewItem
             {
@@ -21,11 +22,11 @@ namespace Fastedit.Helper
                 LineNumberBackground = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberBackground)),
                 LineNumberColor = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberColor)),
                 TextBoxBackground = new SolidColorBrush(ConvertHelper.ToColor(design.TextBoxBackground)),
-                Width = width,
-                Height = height
+                Width = 200,
+                Height = 130
             };
         }
-        public static async Task LoadItems(GridView designGridView, int width = 200, int height = 130)
+        public static async Task LoadItems(GridView designGridView)
         {
             if (!Directory.Exists(DefaultValues.DesignPath))
             {
@@ -42,7 +43,7 @@ namespace Fastedit.Helper
                 if (design != null)
                 {
                     string name = DesignHelper.GetDesingNameFromPath(files[i]);
-                    designGridView.Items.Add(CreateItem(design, name, width, height));
+                    designGridView.Items.Add(CreateItem(design, name));
 
                     if (AppSettings.GetSettings(AppSettingsValues.Settings_DesignName) == name)
                     {
@@ -57,6 +58,8 @@ namespace Fastedit.Helper
             {
                 AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, item.DesignName);
                 TabPageHelper.mainPage.ApplySettings();
+
+                CursorHelper.SetArrow();
             }
         }
         public static async void UpdateItems(GridView designGridView)

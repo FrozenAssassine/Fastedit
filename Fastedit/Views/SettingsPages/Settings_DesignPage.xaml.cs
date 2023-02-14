@@ -1,4 +1,8 @@
-﻿using Fastedit.Helper;
+using Fastedit.Controls;
+using Fastedit.Dialogs;
+using Fastedit.Helper;
+using Microsoft.UI.Xaml.Controls;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -30,6 +34,42 @@ namespace Fastedit.Views.SettingsPages
         private void UpdateDesigns_Click(object sender, RoutedEventArgs e)
         {
             DesignGridViewHelper.UpdateItems(designGridView);
+        }
+
+        private async void ExportDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item && item.Tag != null)
+            {
+                if (!await DesignHelper.ExportDesign(item.Tag.ToString()))
+                    InfoMessages.ExportDesignError();
+            }
+        }
+
+        private async void ImportDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (await DesignHelper.ImportDesign())
+                UpdateDesigns_Click(null, null);
+            else
+                InfoMessages.ImportDesignError();
+        }
+
+        private async void DeleteDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item && item.Tag != null)
+            {
+                if (await DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
+                    UpdateDesigns_Click(null, null);
+                else
+                    InfoMessages.DeleteDesignError();
+            }
+        }
+
+        private void EditDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item)
+            {
+                DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
+            }
         }
     }
 }

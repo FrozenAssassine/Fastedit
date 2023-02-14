@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -29,6 +29,12 @@ namespace Fastedit.Dialogs
         public static void ClearTemporaryFilesSucceed() => new InfoBar().Show("Temporary files", "Successfully cleared temporary files", InfoBarSeverity.Success);
         public static void OpenFileFromCmdError(Exception ex) => new InfoBar().Show("Open cmd file", "Could not open file from cmd\n" + ex.Message, InfoBarSeverity.Error);
         public static void FileNotFound(string file = "") => new InfoBar().Show("File not found", "The file was not found" + (file.Length > 0 ? $":\n\"{file}\"" : ""), InfoBarSeverity.Error);
+        public static void DeleteDesignError() => new InfoBar().Show("Delete design", "Could not delete design", InfoBarSeverity.Error);
+        public static void ImportDesignError() => new InfoBar().Show("Import design", "Could not import design", InfoBarSeverity.Error);
+        public static void ExportDesignError() => new InfoBar().Show("Import design", "Could not export design", InfoBarSeverity.Error);
+        public static void OneDesignNeedsToBeLeft() => new InfoBar().Show("Could not delete", "Could not delete the design, because there always has to be at least one", InfoBarSeverity.Warning);
+        public static void SaveDesignError() => new InfoBar().Show("Save design", "Could not save the design", InfoBarSeverity.Error);
+        public static void SaveDesignSucceed() => new InfoBar().Show("Save design", "The design was saved successfully", InfoBarSeverity.Success);
 
         public static void WelcomeMessage()
         {

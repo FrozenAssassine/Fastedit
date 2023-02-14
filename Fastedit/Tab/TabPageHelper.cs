@@ -138,18 +138,30 @@ namespace Fastedit.Tab
                 tabView.SelectedIndex = selectingIndex < 0 ? 0 : selectingIndex >= tabView.TabItems.Count ? tabView.TabItems.Count - 1 : selectingIndex;
             }
         }
-        public static async Task SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null)
+        public static async Task SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
         {
             progressWindow?.ShowProgress();
 
+            var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DatabasePath);
+            if (folder == null)
+                return;
+
             //Close all windows to get the tabs back to the tabcontrol:
-            await TabWindowHelper.CloseAllWindows();
+            //when saving the database without closing the app, only save the temp files
+            if (closeWindows)
+                await TabWindowHelper.CloseAllWindows();
+            else //save the tempfiles for all the window instances:
+            {
+                foreach (var window in TabWindowHelper.AppWindows)
+                {
+                    await TabDatabase.SaveTempFile(folder, window.Value);
+                }
+            }
 
             //Create the file with the tab data:
             tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
 
             //save the individual files
-            var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DatabasePath);
             for (int i = 0; i < tabView.TabItems.Count; i++)
             {
                 if (tabView.TabItems[i] is TabPageItem tab)

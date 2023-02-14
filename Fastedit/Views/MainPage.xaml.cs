@@ -55,9 +55,9 @@ namespace Fastedit
         }
 
         //A function, that can be called from anywhere to update the settings
-        public void ApplySettings()
+        public void ApplySettings(FasteditDesign currentDesign = null)
         {
-            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, null);
+            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, currentDesign);
         }
         private async Task Initialise()
         {
@@ -162,9 +162,9 @@ namespace Fastedit
         {
             tabControl.SelectedItem = tab;
         }
-        public async Task SaveDatabase(bool ShowProgress = true)
+        public async Task SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
         {
-            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null);
+            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
         }
         public void ShowSettings(string page = null)
         {

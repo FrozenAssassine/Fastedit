@@ -1,9 +1,14 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Settings;
+using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
@@ -96,6 +101,22 @@ namespace Fastedit.Helper
         {
             return Path.GetFileName(path);
         }
+        private static async Task<bool> IsValidDesign(StorageFile file)
+        {
+            if (file == null)
+                return false;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file)) != null;
+            }
+            catch (Exception ex)
+            {
+                InfoMessages.DesignLoadError(file.DisplayName, ex);
+            }
+
+            return false;
+        }
         public static FasteditDesign GetDesignFromFile(string path)
         {
             if (Path.GetExtension(path).Equals(".json") && File.Exists(path))
@@ -115,9 +136,30 @@ namespace Fastedit.Helper
         public static async Task<FasteditDesign> LoadDefaultDesign()
         {
             string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            var file = await StorageFile.GetFileFromPathAsync($"{root}\\Assets\\Designs" + DefaultValues.DefaultDesignName);
+            try
+            {
+                var file = await StorageFile.GetFileFromPathAsync($"{root}\\Assets\\Designs" + DefaultValues.DefaultDesignName);
+                return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file));
+            }
+            catch (FileNotFoundException)
+            {
+                return null;
+            }
 
-            return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file));
+        }
+
+        public static async Task<bool> SaveDesign(FasteditDesign design, StorageFile file)
+        {
+            try
+            {
+                string data = JsonConvert.SerializeObject(design);
+                await FileIO.WriteTextAsync(file, data);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static void SetBackground(Control element, Color color, BackgroundType type)
@@ -175,8 +217,78 @@ namespace Fastedit.Helper
             }
             return null;
         }
+
+        public static async Task<bool> ExportDesign(string designName)
+        {
+            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
+            if (file == null)
+                return false; 
+            
+            var newFile = await SaveFileHelper.PickFile(designName, ".json", "Json");
+            if (newFile == null)
+                return true; //no file was picked
+
+            try
+            {
+                await FileIO.WriteTextAsync(newFile, await FileIO.ReadTextAsync(file));
+                return true;
+            }
+            catch { }
+            return false;
+        }
+        public static async Task<bool> ImportDesign()
+        {
+            var file = await OpenFileHelper.PickFile(".json");
+            if (file == null)
+                return true; //no file was picked
+
+            //validate the design
+            var desing = IsValidDesign(file);
+            if (desing == null)
+                return false;
+            try
+            {
+                //copy the design to the app folder
+                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
+                await file.CopyAsync(folder, file.Name, NameCollisionOption.GenerateUniqueName);
+                return true;
+            }
+            catch { }
+            return false;
+        }
+        public static async Task<bool> DeleteDesign(string designName, GridView designGridView)
+        {
+            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
+            if (file == null)
+                return false;
+
+            //when the active design was deleted
+            if (designName.Equals(AppSettings.GetSettings(AppSettingsValues.Settings_DesignName)))
+            {
+                var files = Directory.GetFiles(DefaultValues.DesignPath);
+                if (files.Length <= 1)
+                {
+                    InfoMessages.OneDesignNeedsToBeLeft();
+                    return true;
+                }
+
+                //select the item
+                designGridView.SelectedItem = designGridView.Items.FirstOrDefault(x => (x as DesignGridViewItem).DesignName.Equals(designName));
+
+                AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, Path.GetFileName(files[0]));
+            }
+            if(designGridView.Items.Count  == 1)
+                designGridView.SelectedIndex = 0;
+            try
+            {
+                await file.DeleteAsync();
+                return true;
+            }
+            catch { }
+            return false;
+        }
     }
-    public class FasteditDesign
+    public class FasteditDesign 
     {
         public ElementTheme Theme { get; set; }
         public Color? BackgroundColor { get; set; }
