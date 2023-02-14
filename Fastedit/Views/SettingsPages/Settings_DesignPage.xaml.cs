@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml.Controls;
@@ -61,6 +61,14 @@ namespace Fastedit.Views.SettingsPages
                     UpdateDesigns_Click(null, null);
                 else
                     InfoMessages.DeleteDesignError();
+            }
+        }
+
+        private void EditDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item)
+            {
+                DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
             }
         }
     }

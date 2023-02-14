@@ -15,6 +15,7 @@
                         <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Export" Click="ExportDesign_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Delete" Click="DeleteDesign_Click"/>
+                        <MenuFlyoutItem Text="Edit" Click="EditDesign_Click" Tag="{x:Bind DesignName}"/>
                     </MenuFlyout>
                 </Grid.ContextFlyout>
                 <Rectangle Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{x:Bind TabPageBackground}"/>

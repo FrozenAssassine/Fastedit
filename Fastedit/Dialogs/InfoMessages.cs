@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -31,7 +31,9 @@ namespace Fastedit.Dialogs
         public static void ImportDesignError() => new InfoBar().Show("Import design", "Could not import design", InfoBarSeverity.Error);
         public static void ExportDesignError() => new InfoBar().Show("Import design", "Could not export design", InfoBarSeverity.Error);
         public static void OneDesignNeedsToBeLeft() => new InfoBar().Show("Could not delete", "Could not delete the design, because there always has to be at least one", InfoBarSeverity.Warning);
-        
+        public static void SaveDesignError() => new InfoBar().Show("Save design", "Could not save the design", InfoBarSeverity.Error);
+        public static void SaveDesignSucceed() => new InfoBar().Show("Save design", "The design was saved successfully", InfoBarSeverity.Success);
+
         public static void WelcomeMessage()
         {
             var btn = new Button { Content = "Designs" };
