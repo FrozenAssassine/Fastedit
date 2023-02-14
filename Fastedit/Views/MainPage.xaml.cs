@@ -162,9 +162,9 @@ namespace Fastedit
         {
             tabControl.SelectedItem = tab;
         }
-        public async Task SaveDatabase(bool ShowProgress = true)
+        public async Task SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
         {
-            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null);
+            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
         }
         public void ShowSettings(string page = null)
         {
