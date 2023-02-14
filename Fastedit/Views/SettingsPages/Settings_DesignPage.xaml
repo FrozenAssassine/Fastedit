@@ -11,7 +11,10 @@
         <DataTemplate x:Key="DesignGridViewItemTemplate_Large" x:DataType="helper:DesignGridViewItem">
             <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
                 <Grid.ContextFlyout>
-                    <MenuFlyout >
+                    <MenuFlyout>
+                        <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Export" Click="ExportDesign_Click"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Delete" Click="DeleteDesign_Click"/>
                         <MenuFlyoutItem Text="Edit" Click="EditDesign_Click" Tag="{x:Bind DesignName}"/>
                     </MenuFlyout>
                 </Grid.ContextFlyout>
@@ -25,14 +28,17 @@
         </DataTemplate>
     </Page.Resources>
     <Grid Margin="0,30,0,0">
-        <Button Click="UpdateDesigns_Click" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <Button.KeyboardAccelerators>
-                <KeyboardAccelerator Key="F5" IsEnabled="True"/>
-            </Button.KeyboardAccelerators>
-            <Button.Content>
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;"/>
-            </Button.Content>
-        </Button>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Click="UpdateDesigns_Click">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="F5" IsEnabled="True"/>
+                </Button.KeyboardAccelerators>
+                <Button.Content>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;"/>
+                </Button.Content>
+            </Button>
+            <Button Margin="10,0,0,0" Content="Import" Click="ImportDesign_Click"/>
+        </StackPanel>
         <GridView HorizontalAlignment="Center" Background="Transparent" Margin="0,45,0,0"
             x:Name="designGridView"
             IsItemClickEnabled="True"
