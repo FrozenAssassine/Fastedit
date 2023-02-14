@@ -18,7 +18,7 @@ namespace Fastedit.Helper
 
         private static async void SaveDatabaseTimer_Tick(object sender, object e)
         {
-            await TabPageHelper.mainPage.SaveDatabase(false);
+            await TabPageHelper.mainPage.SaveDatabase(false, false);
         }
     }
 }

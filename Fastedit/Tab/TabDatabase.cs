@@ -68,6 +68,13 @@ namespace Fastedit.Tab
                 }
             }
 
+            //save all windows:
+            foreach (var window in TabWindowHelper.AppWindows)
+            {
+                window.Value.DatabaseItem.SelectedIndex = SelectedIndex;
+                databaseBuilder.AppendLine(JsonConvert.SerializeObject(window.Value.DatabaseItem));
+            }
+
             string path = Path.Combine(DefaultValues.DatabasePath, DatabaseName);
             if (!File.Exists(path))
             {
