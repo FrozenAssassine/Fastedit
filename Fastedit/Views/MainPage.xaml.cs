@@ -55,9 +55,9 @@ namespace Fastedit
         }
 
         //A function, that can be called from anywhere to update the settings
-        public void ApplySettings()
+        public void ApplySettings(FasteditDesign currentDesign = null)
         {
-            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, null);
+            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, currentDesign);
         }
         private async Task Initialise()
         {

@@ -31,5 +31,13 @@ namespace Fastedit.Views.SettingsPages
         {
             DesignGridViewHelper.UpdateItems(designGridView);
         }
+
+        private void EditDesign_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item)
+            {
+                DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
+            }
+        }
     }
 }

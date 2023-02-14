@@ -5,13 +5,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace Fastedit.Views.SettingsPages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class Settings_Data : Page
     {
         public Settings_Data()
@@ -55,7 +50,6 @@ namespace Fastedit.Views.SettingsPages
 
             InitSize();
         }
-
         private async void ClearTemporaryFiles_Click(object sender, RoutedEventArgs e)
         {
             if (await TemporaryFilesHandler.Clear())

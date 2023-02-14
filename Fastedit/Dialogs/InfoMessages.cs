@@ -27,6 +27,8 @@ namespace Fastedit.Dialogs
         public static void SettingsImportFailed() => new InfoBar().Show("Settings import", "Faild while importing settings", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesFailed() => new InfoBar().Show("Temporary files", "Failed while clearing temporary files", InfoBarSeverity.Error);
         public static void ClearTemporaryFilesSucceed() => new InfoBar().Show("Temporary files", "Successfully cleared temporary files", InfoBarSeverity.Success);
+        public static void SaveDesignError() => new InfoBar().Show("Save design", "Could not save the design", InfoBarSeverity.Error);
+        public static void SaveDesignSucceed() => new InfoBar().Show("Save design", "The design was saved successfully", InfoBarSeverity.Success);
 
         public static void WelcomeMessage()
         {
