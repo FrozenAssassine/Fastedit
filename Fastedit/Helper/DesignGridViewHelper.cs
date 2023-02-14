@@ -58,6 +58,8 @@ namespace Fastedit.Helper
             {
                 AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, item.DesignName);
                 TabPageHelper.mainPage.ApplySettings();
+
+                CursorHelper.SetArrow();
             }
         }
         public static async void UpdateItems(GridView designGridView)

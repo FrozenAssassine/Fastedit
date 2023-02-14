@@ -2,6 +2,7 @@
 using Fastedit.Views.SettingsPages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -55,6 +56,13 @@ namespace Fastedit.Views
         private void ApplySettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsParameter?.MainPage.ApplySettings();
+
+            CursorHelper.SetArrow();
+        }
+
+        private void Page_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            CursorHelper.SetArrow();
         }
     }
 }
