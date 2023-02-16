@@ -202,6 +202,14 @@ namespace Fastedit
         {
             var deferral = e.GetDeferral();
 
+            if (DesignWindowHelper.IsWindowOpen())
+            {
+                InfoMessages.CloseDesignEditor();
+                e.Handled = true;
+                deferral.Complete();
+                return;
+            }
+
             await SaveDatabase();
 
             deferral.Complete();

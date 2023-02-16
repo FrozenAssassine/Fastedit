@@ -23,7 +23,7 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Auto</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateThumbprint>01FF34FCAB2E9004534BA39AA07EB89B5358CFAE</PackageCertificateThumbprint>
@@ -142,6 +142,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColorPickerButton.xaml.cs">
+      <DependentUpon>ColorPickerButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InfobarMessage.cs" />
     <Compile Include="Controls\RunCommandWindow.xaml.cs">
       <DependentUpon>RunCommandWindow.xaml</DependentUpon>
@@ -161,6 +164,7 @@
     <Compile Include="Controls\VerticalTabsFlyoutControl.xaml.cs">
       <DependentUpon>VerticalTabsFlyoutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AskSaveDesignDialog.cs" />
     <Compile Include="Dialogs\AskSaveDialog.cs" />
     <Compile Include="Dialogs\DialogHelper.cs" />
     <Compile Include="Dialogs\EncodingDialog.cs" />
@@ -176,6 +180,7 @@
     <Compile Include="Helper\CursorHelper.cs" />
     <Compile Include="Helper\DesignGridViewHelper.cs" />
     <Compile Include="Helper\DesignHelper.cs" />
+    <Compile Include="Helper\DesignWindowHelper.cs" />
     <Compile Include="Helper\EncodingHelper.cs" />
     <Compile Include="Helper\KeyEventHelper.cs" />
     <Compile Include="Helper\ShareFileHelper.cs" />
@@ -191,6 +196,9 @@
     <Compile Include="Tab\TabWindowHelper.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DesignEditor.xaml.cs">
+      <DependentUpon>DesignEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -345,6 +353,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ColorPickerButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RunCommandWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -372,6 +384,10 @@
     <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DesignEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

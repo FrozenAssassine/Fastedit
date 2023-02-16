@@ -19,6 +19,8 @@ namespace Fastedit.Helper
 {
     internal class DesignWindowHelper
     {
+        static List<AppWindow> OpenWindows = new List<AppWindow>();
+
         public static async void EditDesign(string designName)
         {
             var design = DesignHelper.GetDesignFromFile(Path.Combine(DefaultValues.DesignPath, designName));
@@ -31,6 +33,11 @@ namespace Fastedit.Helper
                 return;
         }
 
+        public static bool IsWindowOpen()
+        {
+            return OpenWindows.Count > 0;
+        }
+        
         private static async Task<AppWindow> ShowWindow(FasteditDesign design, string designName)
         {
             var window = await AppWindow.TryCreateAsync();
@@ -42,6 +49,7 @@ namespace Fastedit.Helper
             window.CloseRequested += Window_CloseRequested;
             if (await window.TryShowAsync())
             {
+                OpenWindows.Add(window);
                 return window;
             }
             return null;
@@ -63,6 +71,7 @@ namespace Fastedit.Helper
                         {
                             InfoMessages.SaveDesignSucceed();
                             args.Cancel = false;
+                            OpenWindows.Remove(sender);
                             def.Complete();
                             return;
                         }
@@ -71,6 +80,7 @@ namespace Fastedit.Helper
                         break;
                     case Windows.UI.Xaml.Controls.ContentDialogResult.Secondary:
                         args.Cancel = false;
+                        OpenWindows.Remove(sender);
                         break;
                 }
             }

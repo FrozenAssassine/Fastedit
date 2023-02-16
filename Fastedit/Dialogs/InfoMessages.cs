@@ -35,6 +35,7 @@ namespace Fastedit.Dialogs
         public static void OneDesignNeedsToBeLeft() => new InfoBar().Show("Could not delete", "Could not delete the design, because there always has to be at least one", InfoBarSeverity.Warning);
         public static void SaveDesignError() => new InfoBar().Show("Save design", "Could not save the design", InfoBarSeverity.Error);
         public static void SaveDesignSucceed() => new InfoBar().Show("Save design", "The design was saved successfully", InfoBarSeverity.Success);
+        public static void CloseDesignEditor() => new InfoBar().Show("Close design editor", "Please close all instances of the design editor", InfoBarSeverity.Warning);
 
         public static void WelcomeMessage()
         {
