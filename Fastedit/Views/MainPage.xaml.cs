@@ -297,7 +297,7 @@ namespace Fastedit
                         FileInfo_Click(null, null);
                         break;
                     case VirtualKey.B:
-                        if (SettingsTabPageHelper.SettingsPageOpen)
+                        if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
                             return;
                         runCommandWindow.Toggle(tabControl);
                         break;
