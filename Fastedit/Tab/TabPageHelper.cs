@@ -77,10 +77,10 @@ namespace Fastedit.Tab
                 tab.DataIsLoaded = true;
             }
         }
-        public static TabPageItem AddNewTab(TabView tabView, bool Select, string title = "")
+        public static TabPageItem AddNewTab(TabView tabView, bool Select)
         {
             var tab = new TabPageItem(tabView);
-            tab.SetHeader(title.Length == 0 ? GenerateUniqueHeader(tabView) : title);
+            tab.SetHeader(GenerateUniqueHeader(tabView));
             tab.DatabaseItem.Identifier = GenerateUniqueIdentifier(tabView);
             tab.DataIsLoaded = true;
             tabView.TabItems.Add(tab);
