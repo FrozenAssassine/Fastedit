@@ -457,7 +457,7 @@
                         <KeyboardAccelerator Key="E" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="New window" Click="ShowTabInNewWindow_Click">
+                <MenuFlyoutItem Text="Undock Tab" Click="UndockTab_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -575,7 +575,7 @@
                 <controls:RunCommandWindowItem Command="Compact overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
                 <controls:RunCommandWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
                 <controls:RunCommandWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
-                <controls:RunCommandWindowItem Command="New window" Shortcut="Ctrl + L" RunCommandWindowItemClicked="ShowTabInNewWindow_Click"/>
+                <controls:RunCommandWindowItem Command="New window" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
             </controls:RunCommandWindow.Items>
         </controls:RunCommandWindow>
     </Grid>

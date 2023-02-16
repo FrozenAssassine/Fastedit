@@ -1,4 +1,16 @@
-﻿#Version 2.1.1 [02/07/2023]
+﻿#Version 2.2.0 [02/16/2023]
+	• Added design editor
+	• Added delete/import/export functionality to designs
+	• Added close and add -tab button to vertical tab flyout
+	• Fixed a bug where the cursor in settings was not correct
+	• Fixed a bug where the undocked tab closed when automatically saving the database after 4 minutes
+	• Fixed a bug where shortcuts with Ctrl + Alt + [X] performed wrong actions
+	• Fixed a bug where quick access could not be shown when the settings window was open
+	• Removed default start location from the file picker
+	• Renamed "New window" to "Undock tab"
+
+---
+#Version 2.1.1 [02/07/2023]
 	• Fixed a bug where the settings were visible in the open tab flyout
 	• Fixed a bug where the quick access flyout did not resize properly
 	• Fixed a bug where closing a not loaded tab, caused an empty file to be saved

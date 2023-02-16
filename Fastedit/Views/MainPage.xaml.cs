@@ -311,7 +311,7 @@ namespace Fastedit
                         ChangeEncoding_Click(null, null);
                         break;
                     case VirtualKey.L:
-                        ShowTabInNewWindow_Click(null, null);
+                        UndockTab_Click(null, null);
                         break;
                     case VirtualKey.K:
                         CompactOverlayMode_Click(null, null);
@@ -530,7 +530,7 @@ namespace Fastedit
         {
             ShareDialog.Share(currentlySelectedTabPage);
         }
-        private async void ShowTabInNewWindow_Click(object sender, RoutedEventArgs e)
+        private async void UndockTab_Click(object sender, RoutedEventArgs e)
         {
             await TabWindowHelper.ShowInNewWindow(tabControl, currentlySelectedTabPage);
         }
