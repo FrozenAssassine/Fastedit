@@ -101,7 +101,6 @@ namespace Fastedit.Settings
                     item.Foreground = foreground;
                 }
             }
-
         }
         public static void SetMainPageSettings(Page mainPage, FasteditDesign currentDesign)
         {
@@ -155,6 +154,8 @@ namespace Fastedit.Settings
 
             //Statusbar
             SetSettingsToStatusbar(statusbar, currentDesign);
+
+            mainPage.RunCommandWindow.UpdateColors();
 
             //TabWindows (tabs as own windows):
             TabWindowHelper.UpdateSettings();

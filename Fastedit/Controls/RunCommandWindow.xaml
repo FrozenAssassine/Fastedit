@@ -23,16 +23,16 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock VerticalAlignment="Bottom" Grid.Column="0" Text="{x:Bind Command}" x:Phase="1"/>
+                    <TextBlock Foreground="{x:Bind TextColor}"  VerticalAlignment="Bottom" Grid.Column="0" Text="{x:Bind Command}" x:Phase="1"/>
                     <Grid VerticalAlignment="Bottom" Grid.Column="1" BorderBrush="#555555" BorderThickness="1" CornerRadius="4">
-                        <TextBlock Padding="2" Text="{x:Bind Shortcut}" x:Phase="1" />
+                        <TextBlock Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind Shortcut}" x:Phase="1" />
                     </Grid>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="#ef222222"
+    <Grid
           BorderThickness="2" HorizontalAlignment="Stretch"
           CornerRadius="10"
           x:Name="grid"
