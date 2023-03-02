@@ -257,8 +257,10 @@ namespace Fastedit.Tab
         }
         private static async Task<bool> RemoveTab(TabView tabView, TabPageItem tab)
         {
-            if (!await RecycleBinDialog.MoveFileToRecycleBin(tab))
-                return false;
+            //only add the file to the recylcbin when it has some content and was modified
+            if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount > 0)
+                if (!await RecycleBinDialog.MoveFileToRecycleBin(tab))
+                    return false;
 
             tab.textbox.Unload();
             tabView.TabItems.Remove(tab);
