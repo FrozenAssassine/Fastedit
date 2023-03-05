@@ -1,5 +1,6 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Settings;
+using System;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,7 +24,8 @@ namespace Fastedit.Views.SettingsPages
             //load:
             ShowMenubarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowMenubar, true);
             ShowStatusbarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowStatusbar, true);
-
+            menubarAlignmentCombobox.SelectedIndex = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_MenubarAlignment, DefaultValues.MenubarAlignment);
+            
             //Load the statusbar sorting:
             lockSave = true;
             var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting, DefaultValues.StatusbarSorting).Split('|');
@@ -72,6 +74,11 @@ namespace Fastedit.Views.SettingsPages
 
                 AppSettings.SaveSettings(AppSettingsValues.Settings_StatusbarSorting, arrayStr);
             }
+        }
+
+        private void menubarAlignmentCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.Settings_MenubarAlignment, menubarAlignmentCombobox.SelectedIndex);
         }
     }
 }
