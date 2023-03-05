@@ -26,7 +26,6 @@ namespace Fastedit.Tab
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 Margin = TabMargin,
-                ShowLineNumbers = true,
             };
             textbox.TextChanged += Textbox_TextChanged;
             textbox.ZoomChanged += Textbox_ZoomChanged;
