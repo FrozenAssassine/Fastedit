@@ -29,14 +29,11 @@
         </controls:SettingsControl>
 
         <controls:SetingsItemSeparator Header="Features"/>
-        
-        <!--Removed du to unknown bug (#110)-->
-        <!--<controls:SettingsControl Header="Show linenumbers">
+        <controls:SettingsControl Header="Show linenumbers" >
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinenumbersSwitch" Toggled="ShowLinenumbersSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        -->
         <controls:SettingsControl Header="Show linehighlighter">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinehighlighterSwitch" Toggled="ShowLinehighlighterSwitch_Toggled"/>
