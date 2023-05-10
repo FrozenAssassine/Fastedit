@@ -51,6 +51,7 @@ namespace Fastedit.Dialogs
             content.AppendLine("Words: " + tab.CountWords());
             content.AppendLine("Lines: " + tab.textbox.NumberOfLines);
             content.AppendLine("Characters: " + tab.textbox.CharacterCount);
+            content.AppendLine("Encoding: " + EncodingHelper.GetEncodingName(tab.Encoding));
 
             string FileName = tab.DatabaseItem.FileToken.Length == 0 ? tab.DatabaseItem.FileName : Path.GetFileName(tab.DatabaseItem.FilePath);
 
