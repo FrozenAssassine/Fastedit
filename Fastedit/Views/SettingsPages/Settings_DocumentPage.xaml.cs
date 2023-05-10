@@ -35,7 +35,8 @@ namespace Fastedit.Views.SettingsPages
             FontFamilyCombobox.SelectedItem = AppSettings.GetSettings(AppSettingsValues.Settings_FontFamily, DefaultValues.FontFamily);
             FontSizeNumberBox.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_FontSize, DefaultValues.FontSize);
 
-            ShowLinenumbersSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineNumbers, DefaultValues.ShowLinenumbers);
+            //Removed du to bug (#110)
+            //ShowLinenumbersSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineNumbers, DefaultValues.ShowLinenumbers);
             EnableSyntaxhighlightingSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_Syntaxhighlighting, DefaultValues.SyntaxHighlighting);
             ShowLinehighlighterSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineHighlighter, DefaultValues.ShowLineHighlighter);
         }
@@ -58,10 +59,11 @@ namespace Fastedit.Views.SettingsPages
         {
             AppSettings.SaveSettings(AppSettingsValues.Settings_FontSize, FontSizeNumberBox.Value);
         }
-        private void ShowLinenumbersSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.Settings_ShowLineNumbers, ShowLinenumbersSwitch.IsOn);
-        }
+        //Removed du to bug (#110)
+        //private void ShowLinenumbersSwitch_Toggled(object sender, RoutedEventArgs e)
+        //{
+        //    AppSettings.SaveSettings(AppSettingsValues.Settings_ShowLineNumbers, ShowLinenumbersSwitch.IsOn);
+        //}
 
         private void ShowLinehighlighterSwitch_Toggled(object sender, RoutedEventArgs e)
         {
