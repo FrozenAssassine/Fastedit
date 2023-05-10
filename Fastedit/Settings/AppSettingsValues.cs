@@ -24,7 +24,7 @@
         public const string Settings_StatusbarSorting = "StatusbarSorting";
 
         public const string Settings_TabViewWidthMode = "TabWidthMode";
-
+        public const string Settings_MenubarAlignment = "MenubarAlignment";
         //Design
         public const string Settings_DesignName = "CurrentDesign";
     }

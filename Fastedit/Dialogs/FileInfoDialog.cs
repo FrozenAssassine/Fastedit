@@ -51,6 +51,7 @@ namespace Fastedit.Dialogs
             content.AppendLine("Words: " + tab.CountWords());
             content.AppendLine("Lines: " + tab.textbox.NumberOfLines);
             content.AppendLine("Characters: " + tab.textbox.CharacterCount);
+            content.AppendLine("Encoding: " + EncodingHelper.GetEncodingName(tab.Encoding));
 
             string FileName = tab.DatabaseItem.FileToken.Length == 0 ? tab.DatabaseItem.FileName : Path.GetFileName(tab.DatabaseItem.FilePath);
 
@@ -60,7 +61,7 @@ namespace Fastedit.Dialogs
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
                 Title = "Info " + FileName,
-                Content = content.ToString(),
+                Content = new TextBlock { Text = content.ToString(), IsTextSelectionEnabled = true },
                 CloseButtonText = "Ok",
                 DefaultButton = ContentDialogButton.Close,
             };

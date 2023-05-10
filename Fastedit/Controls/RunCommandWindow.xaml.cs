@@ -1,15 +1,23 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
+    /// <summary>
+    /// Converts a string to visibility.
+    /// when the string is emty it will be hidden. When the string has content it will be visible
+    /// </summary>
+
     public sealed partial class RunCommandWindow : UserControl
     {
         List<RunCommandWindowCustomItem> CurrentTabPages = new List<RunCommandWindowCustomItem>();

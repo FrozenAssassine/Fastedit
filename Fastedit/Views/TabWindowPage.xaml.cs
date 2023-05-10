@@ -3,6 +3,7 @@ using Fastedit.Helper;
 using Fastedit.Storage;
 using Fastedit.Tab;
 using System;
+using System.Linq;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -64,6 +65,10 @@ namespace Fastedit.Views
         {
             if (tab.DatabaseItem.IsModified && !await AskSaveDialog.Show(tab, this.XamlRoot))
                 return;
+
+            //only add the file to the recylcbin when it has some content and was modified
+            if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount > 0)
+                await RecycleBinDialog.MoveFileToRecycleBin(tab);
 
             await OpenFileHelper.OpenFileForTab(tab);
         }

@@ -53,7 +53,8 @@ namespace Fastedit.Settings
             tab.textbox.ShowLineHighlighter = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineHighlighter, DefaultValues.ShowLineHighlighter);
             tab.textbox.ShowLineNumbers = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineNumbers, DefaultValues.ShowLinenumbers);
 
-            tab.textbox.SyntaxHighlighting = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_Syntaxhighlighting, DefaultValues.SyntaxHighlighting);
+            //Removed du to bug (#110)
+            //tab.textbox.SyntaxHighlighting = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_Syntaxhighlighting, DefaultValues.SyntaxHighlighting);
 
             //tab.textbox.UseSpacesInsteadTabs = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_UseSpacesInsteadTabs, DefaultValues.UseSpacesInsteadTabs);
             //tab.textbox.NumberOfSpacesForTab = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_SpacesPerTab, DefaultValues.NumberOfSpacesPerTab);
@@ -102,6 +103,10 @@ namespace Fastedit.Settings
                 }
             }
         }
+        private static void SetMenubarAlignment(Microsoft.UI.Xaml.Controls.MenuBar menubar)
+        {
+            menubar.HorizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), AppSettings.GetSettings(AppSettingsValues.Settings_MenubarAlignment, DefaultValues.MenubarAlignment.ToString()));
+        }
         public static void SetMainPageSettings(Page mainPage, FasteditDesign currentDesign)
         {
             DesignHelper.SetBackground(mainPage, ConvertHelper.ToColor(currentDesign.BackgroundColor), currentDesign.BackgroundType);
@@ -142,6 +147,9 @@ namespace Fastedit.Settings
 
             //Controls
             SetControlsVisibility(tabView, menuBar, statusbar);
+
+            //menubar
+            SetMenubarAlignment(menuBar);
 
             //TabPages
             UpdateTabPages(tabView, currentDesign);
