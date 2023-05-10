@@ -61,7 +61,7 @@ namespace Fastedit.Dialogs
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
                 Title = "Info " + FileName,
-                Content = content.ToString(),
+                Content = new TextBlock { Text = content.ToString(), IsTextSelectionEnabled = true },
                 CloseButtonText = "Ok",
                 DefaultButton = ContentDialogButton.Close,
             };
