@@ -23,7 +23,17 @@
                     <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
-            
+
+            <controls:SettingsControl Header="Menubar alignment">
+                <controls:SettingsControl.Content>
+                    <ComboBox Width="120" x:Name="menubarAlignmentCombobox" SelectionChanged="menubarAlignmentCombobox_SelectionChanged">
+                        <ComboBoxItem Content="Left" Tag="0"/>
+                        <ComboBoxItem Content="Center" Tag="1"/>
+                        <ComboBoxItem Content="Right" Tag="2"/>
+                    </ComboBox>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+
             <muxc:Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0" >
                 <muxc:Expander.Header>
                     <Grid Height="70">
@@ -61,6 +71,7 @@
                     </Grid>
                 </muxc:Expander.Content>
             </muxc:Expander>
+
         </StackPanel>
     </Grid>
 </Page>

@@ -104,6 +104,10 @@ namespace Fastedit.Settings
             }
 
         }
+        private static void SetMenubarAlignment(Microsoft.UI.Xaml.Controls.MenuBar menubar)
+        {
+            menubar.HorizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), AppSettings.GetSettings(AppSettingsValues.Settings_MenubarAlignment, DefaultValues.MenubarAlignment.ToString()));
+        }
         public static void SetMainPageSettings(Page mainPage, FasteditDesign currentDesign)
         {
             DesignHelper.SetBackground(mainPage, ConvertHelper.ToColor(currentDesign.BackgroundColor), currentDesign.BackgroundType);
@@ -144,6 +148,9 @@ namespace Fastedit.Settings
 
             //Controls
             SetControlsVisibility(tabView, menuBar, statusbar);
+
+            //menubar
+            SetMenubarAlignment(menuBar);
 
             //TabPages
             UpdateTabPages(tabView, currentDesign);
