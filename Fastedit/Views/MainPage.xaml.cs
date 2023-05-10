@@ -31,6 +31,7 @@ namespace Fastedit
         ProgressWindowItem progressWindow;
         public VerticalTabsFlyoutControl verticalTabsFlyout = null;
         public TabView tabView => tabControl;
+        public RunCommandWindow RunCommandWindow => runCommandWindow;
 
         public MainPage()
         {

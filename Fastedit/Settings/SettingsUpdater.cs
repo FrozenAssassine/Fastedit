@@ -102,7 +102,6 @@ namespace Fastedit.Settings
                     item.Foreground = foreground;
                 }
             }
-
         }
         private static void SetMenubarAlignment(Microsoft.UI.Xaml.Controls.MenuBar menubar)
         {
@@ -163,6 +162,8 @@ namespace Fastedit.Settings
 
             //Statusbar
             SetSettingsToStatusbar(statusbar, currentDesign);
+
+            mainPage.RunCommandWindow.UpdateColors();
 
             //TabWindows (tabs as own windows):
             TabWindowHelper.UpdateSettings();

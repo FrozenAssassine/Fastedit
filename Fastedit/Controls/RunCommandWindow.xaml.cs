@@ -1,4 +1,5 @@
-﻿using Fastedit.Tab;
+﻿using Fastedit.Dialogs;
+using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
@@ -20,10 +22,20 @@ namespace Fastedit.Controls
     {
         List<RunCommandWindowCustomItem> CurrentTabPages = new List<RunCommandWindowCustomItem>();
         RunCommandWindowSubItem currentPage = null;
-
         public RunCommandWindow()
         {
             this.InitializeComponent();
+        }
+
+        public void UpdateColors()
+        {
+            grid.Background = DialogHelper.ContentDialogBackground();
+            var textcolor = DialogHelper.ContentDialogForeground();
+            foreach (var item in Items)
+            {
+                item.TextColor = textcolor;
+            }
+            grid.RequestedTheme = DialogHelper.DialogDesign;
         }
 
         public void Toggle(TabView tabView)
@@ -43,6 +55,7 @@ namespace Fastedit.Controls
             {
                 itemHostListView = FindName("itemHostListView") as ListView;
             }
+            UpdateColors();
 
             searchbox.Text = "";
             this.Visibility = Visibility.Visible;
@@ -189,6 +202,7 @@ namespace Fastedit.Controls
         public object Tag { get; set; }
         public string Command { get; set; }
         public string Shortcut { get; set; }
+        public Brush TextColor { get; set; }
     }
 
     public class RunCommandWindowSubItem : IRunCommandWindowItem
@@ -197,6 +211,7 @@ namespace Fastedit.Controls
         public string Command { get; set; }
         public string Shortcut { get; set; }
         public object Tag { get; set; }
+        public Brush TextColor { get; set; }
     }
 
     public class RunCommandWindowCustomItem : IRunCommandWindowItem
@@ -204,6 +219,7 @@ namespace Fastedit.Controls
         public string Command { get; set; }
         public string Shortcut { get; set; }
         public object Tag { get; set; }
+        public Brush TextColor { get; set; }
     }
 
     public interface IRunCommandWindowItem
@@ -211,5 +227,6 @@ namespace Fastedit.Controls
         string Command { get; set; }
         string Shortcut { get; set; }
         object Tag { get; set; }
+        Brush TextColor { get; set; }
     }
 }
