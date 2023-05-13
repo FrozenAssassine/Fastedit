@@ -26,7 +26,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Foreground="{x:Bind TextColor}"  VerticalAlignment="Bottom" Grid.Column="0" Text="{x:Bind Command}" x:Phase="1"/>
-                    <Grid VerticalAlignment="Bottom" Grid.Column="1" BorderBrush="#555555" BorderThickness="1" CornerRadius="4">
+                    <Grid Visibility="{Binding Path=Shortcut, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}"  VerticalAlignment="Bottom" Grid.Column="1" BorderBrush="#555555" BorderThickness="1" CornerRadius="4">
                         <TextBlock Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind Shortcut}" x:Phase="1" />
                     </Grid>
                 </Grid>

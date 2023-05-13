@@ -584,5 +584,9 @@ namespace Fastedit
                 Statusbar_Line.HideFlyout();
             }
         }
+        private void ReloadSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ApplySettings();
+        }
     }
 }

@@ -558,6 +558,7 @@
                 <controls:RunCommandWindowItem Command="Save as" Shortcut="Ctrl + Shift + S" RunCommandWindowItemClicked="SaveFileAs_Click"/>
                 <controls:RunCommandWindowItem Command="Save" Shortcut="Ctrl + S" RunCommandWindowItemClicked="SaveFile_Click"/>
                 <controls:RunCommandWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
+                <controls:RunCommandWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
                 <controls:RunCommandWindowItem Command="Share" RunCommandWindowItemClicked="ShareDocument_Click"/>
                 <controls:RunCommandWindowSubItem Command="Spaces instead tabs">
                     <controls:RunCommandWindowSubItem.Items>
