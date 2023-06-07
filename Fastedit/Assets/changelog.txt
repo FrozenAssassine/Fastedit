@@ -3,7 +3,7 @@
 	• Added selection to fileinfo
 	• Added property to align the menubar left/right/center
 	• Added reload settings to quick access
-	• Fixed quick access to not show emty boxes when there is no shortcut
+	• Fixed quick access to not show empty boxes when there is no shortcut
 	• Fixed add documents only to recycle bin, when they are modified
 	• Fixed colors in quick access window now matching dialog color
 	• Updated to TextControlBox 1.7.1
