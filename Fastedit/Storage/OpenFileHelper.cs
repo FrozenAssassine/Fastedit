@@ -14,7 +14,7 @@ namespace Fastedit.Storage
 {
     public class OpenFileHelper
     {
-        private static async Task<(string Text, Encoding encoding, bool Succed)> ReadTextFromFileAsync(StorageFile file, Encoding encoding = null)
+        public static async Task<(string Text, Encoding encoding, bool Succed)> ReadTextFromFileAsync(StorageFile file, Encoding encoding = null)
         {
             try
             {

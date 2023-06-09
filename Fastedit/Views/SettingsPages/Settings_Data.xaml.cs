@@ -29,16 +29,18 @@ namespace Fastedit.Views.SettingsPages
         //Import/Export settings
         private async void ExportSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (await SettingsImportExport.Export())
+            var res = await SettingsImportExport.Export();
+            if (res == SettingsImportExportResult.Success)
                 InfoMessages.SettingsExportSucceed();
-            else
+            else if (res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsExportFailed();
         }
         private async void ImportSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (await SettingsImportExport.Import())
+            var res = await SettingsImportExport.Import();
+            if (res == SettingsImportExportResult.Success)
                 InfoMessages.SettingsImportSucceed();
-            else
+            else if(res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsImportFailed();
         }
 
