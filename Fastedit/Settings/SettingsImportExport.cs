@@ -38,9 +38,10 @@ namespace Fastedit.Settings
 
             foreach (var line in await FileIO.ReadLinesAsync(file))
             {
-                if (line.Length > 0)
+                string trimmedLine = line.Trim();
+                if (trimmedLine.Length > 0)
                 {
-                    var splitted = line.Split("=", StringSplitOptions.RemoveEmptyEntries);
+                    var splitted = trimmedLine.Split("=", StringSplitOptions.RemoveEmptyEntries);
                     if (splitted.Length > 1)
                     {
                         AppSettings.SaveSettings(splitted[0], splitted[1]);
