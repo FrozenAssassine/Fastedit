@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 
 namespace Fastedit.Tab
 {
@@ -77,7 +78,12 @@ namespace Fastedit.Tab
 
         public int CountWords()
         {
-            return textbox.GetText().Split(new char[] { '\n', ' ', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            int words = 0;
+            foreach (string line in textbox.Lines)
+            {
+                words += line.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            }
+            return words;
         }
         public bool HasHeader(string header)
         {
