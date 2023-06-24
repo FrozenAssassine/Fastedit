@@ -30,6 +30,8 @@ namespace Fastedit
         public List<FrameworkElement> ControlsToHideInSettings = new List<FrameworkElement>();
         ProgressWindowItem progressWindow;
         public VerticalTabsFlyoutControl verticalTabsFlyout = null;
+        private Microsoft.UI.Xaml.Controls.SplitButton addTabButton = null;
+
         public TabView tabView => tabControl;
         public RunCommandWindow RunCommandWindow => runCommandWindow;
 
@@ -320,6 +322,9 @@ namespace Fastedit
                     case VirtualKey.D:
                         DuplicateLine_Click(null, null);
                         break;
+                    case VirtualKey.M:
+                        verticalTabsFlyout.Show(addTabButton);
+                        break;
                 }
             }
 
@@ -587,6 +592,14 @@ namespace Fastedit
         private void ReloadSettings_Click(object sender, RoutedEventArgs e)
         {
             ApplySettings();
+        }
+
+        private void AddButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Microsoft.UI.Xaml.Controls.SplitButton btn)
+            {
+                addTabButton = btn;
+            }
         }
     }
 }

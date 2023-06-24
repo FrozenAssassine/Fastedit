@@ -40,6 +40,14 @@ namespace Fastedit.Controls
                UpdateFlyout();
         }
 
+        public void Show(FrameworkElement placementTarget)
+        {
+            this.ShowAt(placementTarget);
+
+            //update the index:
+            listView.Focus(FocusState.Programmatic);
+        }
+
         private void UpdateFlyout()
         {
             List<TabFlyoutItem> items = new List<TabFlyoutItem>(tabView.TabItems.Count - (SettingsTabPageHelper.SettingsPageOpen ? 1 : 0));
@@ -54,7 +62,8 @@ namespace Fastedit.Controls
                 }
             }
 
-            listView.ItemsSource = items; listView.Tag = null;
+            listView.ItemsSource = items;
+            listView.Tag = null;
             listView.Focus(FocusState.Programmatic);
             listView.SelectedIndex = tabView.SelectedIndex > listView.Items.Count ? 0 : -1;
         }
