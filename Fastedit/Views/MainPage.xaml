@@ -375,6 +375,7 @@
                         <KeyboardAccelerator Key="S" Modifiers="Control,Shift" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Save all" Click="SaveAll_Click"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Recycle bin" Click="RecycleBin_Click"/>
                 <MenuFlyoutSeparator/>
@@ -577,6 +578,7 @@
                 <controls:RunCommandWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
                 <controls:RunCommandWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
                 <controls:RunCommandWindowItem Command="New window" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
+                <controls:RunCommandWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
             </controls:RunCommandWindow.Items>
         </controls:RunCommandWindow>
     </Grid>

@@ -438,6 +438,10 @@ namespace Fastedit
         {
             await new RecycleBinDialog(tabControl).ShowDialog();
         }
+        private async void SaveAll_Click(object sender, RoutedEventArgs e)
+        {
+            await TabPageHelper.SaveAll(tabControl);
+        }
         //Edit
         private void Undo_Click(object sender, RoutedEventArgs e)
         {

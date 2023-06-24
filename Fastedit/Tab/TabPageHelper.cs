@@ -375,5 +375,16 @@ namespace Fastedit.Tab
                 tabView.SelectedIndex--;
             }
         }
+
+        public static async Task SaveAll(TabView tabView)
+        {
+            foreach (var currentTab in tabView.TabItems)
+            {
+                if (currentTab is TabPageItem tab)
+                {
+                    await SaveFile(tab);
+                }
+            }
+        }
     }
 }
