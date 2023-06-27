@@ -588,5 +588,10 @@ namespace Fastedit
         {
             ApplySettings();
         }
+
+        private async void CloseAll_Click(object sender, RoutedEventArgs e)
+        {
+            await TabPageHelper.CloseAll(tabControl);
+        }
     }
 }
