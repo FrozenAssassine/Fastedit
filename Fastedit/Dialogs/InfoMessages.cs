@@ -34,6 +34,8 @@ namespace Fastedit.Dialogs
         public static void SaveDesignError() => new InfoBar().Show("Save design", "Could not save the design", InfoBarSeverity.Error);
         public static void SaveDesignSucceed() => new InfoBar().Show("Save design", "The design was saved successfully", InfoBarSeverity.Success);
         public static void CloseDesignEditor() => new InfoBar().Show("Close design editor", "Please close all instances of the design editor", InfoBarSeverity.Warning);
+        public static void RenameFileError() => new InfoBar().Show("Rename file", "Could not rename file, because a file with the same name already exists.", InfoBarSeverity.Error);
+        public static void RenameFileException(Exception ex) => new InfoBar().Show("Rename file", "Exception while renaming file:\n" + ex.Message, InfoBarSeverity.Error);
 
         public static void WelcomeMessage()
         {
