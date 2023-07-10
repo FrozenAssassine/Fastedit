@@ -1,4 +1,5 @@
 ﻿using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -22,9 +23,24 @@ namespace Fastedit.Controls
     {
         List<RunCommandWindowCustomItem> CurrentTabPages = new List<RunCommandWindowCustomItem>();
         RunCommandWindowSubItem currentPage = null;
+
+        RunCommandWindowInfoItem WordCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Words" };
+        RunCommandWindowInfoItem CharacterCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Character" };
+        RunCommandWindowInfoItem LineCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Lines" };
+        RunCommandWindowInfoItem EncodingDisplay = new RunCommandWindowInfoItem { Command = "Current Encoding" };
+        RunCommandWindowInfoItem FilePathDisplay = new RunCommandWindowInfoItem { Command = "File Path" };
+        RunCommandWindowInfoItem FileNameDisplay = new RunCommandWindowInfoItem { Command = "File Name" };
+
         public RunCommandWindow()
         {
             this.InitializeComponent();
+
+            Items.Add(WordCountDisplay);
+            Items.Add(CharacterCountDisplay);
+            Items.Add(LineCountDisplay);
+            Items.Add(EncodingDisplay);
+            Items.Add(FilePathDisplay);
+            Items.Add(FileNameDisplay);
         }
 
         public void UpdateColors()
@@ -57,6 +73,7 @@ namespace Fastedit.Controls
         {
             //Add the current tabpages:
             AddCurrentTabPages(tabView);
+            UpdateLiveCommands(tabView);
             Items.AddRange(CurrentTabPages);
 
             if (itemHostListView == null)
@@ -81,6 +98,21 @@ namespace Fastedit.Controls
         }
         public List<IRunCommandWindowItem> Items { get; set; } = new List<IRunCommandWindowItem>();
 
+        private void UpdateLiveCommands(TabView tabView)
+        {
+            if (tabView.SelectedItem == null)
+                return;
+
+            if (tabView.SelectedItem is TabPageItem selectedTab)
+            {
+                WordCountDisplay.InfoText = selectedTab.CountWords().ToString();
+                CharacterCountDisplay.InfoText = selectedTab.textbox.CharacterCount.ToString();
+                LineCountDisplay.InfoText = selectedTab.textbox.NumberOfLines.ToString();
+                EncodingDisplay.InfoText = EncodingHelper.GetEncodingName(selectedTab.Encoding);
+                FilePathDisplay.InfoText = selectedTab.DatabaseItem.FilePath;
+                FileNameDisplay.InfoText = selectedTab.DatabaseItem.FileName;
+            }
+        }
         private void AddCurrentTabPages(TabView tabView)
         {
             //remove when there are too many
@@ -155,6 +187,10 @@ namespace Fastedit.Controls
                     Hide();
                 }
             }
+            else if (clickedItem is RunCommandWindowInfoItem)
+            {
+                Hide();
+            }
         }
         private void UserControl_KeyDown(object sender, KeyRoutedEventArgs e)
         {
@@ -197,6 +233,7 @@ namespace Fastedit.Controls
         {
             this.Visibility = Visibility.Collapsed;
         }
+   
     }
     public class RunCommandWindowItem : IRunCommandWindowItem
     {
@@ -211,6 +248,7 @@ namespace Fastedit.Controls
         public string Command { get; set; }
         public string Shortcut { get; set; }
         public Brush TextColor { get; set; }
+        public string InfoText { get; set; } = null;
     }
 
     public class RunCommandWindowSubItem : IRunCommandWindowItem
@@ -220,6 +258,8 @@ namespace Fastedit.Controls
         public string Shortcut { get; set; }
         public object Tag { get; set; }
         public Brush TextColor { get; set; }
+        public string InfoText { get; set; } = null;
+
     }
 
     public class RunCommandWindowCustomItem : IRunCommandWindowItem
@@ -228,12 +268,24 @@ namespace Fastedit.Controls
         public string Shortcut { get; set; }
         public object Tag { get; set; }
         public Brush TextColor { get; set; }
+        public string InfoText { get; set; } = null;
     }
+
+    public class RunCommandWindowInfoItem : IRunCommandWindowItem
+    {
+        public string Command { get; set; }
+        public string Shortcut { get; set; }
+        public string InfoText { get; set; }
+        public object Tag { get; set; }
+        public Brush TextColor { get; set; }
+    }
+
 
     public interface IRunCommandWindowItem
     {
         string Command { get; set; }
         string Shortcut { get; set; }
+        string InfoText { get; set; }
         object Tag { get; set; }
         Brush TextColor { get; set; }
     }
