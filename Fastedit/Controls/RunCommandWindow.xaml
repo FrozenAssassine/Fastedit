@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+            <converter:StringToVisibilityConverter_Inverted x:Key="StringToVisibilityConverter_Inverted"/>
 
             <Storyboard x:Name="showControlAnimation" Storyboard.TargetName="usercontrol">
                 <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.15" />
@@ -29,6 +30,8 @@
                     <Grid Visibility="{Binding Path=Shortcut, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}"  VerticalAlignment="Bottom" Grid.Column="1" BorderBrush="#555555" BorderThickness="1" CornerRadius="4">
                         <TextBlock Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind Shortcut}" x:Phase="1" />
                     </Grid>
+                    <TextBlock Visibility="{Binding Path=Shortcut, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter_Inverted}}" Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind InfoText}" x:Phase="1" VerticalAlignment="Bottom" Grid.Column="1"/>
+
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>

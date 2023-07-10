@@ -593,6 +593,9 @@ namespace Fastedit
         {
             await RenameFileDialog.Show(currentlySelectedTabPage);
             UpdateStatubar();
+        private async void CloseAll_Click(object sender, RoutedEventArgs e)
+        {
+            await TabPageHelper.CloseAll(tabControl);
         }
     }
 }

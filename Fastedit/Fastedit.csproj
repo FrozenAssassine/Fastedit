@@ -166,6 +166,7 @@
     <Compile Include="Controls\VerticalTabsFlyoutControl.xaml.cs">
       <DependentUpon>VerticalTabsFlyoutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringToVisibilityConverter_Inverted.cs" />
     <Compile Include="Converter\StringToVisibilityConverter.cs" />
     <Compile Include="Dialogs\AskSaveDesignDialog.cs" />
     <Compile Include="Dialogs\AskSaveDialog.cs" />

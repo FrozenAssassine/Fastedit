@@ -464,6 +464,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Share" Click="ShareDocument_Click"/>
+                <MenuFlyoutItem Text="Close all" Click="CloseAll_Click"/>
             </muxc:MenuBarItem>
             <muxc:MenuBarItem Title="Advanced">
                 <MenuFlyoutSubItem Text="Syntaxhighlighting" x:Name="CodeLanguageSelector"/>
@@ -583,6 +584,7 @@
                 <controls:RunCommandWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
                 <controls:RunCommandWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
                 <controls:RunCommandWindowItem Command="New window" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
+                <controls:RunCommandWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
             </controls:RunCommandWindow.Items>
         </controls:RunCommandWindow>
     </Grid>

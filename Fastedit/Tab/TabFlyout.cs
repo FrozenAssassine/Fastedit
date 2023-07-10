@@ -1,6 +1,7 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml.Controls;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
@@ -20,6 +21,7 @@ namespace Fastedit.Tab
             flyout.Items.Add(new MenuFlyoutSeparator());
             flyout.Items.Add(CreateItem(tab, tabView, "Share", Symbol.Share, TabPageFlyoutItem.Share));
             flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.J));
+            flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
             return flyout;
         }
         private static MenuFlyoutItem CreateItem(TabPageItem tab, TabView tabView, string Text, Symbol symbol, TabPageFlyoutItem type, VirtualKeyModifiers modifier = VirtualKeyModifiers.None, VirtualKey key = VirtualKey.None)
@@ -89,6 +91,8 @@ namespace Fastedit.Tab
                         break;
                     case TabPageFlyoutItem.Rename:
                         await RenameFileDialog.Show(data.Tab);
+                    case TabPageFlyoutItem.CloseAll:
+                        await TabPageHelper.CloseAll(data.TabView);
                         break;
                 }
             }
@@ -96,7 +100,7 @@ namespace Fastedit.Tab
     }
     public enum TabPageFlyoutItem
     {
-        Save, Close, Share, FileInfo, Rename
+        Save, Close, Share, FileInfo, Rename, CloseAll
     }
     public class TabFlyoutItemData
     {
