@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Settings;
@@ -443,6 +443,10 @@ namespace Fastedit
         {
             await new RecycleBinDialog(tabControl).ShowDialog();
         }
+        private async void SaveAll_Click(object sender, RoutedEventArgs e)
+        {
+            await TabPageHelper.SaveAll(tabControl);
+        }
         //Edit
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
@@ -503,14 +507,14 @@ namespace Fastedit
             if (currentlySelectedTabPage == null)
                 return;
 
-            searchControl.ShowSearch(currentlySelectedTabPage.textbox);
+            searchControl.ShowSearch(currentlySelectedTabPage);
         }
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
             if (currentlySelectedTabPage == null)
                 return;
 
-            searchControl.ShowReplace(currentlySelectedTabPage.textbox);
+            searchControl.ShowReplace(currentlySelectedTabPage);
         }
         private async void GoToLine_Click(object sender, RoutedEventArgs e)
         {
@@ -579,7 +583,7 @@ namespace Fastedit
 
         private void Statusbar_GoToLineTextbox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter)
             {
                 int res = ConvertHelper.ToInt(Statusbar_GoToLineTextbox.Text, -1) - 1;
                 if (res == -1)
@@ -600,6 +604,16 @@ namespace Fastedit
             {
                 addTabButton = btn;
             }
+        }
+
+        private async void RenameFile_Click(object sender, RoutedEventArgs e)
+        {
+            await RenameFileDialog.Show(currentlySelectedTabPage);
+            UpdateStatubar();
+        }
+        private async void CloseAll_Click(object sender, RoutedEventArgs e)
+        {
+            await TabPageHelper.CloseAll(tabControl);
         }
     }
 }

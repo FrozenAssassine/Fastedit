@@ -15,7 +15,7 @@ namespace Fastedit.Storage
 {
     public class SaveFileHelper
     {
-        private static async Task<bool> WriteTextToFileAsync(StorageFile file, string text, Encoding encoding)
+        public static async Task<bool> WriteTextToFileAsync(StorageFile file, string text, Encoding encoding)
         {
             try
             {

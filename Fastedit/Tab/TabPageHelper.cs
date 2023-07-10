@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Settings;
 using Fastedit.Storage;
@@ -247,11 +247,14 @@ namespace Fastedit.Tab
             {
                 if (!tab.DatabaseItem.IsModified || await AskSaveDialog.Show(tab))
                 {
-                    await RemoveTab(tabView, tab);
+                    return await RemoveTab(tabView, tab);
                 }
             }
             else if (SettingsTabPageHelper.IsSettingsPage(tabItem))
+            {
                 SettingsTabPageHelper.CloseSettings(tabView);
+                return true;
+            }
 
             return false;
         }
@@ -373,6 +376,24 @@ namespace Fastedit.Tab
             if (tabView.SelectedIndex > 0)
             {
                 tabView.SelectedIndex--;
+            }
+        }
+        public static async Task SaveAll(TabView tabView)
+        {
+            foreach (var currentTab in tabView.TabItems)
+            {
+                if (currentTab is TabPageItem tab)
+                {
+                    await SaveFile(tab);
+                }
+            }
+        }
+        public static async Task CloseAll(TabView tabView)
+        {
+            while(tabView.TabItems.Count > 0)
+            {
+                    if (!await CloseTab(tabView, tabView.TabItems[tabView.TabItems.Count - 1]))
+                        return; //Cancelled by user
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml.Controls;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
@@ -15,10 +16,12 @@ namespace Fastedit.Tab
             var flyout = new MenuFlyout();
             flyout.Items.Add(CreateItem(tab, tabView, "Close", "\uE8BB", TabPageFlyoutItem.Close, VirtualKeyModifiers.Control, VirtualKey.W));
             flyout.Items.Add(new MenuFlyoutSeparator());
-            flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.J));
-            flyout.Items.Add(CreateItem(tab, tabView, "Share", Symbol.Share, TabPageFlyoutItem.Share));
+            flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
             flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
-
+            flyout.Items.Add(new MenuFlyoutSeparator());
+            flyout.Items.Add(CreateItem(tab, tabView, "Share", Symbol.Share, TabPageFlyoutItem.Share));
+            flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.J));
+            flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
             return flyout;
         }
         private static MenuFlyoutItem CreateItem(TabPageItem tab, TabView tabView, string Text, Symbol symbol, TabPageFlyoutItem type, VirtualKeyModifiers modifier = VirtualKeyModifiers.None, VirtualKey key = VirtualKey.None)
@@ -86,13 +89,18 @@ namespace Fastedit.Tab
                     case TabPageFlyoutItem.Share:
                         ShareFileHelper.ShowShareUI(data.Tab);
                         break;
+                    case TabPageFlyoutItem.Rename:
+                        await RenameFileDialog.Show(data.Tab);
+                    case TabPageFlyoutItem.CloseAll:
+                        await TabPageHelper.CloseAll(data.TabView);
+                        break;
                 }
             }
         }
     }
     public enum TabPageFlyoutItem
     {
-        Save, Close, Share, FileInfo
+        Save, Close, Share, FileInfo, Rename, CloseAll
     }
     public class TabFlyoutItemData
     {

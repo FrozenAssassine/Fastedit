@@ -44,6 +44,18 @@
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
+            <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
+                <StackPanel Height="70" Padding="0" Orientation="Horizontal">
+                    <SymbolIcon Margin="0,4,10,0" Symbol="People"/>
+                    <TextBlock Text="Contribute" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/Fastedit/issues/new" Margin="5" Content="Report Bug"></HyperlinkButton>
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/Fastedit/issues/new" Margin="5" Content="Request Feature"></HyperlinkButton>
+                </StackPanel>
+            </Grid>
+
             <muxc:Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <muxc:Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
