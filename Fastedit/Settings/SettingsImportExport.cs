@@ -1,6 +1,7 @@
 ﻿using Fastedit.Storage;
 using Fastedit.Tab;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,11 +12,11 @@ namespace Fastedit.Settings
 {
     internal class SettingsImportExport
     {
-        public static async Task<bool> Export()
+        public static async Task<SettingsImportExportResult> Export()
         {
             var file = await SaveFileHelper.PickFile("settings.fasteditsettings", ".fasteditsettings", "Fastedit settings");
             if (file == null)
-                return false;
+                return SettingsImportExportResult.Cancelled;
 
             FieldInfo[] fieldInfos = typeof(AppSettingsValues).GetFields(BindingFlags.Public |
                      BindingFlags.Static | BindingFlags.FlattenHierarchy);
@@ -26,21 +27,25 @@ namespace Fastedit.Settings
                 data.AppendLine(item.GetValue(null) + "=" + AppSettings.GetSettings(item.GetValue(null).ToString()));
             }
 
-            await FileIO.WriteTextAsync(file, data.ToString());
-            return true;
+            return await SaveFileHelper.WriteTextToFileAsync(file, data.ToString(), Encoding.UTF8) ? SettingsImportExportResult.Success : SettingsImportExportResult.Failed;
         }
 
-        public static async Task<bool> Import()
+        public static async Task<SettingsImportExportResult> Import()
         {
             var file = await OpenFileHelper.PickFile(".fasteditsettings");
             if (file == null)
-                return false;
+                return SettingsImportExportResult.Cancelled;
 
-            foreach (var line in await FileIO.ReadLinesAsync(file))
+            var result = await OpenFileHelper.ReadTextFromFileAsync(file);
+            if (!result.Succed)
+                return SettingsImportExportResult.Failed;
+
+            foreach (var line in result.Text.Split("\n"))
             {
-                if (line.Length > 0)
+                string trimmedLine = line.Trim();
+                if (trimmedLine.Length > 0)
                 {
-                    var splitted = line.Split("=", StringSplitOptions.RemoveEmptyEntries);
+                    var splitted = trimmedLine.Split("=", StringSplitOptions.RemoveEmptyEntries);
                     if (splitted.Length > 1)
                     {
                         AppSettings.SaveSettings(splitted[0], splitted[1]);
@@ -50,7 +55,11 @@ namespace Fastedit.Settings
 
             //Apply the imported settings
             TabPageHelper.mainPage.ApplySettings();
-            return true;
+            return SettingsImportExportResult.Success;
         }
+    }
+    public enum SettingsImportExportResult
+    {
+        Failed, Cancelled, Success
     }
 }
