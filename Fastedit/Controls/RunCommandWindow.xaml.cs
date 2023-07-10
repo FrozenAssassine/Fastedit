@@ -29,10 +29,18 @@ namespace Fastedit.Controls
 
         public void UpdateColors()
         {
-            grid.Background = DialogHelper.ContentDialogBackground();
+            UpdateColors(Items);
+        }
+        public void UpdateColors(List<IRunCommandWindowItem> items)
+        {
             var textcolor = DialogHelper.ContentDialogForeground();
-            foreach (var item in Items)
+            grid.Background = DialogHelper.ContentDialogBackground();
+            foreach (var item in items)
             {
+                if (item is RunCommandWindowSubItem sub_item)
+                {
+                    UpdateColors(sub_item.Items);
+                }
                 item.TextColor = textcolor;
             }
             grid.RequestedTheme = DialogHelper.DialogDesign;
@@ -182,7 +190,7 @@ namespace Fastedit.Controls
             }
             else if (e.Key == Windows.System.VirtualKey.Enter)
             {
-                ItemClicked(itemHostListView.SelectedItem);
+                ItemClicked(itemHostListView.SelectedItem ?? itemHostListView.Items[0]);
             }
         }
         private void hideControlAnimation_Completed(object sender, object e)
@@ -207,7 +215,7 @@ namespace Fastedit.Controls
 
     public class RunCommandWindowSubItem : IRunCommandWindowItem
     {
-        public List<RunCommandWindowItem> Items { get; set; } = new List<RunCommandWindowItem>();
+        public List<IRunCommandWindowItem> Items { get; set; } = new List<IRunCommandWindowItem>();
         public string Command { get; set; }
         public string Shortcut { get; set; }
         public object Tag { get; set; }
