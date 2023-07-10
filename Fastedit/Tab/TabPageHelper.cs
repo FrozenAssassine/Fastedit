@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TextControlBox;
 using Windows.Storage;
 using Windows.UI.Xaml;
 
@@ -34,7 +35,7 @@ namespace Fastedit.Tab
         }
 
         //textbox events:
-        private static void Textbox_SelectionChanged(TextControlBox.TextControlBox sender, TextControlBox.Text.SelectionChangedEventHandler args)
+        private static void Textbox_SelectionChanged(TextControlBox.TextControlBox sender, SelectionChangedEventHandler args)
         {
             mainPage.UpdateStatubar();
         }
@@ -260,12 +261,12 @@ namespace Fastedit.Tab
         }
         private static async Task<bool> RemoveTab(TabView tabView, TabPageItem tab)
         {
-            //only add the file to the recylcbin when it has some content and was modified
+            //only add the file to the recyclebin if it has text inside and was modified
             if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount > 0)
                 if (!await RecycleBinDialog.MoveFileToRecycleBin(tab))
                     return false;
 
-            tab.textbox.Unload();
+            //tab.textbox.Unload();
             tabView.TabItems.Remove(tab);
             TabDatabase.DeleteTempFile(tab);
             return !tabView.TabItems.Contains(tab);
@@ -350,7 +351,6 @@ namespace Fastedit.Tab
                 return;
 
             string extension = Path.GetExtension(file.Path).ToLower();
-
             //search through the dictionary of codelanguages in the textbox
             foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
             {
@@ -359,6 +359,7 @@ namespace Fastedit.Tab
                     if (item.Value.Filter[i].Equals(extension, StringComparison.OrdinalIgnoreCase))
                     {
                         tab.CodeLanguage = item.Value;
+                        Debug.WriteLine(item.Value.Name);
                         return;
                     }
                 }

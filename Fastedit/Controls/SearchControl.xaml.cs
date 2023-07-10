@@ -145,17 +145,10 @@ namespace Fastedit.Controls
                 if (currentTextbox == null)
                     return;
 
-                try
-                {
-                    if (shift)
-                        currentTextbox.FindPrevious();
-                    else
-                        currentTextbox.FindNext();
-                }
-                catch
-                {
-                    //Due to bug in TextControlBox
-                }
+                if (shift)
+                    currentTextbox.FindPrevious();
+                else
+                    currentTextbox.FindNext();
             }
         }
         private void SearchUpButton_Click(object sender, RoutedEventArgs e)
@@ -163,27 +156,13 @@ namespace Fastedit.Controls
             if (currentTextbox == null)
                 return;
 
-            try
-            {
-                currentTextbox.FindPrevious();
-            }
-            catch
-            {
-                //Due to bug in TextControlBox
-            }
+            currentTextbox.FindPrevious();
         }
         private void SearchDownButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentTextbox == null)
                 return;
-            try
-            {
-                currentTextbox.FindNext();
-            }
-            catch
-            {
-                //Due to bug in TextControlBox
-            }
+            currentTextbox.FindNext();
         }
         private void FindMatchCaseButton_Click(object sender, RoutedEventArgs e)
         {

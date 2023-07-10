@@ -91,6 +91,7 @@ namespace Fastedit.Tab
                         break;
                     case TabPageFlyoutItem.Rename:
                         await RenameFileDialog.Show(data.Tab);
+                        break;
                     case TabPageFlyoutItem.CloseAll:
                         await TabPageHelper.CloseAll(data.TabView);
                         break;

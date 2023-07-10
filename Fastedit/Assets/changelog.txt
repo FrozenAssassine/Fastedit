@@ -1,4 +1,21 @@
-﻿#Version 2.3.0 [05/13/2023]
+﻿#Version 2.4.0 [7/10/2023]
+	• Added CSS syntaxhighlighting
+	• Added autopairing for brackets and quotation marks
+	• Added rename file dialog
+	• Added save all button
+	• Added close all button
+	• Added shortcut Ctrl + Shift + P for QuickAccess
+	• Added report bug/request feature button
+	• Added shortcut for vertical tab flyout (Ctrl + M)
+	• Added items that display wordcount, linecount, charactercount, filepath, filename and encoding to quick access
+	• Added settings import export failed info message
+	• Updated performance of the wordcount algorithm
+	• Updated to TextControlBox 1.8.0
+	• Fixed a bug where the subitems of QuickAccess were not visible
+	• Fixed a bug where replace all did not change the modified state
+
+---
+#Version 2.3.0 [05/13/2023]
 	• Added encoding to fileinfo
 	• Added selection to fileinfo
 	• Added property to align the menubar left/right/center

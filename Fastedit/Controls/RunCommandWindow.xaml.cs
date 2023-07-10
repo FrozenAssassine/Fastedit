@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -187,8 +188,14 @@ namespace Fastedit.Controls
                     Hide();
                 }
             }
-            else if (clickedItem is RunCommandWindowInfoItem)
+            else if (clickedItem is RunCommandWindowInfoItem infoitem)
             {
+                //Copy to clipbard
+                DataPackage dataPackage = new DataPackage();
+                dataPackage.SetText(infoitem.InfoText);
+                dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                Clipboard.SetContent(dataPackage);
+
                 Hide();
             }
         }
