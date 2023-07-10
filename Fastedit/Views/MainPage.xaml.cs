@@ -574,7 +574,7 @@ namespace Fastedit
 
         private void Statusbar_GoToLineTextbox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter)
             {
                 int res = ConvertHelper.ToInt(Statusbar_GoToLineTextbox.Text, -1) - 1;
                 if (res == -1)
@@ -589,6 +589,10 @@ namespace Fastedit
             ApplySettings();
         }
 
+        private async void RenameFile_Click(object sender, RoutedEventArgs e)
+        {
+            await RenameFileDialog.Show(currentlySelectedTabPage);
+            UpdateStatubar();
         private async void CloseAll_Click(object sender, RoutedEventArgs e)
         {
             await TabPageHelper.CloseAll(tabControl);

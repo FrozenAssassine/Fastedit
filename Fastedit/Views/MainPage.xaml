@@ -485,6 +485,11 @@
                         <KeyboardAccelerator Key="B" Modifiers="Control" IsEnabled="False"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rename" Click="RenameFile_Click">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F2"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
             </muxc:MenuBarItem>
             <muxc:MenuBarItem Title="View">
                 <MenuFlyoutItem Text="Compact overlay" Click="CompactOverlayMode_Click">
@@ -560,6 +565,7 @@
                 <controls:RunCommandWindowItem Command="Save" Shortcut="Ctrl + S" RunCommandWindowItemClicked="SaveFile_Click"/>
                 <controls:RunCommandWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
                 <controls:RunCommandWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
+                <controls:RunCommandWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
                 <controls:RunCommandWindowItem Command="Share" RunCommandWindowItemClicked="ShareDocument_Click"/>
                 <controls:RunCommandWindowSubItem Command="Spaces instead tabs">
                     <controls:RunCommandWindowSubItem.Items>

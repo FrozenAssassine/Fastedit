@@ -177,6 +177,7 @@
     <Compile Include="Dialogs\InfoMessages.cs" />
     <Compile Include="Dialogs\ProgressWindowItem.cs" />
     <Compile Include="Dialogs\RecycleBinDialog.cs" />
+    <Compile Include="Dialogs\RenameFileDialog.cs" />
     <Compile Include="Dialogs\ShareDialog.cs" />
     <Compile Include="Helper\AppActivationHelper.cs" />
     <Compile Include="Helper\AutoDatabaseSaveHelper.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Helper\WindowHelper.cs" />
     <Compile Include="Settings\SettingsImportExport.cs" />
     <Compile Include="Settings\SettingsUpdater.cs" />
+    <Compile Include="Storage\RenameFileHelper.cs" />
     <Compile Include="Storage\TemporaryFilesHandler.cs" />
     <Compile Include="Tab\TabFlyout.cs" />
     <Compile Include="Tab\TabWindowHelper.cs" />
