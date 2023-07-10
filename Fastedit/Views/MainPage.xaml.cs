@@ -252,6 +252,12 @@ namespace Fastedit
                 TabPageHelper.SelectNextTab(tabControl);
             else if (ctrl && shift && args.VirtualKey == Windows.System.VirtualKey.Tab)
                 TabPageHelper.SelectPreviousTab(tabControl);
+            else if (ctrl && shift && args.VirtualKey == VirtualKey.P)
+            {
+                if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
+                    return;
+                runCommandWindow.Toggle(tabControl);
+            }
 
             if (ctrl)
             {
