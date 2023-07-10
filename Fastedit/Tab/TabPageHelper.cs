@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Settings;
 using Fastedit.Storage;
@@ -376,6 +376,16 @@ namespace Fastedit.Tab
             if (tabView.SelectedIndex > 0)
             {
                 tabView.SelectedIndex--;
+            }
+        }
+        public static async Task SaveAll(TabView tabView)
+        {
+            foreach (var currentTab in tabView.TabItems)
+            {
+                if (currentTab is TabPageItem tab)
+                {
+                    await SaveFile(tab);
+                }
             }
         }
         public static async Task CloseAll(TabView tabView)
