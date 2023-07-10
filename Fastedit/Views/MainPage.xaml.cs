@@ -498,14 +498,14 @@ namespace Fastedit
             if (currentlySelectedTabPage == null)
                 return;
 
-            searchControl.ShowSearch(currentlySelectedTabPage.textbox);
+            searchControl.ShowSearch(currentlySelectedTabPage);
         }
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
             if (currentlySelectedTabPage == null)
                 return;
 
-            searchControl.ShowReplace(currentlySelectedTabPage.textbox);
+            searchControl.ShowReplace(currentlySelectedTabPage);
         }
         private async void GoToLine_Click(object sender, RoutedEventArgs e)
         {

@@ -1,5 +1,7 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Settings;
+using Fastedit.Tab;
+using System.Diagnostics;
 using TextControlBox.Helper;
 using Windows.System;
 using Windows.UI.Core;
@@ -13,6 +15,8 @@ namespace Fastedit.Controls
     public sealed partial class SearchControl : UserControl
     {
         private TextControlBox.TextControlBox currentTextbox = null;
+        private TabPageItem currentTab = null;
+
         private SearchWindowState searchWindowState = SearchWindowState.Hidden;
 
         public SearchControl()
@@ -67,11 +71,12 @@ namespace Fastedit.Controls
             searchWindowState = SearchWindowState.Default;
         }
 
-        public void ShowSearch(TextControlBox.TextControlBox textbox)
+        public void ShowSearch(TabPageItem tab)
         {
-            if (textbox == null)
+            if (tab == null)
                 return;
-            currentTextbox = textbox;
+            currentTextbox = tab.textbox;
+            currentTab = tab;
 
             //hide the window when in search state or show it when in hidden state or show it when hidden:
             if (searchWindowState == SearchWindowState.Default)
@@ -85,17 +90,18 @@ namespace Fastedit.Controls
             }
 
 
-            if (textbox.SelectionLength > 0 && textbox.SelectionLength < 200)
-                textToFindTextbox.Text = textbox.SelectedText;
+            if (currentTextbox.SelectionLength > 0 && currentTextbox.SelectionLength < 200)
+                textToFindTextbox.Text = currentTextbox.SelectedText;
 
             textToFindTextbox.Focus(FocusState.Keyboard);
             textToFindTextbox.SelectAll();
         }
-        public void ShowReplace(TextControlBox.TextControlBox textbox)
+        public void ShowReplace(TabPageItem tab)
         {
-            if (textbox == null)
+            if (tab == null)
                 return;
-            currentTextbox = textbox;
+            currentTextbox = tab.textbox;
+            currentTab = tab;
 
             //hide the window when in replace state or expand it when in search state or show it when hidden:
             if (searchWindowState == SearchWindowState.Expanded)
@@ -108,8 +114,8 @@ namespace Fastedit.Controls
                 expandReplace();
             }
 
-            if (textbox.SelectionLength > 0 && textbox.SelectionLength < 200)
-                textToFindTextbox.Text = textbox.SelectedText;
+            if (currentTextbox.SelectionLength > 0 && currentTextbox.SelectionLength < 200)
+                textToFindTextbox.Text = currentTextbox.SelectedText;
 
             textToReplaceTextBox.Focus(FocusState.Keyboard);
             textToReplaceTextBox.SelectAll();
@@ -200,6 +206,12 @@ namespace Fastedit.Controls
                 FindWholeWordButton.IsChecked ?? false
                 );
 
+            if (res == SearchResult.Found)
+            {
+                currentTab.DatabaseItem.IsModified = true;
+                currentTab.UpdateHeader();
+            }
+
             ColorWindowBorder(res);
         }
         private void ReplaceCurrentButton_Click(object sender, RoutedEventArgs e)
@@ -213,10 +225,11 @@ namespace Fastedit.Controls
         }
         private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("Search: " + searchWindowState);
             if (searchWindowState == SearchWindowState.Expanded)
-                ShowSearch(currentTextbox);
+                ShowSearch(currentTab);
             else
-                ShowReplace(currentTextbox);
+                ShowReplace(currentTab);
         }
         private void TextBoxes_GotFocus(object sender, RoutedEventArgs e)
         {
