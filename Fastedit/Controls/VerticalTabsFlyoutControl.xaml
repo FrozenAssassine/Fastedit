@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fastedit.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:tab="using:Fastedit.Tab"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:tab="using:Fastedit.Tab"
     mc:Ignorable="d"
     Opened="ShowAllTabsFlyout_Opened" ShowMode="TransientWithDismissOnPointerMoveAway" AllowFocusOnInteraction="True" LightDismissOverlayMode="Off" Placement="Bottom">
     <Grid CharacterReceived="AllTabsFlyout_CharacterReceived" PreviewKeyDown="AllTabsFlyout_KeyDown" HorizontalAlignment="Stretch" VerticalAlignment="Top">

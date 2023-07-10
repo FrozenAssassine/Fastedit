@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Settings;
@@ -30,6 +30,8 @@ namespace Fastedit
         public List<FrameworkElement> ControlsToHideInSettings = new List<FrameworkElement>();
         ProgressWindowItem progressWindow;
         public VerticalTabsFlyoutControl verticalTabsFlyout = null;
+        private Microsoft.UI.Xaml.Controls.SplitButton addTabButton = null;
+
         public TabView tabView => tabControl;
         public RunCommandWindow RunCommandWindow => runCommandWindow;
 
@@ -320,6 +322,9 @@ namespace Fastedit
                     case VirtualKey.D:
                         DuplicateLine_Click(null, null);
                         break;
+                    case VirtualKey.M:
+                        verticalTabsFlyout.Show(addTabButton);
+                        break;
                 }
             }
 
@@ -593,10 +598,19 @@ namespace Fastedit
             ApplySettings();
         }
 
+        private void AddButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Microsoft.UI.Xaml.Controls.SplitButton btn)
+            {
+                addTabButton = btn;
+            }
+        }
+
         private async void RenameFile_Click(object sender, RoutedEventArgs e)
         {
             await RenameFileDialog.Show(currentlySelectedTabPage);
             UpdateStatubar();
+        }
         private async void CloseAll_Click(object sender, RoutedEventArgs e)
         {
             await TabPageHelper.CloseAll(tabControl);
