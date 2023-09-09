@@ -38,7 +38,7 @@
             </Grid>
 
             <controls:SetingsItemSeparator Header="More"/>
-            <controls:SettingsControl Tag="{x:Bind donoURL}" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Donate to show your support" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl Tag="{x:Bind donoURL}" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Donate" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}" />
                 </controls:SettingsControl.Content>
