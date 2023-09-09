@@ -1,4 +1,15 @@
-﻿#Version 2.4.0 [7/10/2023]
+﻿#Version 2.5.0 [09/09/2023]
+	• Added a right-click menu to copy text from the status bar item.
+	• Added support for "Open With" and "Save" for .tex, .csv, and .toml file formats.
+	• Moved the "Syntax Highlighting" option "None" to the top.
+	• Updated Microsoft.UI.Xaml to version 2.8.5.
+	• Fixed a bug where the edit design page always prompted to save even without changes.
+	• Fixed a bug where the app crashed when pressing Enter in the quick access without an item selected.
+	• Fixed a bug where the app crashed when attempting to reopen a file with an encoding, but the file did not exist.
+	• Fixed design1 to have a solid background color for the dialog.
+
+---
+#Version 2.4.0 [7/10/2023]
 	• Added CSS syntaxhighlighting
 	• Added autopairing for brackets and quotation marks
 	• Added rename file dialog
