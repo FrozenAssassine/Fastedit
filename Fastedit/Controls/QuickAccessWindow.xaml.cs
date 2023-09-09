@@ -173,7 +173,7 @@ namespace Fastedit.Controls
                 currentPage = subItem;
                 searchbox.Text = "";
                 itemHostListView.ItemsSource = subItem.Items;
-                itemHostListView.SelectedIndex = 1;
+                itemHostListView.SelectedIndex = 0;
             }
             else if (clickedItem is QuickAccessWindowCustomItem customItem)
             {
@@ -216,6 +216,9 @@ namespace Fastedit.Controls
                     itemHostListView.ScrollIntoView(itemHostListView.Items[itemHostListView.SelectedIndex]);
                 }
 
+                if (itemHostListView.SelectedItem == null)
+                    return;
+
                 itemHostListView.ScrollIntoView(itemHostListView.Items[itemHostListView.SelectedIndex]);
             }
             else if (e.Key == Windows.System.VirtualKey.Up)
@@ -229,7 +232,10 @@ namespace Fastedit.Controls
             }
             else if (e.Key == Windows.System.VirtualKey.Enter)
             {
-                ItemClicked(itemHostListView.SelectedItem ?? itemHostListView.Items[0]);
+                if (itemHostListView.SelectedItem == null)
+                    return;
+
+                ItemClicked(itemHostListView.SelectedItem);
             }
         }
         private void hideControlAnimation_Completed(object sender, object e)
