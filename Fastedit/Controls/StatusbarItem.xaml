@@ -12,6 +12,11 @@
         <Flyout x:Name="flyout">
         </Flyout>
     </UserControl.Resources>
-    <Button Height="35" MinWidth="80" Click="button_Click" x:Name="button" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
+    <Button Height="35" MinWidth="80" Foreground="{x:Bind Foreground,Mode=OneWay}" Content="{x:Bind Text,Mode=OneWay}" Click="Button_Click" x:Name="button" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
+        <Button.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Copy" Click="Copy_click"/>
+            </MenuFlyout>
+        </Button.ContextFlyout>
     </Button>
 </UserControl>

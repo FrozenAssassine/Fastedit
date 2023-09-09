@@ -182,6 +182,7 @@
     <Compile Include="Dialogs\ShareDialog.cs" />
     <Compile Include="Helper\AppActivationHelper.cs" />
     <Compile Include="Helper\AutoDatabaseSaveHelper.cs" />
+    <Compile Include="Helper\ClipboardHelper.cs" />
     <Compile Include="Helper\ConvertHelper.cs" />
     <Compile Include="Helper\CursorHelper.cs" />
     <Compile Include="Helper\DesignGridViewHelper.cs" />
