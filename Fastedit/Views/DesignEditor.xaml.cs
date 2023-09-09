@@ -3,24 +3,12 @@ using Fastedit.Helper;
 using Fastedit.Settings;
 using Fastedit.Tab;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.AppService;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace Fastedit.Views
 {
@@ -37,7 +25,6 @@ namespace Fastedit.Views
             this.window = window;
 
             window.Title = "Edit design " + designName;
-            //NeedSave = false;
         }
         public string CurrentDesignName { get; private set; }
         public bool NeedSave { get; private set; } = false;
@@ -195,6 +182,11 @@ namespace Fastedit.Views
                 InfoMessages.SaveDesignSucceed();
             else
                 InfoMessages.SaveDesignError();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            NeedSave = false;
         }
     }
 }

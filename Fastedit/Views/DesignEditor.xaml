@@ -8,7 +8,7 @@
     xmlns:controls="using:Fastedit.Controls" 
     xmlns:converter="using:Fastedit.Converter"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
     <Page.Resources>
         <converter:EnumToIntConverter x:Key="EnumToIntConverter"/>
     </Page.Resources>

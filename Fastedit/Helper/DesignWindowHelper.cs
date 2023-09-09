@@ -59,9 +59,15 @@ namespace Fastedit.Helper
         {
             var def = args.GetDeferral();
             //Ask save the design when it was modified
-            if (ElementCompositionPreview.GetAppWindowContent(sender) is DesignEditor designEditor
-                && designEditor.NeedSave)
+            if (ElementCompositionPreview.GetAppWindowContent(sender) is DesignEditor designEditor)
             {
+                if (!designEditor.NeedSave)
+                {
+                    OpenWindows.Remove(sender);
+                    def.Complete();
+                    return;
+                }
+
                 args.Cancel = true;
                 var res = await AskSaveDesignDialog.Show(designEditor);
                 switch (res)
@@ -84,6 +90,7 @@ namespace Fastedit.Helper
                         break;
                 }
             }
+
             def.Complete();
         }
     }
