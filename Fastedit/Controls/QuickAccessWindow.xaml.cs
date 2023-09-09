@@ -186,12 +186,7 @@ namespace Fastedit.Controls
             }
             else if (clickedItem is QuickAccessWindowInfoItem infoitem)
             {
-                //Copy to clipbard
-                DataPackage dataPackage = new DataPackage();
-                dataPackage.SetText(infoitem.InfoText);
-                dataPackage.RequestedOperation = DataPackageOperation.Copy;
-                Clipboard.SetContent(dataPackage);
-
+                ClipboardHelper.Copy(infoitem.InfoText);
                 Hide();
             }
         }
