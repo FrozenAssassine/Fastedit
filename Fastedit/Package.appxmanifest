@@ -289,6 +289,36 @@
 						<uap:Logo>Assets\ExtensionIcons\Markdown\MD.png</uap:Logo>
 					</uap:FileTypeAssociation>
 				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="toml">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.toml</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>TOML configuration file</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\Toml\toml.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="latex">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.tex</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>LaTeX</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\LaTeX\latex.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="csv">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.csv</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>Comma-separated values</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\CSV\csv.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 			</Extensions>
 		</Application>
 	</Applications>

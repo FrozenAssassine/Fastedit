@@ -206,6 +206,7 @@
     <Compile Include="Models\QuickAccessWindowInfoItem.cs" />
     <Compile Include="Models\RecycleBinListViewItem.cs" />
     <Compile Include="Models\SettingsImportExportResult.cs" />
+    <Compile Include="Models\SettingsNavigationParameter.cs" />
     <Compile Include="Models\TabFlyoutItem.cs" />
     <Compile Include="Models\TabFlyoutItemData.cs" />
     <Compile Include="Models\TabItemDatabaseItem.cs" />
@@ -335,6 +336,7 @@
     <Content Include="Assets\ExtensionIcons\Config\Config.svg" />
     <Content Include="Assets\ExtensionIcons\CSS\css.png" />
     <Content Include="Assets\ExtensionIcons\CSS\css.svg" />
+    <Content Include="Assets\ExtensionIcons\CSV\csv.png" />
     <Content Include="Assets\ExtensionIcons\C\C.png" />
     <Content Include="Assets\ExtensionIcons\C\C.svg" />
     <Content Include="Assets\ExtensionIcons\Default.svg" />
@@ -354,12 +356,14 @@
     <Content Include="Assets\ExtensionIcons\JS\js.svg" />
     <Content Include="Assets\ExtensionIcons\Kotlin\KT.png" />
     <Content Include="Assets\ExtensionIcons\Kotlin\KT.svg" />
+    <Content Include="Assets\ExtensionIcons\LaTeX\latex.png" />
     <Content Include="Assets\ExtensionIcons\Markdown\MD.png" />
     <Content Include="Assets\ExtensionIcons\Markdown\MD.svg" />
     <Content Include="Assets\ExtensionIcons\PHP\php.png" />
     <Content Include="Assets\ExtensionIcons\PHP\php.svg" />
     <Content Include="Assets\ExtensionIcons\Python\py.png" />
     <Content Include="Assets\ExtensionIcons\Python\py.svg" />
+    <Content Include="Assets\ExtensionIcons\Toml\toml.png" />
     <Content Include="Assets\ExtensionIcons\TXT\txt.png" />
     <Content Include="Assets\ExtensionIcons\TXT\txt.svg" />
     <Content Include="Assets\ExtensionIcons\VB\vb.png" />
