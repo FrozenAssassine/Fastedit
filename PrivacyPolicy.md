@@ -14,4 +14,4 @@ will never be used for any marketing purpose.
 We will not disclose your information to any third party except if you expressly consent or where required by law.
 
 ### Contacting us
-If you have any questions regarding this privacy policy, you can email **fasteditsoftware@gmail.com**
+If you have any questions regarding this privacy policy, you can email **contact@frozenassassine.de**

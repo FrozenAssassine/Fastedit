@@ -6,10 +6,14 @@
      <a href="https://www.microsoft.com/en-us/p/fastedit/9ntq53w18dpw?activetab=pivot:overviewtab">
          <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat">
     </a>
+      <a href="http://fastedit.frozenassassine.de/">
+         <img src="https://img.shields.io/badge/Fastedit-Website-blue">
+    </a>
     <img src="https://img.shields.io/github/stars/FrozenAssassine/Fastedit?style=flat">
     <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/Fastedit?style=flat">
     <img src="https://img.shields.io/github/repo-size/FrozenAssassine/Fastedit?style=flat">
- </div>
+
+</div>
 
 ### What is Fastedit?
 Introducing Fastedit, designed to make editing and organizing your documents effortless. With the ability to open multiple tabs, you can easily edit or view multiple documents at once. The app also features line numbering and custom designs to personalize your experience. A session snapshot feature ensures your work is saved and opens up exactly as you left it. Additionally, our line highlighter and syntax highlighting features make editing code or important information a breeze. Plus, the ability to edit documents in a second instance and a recycle bin to recover deleted files, ensure that you never lose any important work. Upgrade your editing experience with Fastedit.
