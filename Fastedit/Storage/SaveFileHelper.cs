@@ -131,7 +131,7 @@ namespace Fastedit.Storage
                 StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.TemporaryFilesPath);
 
                 StorageFile file = await folder.CreateFileAsync(tab.DatabaseItem.FileName, CreationCollisionOption.OpenIfExists);
-                await FileIO.WriteTextAsync(file, tab.textbox.GetText());
+                await FileIO.WriteLinesAsync(file, tab.textbox.Lines);
 
                 args.Data.SetStorageItems(new IStorageItem[] { file });
                 return true;
