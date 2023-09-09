@@ -600,6 +600,10 @@ namespace Fastedit
                 Statusbar_Line.HideFlyout();
             }
         }
+        private void Statusbar_GoToLineTextbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Statusbar_GoToLineTextbox.SelectAll();
+        }
         private void ReloadSettings_Click(object sender, RoutedEventArgs e)
         {
             ApplySettings();

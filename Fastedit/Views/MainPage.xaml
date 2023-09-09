@@ -530,7 +530,7 @@
             <controls:StatusbarItem Grid.Column="1" HorizontalAlignment="Left" StaticText="Zoom: " x:Name="Statusbar_Zoom"/>
             <controls:StatusbarItem Grid.Column="2" HorizontalAlignment="Right" StaticText="Ln: " x:Name="Statusbar_Line">
                 <controls:StatusbarItem.FlyoutContent>
-                    <TextBox Header="Go to line:" x:Name="Statusbar_GoToLineTextbox" PreviewKeyDown="Statusbar_GoToLineTextbox_KeyDown"/>
+                    <TextBox Header="Go to line:" x:Name="Statusbar_GoToLineTextbox" GotFocus="Statusbar_GoToLineTextbox_GotFocus" PreviewKeyDown="Statusbar_GoToLineTextbox_KeyDown"/>
                 </controls:StatusbarItem.FlyoutContent>
             </controls:StatusbarItem>
             <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Left" StaticText="Cl: " x:Name="Statusbar_Column"/>
