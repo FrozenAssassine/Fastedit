@@ -131,7 +131,16 @@ namespace Fastedit.Storage
             if (tab.DatabaseItem.FileToken.Length == 0)
                 return false;
 
-            StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
+            StorageFile file;
+            try
+            {
+                file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
+            }
+            catch (FileNotFoundException)
+            {
+                InfoMessages.FileNotFoundReopenWithEncoding();
+                return false;
+            }
 
             var res = await ReadTextFromFileAsync(file, encoding);
             if (res.Succed)
