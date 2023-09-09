@@ -32,5 +32,4 @@ namespace Fastedit.Dialogs
             return await SaveDialog.ShowAsync();
         }
     }
-
 }

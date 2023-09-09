@@ -9,28 +9,7 @@ using Fastedit.Helper;
 
 namespace Fastedit.Controls
 {
-    public class EnumToIntConverter : IValueConverter
-    {
-        #region IValueConverter Members
-
-        // Define the Convert method to change a DateTime object to 
-        // a month string.
-        public object Convert(object value, Type targetType,
-            object parameter, string language)
-        {
-            return (value as Enum).GetHashCode();
-        }
-
-        // ConvertBack is not implemented for a OneWay binding.
-        public object ConvertBack(object value, Type targetType,
-            object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }
-
+    
     public sealed partial class ColorPickerButton : Windows.UI.Xaml.Controls.UserControl
     {
         private bool _IsCompact;

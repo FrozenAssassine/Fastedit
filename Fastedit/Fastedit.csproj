@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>7C216B404AAB1D562BCEDD0BA37FCC741E79A19F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E5B498E278856F720491A03D5013E656D398F8EF</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -148,8 +148,8 @@
       <DependentUpon>ColorPickerButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InfobarMessage.cs" />
-    <Compile Include="Controls\RunCommandWindow.xaml.cs">
-      <DependentUpon>RunCommandWindow.xaml</DependentUpon>
+    <Compile Include="Controls\QuickAccessWindow.xaml.cs">
+      <DependentUpon>QuickAccessWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchControl.xaml.cs">
       <DependentUpon>SearchControl.xaml</DependentUpon>
@@ -166,6 +166,7 @@
     <Compile Include="Controls\VerticalTabsFlyoutControl.xaml.cs">
       <DependentUpon>VerticalTabsFlyoutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\EnumToIntConverter.cs" />
     <Compile Include="Converter\StringToVisibilityConverter_Inverted.cs" />
     <Compile Include="Converter\StringToVisibilityConverter.cs" />
     <Compile Include="Dialogs\AskSaveDesignDialog.cs" />
@@ -194,6 +195,13 @@
     <Compile Include="Helper\TitlebarHelper.cs" />
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\WindowHelper.cs" />
+    <Compile Include="Models\ClearRecycleBinResult.cs" />
+    <Compile Include="Models\IQuickAccessWindowItem.cs" />
+    <Compile Include="Models\QuickAccessWindowItem.cs" />
+    <Compile Include="Models\QuickAccessWindowSubItem.cs" />
+    <Compile Include="Models\QuickAccessWindowCustomItem.cs" />
+    <Compile Include="Models\QuickAccessWindowInfoItem.cs" />
+    <Compile Include="Models\RecycleBinListViewItem.cs" />
     <Compile Include="Settings\SettingsImportExport.cs" />
     <Compile Include="Settings\SettingsUpdater.cs" />
     <Compile Include="Storage\RenameFileHelper.cs" />
@@ -363,7 +371,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RunCommandWindow.xaml">
+    <Page Include="Controls\QuickAccessWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

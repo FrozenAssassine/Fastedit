@@ -37,6 +37,7 @@ namespace Fastedit.Views
             this.window = window;
 
             window.Title = "Edit design " + designName;
+            //NeedSave = false;
         }
         public string CurrentDesignName { get; private set; }
         public bool NeedSave { get; private set; } = false;

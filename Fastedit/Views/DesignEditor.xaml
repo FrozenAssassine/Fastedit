@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fastedit.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Fastedit.Controls" 
+    xmlns:converter="using:Fastedit.Converter"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <controls:EnumToIntConverter x:Key="EnumToIntConverter"/>
+        <converter:EnumToIntConverter x:Key="EnumToIntConverter"/>
     </Page.Resources>
     <Grid VerticalAlignment="Top">
         <Grid Height="40" VerticalAlignment="Top" x:Name="titlebar">

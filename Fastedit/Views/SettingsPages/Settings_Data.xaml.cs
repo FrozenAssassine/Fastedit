@@ -1,4 +1,5 @@
 ﻿using Fastedit.Dialogs;
+using Fastedit.Models;
 using Fastedit.Settings;
 using Fastedit.Storage;
 using Windows.UI.Xaml;

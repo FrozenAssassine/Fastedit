@@ -27,10 +27,7 @@ namespace Fastedit.Dialogs
             var res = await SaveDialog.ShowAsync();
             if (res == ContentDialogResult.Primary)
                 return await SaveFileHelper.Save(tab);
-            else if (res == ContentDialogResult.Secondary)
-                return true;
-            else
-                return false;
+            else return res == ContentDialogResult.Secondary;
         }
     }
 }

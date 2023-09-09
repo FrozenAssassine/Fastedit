@@ -11,7 +11,7 @@
     xmlns:tab="using:Fastedit.Tab" 
     xmlns:controls="using:Fastedit.Controls"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" 
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" xmlns:models="using:Fastedit.Models"
     DragOver="Page_DragOver" Drop="Page_Drop" AllowDrop="True"
     >
     <Page.Resources>
@@ -546,49 +546,49 @@
 
         <controls:SearchControl Visibility="Collapsed" Margin="0,50,0,0" HorizontalAlignment="Center" Width="350" x:Name="searchControl"/>
         
-        <controls:RunCommandWindow x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
-            <controls:RunCommandWindow.Items>
-                <controls:RunCommandWindowItem Command="Close tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
-                <controls:RunCommandWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_CodeLanguages"/>
-                <controls:RunCommandWindowItem Command="New tab" Shortcut="Ctrl + T" RunCommandWindowItemClicked="NewFile_Click"/>
-                <controls:RunCommandWindowItem Command="Encoding" Shortcut="Ctrl + E" RunCommandWindowItemClicked="ChangeEncoding_Click"/>
-                <controls:RunCommandWindowItem Command="Copy" Shortcut="Ctrl + C" RunCommandWindowItemClicked="Copy_Click"/>
-                <controls:RunCommandWindowItem Command="Paste" Shortcut="Ctrl + V" RunCommandWindowItemClicked="Paste_Click"/>
-                <controls:RunCommandWindowItem Command="Cut" Shortcut="Ctrl + X" RunCommandWindowItemClicked="Cut_Click"/>
-                <controls:RunCommandWindowItem Command="Duplicate line" Shortcut="Ctrl + D" RunCommandWindowItemClicked="DuplicateLine_Click"/>
-                <controls:RunCommandWindowItem Command="File info" Shortcut="Ctrl + I" RunCommandWindowItemClicked="FileInfo_Click"/>
-                <controls:RunCommandWindowItem Command="Open file" Shortcut="Ctrl + O" RunCommandWindowItemClicked="OpenFile_Click"/>
-                <controls:RunCommandWindowItem Command="Recycle bin" RunCommandWindowItemClicked="RecycleBin_Click"/>
-                <controls:RunCommandWindowItem Command="Redo" Shortcut="Ctrl + Y" RunCommandWindowItemClicked="Redo_Click"/>
-                <controls:RunCommandWindowItem Command="Undo" Shortcut="Ctrl + Z" RunCommandWindowItemClicked="Undo_Click"/>
-                <controls:RunCommandWindowItem Command="Zoom in" Shortcut="Ctrl + +" RunCommandWindowItemClicked="ZoomIn_Click"/>
-                <controls:RunCommandWindowItem Command="Zoom out" Shortcut="Ctrl + -" RunCommandWindowItemClicked="ZoomOut_Click"/>
-                <controls:RunCommandWindowItem Command="Save as" Shortcut="Ctrl + Shift + S" RunCommandWindowItemClicked="SaveFileAs_Click"/>
-                <controls:RunCommandWindowItem Command="Save" Shortcut="Ctrl + S" RunCommandWindowItemClicked="SaveFile_Click"/>
-                <controls:RunCommandWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
-                <controls:RunCommandWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
-                <controls:RunCommandWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
-                <controls:RunCommandWindowItem Command="Share" RunCommandWindowItemClicked="ShareDocument_Click"/>
-                <controls:RunCommandWindowSubItem Command="Spaces instead tabs">
-                    <controls:RunCommandWindowSubItem.Items>
-                        <controls:RunCommandWindowItem Command="1" Tag="1" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <controls:RunCommandWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <controls:RunCommandWindowItem Command="4" Tag="4" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <controls:RunCommandWindowItem Command="8" Tag="8" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <controls:RunCommandWindowItem Command="12" Tag="12" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <controls:RunCommandWindowItem Command="16" Tag="16" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                    </controls:RunCommandWindowSubItem.Items>
-                </controls:RunCommandWindowSubItem>
-                <controls:RunCommandWindowItem Command="Tabs instead spaces" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                <controls:RunCommandWindowItem Command="Settings" Shortcut="F1" RunCommandWindowItemClicked="Settings_Click"/>
-                <controls:RunCommandWindowItem Command="Fullscreen" Shortcut="F11" RunCommandWindowItemClicked="Fullscreen_Click"/>
-                <controls:RunCommandWindowItem Command="Compact overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
-                <controls:RunCommandWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
-                <controls:RunCommandWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
-                <controls:RunCommandWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
-                <controls:RunCommandWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
-                <controls:RunCommandWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
-            </controls:RunCommandWindow.Items>
-        </controls:RunCommandWindow>
+        <controls:QuickAccessWindow x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+            <controls:QuickAccessWindow.Items>
+                <models:QuickAccessWindowItem Command="Close tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
+                <models:QuickAccessWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_CodeLanguages"/>
+                <models:QuickAccessWindowItem Command="New tab" Shortcut="Ctrl + T" RunCommandWindowItemClicked="NewFile_Click"/>
+                <models:QuickAccessWindowItem Command="Encoding" Shortcut="Ctrl + E" RunCommandWindowItemClicked="ChangeEncoding_Click"/>
+                <models:QuickAccessWindowItem Command="Copy" Shortcut="Ctrl + C" RunCommandWindowItemClicked="Copy_Click"/>
+                <models:QuickAccessWindowItem Command="Paste" Shortcut="Ctrl + V" RunCommandWindowItemClicked="Paste_Click"/>
+                <models:QuickAccessWindowItem Command="Cut" Shortcut="Ctrl + X" RunCommandWindowItemClicked="Cut_Click"/>
+                <models:QuickAccessWindowItem Command="Duplicate line" Shortcut="Ctrl + D" RunCommandWindowItemClicked="DuplicateLine_Click"/>
+                <models:QuickAccessWindowItem Command="File info" Shortcut="Ctrl + I" RunCommandWindowItemClicked="FileInfo_Click"/>
+                <models:QuickAccessWindowItem Command="Open file" Shortcut="Ctrl + O" RunCommandWindowItemClicked="OpenFile_Click"/>
+                <models:QuickAccessWindowItem Command="Recycle bin" RunCommandWindowItemClicked="RecycleBin_Click"/>
+                <models:QuickAccessWindowItem Command="Redo" Shortcut="Ctrl + Y" RunCommandWindowItemClicked="Redo_Click"/>
+                <models:QuickAccessWindowItem Command="Undo" Shortcut="Ctrl + Z" RunCommandWindowItemClicked="Undo_Click"/>
+                <models:QuickAccessWindowItem Command="Zoom in" Shortcut="Ctrl + +" RunCommandWindowItemClicked="ZoomIn_Click"/>
+                <models:QuickAccessWindowItem Command="Zoom out" Shortcut="Ctrl + -" RunCommandWindowItemClicked="ZoomOut_Click"/>
+                <models:QuickAccessWindowItem Command="Save as" Shortcut="Ctrl + Shift + S" RunCommandWindowItemClicked="SaveFileAs_Click"/>
+                <models:QuickAccessWindowItem Command="Save" Shortcut="Ctrl + S" RunCommandWindowItemClicked="SaveFile_Click"/>
+                <models:QuickAccessWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
+                <models:QuickAccessWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
+                <models:QuickAccessWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
+                <models:QuickAccessWindowItem Command="Share" RunCommandWindowItemClicked="ShareDocument_Click"/>
+                <models:QuickAccessWindowSubItem Command="Spaces instead tabs">
+                    <models:QuickAccessWindowSubItem.Items>
+                        <models:QuickAccessWindowItem Command="1" Tag="1" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="4" Tag="4" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="8" Tag="8" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="12" Tag="12" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="16" Tag="16" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                    </models:QuickAccessWindowSubItem.Items>
+                </models:QuickAccessWindowSubItem>
+                <models:QuickAccessWindowItem Command="Tabs instead spaces" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                <models:QuickAccessWindowItem Command="Settings" Shortcut="F1" RunCommandWindowItemClicked="Settings_Click"/>
+                <models:QuickAccessWindowItem Command="Fullscreen" Shortcut="F11" RunCommandWindowItemClicked="Fullscreen_Click"/>
+                <models:QuickAccessWindowItem Command="Compact overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
+                <models:QuickAccessWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
+                <models:QuickAccessWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
+                <models:QuickAccessWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
+                <models:QuickAccessWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
+                <models:QuickAccessWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
+                </controls:QuickAccessWindow.Items>
+        </controls:QuickAccessWindow>
     </Grid>
 </Page>

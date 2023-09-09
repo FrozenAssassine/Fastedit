@@ -2,6 +2,7 @@
 using Fastedit.Settings;
 using Fastedit.Storage;
 using Fastedit.Tab;
+using Fastedit.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
@@ -188,24 +189,6 @@ namespace Fastedit.Dialogs
                 Directory.CreateDirectory(DefaultValues.RecycleBinPath);
 
             return SizeCalculationHelper.CalculateFolderSize(DefaultValues.RecycleBinPath);
-        }
-    }
-
-    public enum ClearRecycleBinResult
-    {
-        Success, Exception, NotAllFilesDeleted, NullError
-    }
-    public class RecycleBinListViewItem : ListViewItem
-    {
-        public StorageFile file { get; set; }
-
-        public RecycleBinListViewItem(StorageFile file)
-        {
-            this.file = file;
-            this.Content = new TextBlock
-            {
-                Text = file.Name + "\n" + file.DateCreated.UtcDateTime.ToString()
-            };
         }
     }
 }

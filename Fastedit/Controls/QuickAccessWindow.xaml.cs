@@ -1,5 +1,6 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
+using Fastedit.Models;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -15,24 +16,19 @@ using Windows.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
-    /// <summary>
-    /// Converts a string to visibility.
-    /// when the string is emty it will be hidden. When the string has content it will be visible
-    /// </summary>
-
-    public sealed partial class RunCommandWindow : UserControl
+    public sealed partial class QuickAccessWindow : UserControl
     {
-        List<RunCommandWindowCustomItem> CurrentTabPages = new List<RunCommandWindowCustomItem>();
-        RunCommandWindowSubItem currentPage = null;
+        List<QuickAccessWindowCustomItem> CurrentTabPages = new List<QuickAccessWindowCustomItem>();
+        QuickAccessWindowSubItem currentPage = null;
 
-        RunCommandWindowInfoItem WordCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Words" };
-        RunCommandWindowInfoItem CharacterCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Character" };
-        RunCommandWindowInfoItem LineCountDisplay = new RunCommandWindowInfoItem { Command = "Number of Lines" };
-        RunCommandWindowInfoItem EncodingDisplay = new RunCommandWindowInfoItem { Command = "Current Encoding" };
-        RunCommandWindowInfoItem FilePathDisplay = new RunCommandWindowInfoItem { Command = "File Path" };
-        RunCommandWindowInfoItem FileNameDisplay = new RunCommandWindowInfoItem { Command = "File Name" };
+        QuickAccessWindowInfoItem WordCountDisplay = new QuickAccessWindowInfoItem { Command = "Number of Words" };
+        QuickAccessWindowInfoItem CharacterCountDisplay = new QuickAccessWindowInfoItem { Command = "Number of Character" };
+        QuickAccessWindowInfoItem LineCountDisplay = new QuickAccessWindowInfoItem { Command = "Number of Lines" };
+        QuickAccessWindowInfoItem EncodingDisplay = new QuickAccessWindowInfoItem { Command = "Current Encoding" };
+        QuickAccessWindowInfoItem FilePathDisplay = new QuickAccessWindowInfoItem { Command = "File Path" };
+        QuickAccessWindowInfoItem FileNameDisplay = new QuickAccessWindowInfoItem { Command = "File Name" };
 
-        public RunCommandWindow()
+        public QuickAccessWindow()
         {
             this.InitializeComponent();
 
@@ -48,13 +44,13 @@ namespace Fastedit.Controls
         {
             UpdateColors(Items);
         }
-        public void UpdateColors(List<IRunCommandWindowItem> items)
+        public void UpdateColors(List<IQuickAccessWindowItem> items)
         {
             var textcolor = DialogHelper.ContentDialogForeground();
             grid.Background = DialogHelper.ContentDialogBackground();
             foreach (var item in items)
             {
-                if (item is RunCommandWindowSubItem sub_item)
+                if (item is QuickAccessWindowSubItem sub_item)
                 {
                     UpdateColors(sub_item.Items);
                 }
@@ -97,7 +93,7 @@ namespace Fastedit.Controls
             currentPage = null;
             hideControlAnimation.Begin();
         }
-        public List<IRunCommandWindowItem> Items { get; set; } = new List<IRunCommandWindowItem>();
+        public List<IQuickAccessWindowItem> Items { get; set; } = new List<IQuickAccessWindowItem>();
 
         private void UpdateLiveCommands(TabView tabView)
         {
@@ -136,7 +132,7 @@ namespace Fastedit.Controls
                     else
                     {
                         CurrentTabPages.Add(
-                            new RunCommandWindowCustomItem
+                            new QuickAccessWindowCustomItem
                             {
                                 Command = tab.DatabaseItem.FileName,
                                 Tag = tab,
@@ -166,12 +162,12 @@ namespace Fastedit.Controls
         }
         private void ItemClicked(object clickedItem)
         {
-            if (clickedItem is RunCommandWindowItem item)
+            if (clickedItem is QuickAccessWindowItem item)
             {
                 item.InvokeEvent();
                 Hide();
             }
-            else if (clickedItem is RunCommandWindowSubItem subItem)
+            else if (clickedItem is QuickAccessWindowSubItem subItem)
             {
                 //change the source -> like switching to sub page:
                 currentPage = subItem;
@@ -179,7 +175,7 @@ namespace Fastedit.Controls
                 itemHostListView.ItemsSource = subItem.Items;
                 itemHostListView.SelectedIndex = 1;
             }
-            else if (clickedItem is RunCommandWindowCustomItem customItem)
+            else if (clickedItem is QuickAccessWindowCustomItem customItem)
             {
                 //select a tabpage
                 if (customItem.Tag is TabPageItem tab)
@@ -188,7 +184,7 @@ namespace Fastedit.Controls
                     Hide();
                 }
             }
-            else if (clickedItem is RunCommandWindowInfoItem infoitem)
+            else if (clickedItem is QuickAccessWindowInfoItem infoitem)
             {
                 //Copy to clipbard
                 DataPackage dataPackage = new DataPackage();
@@ -241,59 +237,5 @@ namespace Fastedit.Controls
             this.Visibility = Visibility.Collapsed;
         }
    
-    }
-    public class RunCommandWindowItem : IRunCommandWindowItem
-    {
-        public delegate void RunCommandWindowItemClickedEvent(object sender, RoutedEventArgs e);
-        public event RunCommandWindowItemClickedEvent RunCommandWindowItemClicked;
-        public void InvokeEvent()
-        {
-            RunCommandWindowItemClicked?.Invoke(this, null);
-        }
-
-        public object Tag { get; set; }
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
-        public Brush TextColor { get; set; }
-        public string InfoText { get; set; } = null;
-    }
-
-    public class RunCommandWindowSubItem : IRunCommandWindowItem
-    {
-        public List<IRunCommandWindowItem> Items { get; set; } = new List<IRunCommandWindowItem>();
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
-        public object Tag { get; set; }
-        public Brush TextColor { get; set; }
-        public string InfoText { get; set; } = null;
-
-    }
-
-    public class RunCommandWindowCustomItem : IRunCommandWindowItem
-    {
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
-        public object Tag { get; set; }
-        public Brush TextColor { get; set; }
-        public string InfoText { get; set; } = null;
-    }
-
-    public class RunCommandWindowInfoItem : IRunCommandWindowItem
-    {
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
-        public string InfoText { get; set; }
-        public object Tag { get; set; }
-        public Brush TextColor { get; set; }
-    }
-
-
-    public interface IRunCommandWindowItem
-    {
-        string Command { get; set; }
-        string Shortcut { get; set; }
-        string InfoText { get; set; }
-        object Tag { get; set; }
-        Brush TextColor { get; set; }
     }
 }

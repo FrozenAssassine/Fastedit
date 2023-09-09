@@ -1,6 +1,7 @@
 using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
+using Fastedit.Models;
 using Fastedit.Settings;
 using Fastedit.Storage;
 using Fastedit.Tab;
@@ -33,7 +34,7 @@ namespace Fastedit
         private Microsoft.UI.Xaml.Controls.SplitButton addTabButton = null;
 
         public TabView tabView => tabControl;
-        public RunCommandWindow RunCommandWindow => runCommandWindow;
+        public QuickAccessWindow RunCommandWindow => runCommandWindow;
 
         public MainPage()
         {
@@ -118,7 +119,7 @@ namespace Fastedit
                     menuItem.Click += CodeLanguage_Click;
                     CodeLanguageSelector.Items.Add(menuItem);
 
-                    var runCommandWindowItem = new RunCommandWindowItem
+                    var runCommandWindowItem = new QuickAccessWindowItem
                     {
                         Command = item.Value.Name,
                         Tag = item.Key,
@@ -140,7 +141,7 @@ namespace Fastedit
             noneItem.Click += CodeLanguage_Click;
             CodeLanguageSelector.Items.Add(noneItem);
 
-            var noneCmdWindowItem = new RunCommandWindowItem
+            var noneCmdWindowItem = new QuickAccessWindowItem
             {
                 Command = "None",
                 Tag = "",
@@ -497,7 +498,7 @@ namespace Fastedit
                     currentlySelectedTabPage.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(item.Tag.ToString());
                 }
             }
-            else if (sender is RunCommandWindowItem rcwitem)
+            else if (sender is QuickAccessWindowItem rcwitem)
             {
                 if (rcwitem != null && rcwitem.Tag != null)
                 {
@@ -569,7 +570,7 @@ namespace Fastedit
             {
                 TabPageHelper.TabsOrSpaces(tabControl, item.Tag);
             }
-            else if (sender is RunCommandWindowItem runitem)
+            else if (sender is QuickAccessWindowItem runitem)
             {
                 TabPageHelper.TabsOrSpaces(tabControl, runitem.Tag);
             }

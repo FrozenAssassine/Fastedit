@@ -22,9 +22,9 @@ namespace Fastedit.Dialogs
 
             //File extension
             string fileExtension = Path.GetExtension(tab.DatabaseItem.FilePath.Length > 0 ? tab.DatabaseItem.FilePath : tab.DatabaseItem.FileName);
-            var ectension = FileExtensions.FindByExtension(fileExtension);
-            if (ectension != null)
-                content.AppendLine("Extension: " + fileExtension + " (" + ectension.ExtensionName + ")"); ;
+            var extension = FileExtensions.FindByExtension(fileExtension);
+            if (extension != null)
+                content.AppendLine("Extension: " + fileExtension + " (" + extension.ExtensionName + ")"); ;
 
             //only if the tab is based on a file
             if (tab.DatabaseItem.FileToken.Length > 0)
