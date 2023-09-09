@@ -107,6 +107,22 @@ namespace Fastedit
             if (CodeLanguageSelector.Items.Count > 1)
                 return;
 
+            var noneItem = new MenuFlyoutItem
+            {
+                Text = "None",
+                Tag = "",
+            };
+            noneItem.Click += CodeLanguage_Click;
+            CodeLanguageSelector.Items.Add(noneItem);
+
+            var noneCmdWindowItem = new QuickAccessWindowItem
+            {
+                Command = "None",
+                Tag = "",
+            };
+            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
+            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
+
             try
             {
                 foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
@@ -128,26 +144,7 @@ namespace Fastedit
                     RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
                 }
             }
-            catch
-            {
-
-            }
-
-            var noneItem = new MenuFlyoutItem
-            {
-                Text = "None",
-                Tag = "",
-            };
-            noneItem.Click += CodeLanguage_Click;
-            CodeLanguageSelector.Items.Add(noneItem);
-
-            var noneCmdWindowItem = new QuickAccessWindowItem
-            {
-                Command = "None",
-                Tag = "",
-            };
-            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
-            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
+            catch { }
         }
         public void UpdateStatubar()
         {
