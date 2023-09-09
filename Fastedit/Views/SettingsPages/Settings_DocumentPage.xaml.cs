@@ -58,7 +58,6 @@ namespace Fastedit.Views.SettingsPages
         {
             AppSettings.SaveSettings(AppSettingsValues.Settings_FontSize, FontSizeNumberBox.Value);
         }
-        //Removed du to bug (#110)
         private void ShowLinenumbersSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.Settings_ShowLineNumbers, ShowLinenumbersSwitch.IsOn);
