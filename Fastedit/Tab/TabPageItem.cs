@@ -1,11 +1,11 @@
 ﻿using Fastedit.Helper;
+using Fastedit.Models;
 using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Shapes;
 
 namespace Fastedit.Tab
 {

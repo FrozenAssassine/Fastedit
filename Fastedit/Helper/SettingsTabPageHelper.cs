@@ -1,4 +1,5 @@
-﻿using Fastedit.Tab;
+﻿using Fastedit.Models;
+using Fastedit.Tab;
 using Fastedit.Views;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -29,12 +30,12 @@ namespace Fastedit.Helper
 
         public static void HideControls()
         {
-            if (TabPageHelper.mainPage != null)
+            if (TabPageHelper.mainPage == null)
+                return;
+
+            foreach(var control in TabPageHelper.mainPage.ControlsToHideInSettings)
             {
-                for (int i = 0; i < TabPageHelper.mainPage.ControlsToHideInSettings.Count; i++)
-                {
-                    TabPageHelper.mainPage.ControlsToHideInSettings[i].Visibility = Visibility.Collapsed;
-                }
+                control.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -60,18 +61,5 @@ namespace Fastedit.Helper
         {
             return item is TabViewItem tab && tab.Content is SettingsPage;
         }
-    }
-
-    public class SettingsNavigationParameter
-    {
-        public SettingsNavigationParameter(MainPage mainPage, TabView tabView, string page = null)
-        {
-            MainPage = mainPage;
-            TabView = tabView;
-            Page = page;
-        }
-        public MainPage MainPage { get; set; }
-        public TabView TabView { get; set; }
-        public string Page { get; set; }
     }
 }

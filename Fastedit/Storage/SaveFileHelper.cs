@@ -1,4 +1,5 @@
 ﻿using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Fastedit.Settings;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
@@ -60,18 +61,16 @@ namespace Fastedit.Storage
             //file was already saved
             if (tab.DatabaseItem.FileToken.Length > 0)
             {
-                StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
-                if (file == null)
+                var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
+                if (!getFileRes.success)
                     return await SaveFileAs(tab);
-                else
+
+                bool result = await WriteTextToFileAsync(getFileRes.file, tab.textbox.GetText(), tab.Encoding);
+                if (result)
                 {
-                    bool result = await WriteTextToFileAsync(file, tab.textbox.GetText(), tab.Encoding);
-                    if (result)
-                    {
-                        TabPageHelper.UpdateSaveStatus(tab, false, tab.DatabaseItem.FileToken, file);
-                    }
-                    return result;
+                    TabPageHelper.UpdateSaveStatus(tab, false, tab.DatabaseItem.FileToken, getFileRes.file);
                 }
+                return result;
             }
             else
             {
@@ -84,25 +83,25 @@ namespace Fastedit.Storage
                 return false;
 
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
-
-            StorageFile OpenedFile = null;
-            if (tab.DatabaseItem.FileToken.Length > 0)
-                OpenedFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
-
-            try
+            var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
+            if (getFileRes.success)
             {
-                //Add the extension of the current file
-                savePicker.FileTypeChoices.Add("Current extension", new List<string>() { OpenedFile != null ? OpenedFile.FileType : Path.GetExtension(tab.DatabaseItem.FileName) });
-            }
-            catch (ArgumentException) //not a valid file name:
-            {
+                try
+                {
+                    //Add the extension of the current file
+                    savePicker.FileTypeChoices.Add("Current extension", new List<string>() { getFileRes.file != null ? getFileRes.file.FileType : Path.GetExtension(tab.DatabaseItem.FileName) });
+                }
+                catch (ArgumentException)
+                {
+                    //not a valid file name:
+                }
             }
             for (int i = 0; i < FileExtensions.FileExtentionList.Count; i++)
             {
                 var item = FileExtensions.FileExtentionList[i];
                 savePicker.FileTypeChoices.TryAdd(item.ExtensionName, item.Extension);
             }
-            savePicker.SuggestedFileName = OpenedFile != null ? OpenedFile.DisplayName : tab.DatabaseItem.FileName;
+            savePicker.SuggestedFileName = getFileRes.file != null ? getFileRes.file.DisplayName : tab.DatabaseItem.FileName;
 
 
             StorageFile file = await savePicker.PickSaveFileAsync();

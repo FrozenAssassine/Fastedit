@@ -10,6 +10,7 @@ using Windows.Storage.AccessCache;
 using Windows.Storage;
 using Fastedit.Tab;
 using Fastedit.Dialogs;
+using Fastedit.Helper;
 
 namespace Fastedit.Storage
 {
@@ -20,35 +21,39 @@ namespace Fastedit.Storage
             if (tab == null)
                 return false;
 
-            //File has been saved or opened
-            if (tab.DatabaseItem.FileToken.Length > 0)
+            //File has NOT been saved or opened
+            if (tab.DatabaseItem.FileToken.Length <= 0)
             {
-                var currentFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
-                if (currentFile == null)
-                    return false;
-
-                //Nothing to rename
-                if (currentFile.Name == newName)
-                    return true;
-
-                //Check if the file already exists
-                if(Directory.Exists(Path.Combine(Path.GetDirectoryName(currentFile.Path), newName)))
-                {
-                    InfoMessages.RenameFileError();
-                    return false;
-                }
-
-                try
-                {
-                    await currentFile.RenameAsync(newName, NameCollisionOption.FailIfExists);
-                    tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(currentFile);
-                }
-                catch (Exception ex)
-                {
-                    InfoMessages.RenameFileException(ex);
-                    return false;
-                }
+                tab.SetHeader(newName);
+                return true;
             }
+
+            var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
+            if (!getFileRes.success)
+                return false;
+
+            //Nothing to rename
+            if (getFileRes.file.Name == newName)
+                return true;
+
+            //Check if the file already exists
+            if (Directory.Exists(Path.Combine(Path.GetDirectoryName(getFileRes.file.Path), newName)))
+            {
+                InfoMessages.RenameFileError();
+                return false;
+            }
+
+            try
+            {
+                await getFileRes.file.RenameAsync(newName, NameCollisionOption.FailIfExists);
+                tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(getFileRes.file);
+            }
+            catch (Exception ex)
+            {
+                InfoMessages.RenameFileException(ex);
+                return false;
+            }
+
             tab.SetHeader(newName);
             return true;
         }

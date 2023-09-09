@@ -4,11 +4,8 @@ using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
@@ -33,67 +30,62 @@ namespace Fastedit.Helper
             }
             //When the design could not get loaded, load alternative design:
             if (CurrentDesign == null)
-            {
                 CurrentDesign = await LoadDefaultDesign();
 
-                //When the design still could not get loaded, load some data
-                if (CurrentDesign == null)
+            //if the design still could not get loaded, load some data
+            if (CurrentDesign == null)
+            {
+                CurrentDesign = new FasteditDesign
                 {
-                    CurrentDesign = new FasteditDesign
-                    {
-                        BackgroundColor = Color.FromArgb(100, 0, 0, 0),
-                        BackgroundType = BackgroundType.Solid,
-                        CursorColor = Color.FromArgb(255, 255, 255, 255),
-                        DialogBackgroundColor = Color.FromArgb(30, 20, 20, 20),
-                        DialogBackgroundType = ControlBackgroundType.Acrylic,
-                        DialogTextColor = Color.FromArgb(255, 255, 255, 255),
-                        LineHighlighterBackground = Color.FromArgb(50, 0, 0, 0),
-                        LineNumberBackground = Color.FromArgb(0, 0, 0, 0),
-                        LineNumberColor = Color.FromArgb(0, 0, 0, 0),
-                        SearchHighlightColor = Color.FromArgb(0, 0, 0, 0),
-                        SelectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
-                        SelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
-                        SelectionColor = Color.FromArgb(0, 0, 0, 0),
-                        StatusbarBackgroundColor = Color.FromArgb(0, 0, 0, 0),
-                        StatusbarBackgroundType = ControlBackgroundType.Acrylic,
-                        StatusbarTextColor = Color.FromArgb(0, 0, 0, 0),
-                        TextBoxBackground = Color.FromArgb(0, 0, 0, 0),
-                        TextboxBackgroundType = ControlBackgroundType.Acrylic,
-                        TextColor = Color.FromArgb(0, 0, 0, 0),
-                        Theme = ElementTheme.Dark,
-                        UnselectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
-                        UnSelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
-                    }; // await LoadDefaultDesign();
-                }
+                    BackgroundColor = Color.FromArgb(100, 0, 0, 0),
+                    BackgroundType = BackgroundType.Solid,
+                    CursorColor = Color.FromArgb(255, 255, 255, 255),
+                    DialogBackgroundColor = Color.FromArgb(30, 20, 20, 20),
+                    DialogBackgroundType = ControlBackgroundType.Acrylic,
+                    DialogTextColor = Color.FromArgb(255, 255, 255, 255),
+                    LineHighlighterBackground = Color.FromArgb(50, 0, 0, 0),
+                    LineNumberBackground = Color.FromArgb(0, 0, 0, 0),
+                    LineNumberColor = Color.FromArgb(0, 0, 0, 0),
+                    SearchHighlightColor = Color.FromArgb(0, 0, 0, 0),
+                    SelectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
+                    SelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
+                    SelectionColor = Color.FromArgb(0, 0, 0, 0),
+                    StatusbarBackgroundColor = Color.FromArgb(0, 0, 0, 0),
+                    StatusbarBackgroundType = ControlBackgroundType.Acrylic,
+                    StatusbarTextColor = Color.FromArgb(0, 0, 0, 0),
+                    TextBoxBackground = Color.FromArgb(0, 0, 0, 0),
+                    TextboxBackgroundType = ControlBackgroundType.Acrylic,
+                    TextColor = Color.FromArgb(0, 0, 0, 0),
+                    Theme = ElementTheme.Dark,
+                    UnselectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
+                    UnSelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
+                };
             }
         }
         public static async Task CopyDefaultDesigns()
         {
-            if (AppSettings.GetSettingsAsInt(AppSettingsValues.DesignLoaded) == 0)
+            if (AppSettings.GetSettingsAsInt(AppSettingsValues.DesignLoaded) != 0)
+                return;
+
+            //the designs are not loaded into the folder
+            AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 1);
+
+            try
             {
-                //the designs are not loaded into the folder
-                AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 1);
+                string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+                StorageFolder sourceFolder = await StorageFolder.GetFolderFromPathAsync($"{root}\\Assets\\Designs");
+                StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
 
-                try
+                var files = await sourceFolder.GetFilesAsync();
+                foreach (var file in files)
                 {
-                    string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-                    StorageFolder sourceFolder = await StorageFolder.GetFolderFromPathAsync($"{root}\\Assets\\Designs");
-                    StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
-
-                    var files = await sourceFolder.GetFilesAsync();
-                    foreach (var file in files)
-                    {
-
-                        if (file != null)
-                        {
-                            await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
-                        }
-                    }
+                    if (file != null)
+                        await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
                 }
-                catch
-                {
-                    AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);
-                }
+            }
+            catch
+            {
+                AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);
             }
         }
 
@@ -119,18 +111,18 @@ namespace Fastedit.Helper
         }
         public static FasteditDesign GetDesignFromFile(string path)
         {
-            if (Path.GetExtension(path).Equals(".json") && File.Exists(path))
+            if (!Path.GetExtension(path).Equals(".json") || !File.Exists(path))
+                return null;
+
+            try
             {
-                try
-                {
-                    return JsonConvert.DeserializeObject<FasteditDesign>(File.ReadAllText(path));
-                }
-                catch (Exception ex)
-                {
-                    InfoMessages.DesignLoadError(GetDesingNameFromPath(path), ex);
-                }
+                return JsonConvert.DeserializeObject<FasteditDesign>(File.ReadAllText(path));
             }
-            return null;
+            catch (Exception ex)
+            {
+                InfoMessages.DesignLoadError(GetDesingNameFromPath(path), ex);
+                return null;
+            }
         }
 
         public static async Task<FasteditDesign> LoadDefaultDesign()
@@ -145,7 +137,6 @@ namespace Fastedit.Helper
             {
                 return null;
             }
-
         }
 
         public static async Task<bool> SaveDesign(FasteditDesign design, StorageFile file)
@@ -179,12 +170,12 @@ namespace Fastedit.Helper
             }
             else if (type == BackgroundType.Acrylic)
             {
-                element.Background = new Windows.UI.Xaml.Media.AcrylicBrush
+                element.Background = new AcrylicBrush
                 {
                     TintColor = color,
                     TintOpacity = transparency / 255.0,
                     FallbackColor = color,
-                    BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.HostBackdrop,
+                    BackgroundSource = AcrylicBackgroundSource.HostBackdrop,
                 };
             }
             else if (type == BackgroundType.Solid)

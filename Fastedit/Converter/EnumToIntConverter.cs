@@ -15,7 +15,6 @@ namespace Fastedit.Converter
             return (value as Enum).GetHashCode();
         }
 
-        // ConvertBack is not implemented for a OneWay binding.
         public object ConvertBack(object value, Type targetType,
             object parameter, string language)
         {

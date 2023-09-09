@@ -41,7 +41,7 @@ namespace Fastedit.Helper
         }
         public static bool ToggleFullscreen()
         {
-            return FullScreen(!ApplicationView.GetForCurrentView().IsFullScreen);
+            return FullScreen(!ApplicationView.GetForCurrentView().IsFullScreenMode);
         }
 
         public static async void ToggleCompactOverlay()
@@ -52,26 +52,20 @@ namespace Fastedit.Helper
 
         public static void ToggleCompactOverlayForAppWindow(AppWindow window)
         {
-            if (window.Presenter.GetConfiguration().Kind != AppWindowPresentationKind.CompactOverlay)
-            {
-                window.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
-            }
-            else
-            {
-                window.Presenter.RequestPresentation(AppWindowPresentationKind.Default);
-            }
+            window.Presenter.RequestPresentation(
+                window.Presenter.GetConfiguration().Kind == AppWindowPresentationKind.CompactOverlay ? 
+                AppWindowPresentationKind.Default :
+                AppWindowPresentationKind.CompactOverlay
+                );
         }
 
         public static void ToggleFullscreenForAppWindow(AppWindow window)
         {
-            if (window.Presenter.GetConfiguration().Kind != AppWindowPresentationKind.FullScreen)
-            {
-                window.Presenter.RequestPresentation(AppWindowPresentationKind.FullScreen);
-            }
-            else
-            {
-                window.Presenter.RequestPresentation(AppWindowPresentationKind.Default);
-            }
+            window.Presenter.RequestPresentation(
+                window.Presenter.GetConfiguration().Kind == AppWindowPresentationKind.FullScreen ?
+                AppWindowPresentationKind.Default :
+                AppWindowPresentationKind.FullScreen
+                );
         }
     }
 }

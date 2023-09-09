@@ -27,22 +27,15 @@ namespace Fastedit.Dialogs
                 content.AppendLine("Extension: " + fileExtension + " (" + extension.ExtensionName + ")"); ;
 
             //only if the tab is based on a file
-            if (tab.DatabaseItem.FileToken.Length > 0)
+            var res = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
+            if (res.success)
             {
-                try
-                {
-                    var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
+                BasicProperties fileProperties = await res.file.GetBasicPropertiesAsync();
 
-                    BasicProperties fileProperties = await file.GetBasicPropertiesAsync();
-                    //calculate the filesize and extension
-
-                    content.AppendLine("Path: " + tab.DatabaseItem.FilePath);
-                    content.AppendLine("Created: " + file.DateCreated);
-                    content.AppendLine("Last modified: " + fileProperties.DateModified);
-                    content.AppendLine("Size: " + SizeCalculationHelper.SplitSize(fileProperties.Size));
-
-                }
-                catch (FileNotFoundException) { }
+                content.AppendLine("Path: " + tab.DatabaseItem.FilePath);
+                content.AppendLine("Created: " + res.file.DateCreated);
+                content.AppendLine("Last modified: " + fileProperties.DateModified);
+                content.AppendLine("Size: " + SizeCalculationHelper.SplitSize(fileProperties.Size));
             }
 
             if (tab.textbox.CodeLanguage != null)

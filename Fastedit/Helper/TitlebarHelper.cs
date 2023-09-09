@@ -48,8 +48,6 @@ namespace Fastedit.Helper
 
             if (ShellTitlebarInset != null)
                 ShellTitlebarInset.Height = CustomDragRegion.Height;
-
         }
-
     }
 }
