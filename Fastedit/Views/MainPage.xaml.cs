@@ -616,6 +616,9 @@ namespace Fastedit
 
         private async void RenameFile_Click(object sender, RoutedEventArgs e)
         {
+            if (SettingsTabPageHelper.SettingsSelected)
+                return;
+
             await RenameFileDialog.Show(currentlySelectedTabPage);
             UpdateStatubar();
         }
