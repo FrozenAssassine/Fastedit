@@ -229,6 +229,9 @@ namespace Fastedit.Controls
             }
             else if (e.Key == Windows.System.VirtualKey.Enter)
             {
+                if (itemHostListView.SelectedItem == null && itemHostListView.Items.Count == 0)
+                    return;
+
                 ItemClicked(itemHostListView.SelectedItem ?? itemHostListView.Items[0]);
             }
         }

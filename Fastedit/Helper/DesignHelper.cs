@@ -148,6 +148,30 @@ namespace Fastedit.Helper
 
         }
 
+        public static bool IsValidDesignName(string name)
+        {
+            var invalid = Path.GetInvalidPathChars();
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (invalid.Contains(name[i]))
+                    return false;
+            }
+            return true;
+        }
+
+        public static async Task<StorageFile> CreateDesign(string name)
+        {
+            if (name == null)
+                return null;
+
+            var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
+            var designFile = await folder.CreateFileAsync(name);
+
+            var design = new FasteditDesign();
+            await SaveDesign(design, designFile);
+            return designFile;
+        }
+        
         public static async Task<bool> SaveDesign(FasteditDesign design, StorageFile file)
         {
             try

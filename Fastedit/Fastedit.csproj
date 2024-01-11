@@ -176,6 +176,7 @@
     <Compile Include="Dialogs\FileInfoDialog.cs" />
     <Compile Include="Dialogs\GoToLineDialog.cs" />
     <Compile Include="Dialogs\InfoMessages.cs" />
+    <Compile Include="Dialogs\NewDesignDialog.cs" />
     <Compile Include="Dialogs\ProgressWindowItem.cs" />
     <Compile Include="Dialogs\RecycleBinDialog.cs" />
     <Compile Include="Dialogs\RenameFileDialog.cs" />

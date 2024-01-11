@@ -37,6 +37,7 @@ namespace Fastedit.Dialogs
         public static void RenameFileError() => new InfoBar().Show("Rename file", "Could not rename file, because a file with the same name already exists.", InfoBarSeverity.Error);
         public static void RenameFileException(Exception ex) => new InfoBar().Show("Rename file", "Exception while renaming file:\n" + ex.Message, InfoBarSeverity.Error);
         public static void FileNotFoundReopenWithEncoding() => new InfoBar().Show("File not found", "Could not reopen the file, because it does not exist anymore.", InfoBarSeverity.Error);
+        public static void InvalidDesignName() => new InfoBar().Show("Invalid Design name", "The Design name is invalid", InfoBarSeverity.Error);
 
         public static void WelcomeMessage()
         {
