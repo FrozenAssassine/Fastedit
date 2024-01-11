@@ -11,8 +11,8 @@
 
 	<Identity
 	  Name="52804JuliusKirsch.Fastedit"
-      Publisher="CN=Julius"
-	  Version="2.4.0.0" />
+      Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
+	  Version="2.5.0.0" />
 
 	<mp:PhoneIdentity PhoneProductId="3b0b91ff-dc83-4170-87f9-d51da36d8a48" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -287,6 +287,36 @@
 						</uap:SupportedFileTypes>
 						<uap:DisplayName>Markdown</uap:DisplayName>
 						<uap:Logo>Assets\ExtensionIcons\Markdown\MD.png</uap:Logo>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="toml">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.toml</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>TOML configuration file</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\Toml\toml.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="latex">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.tex</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>LaTeX</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\LaTeX\latex.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="csv">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.csv</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DisplayName>Comma-separated values</uap:DisplayName>
+						<uap:Logo>Assets\ExtensionIcons\CSV\csv.png</uap:Logo>
+						<uap:EditFlags OpenIsSafe="true"/>
 					</uap:FileTypeAssociation>
 				</uap:Extension>
 			</Extensions>

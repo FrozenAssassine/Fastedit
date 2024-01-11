@@ -29,15 +29,12 @@ namespace Fastedit.Storage
                         byte[] buffer = new byte[stream.Length];
                         stream.Read(buffer, 0, buffer.Length);
 
-                        if (encoding == null)  //Encoding gets detected
-                        {
-                            encoding = EncodingHelper.DetectTextEncoding(buffer, out string text);
-                            return (text, encoding, true);
-                        }
-                        else //Encoding is predefined
-                        {
+                        if (encoding != null)//Encoding is predefined
                             return (encoding.GetString(buffer, 0, buffer.Length), encoding, true);
-                        }
+
+                        //Encoding gets detected
+                        encoding = EncodingHelper.DetectTextEncoding(buffer, out string text);
+                        return (text, encoding, true);
                     }
                 }
             }
@@ -54,46 +51,45 @@ namespace Fastedit.Storage
 
         private static async Task<bool> DoOpenTab(TabPageItem tab, StorageFile file, bool load = true)
         {
-            if (file != null)
+            if (file == null)
+                return false;
+
+            var res = await ReadTextFromFileAsync(file);
+            if (!res.Succed)
+                return false;
+
+            tab.DatabaseItem.FilePath = file.Path;
+            tab.DatabaseItem.FileName = file.Name;
+            try
             {
-                var res = await ReadTextFromFileAsync(file);
-                if (res.Succed)
-                {
-                    tab.DatabaseItem.FilePath = file.Path;
-                    tab.DatabaseItem.FileName = file.Name;
-                    try
-                    {
-                        tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        InfoMessages.UnhandledException(ex.Message);
-                        return false;
-                    }
-                    tab.Encoding = res.encoding;
-
-                    if (load)
-                        tab.textbox.LoadText(res.Text);
-
-                    TabPageHelper.SelectCodeLanguageByFile(tab, file);
-
-                    tab.textbox.GoToLine(0);
-                    tab.textbox.ScrollLineIntoView(0);
-                    tab.DataIsLoaded = load;
-                    tab.DatabaseItem.IsModified = false;
-                    tab.SetHeader(file.Name);
-
-                    if (!load)
-                    {
-                        var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DatabasePath);
-                        var newFile = await file.CopyAsync(folder);
-                        await newFile.RenameAsync(tab.DatabaseItem.Identifier);
-                    }
-
-                    return true;
-                }
+                tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
             }
-            return false;
+            catch (Exception ex)
+            {
+                InfoMessages.UnhandledException(ex.Message);
+                return false;
+            }
+            tab.Encoding = res.encoding;
+
+            if (load)
+                tab.textbox.LoadText(res.Text);
+
+            TabPageHelper.SelectCodeLanguageByFile(tab, file);
+
+            tab.textbox.GoToLine(0);
+            tab.textbox.ScrollLineIntoView(0);
+            tab.DataIsLoaded = load;
+            tab.DatabaseItem.IsModified = false;
+            tab.SetHeader(file.Name);
+
+            if (!load)
+            {
+                var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DatabasePath);
+                var newFile = await file.CopyAsync(folder);
+                await newFile.RenameAsync(tab.DatabaseItem.Identifier);
+            }
+
+            return true;
         }
         public static async Task<TabPageItem> DoOpen(TabView tabView, StorageFile file, bool load = true)
         {
@@ -131,18 +127,14 @@ namespace Fastedit.Storage
             if (tab.DatabaseItem.FileToken.Length == 0)
                 return false;
 
-            StorageFile file;
-            try
-            {
-                file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(tab.DatabaseItem.FileToken);
-            }
-            catch (FileNotFoundException)
+            var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
+            if (!getFileRes.success)
             {
                 InfoMessages.FileNotFoundReopenWithEncoding();
                 return false;
             }
 
-            var res = await ReadTextFromFileAsync(file, encoding);
+            var res = await ReadTextFromFileAsync(getFileRes.file, encoding);
             if (res.Succed)
             {
                 tab.Encoding = res.encoding;

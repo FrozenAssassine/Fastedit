@@ -55,9 +55,6 @@ namespace Fastedit.Settings
             tab.textbox.ShowLineNumbers = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowLineNumbers, DefaultValues.ShowLinenumbers);
 
             tab.textbox.SyntaxHighlighting = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_Syntaxhighlighting, DefaultValues.SyntaxHighlighting);
-
-            //tab.textbox.UseSpacesInsteadTabs = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_UseSpacesInsteadTabs, DefaultValues.UseSpacesInsteadTabs);
-            //tab.textbox.NumberOfSpacesForTab = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_SpacesPerTab, DefaultValues.NumberOfSpacesPerTab);
             tab.textbox.RequestedTheme = theme;
 
             if (setMargin)

@@ -136,6 +136,21 @@ namespace Fastedit.Storage
             {
                 Extension = { ".js", },
                 ExtensionName = "JavaScript",
+            },
+            new ExtensionItem()
+            {
+                Extension = { ".csv", },
+                ExtensionName = "Comma-separated values",
+            },
+            new ExtensionItem()
+            {
+                Extension = { ".tex", },
+                ExtensionName = "LaTeX",
+            },
+            new ExtensionItem()
+            {
+                Extension = { ".toml", },
+                ExtensionName = "TOML configuration file",
             }
         };
     }

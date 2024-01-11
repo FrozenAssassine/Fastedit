@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fastedit.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -126,15 +127,4 @@ namespace Fastedit.Helper
             return res.Count() > 0 ? Array.IndexOf(AllEncodings, res.First()) : -1;
         }
     }
-    public struct EncodingItem
-    {
-        public EncodingItem(Encoding encoding, string name)
-        {
-            this.encoding = encoding;
-            this.name = name;
-        }
-        public Encoding encoding;
-        public string name;
-    }
-
 }

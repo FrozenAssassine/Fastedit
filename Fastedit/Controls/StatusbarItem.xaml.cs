@@ -1,30 +1,21 @@
-﻿using Windows.UI.Xaml;
+﻿using Fastedit.Helper;
+using System.ComponentModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace Fastedit.Controls
 {
-    public sealed partial class StatusbarItem : UserControl
+    public sealed partial class StatusbarItem : UserControl, INotifyPropertyChanged
     {
-        public delegate void StatusbarItemClickEvent(StatusbarItem sender, Button children);
-        public event StatusbarItemClickEvent StatusbarItemClick;
-
         public StatusbarItem()
         {
             this.InitializeComponent();
         }
 
-        public FlyoutBase CustomFlyout
-        {
-            set
-            {
-                button.Flyout = value;
-            }
-        }
-
+        public string Text { get => StaticText + ChangingText; }
+        public FlyoutBase CustomFlyout { set => button.Flyout = value; }
         public UIElement FlyoutContent
         {
             get => flyout.Content;
@@ -34,25 +25,33 @@ namespace Fastedit.Controls
                 flyout.Content = value;
             }
         }
-
         private string _StaticText;
         private string _ChangingText;
-        public string StaticText { get => _StaticText; set { _StaticText = value; UpdateContent(); } }
-        public string ChangingText { get => _ChangingText; set { _ChangingText = value; UpdateContent(); } }
+        public string StaticText { get => _StaticText; set { _StaticText = value; NotifyPropertyChanged("Text"); }}
+        public string ChangingText { get => _ChangingText; set { _ChangingText = value; NotifyPropertyChanged("Text"); }}
+        private Brush _Foreground { get; set; }
+        public new Brush Foreground { get => _Foreground; set { _Foreground = value; NotifyPropertyChanged("Foreground"); } }
 
-        public new Brush Foreground { set { button.Foreground = value; } get => button.Foreground; }
+        public delegate void StatusbarItemClickEvent(StatusbarItem sender, Button children);
+        public event StatusbarItemClickEvent StatusbarItemClick;
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public void HideFlyout()
         {
             flyout.Hide();
         }
 
-        public void UpdateContent()
-        {
-            button.Content = _StaticText + _ChangingText;
-        }
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             StatusbarItemClick?.Invoke(this, button);
         }
+        private void Copy_click(object sender, RoutedEventArgs e)
+        {
+            ClipboardHelper.Copy(ChangingText);
+        }
+
     }
 }

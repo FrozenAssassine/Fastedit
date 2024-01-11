@@ -1,5 +1,6 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
+using Fastedit.Models;
 using Fastedit.Storage;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml.Controls;
@@ -98,21 +99,5 @@ namespace Fastedit.Tab
                 }
             }
         }
-    }
-    public enum TabPageFlyoutItem
-    {
-        Save, Close, Share, FileInfo, Rename, CloseAll
-    }
-    public class TabFlyoutItemData
-    {
-        public TabFlyoutItemData(TabPageItem tab, TabView tabView, TabPageFlyoutItem item)
-        {
-            this.Item = item;
-            this.Tab = tab;
-            this.TabView = tabView;
-        }
-        public TabPageFlyoutItem Item { get; set; }
-        public TabPageItem Tab { get; set; }
-        public TabView TabView { get; set; }
     }
 }

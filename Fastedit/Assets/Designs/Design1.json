@@ -92,7 +92,7 @@
 		"G": 0,
 		"B": 0
 	},
-	"DialogBackgroundType": 2,
+	"DialogBackgroundType": 1,
 	"DialogBackgroundColor": {
 		"A": 255,
 		"R": 35,

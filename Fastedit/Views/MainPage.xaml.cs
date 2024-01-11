@@ -107,6 +107,22 @@ namespace Fastedit
             if (CodeLanguageSelector.Items.Count > 1)
                 return;
 
+            var noneItem = new MenuFlyoutItem
+            {
+                Text = "None",
+                Tag = "",
+            };
+            noneItem.Click += CodeLanguage_Click;
+            CodeLanguageSelector.Items.Add(noneItem);
+
+            var noneCmdWindowItem = new QuickAccessWindowItem
+            {
+                Command = "None",
+                Tag = "",
+            };
+            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
+            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
+
             try
             {
                 foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
@@ -128,26 +144,7 @@ namespace Fastedit
                     RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
                 }
             }
-            catch
-            {
-
-            }
-
-            var noneItem = new MenuFlyoutItem
-            {
-                Text = "None",
-                Tag = "",
-            };
-            noneItem.Click += CodeLanguage_Click;
-            CodeLanguageSelector.Items.Add(noneItem);
-
-            var noneCmdWindowItem = new QuickAccessWindowItem
-            {
-                Command = "None",
-                Tag = "",
-            };
-            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
-            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
+            catch { }
         }
         public void UpdateStatubar()
         {
@@ -600,6 +597,10 @@ namespace Fastedit
                 Statusbar_Line.HideFlyout();
             }
         }
+        private void Statusbar_GoToLineTextbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Statusbar_GoToLineTextbox.SelectAll();
+        }
         private void ReloadSettings_Click(object sender, RoutedEventArgs e)
         {
             ApplySettings();
@@ -615,6 +616,9 @@ namespace Fastedit
 
         private async void RenameFile_Click(object sender, RoutedEventArgs e)
         {
+            if (SettingsTabPageHelper.SettingsSelected)
+                return;
+
             await RenameFileDialog.Show(currentlySelectedTabPage);
             UpdateStatubar();
         }

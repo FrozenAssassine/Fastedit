@@ -1,4 +1,5 @@
-﻿using Fastedit.Settings;
+﻿using Fastedit.Models;
+using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
@@ -19,41 +20,39 @@ namespace Fastedit.Tab
         public static TabPageItem[] CheckOlddatabase(TabView tabView)
         {
             string path = Path.Combine(DefaultValues.DatabasePath, "Tabs.tdb");
-            if (File.Exists(path))
+            if (!File.Exists(path))
+                return null;
+
+            var lines = File.ReadAllLines(path);
+            TabPageItem[] newItems = new TabPageItem[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
             {
-                var lines = File.ReadAllLines(path);
-                TabPageItem[] newItems = new TabPageItem[lines.Length];
-                for (int i = 0; i < lines.Length; i++)
+                try
                 {
-                    try
+                    var oldItem = JsonConvert.DeserializeObject<OldDBItem>(lines[i]);
+                    var resultItem = new TabItemDatabaseItem
                     {
-                        var oldItem = JsonConvert.DeserializeObject<OldDBItem>(lines[i]);
-                        var resultItem = new TabItemDatabaseItem
-                        {
-                            FileToken = oldItem.TabToken,
-                            FileName = oldItem.TabHeader,
-                            IsModified = oldItem.TabModified,
-                            FilePath = oldItem.TabPath,
-                            Identifier = oldItem.TabName,
-                            ZoomFactor = (int)oldItem.ZoomFactor,
-                            SelectedIndex = oldItem.CurrentSelectedTabIndex,
-                        };
+                        FileToken = oldItem.TabToken,
+                        FileName = oldItem.TabHeader,
+                        IsModified = oldItem.TabModified,
+                        FilePath = oldItem.TabPath,
+                        Identifier = oldItem.TabName,
+                        ZoomFactor = (int)oldItem.ZoomFactor,
+                        SelectedIndex = oldItem.CurrentSelectedTabIndex,
+                    };
 
-                        newItems[i] = new TabPageItem(tabView)
-                        {
-                            DatabaseItem = resultItem,
-                        };
-                    }
-                    catch
+                    newItems[i] = new TabPageItem(tabView)
                     {
-                        Debug.WriteLine("Database migration -> item parse exception");
-                    }
+                        DatabaseItem = resultItem,
+                    };
                 }
-                File.Delete(path);
-                return newItems;
+                catch
+                {
+                    Debug.WriteLine("Database migration -> item parse exception");
+                }
             }
-
-            return null;
+            File.Delete(path);
+            return newItems;
         }
 
         public void SaveData(IList<object> TabItems, int SelectedIndex)
@@ -81,14 +80,12 @@ namespace Fastedit.Tab
                 Directory.CreateDirectory(DefaultValues.DatabasePath);
             }
 
-            Debug.WriteLine("Saving database...");
             File.WriteAllText(path, databaseBuilder.ToString());
-            Debug.WriteLine("Database saved");
         }
         public IEnumerable<TabPageItem> LoadData(TabView tabView)
         {
-            string databaseContent = "";
             string path = Path.Combine(DefaultValues.DatabasePath, DatabaseName);
+            string databaseContent = "";
 
             if (File.Exists(path))
                 databaseContent = File.ReadAllText(path);
@@ -125,44 +122,5 @@ namespace Fastedit.Tab
             }
             return "";
         }
-    }
-    public class TabItemDatabaseItem
-    {
-        public TabItemDatabaseItem() { }
-        public TabItemDatabaseItem(TabItemDatabaseItem item)
-        {
-            this.IsModified = item.IsModified;
-            this.ZoomFactor = item.ZoomFactor;
-            this.SelectedIndex = item.SelectedIndex;
-            this.Identifier = item.Identifier;
-            this.CodeLanguage = item.CodeLanguage;
-            this.FileName = item.FileName;
-            this.FilePath = item.FilePath;
-            this.FileToken = item.FileToken;
-            this.SaveMode = item.SaveMode;
-            this.Encoding = item.Encoding;
-        }
-        public bool IsModified { get; set; }
-        public string FilePath { get; set; }
-        public string FileName { get; set; }
-        public string Identifier { get; set; }
-        public int SelectedIndex { get; set; }
-        public int SaveMode { get; set; }
-        public string FileToken { get; set; }
-        public int ZoomFactor { get; set; }
-        public string CodeLanguage { get; set; }
-        public int Encoding { get; set; }
-
-        public bool HasOwnWindow { get; set; }
-    }
-    public class OldDBItem
-    {
-        public string TabName { get; set; }
-        public bool TabModified { get; set; }
-        public string TabHeader { get; set; }
-        public string TabToken { get; set; }
-        public string TabPath { get; set; }
-        public double ZoomFactor { get; set; }
-        public int CurrentSelectedTabIndex { get; set; }
     }
 }

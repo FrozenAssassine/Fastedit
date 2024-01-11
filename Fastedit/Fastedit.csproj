@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>E5B498E278856F720491A03D5013E656D398F8EF</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>31005D76C01117397C1391884CCCB2CD42D16455</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -183,13 +183,14 @@
     <Compile Include="Dialogs\ShareDialog.cs" />
     <Compile Include="Helper\AppActivationHelper.cs" />
     <Compile Include="Helper\AutoDatabaseSaveHelper.cs" />
+    <Compile Include="Helper\ClipboardHelper.cs" />
     <Compile Include="Helper\ConvertHelper.cs" />
     <Compile Include="Helper\CursorHelper.cs" />
     <Compile Include="Helper\DesignGridViewHelper.cs" />
     <Compile Include="Helper\DesignHelper.cs" />
     <Compile Include="Helper\DesignWindowHelper.cs" />
     <Compile Include="Helper\EncodingHelper.cs" />
-    <Compile Include="Helper\KeyEventHelper.cs" />
+    <Compile Include="Helper\FutureAccessListHelper.cs" />
     <Compile Include="Helper\ShareFileHelper.cs" />
     <Compile Include="Helper\SizeCalculationHelper.cs" />
     <Compile Include="Helper\ThemeHelper.cs" />
@@ -197,12 +198,20 @@
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\WindowHelper.cs" />
     <Compile Include="Models\ClearRecycleBinResult.cs" />
+    <Compile Include="Models\EncodingItem.cs" />
     <Compile Include="Models\IQuickAccessWindowItem.cs" />
+    <Compile Include="Models\OldDBItem.cs" />
     <Compile Include="Models\QuickAccessWindowItem.cs" />
     <Compile Include="Models\QuickAccessWindowSubItem.cs" />
     <Compile Include="Models\QuickAccessWindowCustomItem.cs" />
     <Compile Include="Models\QuickAccessWindowInfoItem.cs" />
     <Compile Include="Models\RecycleBinListViewItem.cs" />
+    <Compile Include="Models\SettingsImportExportResult.cs" />
+    <Compile Include="Models\SettingsNavigationParameter.cs" />
+    <Compile Include="Models\TabFlyoutItem.cs" />
+    <Compile Include="Models\TabFlyoutItemData.cs" />
+    <Compile Include="Models\TabItemDatabaseItem.cs" />
+    <Compile Include="Models\TabPageFlyoutItem.cs" />
     <Compile Include="Settings\SettingsImportExport.cs" />
     <Compile Include="Settings\SettingsUpdater.cs" />
     <Compile Include="Storage\RenameFileHelper.cs" />
@@ -328,6 +337,7 @@
     <Content Include="Assets\ExtensionIcons\Config\Config.svg" />
     <Content Include="Assets\ExtensionIcons\CSS\css.png" />
     <Content Include="Assets\ExtensionIcons\CSS\css.svg" />
+    <Content Include="Assets\ExtensionIcons\CSV\csv.png" />
     <Content Include="Assets\ExtensionIcons\C\C.png" />
     <Content Include="Assets\ExtensionIcons\C\C.svg" />
     <Content Include="Assets\ExtensionIcons\Default.svg" />
@@ -347,12 +357,14 @@
     <Content Include="Assets\ExtensionIcons\JS\js.svg" />
     <Content Include="Assets\ExtensionIcons\Kotlin\KT.png" />
     <Content Include="Assets\ExtensionIcons\Kotlin\KT.svg" />
+    <Content Include="Assets\ExtensionIcons\LaTeX\latex.png" />
     <Content Include="Assets\ExtensionIcons\Markdown\MD.png" />
     <Content Include="Assets\ExtensionIcons\Markdown\MD.svg" />
     <Content Include="Assets\ExtensionIcons\PHP\php.png" />
     <Content Include="Assets\ExtensionIcons\PHP\php.svg" />
     <Content Include="Assets\ExtensionIcons\Python\py.png" />
     <Content Include="Assets\ExtensionIcons\Python\py.svg" />
+    <Content Include="Assets\ExtensionIcons\Toml\toml.png" />
     <Content Include="Assets\ExtensionIcons\TXT\txt.png" />
     <Content Include="Assets\ExtensionIcons\TXT\txt.svg" />
     <Content Include="Assets\ExtensionIcons\VB\vb.png" />
@@ -442,7 +454,7 @@
       <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.4</Version>
+      <Version>2.8.5</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
