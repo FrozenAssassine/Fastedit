@@ -5,10 +5,10 @@
     xmlns:local="using:Fastedit.Views.SettingsPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:helper="using:Fastedit.Helper" xmlns:controls="using:Fastedit.Controls"
+    xmlns:models="using:Fastedit.Models"
     mc:Ignorable="d">
     <Page.Resources>
-        <DataTemplate x:Key="DesignGridViewItemTemplate_Large" x:DataType="helper:DesignGridViewItem">
+        <DataTemplate x:Key="DesignGridViewItemTemplate_Large" x:DataType="models:DesignGridViewItem">
             <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
                 <Grid.ContextFlyout>
                     <MenuFlyout>
