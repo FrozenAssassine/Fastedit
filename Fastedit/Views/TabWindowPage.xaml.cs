@@ -93,9 +93,6 @@ namespace Fastedit.Views
                     case Windows.System.VirtualKey.O:
                         Open_Click(null, null);
                         break;
-                    case Windows.System.VirtualKey.F11:
-                        Fullscreen_Click(null, null);
-                        break;
                     case Windows.System.VirtualKey.K:
                         CompactOverlay_Click(null, null);
                         break;
@@ -103,6 +100,12 @@ namespace Fastedit.Views
                         EditActions.DuplicateLine(tab);
                         break;
                 }
+                return;
+            }
+            
+            if (e.Key == Windows.System.VirtualKey.F11)
+            {
+                Fullscreen_Click(null, null);
             }
         }
         public Grid Titlebar => titlebar;
