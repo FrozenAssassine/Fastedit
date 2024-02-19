@@ -71,5 +71,17 @@ namespace Fastedit.Views.SettingsPages
                 DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
             }
         }
+
+        private async void NewDesign_Click(object sender, RoutedEventArgs e)
+        {
+            string designName = await NewDesignDialog.Show();
+            if (designName == null)
+                return;
+
+            var file = await DesignHelper.CreateDesign(designName);
+
+            DesignGridViewHelper.UpdateItems(designGridView);
+            DesignWindowHelper.EditDesign(file.Name);
+        }
     }
 }

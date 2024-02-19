@@ -1,4 +1,5 @@
-﻿using Fastedit.Settings;
+﻿using Fastedit.Models;
+using Fastedit.Settings;
 using Fastedit.Tab;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -67,18 +68,5 @@ namespace Fastedit.Helper
             designGridView.Items.Clear();
             await LoadItems(designGridView);
         }
-    }
-
-    public class DesignGridViewItem
-    {
-        public Brush AppBackground { get; set; }
-        public Brush TextColor { get; set; }
-        public Brush LineNumberColor { get; set; }
-        public Brush TextBoxBackground { get; set; }
-        public Brush LineNumberBackground { get; set; }
-        public Brush TabPageBackground { get; set; }
-        public string DesignName { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
     }
 }
