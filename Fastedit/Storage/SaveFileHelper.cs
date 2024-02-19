@@ -143,7 +143,7 @@ namespace Fastedit.Storage
             }
         }
 
-        public async static Task<StorageFile> PickFile(string fileName, string extension, string extensionDisplayName)
+        public async static Task<StorageFile> PickFile(string extension, string extensionDisplayName)
         {
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.FileTypeChoices.Add(extensionDisplayName, new List<string>() { extension });
