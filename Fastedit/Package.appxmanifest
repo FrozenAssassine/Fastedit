@@ -11,7 +11,7 @@
 
 	<Identity
 	  Name="52804JuliusKirsch.Fastedit"
-      Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
+      Publisher="CN=Julius"
 	  Version="2.5.0.0" />
 
 	<mp:PhoneIdentity PhoneProductId="3b0b91ff-dc83-4170-87f9-d51da36d8a48" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

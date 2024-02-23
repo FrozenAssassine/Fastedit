@@ -370,7 +370,11 @@ namespace Fastedit
         }
         private async void TabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tabControl.SelectedItem is TabPageItem tab)
+            if (tabControl.SelectedItem is SplitTabView splitTab)
+            {
+                currentlySelectedTabPage = splitTab.SelectedTab;
+            }
+            else if (tabControl.SelectedItem is TabPageItem tab)
             {
                 currentlySelectedTabPage = tab;
                 if (tab == null)
@@ -392,7 +396,7 @@ namespace Fastedit
                 SettingsTabPageHelper.HideControls();
                 return;
             }
-
+            
             if (tabControl.TabItems.Count == 0)
                 currentlySelectedTabPage = null;
 
@@ -625,6 +629,22 @@ namespace Fastedit
         private async void CloseAll_Click(object sender, RoutedEventArgs e)
         {
             await TabPageHelper.CloseAll(tabControl);
+        }
+
+        private async void SplitTabView_Click(object sender, RoutedEventArgs e)
+        {
+            if (SettingsTabPageHelper.SettingsPageOpen || currentlySelectedTabPage == null)
+                return;
+
+            //Check if there are more than two tabs:
+
+            var tab1 = this.currentlySelectedTabPage;
+            var tab2 = await SelectTabPageDialog.Show(tabView, tab1);
+            if (tab2 == null)
+                return;
+
+            SplitTabView splitView = new SplitTabView(tab1, tab2);
+            splitView.Open(tabView);
         }
     }
 }

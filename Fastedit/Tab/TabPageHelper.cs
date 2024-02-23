@@ -244,7 +244,11 @@ namespace Fastedit.Tab
         }
         public static async Task<bool> CloseTab(TabView tabView, object tabItem)
         {
-            if (tabItem is TabPageItem tab)
+            if(tabItem is SplitTabView splitTab)
+            {
+                splitTab.Close(tabView);
+            }
+            else if (tabItem is TabPageItem tab)
             {
                 if (!tab.DatabaseItem.IsModified || await AskSaveDialog.Show(tab))
                 {

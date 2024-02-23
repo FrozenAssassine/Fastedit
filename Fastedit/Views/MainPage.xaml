@@ -588,6 +588,7 @@
                 <models:QuickAccessWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
                 <models:QuickAccessWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
                 <models:QuickAccessWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
+                <models:QuickAccessWindowItem Command="Split tab" RunCommandWindowItemClicked="SplitTabView_Click"/>
                 </controls:QuickAccessWindow.Items>
         </controls:QuickAccessWindow>
     </Grid>

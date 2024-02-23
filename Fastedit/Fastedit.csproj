@@ -26,7 +26,7 @@
     <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>31005D76C01117397C1391884CCCB2CD42D16455</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E5B498E278856F720491A03D5013E656D398F8EF</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -180,6 +180,7 @@
     <Compile Include="Dialogs\ProgressWindowItem.cs" />
     <Compile Include="Dialogs\RecycleBinDialog.cs" />
     <Compile Include="Dialogs\RenameFileDialog.cs" />
+    <Compile Include="Dialogs\SelectTabPageDialog.cs" />
     <Compile Include="Dialogs\ShareDialog.cs" />
     <Compile Include="Helper\AppActivationHelper.cs" />
     <Compile Include="Helper\AutoDatabaseSaveHelper.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\WindowHelper.cs" />
     <Compile Include="Models\ClearRecycleBinResult.cs" />
+    <Compile Include="Models\DesignGridViewItem.cs" />
     <Compile Include="Models\EncodingItem.cs" />
     <Compile Include="Models\IQuickAccessWindowItem.cs" />
     <Compile Include="Models\OldDBItem.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="Views\SettingsPages\Settings_TabControl.xaml.cs">
       <DependentUpon>Settings_TabControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tab\SplitTabView.cs" />
     <Compile Include="Views\TabWindowPage.xaml.cs">
       <DependentUpon>TabWindowPage.xaml</DependentUpon>
     </Compile>
@@ -450,6 +453,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.Sizers">
+      <Version>8.0.240109</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
