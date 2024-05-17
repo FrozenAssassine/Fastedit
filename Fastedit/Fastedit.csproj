@@ -198,6 +198,7 @@
     <Compile Include="Helper\VersionHelper.cs" />
     <Compile Include="Helper\WindowHelper.cs" />
     <Compile Include="Models\ClearRecycleBinResult.cs" />
+    <Compile Include="Models\DesignGridViewItem.cs" />
     <Compile Include="Models\EncodingItem.cs" />
     <Compile Include="Models\IQuickAccessWindowItem.cs" />
     <Compile Include="Models\OldDBItem.cs" />

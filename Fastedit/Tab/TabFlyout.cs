@@ -20,6 +20,7 @@ namespace Fastedit.Tab
             flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
             flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
             flyout.Items.Add(new MenuFlyoutSeparator());
+            flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock));
             flyout.Items.Add(CreateItem(tab, tabView, "Share", Symbol.Share, TabPageFlyoutItem.Share));
             flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.J));
             flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
@@ -95,6 +96,9 @@ namespace Fastedit.Tab
                         break;
                     case TabPageFlyoutItem.CloseAll:
                         await TabPageHelper.CloseAll(data.TabView);
+                        break;
+                    case TabPageFlyoutItem.Undock:
+                        await TabWindowHelper.ShowInNewWindow(data.TabView, data.Tab);
                         break;
                 }
             }

@@ -240,7 +240,7 @@ namespace Fastedit.Helper
             if (file == null)
                 return false; 
             
-            var newFile = await SaveFileHelper.PickFile(designName, ".json", "Json");
+            var newFile = await SaveFileHelper.PickFile(".json", "Json");
             if (newFile == null)
                 return true; //no file was picked
 

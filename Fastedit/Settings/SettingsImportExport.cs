@@ -13,7 +13,7 @@ namespace Fastedit.Settings
     {
         public static async Task<SettingsImportExportResult> Export()
         {
-            var file = await SaveFileHelper.PickFile("settings.fasteditsettings", ".fasteditsettings", "Fastedit settings");
+            var file = await SaveFileHelper.PickFile(".fasteditsettings", "Fastedit settings");
             if (file == null)
                 return SettingsImportExportResult.Cancelled;
 
