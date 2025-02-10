@@ -1,56 +1,81 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Settings;
-using System;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
+using System.Text;
+using Fastedit.Controls;
 
 namespace Fastedit.Views.SettingsPages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class Settings_AppPage : Page
     {
-        int[] StatusbarItemSorting = new int[] { 0, 0, 0, 0, 0 };
-        bool lockSave = false;
+        private bool lockSave = false;
+        private Dictionary<ToggleSwitch, string> StatusbarToggleSwitches;
+        private Dictionary<string, ToggleSwitch> StatusbarStrings;
 
         public Settings_AppPage()
         {
             this.InitializeComponent();
 
-            //load:
-            ShowMenubarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowMenubar, true);
-            ShowStatusbarToggleSwitch.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.Settings_ShowStatusbar, true);
-            menubarAlignmentCombobox.SelectedIndex = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_MenubarAlignment, DefaultValues.MenubarAlignment);
-            
+            ShowMenubarToggleSwitch.IsOn = AppSettings.ShowMenubar;
+            ShowStatusbarToggleSwitch.IsOn = AppSettings.ShowStatusbar;
+            menubarAlignmentCombobox.SelectedIndex = AppSettings.MenubarAlignment;
+            HideTitlebarToggle.IsOn = AppSettings.HideTitlebar;
+
             //Load the statusbar sorting:
             lockSave = true;
-            var splitted = AppSettings.GetSettings(AppSettingsValues.Settings_StatusbarSorting, DefaultValues.StatusbarSorting).Split('|');
-            for (int i = 0; i < StatusbarItemSorting.Length; i++)
-            {
-                StatusbarItemSorting[i] = splitted[i].Equals("1") ? 1 : 0;
+            LoadStatusbarSorting();
+            lockSave = false;
+        }
 
-                var res = StatusbarItemGrid.Children.FirstOrDefault(x => (x is ToggleSwitch tsw) && ConvertHelper.ToInt(tsw.Tag, -1) == i);
-                if (res == default(UIElement))
+        private void LoadStatusbarSorting()
+        {
+            StatusbarToggleSwitches = new Dictionary<ToggleSwitch, string>
+            {
+                { showZoomItem, "Zoom" },
+                { showLineColumnItem, "LineColumn" },
+                { showEncodingItem, "Encoding" },
+                { showFileItem, "FileName" },
+                { showWordChars, "WordChar" }
+            };
+
+            StatusbarStrings = new Dictionary<string, ToggleSwitch>
+           {
+                {"Zoom", showZoomItem},
+                {"LineColumn",showLineColumnItem},
+                {"Encoding", showEncodingItem},
+                {"FileName", showFileItem},
+                {"WordChar", showWordChars }
+            };
+
+            //turn them all on (fallback)
+            foreach (var item in StatusbarStrings.Values)
+                item.IsOn = true;
+
+            var sorting = AppSettings.StatusbarSorting.Split("|", System.StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in sorting)
+            {
+                var splitted = item.Split(":");
+                if (splitted.Length != 2)
                     continue;
 
-                if (res is ToggleSwitch sw)
-                    sw.IsOn = StatusbarItemSorting[i] == 1;
+                if (StatusbarStrings.TryGetValue(splitted[0].Trim(), out ToggleSwitch toggleSwitch))
+                    toggleSwitch.IsOn = splitted[1] == "1";
             }
-            lockSave = false;
+
+
         }
 
         private void ShowStatusbar_Toggled(object sender, RoutedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.Settings_ShowStatusbar, ShowStatusbarToggleSwitch.IsOn);
+            AppSettings.ShowStatusbar = ShowStatusbarToggleSwitch.IsOn;
         }
 
         private void ShowMenubar_Toggled(object sender, RoutedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.Settings_ShowMenubar, ShowMenubarToggleSwitch.IsOn);
+            AppSettings.ShowMenubar = ShowMenubarToggleSwitch.IsOn;
         }
 
         private void Statusbar_ShowItem_Toggled(object sender, RoutedEventArgs e)
@@ -58,27 +83,27 @@ namespace Fastedit.Views.SettingsPages
             if (lockSave)
                 return;
 
-            if (sender is ToggleSwitch swt && swt.Tag != null)
+            //save the statusbar sorting
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in StatusbarToggleSwitches)
             {
-                int itemIndex = ConvertHelper.ToInt(swt.Tag, -1);
-                if (itemIndex < 0)
-                    return;
-
-                StatusbarItemSorting[itemIndex] = swt.IsOn ? 1 : 0;
-
-                string arrayStr = "";
-                for (int i = 0; i < StatusbarItemSorting.Length; i++)
-                {
-                    arrayStr += StatusbarItemSorting[i] + "|";
-                }
-
-                AppSettings.SaveSettings(AppSettingsValues.Settings_StatusbarSorting, arrayStr);
+                sb.Append(item.Value);
+                sb.Append(":");
+                sb.Append(item.Key.IsOn ? 1 : 0);
+                sb.Append("|");
             }
+            string sorting = sb.ToString();
+            AppSettings.StatusbarSorting = sorting;
         }
 
         private void menubarAlignmentCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.Settings_MenubarAlignment, menubarAlignmentCombobox.SelectedIndex);
+            AppSettings.MenubarAlignment = menubarAlignmentCombobox.SelectedIndex;
+        }
+
+        private void HideTitlebar_Toggled(object sender, RoutedEventArgs e)
+        {
+            AppSettings.HideTitlebar = HideTitlebarToggle.IsOn;
         }
     }
 }

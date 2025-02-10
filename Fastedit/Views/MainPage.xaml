@@ -5,14 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     xmlns:primitiveContract7Present="using:Microsoft.UI.Xaml.Controls.Primitives?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)" 
     xmlns:tab="using:Fastedit.Tab" 
     xmlns:controls="using:Fastedit.Controls"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" 
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" xmlns:models="using:Fastedit.Models"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" 
+    xmlns:models="using:Fastedit.Models"
     DragOver="Page_DragOver" Drop="Page_Drop" AllowDrop="True"
+    KeyDown="Page_KeyDown"
+    Loaded="Page_Loaded"
     >
     <Page.Resources>
         <Style x:Name="TabViewButtonStyle" TargetType="Button">
@@ -261,14 +263,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="TabViewStyle1" TargetType="muxc:TabView">
+        <Style x:Key="TabViewStyle1" TargetType="TabView">
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Padding" Value="{ThemeResource TabViewHeaderPadding}"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="Background" Value="{ThemeResource TabViewBackground}"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="muxc:TabView">
+                    <ControlTemplate TargetType="TabView">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -297,11 +299,11 @@
                                 <ContentPresenter x:Name="LeftContentPresenter" ContentTemplate="{TemplateBinding TabStripHeaderTemplate}" Grid.Column="0" Content="{TemplateBinding TabStripHeader}"/>
                                 <primitiveContract7Present:TabViewListView Style="{StaticResource TabViewListViewStyle1}" x:Name="TabListView" AllowDrop="{TemplateBinding AllowDropTabs}" CanReorderItems="{TemplateBinding CanReorderTabs}" Grid.Column="1" CanDragItems="{TemplateBinding CanDragTabs}" ItemTemplate="{TemplateBinding TabItemTemplate}" ItemsSource="{TemplateBinding TabItemsSource}" ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}" Padding="{TemplateBinding Padding}"/>
                                 <Border Grid.Column="2" Padding="{ThemeResource TabViewItemAddButtonContainerPadding}" VerticalAlignment="Bottom" Visibility="{Binding IsAddTabButtonVisible, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                    <muxc:SplitButton Loaded="AddButton_Loaded" VerticalAlignment="Center" FontSize="12" Click="AddTabButton_Click" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" ToolTipService.ToolTip="Show all Tabs; Ctrl + M (Type to search)" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" x:Name="AddButton" Command="{TemplateBinding AddTabButtonCommand}" CommandParameter="{TemplateBinding AddTabButtonCommandParameter}" HorizontalAlignment="Center" HighContrastAdjustment="None" IsTextScaleFactorEnabled="False">
-                                        <muxc:SplitButton.Flyout>
+                                    <SplitButton Loaded="AddButton_Loaded" VerticalAlignment="Center" FontSize="12" Click="AddTabButton_Click" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" ToolTipService.ToolTip="Show all Tabs; Ctrl + M (Type to search)" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" x:Name="AddButton" Command="{TemplateBinding AddTabButtonCommand}" CommandParameter="{TemplateBinding AddTabButtonCommandParameter}" HorizontalAlignment="Center" HighContrastAdjustment="None" IsTextScaleFactorEnabled="False">
+                                        <SplitButton.Flyout>
                                             <controls:VerticalTabsFlyoutControl x:Name="verticalTabsFlyout"/>
-                                        </muxc:SplitButton.Flyout>
-                                    </muxc:SplitButton>
+                                        </SplitButton.Flyout>
+                                    </SplitButton>
                                 </Border>
                                 <ContentPresenter x:Name="RightContentPresenter" ContentTemplate="{TemplateBinding TabStripFooterTemplate}" Grid.Column="3" Content="{TemplateBinding TabStripFooter}" HorizontalAlignment="Stretch"/>
                             </Grid>
@@ -313,7 +315,7 @@
         </Style>
     </Page.Resources>
     <Grid x:Name="mainGrid">
-        <muxc:TabView Style="{StaticResource TabViewStyle1}" HorizontalAlignment="Stretch"
+        <TabView Style="{StaticResource TabViewStyle1}" HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       Background="Transparent"
                       x:Name="tabControl"
@@ -321,10 +323,11 @@
                       TabCloseRequested="TabView_CloseTabButtonClick"
                       SelectionChanged="TabView_SelectionChanged"
                       CanDragTabs="true"
+                      TabDragCompleted="tabControl_TabDragCompleted"
                       TabDragStarting="tabControl_TabDragStarting"
                       SelectedIndex="0"
                       >
-            <muxc:TabView.Resources>
+            <TabView.Resources>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="TabViewItemHeaderBackground" Color="Black"/>
                     <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="Black"/>
@@ -332,224 +335,222 @@
                     <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected" Color="Black"/>
                     <SolidColorBrush x:Key="TabViewItemHeaderForegroundSelected" Color="Black"/>
                 </ResourceDictionary>
-            </muxc:TabView.Resources>
-            <muxc:TabView.TabStripHeader>
+            </TabView.Resources>
+            <TabView.TabStripHeader>
                 <StackPanel Orientation="Horizontal">
-                    <Button Click="Settings_Click" Margin="10,10,5,0" BorderThickness="0" Padding="0" Grid.Row="1" Width="30" Height="30" Background="Transparent" HorizontalAlignment="Right" x:Name="SettingsButton" VerticalAlignment="Top">
-                        <muxc:AnimatedIcon Width="16" Height="16" x:Name="SettingAnimatedIcon" >
-                            <muxc:AnimatedIcon.Source>
+                    <Button AllowFocusOnInteraction="False" Click="Settings_Click" Margin="10,10,5,0" BorderThickness="0" Padding="0" Grid.Row="1" Width="30" Height="30" Background="Transparent" HorizontalAlignment="Right" x:Name="SettingsButton" VerticalAlignment="Top">
+                        <AnimatedIcon Width="16" Height="16" x:Name="SettingAnimatedIcon" >
+                            <AnimatedIcon.Source>
                                 <animatedvisuals:AnimatedSettingsVisualSource/>
-                            </muxc:AnimatedIcon.Source>
-                            <muxc:AnimatedIcon.FallbackIconSource>
-                                <muxc:SymbolIconSource Symbol="Setting"/>
-                            </muxc:AnimatedIcon.FallbackIconSource>
-                        </muxc:AnimatedIcon>
+                            </AnimatedIcon.Source>
+                            <AnimatedIcon.FallbackIconSource>
+                                <SymbolIconSource Symbol="Setting"/>
+                            </AnimatedIcon.FallbackIconSource>
+                        </AnimatedIcon>
                     </Button>
-                    <Grid x:Name="ShellTitlebarInset" Background="Transparent" />
                 </StackPanel>
-            </muxc:TabView.TabStripHeader>
-            <muxc:TabView.TabStripFooter>
-                <Grid x:Name="CustomDragRegion" MinWidth="188" Margin="0,-2,0,0" Loaded="CustomDragRegion_Loaded" Background="Transparent" />
-            </muxc:TabView.TabStripFooter>
-        </muxc:TabView>
+            </TabView.TabStripHeader>
+            <TabView.TabStripFooter>
+                <Grid x:Name="customDragRegion" HorizontalAlignment="Stretch" Background="Transparent" VerticalAlignment="Stretch" MinWidth="188" Margin="0,-2,0,0"/>
+            </TabView.TabStripFooter>
+        </TabView>
 
-        <muxc:MenuBar x:Name="mainMenubar" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0">
-            <muxc:MenuBarItem Title="File" >
-                <MenuFlyoutItem Text="New" Click="NewFile_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="N" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Open" Click="OpenFile_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="O" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Save" Click="SaveFile_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Save as" Click="SaveFileAs_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="S" Modifiers="Control,Shift" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Save all" Click="SaveAll_Click"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Recycle bin" Click="RecycleBin_Click"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Settings" Click="Settings_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F1" IsEnabled="False" Modifiers="None"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-            </muxc:MenuBarItem>
+        <MenuBar x:Name="mainMenubar" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0">
+            <MenuBar.Items>
+                
+            <MenuBarItem Title="File" >
+                    <MenuBarItem.Items>
+                        <MenuFlyoutItem Text="New" Click="NewFile_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="N" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Open" Click="OpenFile_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="O" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Save" Click="SaveFile_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Save as" Click="SaveFileAs_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="S" Modifiers="Control,Shift" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Save all" Click="SaveAll_Click"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Recycle bin" Click="RecycleBin_Click"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Settings" Click="Settings_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="F1" IsEnabled="False" Modifiers="None"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                    </MenuBarItem.Items>
+                </MenuBarItem>
 
-            <muxc:MenuBarItem Title="Edit">
-                <MenuFlyoutItem Text="Undo" Click="Undo_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Z" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Redo" Click="Redo_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Y" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Cut" Click="Cut_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="X" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Copy" Click="Copy_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="C" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Paste" Click="Paste_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="V" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Duplicate line" Click="DuplicateLine_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="D" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Search" Click="Search_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Replace" Click="Replace_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Go to" Click="GoToLine_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="G" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Select all" Click="SelectAll_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="A" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-            </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="Document">
-                <MenuFlyoutItem Text="Close" Click="CloseTab_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="T" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="File info" Click="FileInfo_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="I" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Encoding" Click="ChangeEncoding_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="E" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Undock Tab" Click="UndockTab_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Share" Click="ShareDocument_Click"/>
-                <MenuFlyoutItem Text="Close all" Click="CloseAll_Click"/>
-            </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="Advanced">
-                <MenuFlyoutSubItem Text="Syntaxhighlighting" x:Name="CodeLanguageSelector"/>
-                <MenuFlyoutSubItem Text="TabKey">
-                    <MenuFlyoutSubItem Text="Spaces">
-                        <MenuFlyoutItem Text="1" Click="TabSpaces_Click" Tag="1"/>
-                        <MenuFlyoutItem Text="2" Click="TabSpaces_Click" Tag="2"/>
-                        <MenuFlyoutItem Text="4" Click="TabSpaces_Click" Tag="4"/>
-                        <MenuFlyoutItem Text="8" Click="TabSpaces_Click" Tag="8"/>
-                        <MenuFlyoutItem Text="12" Click="TabSpaces_Click" Tag="12"/>
-                        <MenuFlyoutItem Text="16" Click="TabSpaces_Click" Tag="16"/>
-                    </MenuFlyoutSubItem>
-                    <MenuFlyoutItem Text="Tabs" Click="TabSpaces_Click" Tag="-1"/>
-                </MenuFlyoutSubItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Quick access" Click="ShowRunCommandWindow_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="B" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Rename" Click="RenameFile_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F2"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-            </muxc:MenuBarItem>
-            <muxc:MenuBarItem Title="View">
-                <MenuFlyoutItem Text="Compact overlay" Click="CompactOverlayMode_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="K" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Fullscreen" Click="Fullscreen_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F11" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Zoom in" Click="ZoomIn_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Zoom out" Click="ZoomOut_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-            </muxc:MenuBarItem>
-        </muxc:MenuBar>
+            <MenuBarItem Title="Edit">
+                    <MenuBarItem.Items>
+                        <MenuFlyoutItem Text="Undo" Click="Undo_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Z" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Redo" Click="Redo_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Y" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Cut" Click="Cut_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="X" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Copy" Click="Copy_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="C" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Paste" Click="Paste_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="V" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Duplicate line" Click="DuplicateLine_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="D" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Search" Click="Search_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Replace" Click="Replace_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Go to" Click="GoToLine_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="G" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Select all" Click="SelectAll_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="A" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                    </MenuBarItem.Items>
+                </MenuBarItem>
+            <MenuBarItem Title="Document">
+                    <MenuBarItem.Items>
+                        <MenuFlyoutItem Text="Close" Click="CloseTab_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="T" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="File info" Click="FileInfo_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="I" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Encoding" Click="ChangeEncoding_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="E" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Undock Tab" Click="UndockTab_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Close all" Click="CloseAll_Click"/>
+                    </MenuBarItem.Items>
+                </MenuBarItem>
+            <MenuBarItem Title="Advanced">
+                    <MenuBarItem.Items>
 
-        <Grid Height="30" x:Name="statusbar" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <controls:StatusbarItem Grid.Column="0" HorizontalAlignment="Left" StaticText="" x:Name="Statusbar_FilePath"/>
-            <controls:StatusbarItem Grid.Column="1" HorizontalAlignment="Left" StaticText="Zoom: " x:Name="Statusbar_Zoom"/>
-            <controls:StatusbarItem Grid.Column="2" HorizontalAlignment="Right" StaticText="Ln: " x:Name="Statusbar_Line">
-                <controls:StatusbarItem.FlyoutContent>
-                    <TextBox Header="Go to line:" x:Name="Statusbar_GoToLineTextbox" GotFocus="Statusbar_GoToLineTextbox_GotFocus" PreviewKeyDown="Statusbar_GoToLineTextbox_KeyDown"/>
-                </controls:StatusbarItem.FlyoutContent>
-            </controls:StatusbarItem>
-            <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Left" StaticText="Cl: " x:Name="Statusbar_Column"/>
-            <controls:StatusbarItem Grid.Column="4" HorizontalAlignment="Left" StaticText="" x:Name="Statusbar_Encoding"/>
-        </Grid>
+                        <MenuFlyoutSubItem Text="Syntaxhighlighting" x:Name="CodeLanguageSelector"/>
+                        <MenuFlyoutSubItem Text="TabKey">
+                            <MenuFlyoutSubItem Text="Spaces">
+                                <MenuFlyoutItem Text="1" Click="TabSpaces_Click" Tag="1"/>
+                                <MenuFlyoutItem Text="2" Click="TabSpaces_Click" Tag="2"/>
+                                <MenuFlyoutItem Text="4" Click="TabSpaces_Click" Tag="4"/>
+                                <MenuFlyoutItem Text="8" Click="TabSpaces_Click" Tag="8"/>
+                                <MenuFlyoutItem Text="12" Click="TabSpaces_Click" Tag="12"/>
+                                <MenuFlyoutItem Text="16" Click="TabSpaces_Click" Tag="16"/>
+                            </MenuFlyoutSubItem>
+                            <MenuFlyoutItem Text="Tabs" Click="TabSpaces_Click" Tag="-1"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Quick access" Click="ShowRunCommandWindow_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="B" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Rename" Click="RenameFile_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="F2"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Surround With" Click="SurroundWith_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Q" Modifiers="Control"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                    </MenuBarItem.Items>
+                </MenuBarItem>
+                <MenuBarItem Title="View">
+                    <MenuBarItem.Items>
+                        <MenuFlyoutItem Text="Compact overlay" Click="CompactOverlayMode_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="K" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Fullscreen" Click="Fullscreen_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="F11" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Zoom in" Click="ZoomIn_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Zoom out" Click="ZoomOut_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                    </MenuBarItem.Items>
+                </MenuBarItem>
+            </MenuBar.Items>
+        </MenuBar>
 
+        <controls:TextStatusBar Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" x:Name="textStatusBar"/>
+        
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-            <muxc:ProgressRing HorizontalAlignment="Center" IsActive="False" Width="70" Height="70" x:Name="progressBar"/>
+            <ProgressRing HorizontalAlignment="Center" IsActive="False" Width="70" Height="70" x:Name="progressBar"/>
             <TextBlock Margin="0,100,0,0" Text="" MinWidth="100" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="progressInfo"/>
         </Grid>
-
-        <StackPanel x:Name="infobarDisplay" MinWidth="400" MaxWidth="500" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,50,10,0"/>
-
+        
         <controls:SearchControl Visibility="Collapsed" Margin="0,50,0,0" HorizontalAlignment="Center" Width="350" x:Name="searchControl"/>
         
-        <controls:QuickAccessWindow x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+        <controls:QuickAccessWindow Closed="runCommandWindow_Closed" x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
             <controls:QuickAccessWindow.Items>
                 <models:QuickAccessWindowItem Command="Close tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
-                <models:QuickAccessWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_CodeLanguages"/>
+                <models:QuickAccessWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_SyntaxHighlighting"/>
                 <models:QuickAccessWindowItem Command="New tab" Shortcut="Ctrl + T" RunCommandWindowItemClicked="NewFile_Click"/>
                 <models:QuickAccessWindowItem Command="Encoding" Shortcut="Ctrl + E" RunCommandWindowItemClicked="ChangeEncoding_Click"/>
                 <models:QuickAccessWindowItem Command="Copy" Shortcut="Ctrl + C" RunCommandWindowItemClicked="Copy_Click"/>
@@ -568,7 +569,6 @@
                 <models:QuickAccessWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
                 <models:QuickAccessWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
                 <models:QuickAccessWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
-                <models:QuickAccessWindowItem Command="Share" RunCommandWindowItemClicked="ShareDocument_Click"/>
                 <models:QuickAccessWindowSubItem Command="Spaces instead tabs">
                     <models:QuickAccessWindowSubItem.Items>
                         <models:QuickAccessWindowItem Command="1" Tag="1" RunCommandWindowItemClicked="TabSpaces_Click"/>
@@ -588,6 +588,8 @@
                 <models:QuickAccessWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
                 <models:QuickAccessWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
                 <models:QuickAccessWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
+                <models:QuickAccessWindowItem Command="Surround With" Shortcut="Ctrl + Q" RunCommandWindowItemClicked="SurroundWith_Click"/>
+                <models:QuickAccessWindowSubItem TriggerOnSelecting="True" SelectedChanged="RunCommandWindowItem_Designs_SelectedChanged" Command="Design" x:Name="RunCommandWindowItem_Designs"/>
                 </controls:QuickAccessWindow.Items>
         </controls:QuickAccessWindow>
     </Grid>

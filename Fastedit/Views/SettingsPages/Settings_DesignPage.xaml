@@ -12,10 +12,11 @@
             <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
                 <Grid.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Export" Click="ExportDesign_Click"/>
+                        <MenuFlyoutItem Tag="{x:Bind FileName}" Text="Export" Click="ExportDesign_Click"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Tag="{x:Bind DesignName}" Text="Delete" Click="DeleteDesign_Click"/>
-                        <MenuFlyoutItem Text="Edit" Click="EditDesign_Click" Tag="{x:Bind DesignName}"/>
+                        <MenuFlyoutItem Tag="{x:Bind FileName}" Text="Delete" Click="DeleteDesign_Click"/>
+                        <MenuFlyoutItem Text="Edit" Click="EditDesign_Click" Tag="{x:Bind FileName}"/>
+                        <MenuFlyoutItem Text="Edit Json" Click="EditDesignJson_Click" Tag="{x:Bind FileName}"/>
                     </MenuFlyout>
                 </Grid.ContextFlyout>
                 <Rectangle Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{x:Bind TabPageBackground}"/>
@@ -23,7 +24,7 @@
                 <Grid Background="{x:Bind TabPageBackground}" Width="40" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,0,0"/>
                 <Rectangle Margin="20,20,0,0" Fill="{x:Bind TextBoxBackground}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 <TextBlock Margin="5,20,0,0" FontSize="20" HorizontalAlignment="Left" Text="1234" TextWrapping="Wrap" Width="10" Foreground="{x:Bind LineNumberColor}"/>
-                <TextBlock Margin="30,20,0,0" FontSize="20" Text="{x:Bind DesignName}" Foreground="{x:Bind TextColor}"/>
+                <TextBlock Margin="30,20,0,0" FontSize="20" Text="{x:Bind DisplayName}" Foreground="{x:Bind TextColor}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -39,8 +40,20 @@
                 </Button.Content>
             </Button>
             <Button Margin="10,0,0,0" Content="Import" Click="ImportDesign_Click"/>
+            <Button Margin="10,0,0,0" Content="Reset defaults">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All existing items will be replaced. Export items to backup them!" Margin="0,0,0,12" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Style="{ThemeResource AccentButtonStyle}" Click="LoadDefaultDesigns_Click" Content="Confirm" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
         </StackPanel>
-        <GridView HorizontalAlignment="Center" Background="Transparent" Margin="0,45,0,0"
+        <GridView HorizontalAlignment="Center" Background="Transparent" Margin="0,80,0,0"
             x:Name="designGridView"
             IsItemClickEnabled="True"
             ItemClick="BasicGridView_ItemClick"

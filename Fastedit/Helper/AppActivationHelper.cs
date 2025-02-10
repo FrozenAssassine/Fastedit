@@ -1,34 +1,28 @@
-﻿using Fastedit.Tab;
-using Microsoft.UI.Xaml.Controls;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml.Navigation;
+﻿using Microsoft.UI.Xaml.Controls;
+using Fastedit.Tab;
 
-namespace Fastedit.Helper
+namespace Fastedit.Helper;
+
+public class AppActivationHelper
 {
-    public class AppActivationHelper
+    public static string appActivationArguments = null;
+
+    public static bool HandleAppActivation(TabView tabView)
     {
-        public static NavigationEventArgs NavigationEvent = null;
-
-        public static async Task<bool> HandleAppActivation(TabView tabView)
-        {
-            if (NavigationEvent.Parameter == null)
-                return false;
-
-            if (NavigationEvent.Parameter is IActivatedEventArgs args)
-            {
-                if (args.Kind == ActivationKind.Launch)
-                    return true;
-                else if (args.Kind == ActivationKind.File)
-                {
-                    var handler = args as FileActivatedEventArgs;
-                    if (handler == null)
-                        return false;
-
-                    return await TabPageHelper.OpenFiles(tabView, handler.Files);
-                }
-            }
+        if (appActivationArguments == null)
             return false;
-        }
+
+        //var args = Environment.GetCommandLineArgs();
+
+        return HandleFileActivation(tabView);
+    }
+
+    private static bool HandleFileActivation(TabView tabView)
+    {
+        var file = appActivationArguments;
+        if (file == null || file.Length == 0)
+            return false;
+
+        return TabPageHelper.OpenAndShowFile(tabView, file, true);
     }
 }

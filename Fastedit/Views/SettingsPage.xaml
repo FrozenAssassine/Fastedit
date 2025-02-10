@@ -9,51 +9,51 @@
     mc:Ignorable="d" PointerEntered="Page_PointerEntered">
 
     <Grid>
-        <muxc:NavigationView OpenPaneLength="200" Margin="0,15,0,0" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" x:Name="navigationView" ItemInvoked="NavigationView_ItemInvoked">
-            <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItem Content="App" Tag="AppPage" >
-                    <muxc:NavigationViewItem.Icon>
+        <NavigationView OpenPaneLength="250" Margin="0,15,0,0" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" x:Name="navigationView" ItemInvoked="NavigationView_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="App" Tag="AppPage" >
+                    <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB7E;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 
-                <muxc:NavigationViewItem Content="Textbox" Tag="TextboxPage" >
-                    <muxc:NavigationViewItem.Icon>
+                <NavigationViewItem Content="Textbox" Tag="TextboxPage" >
+                    <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe8d2;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="Tabview" Tag="TabviewPage" >
-                    <muxc:NavigationViewItem.Icon>
+                <NavigationViewItem Content="Tabview" Tag="TabviewPage" >
+                    <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7C3;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="Designs" Tag="DesignPage" >
-                    <muxc:NavigationViewItem.Icon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Designs" Tag="DesignPage" >
+                    <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE790;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="Data" Tag="DataPage" Icon="PostUpdate"/>
-            </muxc:NavigationView.MenuItems>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Data" Tag="DataPage" Icon="PostUpdate"/>
+            </NavigationView.MenuItems>
 
-            <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem Tag="AboutPage" Content="About">
-                    <muxc:NavigationViewItem.Icon>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Tag="AboutPage" Content="About">
+                    <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE946;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-            </muxc:NavigationView.FooterMenuItems>
-            <muxc:NavigationView.Header>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+            <NavigationView.Header>
                 <Grid VerticalAlignment="Center" Margin="0,-40,0,0">
                     <TextBlock FontSize="48" Text="Hello" x:Name="pageNameDisplay" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Margin="0,10,20,0" x:Name="applySettingsButton" Click="ApplySettings_Click" Style="{ThemeResource AccentButtonStyle}" Content="Apply settings" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
-            </muxc:NavigationView.Header>
+            </NavigationView.Header>
 
             <ScrollViewer Margin="0,0,0,0" Grid.Row="1" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
                 <Frame Margin="20,0,20,20" x:Name="navigationFrame"/>
             </ScrollViewer>
 
-        </muxc:NavigationView>
+        </NavigationView>
     </Grid>
 </Page>

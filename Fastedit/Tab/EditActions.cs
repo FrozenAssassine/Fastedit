@@ -73,7 +73,7 @@ namespace Fastedit.Tab
 
             tab.textbox.GoToLine(line);
             tab.textbox.ScrollLineIntoView(line);
-            tab.textbox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+            tab.textbox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
     }
 }

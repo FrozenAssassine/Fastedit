@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
+using System.IO;
 
 namespace Fastedit.Models
 {
     public class RecycleBinListViewItem : ListViewItem
     {
-        public StorageFile file { get; set; }
-        public RecycleBinListViewItem(StorageFile file)
+        public string filePath { get; set; }
+        public RecycleBinListViewItem(string file)
         {
-            this.file = file;
+            this.filePath = file;
+
+            var dateCreated = new FileInfo(filePath).CreationTime;
+
             this.Content = new TextBlock
             {
-                Text = file.Name + "\n" + file.DateCreated.UtcDateTime.ToString()
+                Text = Path.GetFileName(file) + "\n" + dateCreated.ToString("HH:mm dd.MM.yyyy")
             };
         }
     }

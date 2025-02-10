@@ -3,54 +3,53 @@ using Fastedit.Storage;
 using Fastedit.Tab;
 using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
-namespace Fastedit.Dialogs
+namespace Fastedit.Dialogs;
+
+public class EncodingDialog
 {
-    public class EncodingDialog
+    private static ComboBox encodingCombobox;
+
+    public static async Task Show(TabPageItem tab)
     {
-        private static ComboBox encodingCombobox;
+        if (tab == null)
+            return;
 
-        public static async Task Show(TabPageItem tab)
+        if (encodingCombobox == null)
         {
-            if (tab == null)
-                return;
-
-            //create the combobox:
-            if (encodingCombobox == null)
+            encodingCombobox = new ComboBox
             {
-                encodingCombobox = new ComboBox
-                {
-                    Header = "Encoding:",
-                    HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center,
-                    VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center
-                };
-                encodingCombobox.ItemsSource = EncodingHelper.AllEncodingNames;
-            }
-
-            encodingCombobox.SelectedIndex = EncodingHelper.GetIndexByEncoding(tab.Encoding);
-            var dialog = new ContentDialog
-            {
-                Background = DialogHelper.ContentDialogBackground(),
-                Foreground = DialogHelper.ContentDialogForeground(),
-                RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Encoding",
-                Content = encodingCombobox,
-                PrimaryButtonText = "Done",
-                SecondaryButtonText = tab.DatabaseItem.FileToken.Length > 0 ? "Reopen" : "", //only when tab is a local file
-                CloseButtonText = "Cancel",
-                DefaultButton = ContentDialogButton.Primary,
+                Header = "Encoding:",
+                HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Center,
+                VerticalAlignment = Microsoft.UI.Xaml.VerticalAlignment.Center,
+                Width=200,
             };
-            var res = await dialog.ShowAsync();
-            dialog.Content = null;
+            encodingCombobox.ItemsSource = EncodingHelper.AllEncodingNames;
+        }
 
-            if (res == ContentDialogResult.Primary)
-                tab.Encoding = EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex);
-            else if (res == ContentDialogResult.Secondary)
-            {
-                //reopen the file with the encoding specified
-                await OpenFileHelper.ReopenWithEncoding(tab, EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex));
-            }
+        encodingCombobox.SelectedIndex = EncodingHelper.GetIndexByEncoding(tab.Encoding);
+        var dialog = new ContentDialog
+        {
+            Background = DialogHelper.ContentDialogBackground(),
+            Foreground = DialogHelper.ContentDialogForeground(),
+            RequestedTheme = DialogHelper.DialogDesign,
+            Title = "Encoding",
+            Content = encodingCombobox,
+            PrimaryButtonText = "Done",
+            SecondaryButtonText = tab.DatabaseItem.WasNeverSaved ? "" : "Reopen",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+            XamlRoot = App.m_window.Content.XamlRoot
+        };
+        var res = await dialog.ShowAsync();
+        dialog.Content = null;
+
+        if (res == ContentDialogResult.Primary)
+            tab.Encoding = EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex);
+        else if (res == ContentDialogResult.Secondary)
+        {
+            OpenFileHelper.ReopenWithEncoding(tab, EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex));
         }
     }
 }

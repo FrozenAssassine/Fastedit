@@ -11,22 +11,16 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <controls:SetingsItemSeparator/>
+            <controls:SetingsItemSeparator Header="Menubar"/>
             <controls:SettingsControl Header="Show Menubar">
                 <controls:SettingsControl.Content>
                     <ToggleSwitch x:Name="ShowMenubarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowMenubar_Toggled"/>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
-
-            <controls:SettingsControl Header="Show Statusbar">
-                <controls:SettingsControl.Content>
-                    <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
-                </controls:SettingsControl.Content>
-            </controls:SettingsControl>
-
+            
             <controls:SettingsControl Header="Menubar alignment">
                 <controls:SettingsControl.Content>
-                    <ComboBox Width="120" x:Name="menubarAlignmentCombobox" SelectionChanged="menubarAlignmentCombobox_SelectionChanged">
+                    <ComboBox Width="200" x:Name="menubarAlignmentCombobox" SelectionChanged="menubarAlignmentCombobox_SelectionChanged">
                         <ComboBoxItem Content="Left" Tag="0"/>
                         <ComboBoxItem Content="Center" Tag="1"/>
                         <ComboBoxItem Content="Right" Tag="2"/>
@@ -34,13 +28,20 @@
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
-            <muxc:Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0" >
-                <muxc:Expander.Header>
+            <controls:SetingsItemSeparator Header="Statusbar"/>
+
+            <controls:SettingsControl Header="Show Statusbar">
+                <controls:SettingsControl.Content>
+                    <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+            <Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0" >
+                <Expander.Header>
                     <Grid Height="70">
                         <TextBlock Margin="10,0,0,0" Text="Statusbar" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </Grid>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
+                </Expander.Header>
+                <Expander.Content>
                     <Grid HorizontalAlignment="Stretch" x:Name="StatusbarItemGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -55,23 +56,29 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock FontSize="16" Text="File name" Grid.Row="0" Grid.Column="0"/>
-                        <ToggleSwitch Tag="0" Grid.Row="0" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <ToggleSwitch x:Name="showFileItem" Tag="0" Grid.Row="0" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
                         <TextBlock FontSize="16" Text="Zoom" Grid.Row="1" Grid.Column="0"/>
-                        <ToggleSwitch Tag="1" Grid.Row="1" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <ToggleSwitch x:Name="showZoomItem" Tag="1" Grid.Row="1" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Linenumber" Grid.Row="2" Grid.Column="0"/>
-                        <ToggleSwitch Tag="2" Grid.Row="2" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <TextBlock FontSize="16" Text="Linenumber/Column" Grid.Row="2" Grid.Column="0"/>
+                        <ToggleSwitch x:Name="showLineColumnItem" Tag="2" Grid.Row="2" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Column" Grid.Row="3" Grid.Column="0"/>
-                        <ToggleSwitch Tag="3" Grid.Row="3" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <TextBlock FontSize="16" Text="Words/Characters" Grid.Row="3" Grid.Column="0"/>
+                        <ToggleSwitch x:Name="showWordChars" Tag="3" Grid.Row="3" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
                         <TextBlock FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
-                        <ToggleSwitch Tag="4" Grid.Row="4" Grid.Column="1"  Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <ToggleSwitch x:Name="showEncodingItem" Tag="4" Grid.Row="4" Grid.Column="1"  Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
                     </Grid>
-                </muxc:Expander.Content>
-            </muxc:Expander>
+                </Expander.Content>
+            </Expander>
 
+            <controls:SetingsItemSeparator Header="Window"/>
+            <controls:SettingsControl Header="Hide titlebar" InfoText="Restart to fix rendering issues">
+                <controls:SettingsControl.Content>
+                    <ToggleSwitch x:Name="HideTitlebarToggle" Style="{StaticResource LeftSideToggleSwitch}" Toggled="HideTitlebar_Toggled"/>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
         </StackPanel>
     </Grid>
 </Page>

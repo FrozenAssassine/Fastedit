@@ -8,8 +8,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
@@ -33,8 +31,8 @@ namespace Fastedit.Dialogs
 
             listview = new ListView()
             {
-                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch,
-                VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Stretch,
+                HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch,
+                VerticalAlignment = Microsoft.UI.Xaml.VerticalAlignment.Stretch,
                 SelectionMode = ListViewSelectionMode.Multiple
             };
             dialog = new ContentDialog()
@@ -46,6 +44,7 @@ namespace Fastedit.Dialogs
                 CloseButtonText = "Cancel",
                 PrimaryButtonText = "Delete",
                 Content = listview,
+                XamlRoot = App.m_window.Content.XamlRoot
             };
             dialog.Closing += Dialog_Closing;
             listview.SelectionChanged += Listview_SelectionChanged;
@@ -60,7 +59,7 @@ namespace Fastedit.Dialogs
         }
 
         //delete selected items:
-        private async void RecyclebinWindow_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void RecyclebinWindow_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (listview.SelectedItems.Count == 0)
                 return;
@@ -72,7 +71,7 @@ namespace Fastedit.Dialogs
                 while (listview.SelectedItems.Count > 0)
                 {
                     var selecteditem = listview.SelectedItems[listview.SelectedItems.Count - 1] as RecycleBinListViewItem;
-                    await selecteditem.file.DeleteAsync();
+                    File.Delete(selecteditem.filePath);
                     listview.Items.Remove(selecteditem);
                 }
             }
@@ -82,7 +81,7 @@ namespace Fastedit.Dialogs
                 Debug.WriteLine("Exception in RecycleBinDialog --> RecyclebinWindow_PrimaryButtonClick:" + "\n" + ex.Message);
             }
         }
-        private async void RecyclebinWindow_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void RecyclebinWindow_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (listview.SelectedItems.Count == 0)
                 return;
@@ -92,10 +91,10 @@ namespace Fastedit.Dialogs
                 while (listview.SelectedItems.Count > 0)
                 {
                     var selecteditem = listview.SelectedItems[listview.SelectedItems.Count - 1] as RecycleBinListViewItem;
-                    var res = await OpenFileHelper.DoOpen(tabView, selecteditem.file, true);
+                    var res = OpenFileHelper.DoOpen(tabView, selecteditem.filePath, true);
                     if (res != null)
                     {
-                        await selecteditem.file.DeleteAsync();
+                        File.Delete(selecteditem.filePath);
                         listview.Items.Remove(selecteditem);
                     }
                 }
@@ -116,63 +115,60 @@ namespace Fastedit.Dialogs
                 dialog.PrimaryButtonText = dialog.SecondaryButtonText = "";
         }
 
-        public async void UpdateListViewItems(ListView listview)
+        private static bool CheckAndCreateDirectory()
         {
             if (!Directory.Exists(DefaultValues.RecycleBinPath))
+            {
                 Directory.CreateDirectory(DefaultValues.RecycleBinPath);
+                return false;
+            }
+            return true;
+        }
+
+        public void UpdateListViewItems(ListView listview)
+        {
+            //no need to render any items if the folder was just created
+            if (!CheckAndCreateDirectory())
+                return;
 
             listview.Items.Clear();
-            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.RecycleBinPath);
-            var files = await folder.GetFilesAsync();
-            for (int i = 0; i < files.Count; i++)
+
+            foreach (var file in GetTrashedFiles())
             {
-                listview.Items.Add(new RecycleBinListViewItem(files[i]));
+                listview.Items.Add(new RecycleBinListViewItem(file));
             }
         }
-        public static async Task<ClearRecycleBinResult> ClearRecycleBin()
+        private static string[] GetTrashedFiles()
+        {
+            return Directory.GetFiles(DefaultValues.RecycleBinPath);
+        }
+
+        public static ClearRecycleBinResult ClearRecycleBin()
         {
             try
             {
-                if (!Directory.Exists(DefaultValues.RecycleBinPath))
-                    Directory.CreateDirectory(DefaultValues.RecycleBinPath);
-
-                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.RecycleBinPath);
-                var files = await folder.GetFilesAsync();
-                for (int i = 0; i < files.Count; i++)
-                {
-                    if (files[i] == null)
-                        return ClearRecycleBinResult.NullError;
-                    await files[i].DeleteAsync();
-                }
-
-                //check if all have been deleted
-                var files_2 = await folder.GetFilesAsync();
-                return files_2.Count == 0 ? ClearRecycleBinResult.Success : ClearRecycleBinResult.NotAllFilesDeleted;
+                if (Directory.Exists(DefaultValues.RecycleBinPath))
+                    Directory.Delete(DefaultValues.RecycleBinPath);
             }
-            catch (Exception ex)
+            catch
             {
                 InfoMessages.ClearRecyclebinError();
-                Debug.WriteLine("Exception in RecycleBinDialog -> ClearRecycleBin " + ex.Message);
                 return ClearRecycleBinResult.Exception;
             }
+
+            CheckAndCreateDirectory();
+
+            //check if all have been deleted
+            return ClearRecycleBinResult.Success;
         }
-        public static async Task<bool> MoveFileToRecycleBin(TabPageItem tab)
+        public static bool MoveFileToRecycleBin(TabPageItem tab)
         {
+            CheckAndCreateDirectory();
+
             try
             {
-                if (!Directory.Exists(DefaultValues.RecycleBinPath))
-                    Directory.CreateDirectory(DefaultValues.RecycleBinPath);
-
-                var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.RecycleBinPath);
-                if (folder == null)
-                    return false;
-
-                var file = await folder.CreateFileAsync(tab.DatabaseItem.FileName, CreationCollisionOption.GenerateUniqueName);
-                if (file == null)
-                    return false;
-
-                await FileIO.WriteTextAsync(file, tab.textbox.GetText());
-
+                string fileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(DefaultValues.RecycleBinPath, tab.DatabaseItem.FileName));
+                File.WriteAllLines(Path.Join(DefaultValues.RecycleBinPath, fileName), tab.textbox.Lines);
                 return true;
             }
             catch (Exception ex)
@@ -185,8 +181,7 @@ namespace Fastedit.Dialogs
 
         public static string GetSize()
         {
-            if (!Directory.Exists(DefaultValues.RecycleBinPath))
-                Directory.CreateDirectory(DefaultValues.RecycleBinPath);
+            CheckAndCreateDirectory();
 
             return SizeCalculationHelper.CalculateFolderSize(DefaultValues.RecycleBinPath);
         }

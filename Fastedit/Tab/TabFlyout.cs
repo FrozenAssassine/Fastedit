@@ -1,12 +1,9 @@
 ﻿using Fastedit.Dialogs;
-using Fastedit.Helper;
 using Fastedit.Models;
 using Fastedit.Storage;
-using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml.Controls;
 using Windows.System;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Input;
 
 namespace Fastedit.Tab
 {
@@ -20,8 +17,8 @@ namespace Fastedit.Tab
             flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
             flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
             flyout.Items.Add(new MenuFlyoutSeparator());
-            flyout.Items.Add(CreateItem(tab, tabView, "Share", Symbol.Share, TabPageFlyoutItem.Share));
-            flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.J));
+            flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock));
+            flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
             flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
             return flyout;
         }
@@ -46,7 +43,7 @@ namespace Fastedit.Tab
         private static MenuFlyoutItem CreateItem(TabPageItem tab, TabView tabView, string Text, string glyph, TabPageFlyoutItem type, VirtualKeyModifiers modifier, VirtualKey key = VirtualKey.None)
         {
             var item = CreateItem(tab, tabView, Text, type);
-            item.Icon = new FontIcon { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = glyph };
+            item.Icon = new FontIcon { FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets"), Glyph = glyph };
 
             //prevent adding a keyboard accelerator
             if (key == VirtualKey.None)
@@ -72,7 +69,7 @@ namespace Fastedit.Tab
             return item;
         }
 
-        private static async void Item_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private static async void Item_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem item && item.Tag is TabFlyoutItemData data)
             {
@@ -87,14 +84,14 @@ namespace Fastedit.Tab
                     case TabPageFlyoutItem.FileInfo:
                         await FileInfoDialog.Show(data.Tab);
                         break;
-                    case TabPageFlyoutItem.Share:
-                        ShareFileHelper.ShowShareUI(data.Tab);
-                        break;
                     case TabPageFlyoutItem.Rename:
                         await RenameFileDialog.Show(data.Tab);
                         break;
                     case TabPageFlyoutItem.CloseAll:
                         await TabPageHelper.CloseAll(data.TabView);
+                        break;
+                    case TabPageFlyoutItem.Undock:
+                        await TabWindowHelper.ShowInNewWindow(data.TabView, data.Tab);
                         break;
                 }
             }

@@ -1,10 +1,10 @@
 ﻿using Fastedit.Tab;
 using System;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Fastedit.Helper
 {
-    internal class AutoDatabaseSaveHelper
+    internal class AutoSaveDatabaseHelper
     {
         public static TimeSpan DatabaseBackupTime = new TimeSpan(0, 4, 0);
 
@@ -16,9 +16,9 @@ namespace Fastedit.Helper
             timer.Start();
         }
 
-        private static async void SaveDatabaseTimer_Tick(object sender, object e)
+        private static void SaveDatabaseTimer_Tick(object sender, object e)
         {
-            await TabPageHelper.mainPage.SaveDatabase(false, false);
+            TabPageHelper.mainPage.SaveDatabase(false, false);
         }
     }
 }

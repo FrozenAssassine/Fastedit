@@ -1,9 +1,7 @@
 ﻿using Fastedit.Helper;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Fastedit.Controls
 {
@@ -22,6 +20,7 @@ namespace Fastedit.Controls
         private string _Glyph;
         public string Glyph { get => _Glyph; set { _Glyph = value; iconDisplay.Visibility = ConvertHelper.BoolToVisibility(value.Length > 0); } }
         public string Header { get; set; }
+        public string InfoText { get; set; }
         public new UIElement Content
         {
             set

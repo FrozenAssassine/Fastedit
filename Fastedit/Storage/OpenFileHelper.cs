@@ -1,41 +1,71 @@
 ﻿using Fastedit.Dialogs;
-using Fastedit.Helper;
 using Fastedit.Settings;
 using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 
 namespace Fastedit.Storage
 {
     public class OpenFileHelper
     {
-        public static async Task<(string Text, Encoding encoding, bool Succed)> ReadTextFromFileAsync(StorageFile file, Encoding encoding = null)
+
+        private static IEnumerable<string> GetLines(StreamReader reader)
         {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                yield return line;
+            }
+        }
+        public static (string[] lines, Encoding encoding, bool succeeded) ReadLinesFromFile(string path, Encoding encoding = null)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return (null, null, false);
+
             try
             {
-                if (file == null)
-                    return ("", Encoding.Default, false);
-
-                using (var stream = (await file.OpenReadAsync()).AsStreamForRead())
+                using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, useAsync: true);
+                using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
                 {
-                    //Detect the encoding:
-                    using (var reader = new StreamReader(stream, true))
-                    {
-                        byte[] buffer = new byte[stream.Length];
-                        stream.Read(buffer, 0, buffer.Length);
+                    var lines = GetLines(reader).ToArray();
 
-                        if (encoding != null)//Encoding is predefined
-                            return (encoding.GetString(buffer, 0, buffer.Length), encoding, true);
+                    encoding ??= reader.CurrentEncoding;
 
-                        //Encoding gets detected
-                        encoding = EncodingHelper.DetectTextEncoding(buffer, out string text);
-                        return (text, encoding, true);
-                    }
+                    return (lines, encoding, true);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                InfoMessages.NoAccesToReadFile();
+                return (null, null, false);
+            }
+            catch (Exception ex)
+            {
+                InfoMessages.UnhandledException(ex.Message);
+            }
+            return (null, null, false);
+        }
+
+        public static async Task<(string text, Encoding encoding, bool succeeded)> ReadTextFromFileAsync(string path, Encoding encoding = null)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return ("", Encoding.Default, false);
+
+            try
+            {
+                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, useAsync: true))
+                using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
+                {
+                    string text = await reader.ReadToEndAsync();
+
+                    encoding ??= reader.CurrentEncoding;
+
+                    return (text, encoding, true);
                 }
             }
             catch (UnauthorizedAccessException)
@@ -46,59 +76,52 @@ namespace Fastedit.Storage
             {
                 InfoMessages.UnhandledException(ex.Message);
             }
+
             return ("", Encoding.Default, false);
         }
 
-        private static async Task<bool> DoOpenTab(TabPageItem tab, StorageFile file, bool load = true)
+        private static bool DoOpenTab(TabPageItem tab, string path, bool load = true)
         {
-            if (file == null)
+            if (path == null)
                 return false;
 
-            var res = await ReadTextFromFileAsync(file);
-            if (!res.Succed)
+            var res = ReadLinesFromFile(path);
+            if (!res.succeeded)
                 return false;
 
-            tab.DatabaseItem.FilePath = file.Path;
-            tab.DatabaseItem.FileName = file.Name;
-            try
-            {
-                tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
-            }
-            catch (Exception ex)
-            {
-                InfoMessages.UnhandledException(ex.Message);
-                return false;
-            }
+            tab.DatabaseItem.FilePath = path;
+            tab.DatabaseItem.FileName = Path.GetFileName(path);
             tab.Encoding = res.encoding;
 
             if (load)
-                tab.textbox.LoadText(res.Text);
+                tab.textbox.LoadLines(res.lines);
 
-            TabPageHelper.SelectCodeLanguageByFile(tab, file);
+            TabPageHelper.SelectHighlightLanguageByPath(tab);
 
             tab.textbox.GoToLine(0);
             tab.textbox.ScrollLineIntoView(0);
             tab.DataIsLoaded = load;
             tab.DatabaseItem.IsModified = false;
-            tab.SetHeader(file.Name);
+            tab.SetHeader(tab.DatabaseItem.FileName);
 
             if (!load)
             {
-                var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DatabasePath);
-                var newFile = await file.CopyAsync(folder);
-                await newFile.RenameAsync(tab.DatabaseItem.Identifier);
+                File.Copy(path, Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier));
             }
 
             return true;
         }
-        public static async Task<TabPageItem> DoOpen(TabView tabView, StorageFile file, bool load = true)
+        public static TabPageItem DoOpen(TabView tabView, string path, bool load = true, bool select = false)
         {
             var tab = TabPageHelper.AddNewTab(tabView, false);
-            if (!await DoOpenTab(tab, file, load))
+            if (!DoOpenTab(tab, path, load))
             {
                 tabView.TabItems.Remove(tab);
                 return null;
             }
+
+            if(select)
+                tabView.SelectedItem = tab;
 
             return tab;
         }
@@ -107,12 +130,13 @@ namespace Fastedit.Storage
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
             picker.FileTypeFilter.Add("*");
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
 
             bool res = true;
             var files = await picker.PickMultipleFilesAsync();
             foreach (var file in files)
             {
-                var tab = await DoOpen(tabView, file);
+                var tab = DoOpen(tabView, file.Path);
                 if (tab != null)
                     tabView.SelectedItem = tab;
                 else
@@ -121,24 +145,17 @@ namespace Fastedit.Storage
             return res;
         }
 
-        public static async Task<bool> ReopenWithEncoding(TabPageItem tab, Encoding encoding)
+        public static bool ReopenWithEncoding(TabPageItem tab, Encoding encoding)
         {
             //File has not been saved:
-            if (tab.DatabaseItem.FileToken.Length == 0)
+            if (tab.DatabaseItem.WasNeverSaved)
                 return false;
 
-            var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
-            if (!getFileRes.success)
-            {
-                InfoMessages.FileNotFoundReopenWithEncoding();
-                return false;
-            }
-
-            var res = await ReadTextFromFileAsync(getFileRes.file, encoding);
-            if (res.Succed)
+            var res = ReadLinesFromFile(tab.DatabaseItem.FilePath, encoding);
+            if (res.succeeded)
             {
                 tab.Encoding = res.encoding;
-                tab.textbox.LoadText(res.Text);
+                tab.textbox.LoadLines(res.lines);
                 return true;
             }
             return false;
@@ -149,22 +166,28 @@ namespace Fastedit.Storage
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
             picker.FileTypeFilter.Add("*");
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
 
             var file = await picker.PickSingleFileAsync();
             if (file == null)
                 return false;
 
-            await DoOpenTab(tab, file);
+            DoOpenTab(tab, file.Path);
             return tab != null;
         }
 
-        public static async Task<StorageFile> PickFile(string extension)
+        public static async Task<string> PickFile(string extension)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
             picker.FileTypeFilter.Add(extension);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
 
-            return await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
+            if (file == null)
+                return "";
+
+            return file.Path;
         }
     }
 }

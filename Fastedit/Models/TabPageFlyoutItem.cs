@@ -2,6 +2,6 @@
 {
     public enum TabPageFlyoutItem
     {
-        Save, Close, Share, FileInfo, Rename, CloseAll
+        Save, Close, FileInfo, Rename, CloseAll, Undock
     }
 }

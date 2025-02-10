@@ -1,6 +1,8 @@
 ﻿using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using TextControlBoxNS;
+using System;
 
 namespace Fastedit.Helper
 {
@@ -48,6 +50,14 @@ namespace Fastedit.Helper
                     return converted;
             }
             return defaultValue;
+        }
+
+        public static TextControlBoxNS.SyntaxHighlightID ToCodeLanguage(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return SyntaxHighlightID.None;
+
+            return Enum.TryParse(value, true, out SyntaxHighlightID result) ? result : SyntaxHighlightID.None;
         }
 
         public static Color ToColor(SolidColorBrush clr)

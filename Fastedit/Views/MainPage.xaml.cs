@@ -3,69 +3,87 @@ using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Models;
 using Fastedit.Settings;
-using Fastedit.Storage;
 using Fastedit.Tab;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
-using Windows.UI.Core.Preview;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
+using TextControlBoxNS;
+using Fastedit.Controls;
 
 namespace Fastedit
 {
     public sealed partial class MainPage : Page
     {
-        TitlebarHelper titlebarhelper;
         TabDatabase tabdatabase = new TabDatabase();
         public TabPageItem currentlySelectedTabPage = null;
         bool FirstLoaded = false;
         bool TabsLoaded = false;
-        public List<FrameworkElement> ControlsToHideInSettings = new List<FrameworkElement>();
+        public FrameworkElement[] ControlsToHideInSettings;
         ProgressWindowItem progressWindow;
         public VerticalTabsFlyoutControl verticalTabsFlyout = null;
-        private Microsoft.UI.Xaml.Controls.SplitButton addTabButton = null;
-
-        public TabView tabView => tabControl;
-        public QuickAccessWindow RunCommandWindow => runCommandWindow;
+        private SplitButton addTabButton = null;
+        private SurroundWithFlyout surroundWithFlyout = new SurroundWithFlyout();
+        public TextStatusBar TextStatusBar => textStatusBar;
+        public TabView tabView => this.tabControl;
+        public QuickAccessWindow RunCommandWindow => this.runCommandWindow;
+        public Grid TitleBarGrid => this.customDragRegion;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             TabPageHelper.mainPage = this;
-            InfoMessages.InfoMessagePanel = infobarDisplay;
-
-            //events:
-            this.PointerPressed += MainPage_PointerPressed;
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
-            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += MainPage_CloseRequested;
-            SettingsTabPageHelper.SettingsTabClosed += SettingsUpdater_SettingsTabClosed;
-
-            //classes
-            if (titlebarhelper == null)
-                titlebarhelper = new TitlebarHelper(CustomDragRegion, ShellTitlebarInset, FlowDirection);
-
             if (progressWindow == null)
                 progressWindow = new ProgressWindowItem(progressBar, progressInfo);
 
             //Enable auto save database
-            AutoDatabaseSaveHelper.RegisterSave();
+            AutoSaveDatabaseHelper.RegisterSave();
         }
 
-        //A function, that can be called from anywhere to update the settings
-        public void ApplySettings(FasteditDesign currentDesign = null)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, currentDesign);
+            //events:
+            this.PointerPressed += MainPage_PointerPressed;
+            SettingsTabPageHelper.SettingsTabClosed += SettingsUpdater_SettingsTabClosed;
+            App.m_window.AppWindow.Closing += AppWindow_Closing;
+
+            if (!TabsLoaded)
+            {
+                TabsLoaded = true;
+                progressBar.IsActive = true;
+
+                Initialise();
+
+                //apply the settings
+                ApplySettings();
+
+                // Load the database
+                await TabPageHelper.LoadTabDatabase(tabControl, tabdatabase);
+
+                //Handle activation from files on start and check whether a new tab needs to be created
+                if (!AppActivationHelper.HandleAppActivation(tabControl) && tabControl.TabItems.Count == 0)
+                {
+                    TabPageHelper.AddNewTab(tabView, true);
+                }
+                SettingsUpdater.UpdateTabs(tabControl);
+
+                //Show new-version info
+                VersionHelper.CheckNewVersion();
+
+                progressBar.IsActive = false;
+            }
         }
-        private async Task Initialise()
+
+        public void TriggerAppActivationAfterStart()
+        {
+            AppActivationHelper.HandleAppActivation(tabControl);
+        }
+
+        private void Initialise()
         {
             if (!FirstLoaded)
             {
@@ -78,179 +96,68 @@ namespace Fastedit
                     Directory.CreateDirectory(DefaultValues.DesignPath);
 
                 //copy the designs only on first start or when forced by user
-                await DesignHelper.CopyDefaultDesigns();
-
-                await DesignHelper.LoadDesign();
+                DesignHelper.CopyDefaultDesigns();
 
                 //Add all the controls, that need to be hidden when in settings
-                ControlsToHideInSettings.Add(mainMenubar);
-                ControlsToHideInSettings.Add(statusbar);
-                ControlsToHideInSettings.Add(searchControl);
-                ControlsToHideInSettings.Add(runCommandWindow);
+                ControlsToHideInSettings = [mainMenubar, textStatusBar, runCommandWindow];
 
                 //Create additinal controls:
                 CreateMenubarFromLanguage();
 
-                titlebarhelper.SetTitlebar();
-
-                if (AppSettings.GetSettings(AppSettingsValues.App_FirstStart).Length == 0)
+                if (AppSettings.FirstStart)
                 {
-                    AppSettings.SaveSettings(AppSettingsValues.App_FirstStart, "L");
+                    AppSettings.FirstStart = true;
                     InfoMessages.WelcomeMessage();
                 }
             }
-            ApplySettings();
-        }
-        private void CreateMenubarFromLanguage()
-        {
-            //items already added
-            if (CodeLanguageSelector.Items.Count > 1)
-                return;
-
-            var noneItem = new MenuFlyoutItem
-            {
-                Text = "None",
-                Tag = "",
-            };
-            noneItem.Click += CodeLanguage_Click;
-            CodeLanguageSelector.Items.Add(noneItem);
-
-            var noneCmdWindowItem = new QuickAccessWindowItem
-            {
-                Command = "None",
-                Tag = "",
-            };
-            noneCmdWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
-            RunCommandWindowItem_CodeLanguages.Items.Add(noneCmdWindowItem);
-
-            try
-            {
-                foreach (var item in TextControlBox.TextControlBox.CodeLanguages)
-                {
-                    var menuItem = new MenuFlyoutItem
-                    {
-                        Text = item.Value.Name,
-                        Tag = item.Key,
-                    };
-                    menuItem.Click += CodeLanguage_Click;
-                    CodeLanguageSelector.Items.Add(menuItem);
-
-                    var runCommandWindowItem = new QuickAccessWindowItem
-                    {
-                        Command = item.Value.Name,
-                        Tag = item.Key,
-                    };
-                    runCommandWindowItem.RunCommandWindowItemClicked += CodeLanguage_Click;
-                    RunCommandWindowItem_CodeLanguages.Items.Add(runCommandWindowItem);
-                }
-            }
-            catch { }
-        }
-        public void UpdateStatubar()
-        {
-            if (currentlySelectedTabPage == null || statusbar.Visibility == Visibility.Collapsed)
-                return;
-
-            Statusbar_Column.ChangingText = currentlySelectedTabPage.textbox.CursorPosition.CharacterPosition.ToString();
-            Statusbar_Line.ChangingText = (currentlySelectedTabPage.textbox.CursorPosition.LineNumber + 1).ToString();
-            Statusbar_FilePath.ChangingText = currentlySelectedTabPage.DatabaseItem.FileName.ToString();
-            Statusbar_Zoom.ChangingText = currentlySelectedTabPage.textbox.ZoomFactor + "%";
-            Statusbar_Encoding.ChangingText = EncodingHelper.GetEncodingName(currentlySelectedTabPage.Encoding);
-        }
-        public void SelectedTabChanged()
-        {
-            TabView_SelectionChanged(tabControl, null);
-        }
-        public void ChangeSelectedTab(TabPageItem tab)
-        {
-            tabControl.SelectedItem = tab;
-        }
-        public async Task SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
-        {
-            await TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
-        }
-        public void ShowSettings(string page = null)
-        {
-            SettingsTabPageHelper.OpenSettings(this, tabControl, page);
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            //Save back the value and read from it after all tabs are loaded
-            AppActivationHelper.NavigationEvent = e;
-
-            //handle activation from files and commandline after the tabs are already loaded
-            if (TabsLoaded)
-            {
-                await AppActivationHelper.HandleAppActivation(tabControl);
             }
 
-            base.OnNavigatedTo(e);
-        }
-        private async void tabControl_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
-            if (currentlySelectedTabPage == null)
+            if (DesignWindowHelper.IsWindowOpen())
+            {
+                InfoMessages.CloseDesignEditor();
+                args.Cancel = true;
+
+                return;
+            }
+
+            SaveDatabase();
+        }
+
+        private void tabControl_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        {
+            if (args.Tab == SettingsTabPageHelper.settingsPage)
+            {
+                args.Cancel = true;
+                return;
+            }
+            args.Data.RequestedOperation = DataPackageOperation.Move;
+        }
+        private async void tabControl_TabDragCompleted(TabView sender, TabViewTabDragCompletedEventArgs args)
+        {
+            if (args.Tab == SettingsTabPageHelper.settingsPage)
                 return;
 
-            await SaveFileHelper.DragFileToPath(currentlySelectedTabPage, args);
+            await TabWindowHelper.ShowInNewWindow(tabControl, args.Tab as TabPageItem);
         }
         private void SettingsUpdater_SettingsTabClosed()
         {
             //Event when the settings page got closed
             ApplySettings();
         }
-        private async void MainPage_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+
+        private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            var deferral = e.GetDeferral();
+            var ctrl = KeyHelper.IsKeyPressed(VirtualKey.Control);
+            var shift = KeyHelper.IsKeyPressed(VirtualKey.Shift);
+            var menu = KeyHelper.IsKeyPressed(VirtualKey.Menu);
 
-            if (DesignWindowHelper.IsWindowOpen())
-            {
-                InfoMessages.CloseDesignEditor();
-                e.Handled = true;
-                deferral.Complete();
-                return;
-            }
-
-            await SaveDatabase();
-
-            deferral.Complete();
-        }
-        private async void CustomDragRegion_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (!TabsLoaded)
-            {
-                TabsLoaded = true;
-
-                progressBar.IsActive = true;
-
-                await Initialise();
-
-                //load the database
-                await TabPageHelper.LoadTabDatabase(tabControl, tabdatabase);
-
-                //handle activation from files and commandline on start
-                await AppActivationHelper.HandleAppActivation(tabControl);
-
-                //apply the settings
-                SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, statusbar, DesignHelper.CurrentDesign);
-
-                //Show new-version info
-                VersionHelper.CheckNewVersion();
-
-                progressBar.IsActive = false;
-            }
-        }
-        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
-        {
-            var ctrl = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
-            var shift = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
-            var menu = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Menu).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
-
-            if (ctrl && args.VirtualKey == Windows.System.VirtualKey.Tab)
+            if (ctrl && e.Key== VirtualKey.Tab)
                 TabPageHelper.SelectNextTab(tabControl);
-            else if (ctrl && shift && args.VirtualKey == Windows.System.VirtualKey.Tab)
+            else if (ctrl && shift && e.Key== VirtualKey.Tab)
                 TabPageHelper.SelectPreviousTab(tabControl);
-            else if (ctrl && shift && args.VirtualKey == VirtualKey.P)
+            else if (ctrl && shift && e.Key== VirtualKey.P)
             {
                 if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
                     return;
@@ -261,7 +168,7 @@ namespace Fastedit
             {
                 if (menu)
                 {
-                    switch (args.VirtualKey)
+                    switch (e.Key)
                     {
                         case VirtualKey.R:
                             ApplySettings();
@@ -271,7 +178,7 @@ namespace Fastedit
                     }
                 }
 
-                switch (args.VirtualKey)
+                switch (e.Key)
                 {
                     case VirtualKey.N:
                         NewFile_Click(null, null);
@@ -332,7 +239,7 @@ namespace Fastedit
                 }
             }
 
-            switch (args.VirtualKey)
+            switch (e.Key)
             {
                 case VirtualKey.F1:
                     Settings_Click(null, null);
@@ -368,25 +275,32 @@ namespace Fastedit
             await TabPageHelper.CloseTab(tabControl, args.Item);
             verticalTabsFlyout?.UpdateFlyoutIfOpen();
         }
-        private async void TabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (searchControl.searchOpen && tabControl.SelectedItem == null)
+                searchControl.Visibility = Visibility.Collapsed;
+
             if (tabControl.SelectedItem is TabPageItem tab)
             {
-                currentlySelectedTabPage = tab;
+                textStatusBar.tabPage = currentlySelectedTabPage = tab;
                 if (tab == null)
                     return;
 
                 SettingsTabPageHelper.SettingsSelected = false;
 
-                UpdateStatubar();
-
                 //set the focus to the textbox:
                 tab.textbox.Focus(FocusState.Programmatic);
+                searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
 
-                await TabPageHelper.LoadUnloadedTab(tab, progressWindow);
+                TabPageHelper.LoadUnloadedTab(tab, progressWindow);
+
+                textStatusBar.UpdateAll();
             }
             else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
             {
+                if (searchControl.searchOpen)
+                    searchControl.Visibility = Visibility.Collapsed;
+
                 currentlySelectedTabPage = null;
                 SettingsTabPageHelper.SettingsSelected = true;
                 SettingsTabPageHelper.HideControls();
@@ -399,7 +313,7 @@ namespace Fastedit
             //show hidden controls
             if (!SettingsTabPageHelper.SettingsSelected)
             {
-                SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, statusbar);
+                SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
             }
         }
 
@@ -409,7 +323,7 @@ namespace Fastedit
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
                 var files = await e.DataView.GetStorageItemsAsync();
-                await TabPageHelper.OpenFiles(tabControl, files);
+                TabPageHelper.OpenFiles(tabControl, files);
             }
         }
         private void Page_DragOver(object sender, DragEventArgs e)
@@ -480,30 +394,18 @@ namespace Fastedit
         {
             EditActions.DuplicateLine(currentlySelectedTabPage);
         }
-        private void CodeLanguage_Click(object sender, RoutedEventArgs e)
+        private void SyntaxHighlighting_Click(object sender, RoutedEventArgs e)
         {
             if (currentlySelectedTabPage == null)
                 return;
 
             if (sender is MenuFlyoutItem item)
             {
-                if (item != null && item.Tag != null)
-                {
-                    if (item.Tag.ToString().Length == 0)
-                        currentlySelectedTabPage.CodeLanguage = null;
-
-                    currentlySelectedTabPage.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(item.Tag.ToString());
-                }
+                currentlySelectedTabPage.HighlightLanguage = (SyntaxHighlightID)ConvertHelper.ToInt(item.Tag);
             }
             else if (sender is QuickAccessWindowItem rcwitem)
             {
-                if (rcwitem != null && rcwitem.Tag != null)
-                {
-                    if (rcwitem.Tag.ToString().Length == 0)
-                        currentlySelectedTabPage.CodeLanguage = null;
-
-                    currentlySelectedTabPage.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(rcwitem.Tag.ToString());
-                }
+                currentlySelectedTabPage.HighlightLanguage = (SyntaxHighlightID)ConvertHelper.ToInt(rcwitem.Tag);
             }
         }
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -538,11 +440,7 @@ namespace Fastedit
         private async void ChangeEncoding_Click(object sender, RoutedEventArgs e)
         {
             await EncodingDialog.Show(currentlySelectedTabPage);
-            UpdateStatubar();
-        }
-        private void ShareDocument_Click(object sender, RoutedEventArgs e)
-        {
-            ShareDialog.Share(currentlySelectedTabPage);
+            textStatusBar.UpdateEncoding();
         }
         private async void UndockTab_Click(object sender, RoutedEventArgs e)
         {
@@ -574,32 +472,15 @@ namespace Fastedit
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.ToggleFullscreen();
+            WindowHelper.ToggleFullscreen(App.m_window);
         }
         private void CompactOverlayMode_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.ToggleCompactOverlay();
+            WindowHelper.ToggleCompactOverlay(App.m_window);
         }
         private void ShowRunCommandWindow_Click(object sender, RoutedEventArgs e)
         {
             runCommandWindow.Toggle(tabControl);
-        }
-
-        private void Statusbar_GoToLineTextbox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                int res = ConvertHelper.ToInt(Statusbar_GoToLineTextbox.Text, -1) - 1;
-                if (res == -1)
-                    return;
-
-                EditActions.GoToLine(currentlySelectedTabPage, res);
-                Statusbar_Line.HideFlyout();
-            }
-        }
-        private void Statusbar_GoToLineTextbox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Statusbar_GoToLineTextbox.SelectAll();
         }
         private void ReloadSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -608,7 +489,7 @@ namespace Fastedit
 
         private void AddButton_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is Microsoft.UI.Xaml.Controls.SplitButton btn)
+            if (sender is SplitButton btn)
             {
                 addTabButton = btn;
             }
@@ -616,15 +497,94 @@ namespace Fastedit
 
         private async void RenameFile_Click(object sender, RoutedEventArgs e)
         {
-            if (SettingsTabPageHelper.SettingsSelected)
+            if (SettingsTabPageHelper.SettingsSelected && currentlySelectedTabPage != null)
                 return;
 
             await RenameFileDialog.Show(currentlySelectedTabPage);
-            UpdateStatubar();
+            textStatusBar.UpdateFile();
         }
         private async void CloseAll_Click(object sender, RoutedEventArgs e)
         {
             await TabPageHelper.CloseAll(tabControl);
+        }
+
+        public void ApplySettings(FasteditDesign currentDesign = null)
+        {
+            SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, textStatusBar, currentDesign);
+        }
+        private void CreateMenubarFromLanguage()
+        {
+            //items already added
+            if (CodeLanguageSelector.Items.Count > 1)
+                return;
+
+            foreach (var item in TextControlBox.SyntaxHighlightings)
+            {
+                var menuItem = new MenuFlyoutItem
+                {
+                    Text = item.Value == null ? "None" : item.Value.Name,
+                    Tag = item.Key.GetHashCode(),
+                };
+                menuItem.Click += SyntaxHighlighting_Click;
+                CodeLanguageSelector.Items.Add(menuItem);
+
+                var runCommandWindowItem = new QuickAccessWindowItem
+                {
+                    Command = item.Value == null ? "None" : item.Value.Name,
+                    Tag = item.Key.GetHashCode(),
+                };
+                runCommandWindowItem.RunCommandWindowItemClicked += SyntaxHighlighting_Click;
+                RunCommandWindowItem_SyntaxHighlighting.Items.Add(runCommandWindowItem);
+            }
+
+            foreach(var path in DesignHelper.GetDesignsFilesFromFolder())
+            {
+                var runCommandWindowItem = new QuickAccessWindowItem
+                {
+                    Command = DesignHelper.GetDesignNameFromPath(path),
+                    Tag = path,
+                };
+                runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
+                RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
+            }
+        }
+
+        private void RunCommandWindow_ChangeDesign_Click(object sender, RoutedEventArgs e)
+        {
+            AppSettings.CurrentDesign = (sender as QuickAccessWindowItem).Tag.ToString();
+            ApplySettings();
+        }
+        private void RunCommandWindowItem_Designs_SelectedChanged(IQuickAccessWindowItem item)
+        {
+            AppSettings.CurrentDesign = item.Tag.ToString();
+            ApplySettings();
+        }
+
+        public void SelectedTabChanged()
+        {
+            TabView_SelectionChanged(tabControl, null);
+        }
+        public void ChangeSelectedTab(TabPageItem tab)
+        {
+            tabControl.SelectedItem = tab;
+        }
+        public void SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
+        {
+            TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
+        }
+        public void ShowSettings(string page = null)
+        {
+            SettingsTabPageHelper.OpenSettings(this, tabControl, page);
+        }
+        private void runCommandWindow_Closed()
+        {
+            if(currentlySelectedTabPage != null && currentlySelectedTabPage.textbox != null)
+                currentlySelectedTabPage.textbox.Focus(FocusState.Programmatic);
+        }
+
+        private void SurroundWith_Click(object sender, RoutedEventArgs e)
+        {
+            surroundWithFlyout.ShowFlyout(currentlySelectedTabPage.textbox);
         }
     }
 }

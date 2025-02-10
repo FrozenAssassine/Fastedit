@@ -16,45 +16,46 @@ namespace Fastedit.Storage
 {
     internal class RenameFileHelper
     {
-        public static async Task<bool> RenameFile(TabPageItem tab, string newName)
+        public static bool RenameFile(TabPageItem tab, string newName)
         {
             if (tab == null)
                 return false;
 
             //File has NOT been saved or opened
-            if (tab.DatabaseItem.FileToken.Length <= 0)
+            if (tab.DatabaseItem.WasNeverSaved)
             {
                 tab.SetHeader(newName);
                 return true;
             }
 
-            var getFileRes = await FutureAccessListHelper.GetFileAsync(tab.DatabaseItem.FileToken);
-            if (!getFileRes.success)
-                return false;
-
             //Nothing to rename
-            if (getFileRes.file.Name == newName)
+            if (tab.DatabaseItem.FileName == newName)
                 return true;
 
             //Check if the file already exists
-            if (Directory.Exists(Path.Combine(Path.GetDirectoryName(getFileRes.file.Path), newName)))
+            if (Directory.Exists(Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName)))
             {
-                InfoMessages.RenameFileError();
+                InfoMessages.RenameFileAlreadyExists();
                 return false;
             }
 
-            try
-            {
-                await getFileRes.file.RenameAsync(newName, NameCollisionOption.FailIfExists);
-                tab.DatabaseItem.FileToken = StorageApplicationPermissions.FutureAccessList.Add(getFileRes.file);
-            }
-            catch (Exception ex)
-            {
-                InfoMessages.RenameFileException(ex);
-                return false;
-            }
 
-            tab.SetHeader(newName);
+            string sourceFile = tab.DatabaseItem.FilePath;
+            string destFile = Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName);
+
+            if (File.Exists(sourceFile))
+            {
+                try 
+                {
+                    Directory.Move(sourceFile, destFile);
+                    tab.SetHeader(newName);
+                }
+                catch (Exception ex)
+                {
+                    InfoMessages.RenameFileException(ex);
+                    return false;
+                }
+            }
             return true;
         }
     }

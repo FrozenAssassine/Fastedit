@@ -3,12 +3,9 @@ using Fastedit.Storage;
 using Fastedit.Tab;
 using Fastedit.Views;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {

@@ -1,8 +1,8 @@
 ﻿using Fastedit.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Fastedit.Controls
 {
@@ -23,7 +23,7 @@ namespace Fastedit.Controls
             //this.Foreground = DialogHelper.ContentDialogForeground();
             infobar.RequestedTheme = DialogHelper.DialogDesign;
 
-            InfoMessages.InfoMessagePanel.Children.Add(infobar);
+            MainWindow.InfoMessagesPanel.Children.Add(infobar);
 
             DispatcherTimer autoCloseTimer = new DispatcherTimer();
             autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);

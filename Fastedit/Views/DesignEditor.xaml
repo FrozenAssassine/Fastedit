@@ -13,9 +13,9 @@
         <converter:EnumToIntConverter x:Key="EnumToIntConverter"/>
     </Page.Resources>
     <Grid VerticalAlignment="Top">
-        <Grid Height="40" VerticalAlignment="Top" x:Name="titlebar">
+       <Grid Height="40" VerticalAlignment="Top" x:Name="titlebar">
             <FontIcon Margin="10,0,0,0" VerticalAlignment="Center" Glyph="&#xE790;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Left" />
-            <TextBlock VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind window.Title}" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="titlebarHeader" VerticalAlignment="Center" Margin="40,0,0,0" HorizontalAlignment="Left"/>
         </Grid>
         <StackPanel VerticalAlignment="Top" Margin="0,40,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Margin="5,0,5,0" Content="Apply" Click="ApplyDesign_Click"/>
@@ -39,7 +39,7 @@
                             <ComboBoxItem Content="Acrylic"/>
                             <ComboBoxItem Content="Solid"/>
                             <ComboBoxItem Content="Mica"/>
-                            <ComboBoxItem Content="None"/>
+                            <ComboBoxItem Content="Transparent"/>
                         </ComboBox>
                         <controls:ColorPickerButton ColorChanged="BackgroundColor_Changed" Margin="5,0,0,0" Color="{x:Bind currentDesign.BackgroundColor}"/>
                     </StackPanel>

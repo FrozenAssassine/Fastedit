@@ -4,327 +4,305 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
-  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap mp uap5 uap10 rescap">
+  IgnorableNamespaces="uap rescap uap5 uap10">
 
-	<Identity
-	  Name="52804JuliusKirsch.Fastedit"
-      Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
-	  Version="2.5.0.0" />
+  <Identity
+    Name="52804JuliusKirsch.Fastedit"
+    Publisher="CN=juliu"
+    Version="2.6.0.0" />
 
-	<mp:PhoneIdentity PhoneProductId="3b0b91ff-dc83-4170-87f9-d51da36d8a48" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6468b0e9-d4a1-486d-a6a7-2a98b08cd65f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
-	<Properties>
-		<DisplayName>Fastedit</DisplayName>
-		<PublisherDisplayName>Julius Kirsch</PublisherDisplayName>
-		<Logo>Assets\AppIcon\Generated\StoreLogo.png</Logo>
-	</Properties>
+  <Properties>
+    <DisplayName>Fastedit</DisplayName>
+    <PublisherDisplayName>Julius Kirsch</PublisherDisplayName>
+    <Logo>Assets\Generated\StoreLogo.png</Logo>
+  </Properties>
 
-	<Dependencies>
-		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
-	</Dependencies>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+  </Dependencies>
 
-	<Resources>
-		<Resource Language="en-us"/>
-	</Resources>
-	
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
 
-	<Applications>
-		<Application Id="App"
-		  Executable="$targetnametoken$.exe"
-		  EntryPoint="Fastedit.App">
-			<uap:VisualElements
-			  DisplayName="Fastedit"
-			  Square150x150Logo="Assets\AppIcon\Generated\Square150x150Logo.png"
-			  Square44x44Logo="Assets\AppIcon\Generated\Square44x44Logo.png"
-			  Description="Fastedit"
-			  BackgroundColor="transparent">
-				<uap:DefaultTile Wide310x150Logo="Assets\AppIcon\Generated\Wide310x150Logo.png" Square71x71Logo="Assets\AppIcon\Generated\SmallTile.png" Square310x310Logo="Assets\AppIcon\Generated\LargeTile.png" ShortName="Fastedit">
-					<uap:ShowNameOnTiles>
-						<uap:ShowOn Tile="square150x150Logo"/>
-						<uap:ShowOn Tile="wide310x150Logo"/>
-						<uap:ShowOn Tile="square310x310Logo"/>
-					</uap:ShowNameOnTiles>
-				</uap:DefaultTile >
-				<uap:SplashScreen Image="Assets\AppIcon\Generated\SplashScreen.png" />
-				<uap:InitialRotationPreference>
-					<uap:Rotation Preference="landscape"/>
-					<uap:Rotation Preference="portrait"/>
-					<uap:Rotation Preference="landscapeFlipped"/>
-					<uap:Rotation Preference="portraitFlipped"/>
-				</uap:InitialRotationPreference>
-			</uap:VisualElements>
-			<Extensions>
-				<uap5:Extension
-				  Category="windows.appExecutionAlias"
-				  Executable="fastedit.exe"
-				  EntryPoint="Fastedit.App">
-					<uap5:AppExecutionAlias>
-						<uap5:ExecutionAlias Alias="fastedit.exe" />
-					</uap5:AppExecutionAlias>
-				</uap5:Extension>
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$">
+      <uap:VisualElements
+        DisplayName="Fastedit"
+        Description="Fastedit"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\AppIcon\Generated\Square150x150Logo.png"
+        Square44x44Logo="Assets\AppIcon\Generated\Square44x44Logo.png">
+		  <uap:DefaultTile Wide310x150Logo="Assets\AppIcon\Generated\Wide310x150Logo.png"  Square71x71Logo="Assets\AppIcon\Generated\SmallTile.png" Square310x310Logo="Assets\AppIcon\Generated\LargeTile.png">
+		  </uap:DefaultTile >
+      </uap:VisualElements>
+		<Extensions>
+			<uap:Extension Category="windows.fileTypeAssociation" >
+				<uap:FileTypeAssociation Name="assembly">
+					<uap:DisplayName>Assembly</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\asm\asm.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true" />
+					<uap:SupportedFileTypes>
+						<uap:FileType>.asm</uap:FileType>
+					</uap:SupportedFileTypes>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
 
-				<uap:Extension Category="windows.fileTypeAssociation" >
-					<uap:FileTypeAssociation Name="assembly">
-						<uap:DisplayName>Assembly</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\asm\asm.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true" />
-						<uap:SupportedFileTypes>
-							<uap:FileType>.asm</uap:FileType>
-						</uap:SupportedFileTypes>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation" >
+				<uap:FileTypeAssociation Name="text">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.txt</uap:FileType>
+						<uap:FileType>.log</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Text</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\TXT\txt.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="anyfile">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.randomextension</uap:FileType>
+						<uap10:FileType>*</uap10:FileType>
+					</uap:SupportedFileTypes>
+					<uap:EditFlags OpenIsSafe="true" />
+					<uap:Logo>Assets\ExtensionIcons\any\any.png</uap:Logo>
+					<uap:DisplayName>Fastedit</uap:DisplayName>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="gcc">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.c</uap:FileType>
+						<uap:FileType>.h</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>GCC file</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\C\C.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="cs">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.cs</uap:FileType>
+					</uap:SupportedFileTypes>
 
-				<uap:Extension Category="windows.fileTypeAssociation" >
-					<uap:FileTypeAssociation Name="text">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.txt</uap:FileType>
-							<uap:FileType>.log</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Text</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\TXT\txt.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="anyfile">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.randomextension</uap:FileType>
-							<uap10:FileType>*</uap10:FileType>
-						</uap:SupportedFileTypes>
-						<uap:EditFlags OpenIsSafe="true" />
-						<uap:Logo>Assets\ExtensionIcons\any\any.png</uap:Logo>
-						<uap:DisplayName>Fastedit</uap:DisplayName>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="gcc">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.c</uap:FileType>
-							<uap:FileType>.h</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>GCC file</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\C\C.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="cs">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.cs</uap:FileType>
-						</uap:SupportedFileTypes>
-				
-						<uap:DisplayName>C-Sharp</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\C-Sharp\cs.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="javascript">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.js</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Java Script</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-						<uap:Logo>Assets\ExtensionIcons\JS\js.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="python">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.py</uap:FileType>
-							<uap:FileType>.py3</uap:FileType>
-							<uap:FileType>.pyt</uap:FileType>
-							<uap:FileType>.rpy</uap:FileType>
-							<uap:FileType>.pyw</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:Logo>Assets\ExtensionIcons\Python\py.png</uap:Logo>
-						<uap:DisplayName>Python</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="html">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.html</uap:FileType>
-							<uap:FileType>.htm</uap:FileType>
-							<uap:FileType>.xhtml</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>HTML</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-						<uap:Logo>Assets\ExtensionIcons\HTML\html.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="java">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.java</uap:FileType>
-							<uap:FileType>.jav</uap:FileType>
-							<uap:FileType>.j</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:Logo>Assets\ExtensionIcons\Java\java.png</uap:Logo>
-						<uap:DisplayName>Java</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="json">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.json</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>JSON</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\Json\json.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="gcode">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.gcode</uap:FileType>
-							<uap:FileType>.ngc</uap:FileType>
-							<uap:FileType>.tap</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>G-Code</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\G-Code\gcode.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="vb">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.vb</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Visual Basic</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\VB\vb.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="arduino-sketch">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.ino</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Arduino sketch</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\Ino\ino.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="php">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.php</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>PHP</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\PHP\php.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="kotlin">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.kt</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Kotlin</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\Kotlin\KT.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="cpp">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.cpp</uap:FileType>
-							<uap:FileType>.cc</uap:FileType>
-							<uap:FileType>.cxx</uap:FileType>
-							<uap:FileType>.hpp</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>C++</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-						<uap:Logo>Assets\ExtensionIcons\C++\cpp.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="xml">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.xml</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>XML</uap:DisplayName>
-						<uap:EditFlags OpenIsSafe="true"/>
-						<uap:Logo>Assets\ExtensionIcons\xml\xml.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="cascading-style-sheets">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.css</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Cascading Style Sheets</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\CSS\css.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="ini">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.ini</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>INI</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\ini\ini.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="config">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.cfg</uap:FileType>
-							<uap:FileType>.properties</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:EditFlags OpenIsSafe="true"/>
-						<uap:Logo>Assets\ExtensionIcons\Config\Config.png</uap:Logo>
-						<uap:DisplayName>Config</uap:DisplayName>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="markdown">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.md</uap:FileType>
-							<uap:FileType>.markdown</uap:FileType>
-							<uap:FileType>.mdown</uap:FileType>
-							<uap:FileType>.markdn</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Markdown</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\Markdown\MD.png</uap:Logo>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="toml">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.toml</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>TOML configuration file</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\Toml\toml.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="latex">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.tex</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>LaTeX</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\LaTeX\latex.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-				<uap:Extension Category="windows.fileTypeAssociation">
-					<uap:FileTypeAssociation Name="csv">
-						<uap:SupportedFileTypes>
-							<uap:FileType>.csv</uap:FileType>
-						</uap:SupportedFileTypes>
-						<uap:DisplayName>Comma-separated values</uap:DisplayName>
-						<uap:Logo>Assets\ExtensionIcons\CSV\csv.png</uap:Logo>
-						<uap:EditFlags OpenIsSafe="true"/>
-					</uap:FileTypeAssociation>
-				</uap:Extension>
-			</Extensions>
-		</Application>
-	</Applications>
-	<Capabilities>
-		<rescap:Capability Name="confirmAppClose" />
-		<uap:Capability Name="removableStorage" />
-		<rescap:Capability Name="broadFileSystemAccess" />
-	</Capabilities>
+					<uap:DisplayName>C-Sharp</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\C-Sharp\cs.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="javascript">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.js</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Java Script</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+					<uap:Logo>Assets\ExtensionIcons\JS\js.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="python">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.py</uap:FileType>
+						<uap:FileType>.py3</uap:FileType>
+						<uap:FileType>.pyt</uap:FileType>
+						<uap:FileType>.rpy</uap:FileType>
+						<uap:FileType>.pyw</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:Logo>Assets\ExtensionIcons\Python\py.png</uap:Logo>
+					<uap:DisplayName>Python</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="html">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.html</uap:FileType>
+						<uap:FileType>.htm</uap:FileType>
+						<uap:FileType>.xhtml</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>HTML</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+					<uap:Logo>Assets\ExtensionIcons\HTML\html.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="java">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.java</uap:FileType>
+						<uap:FileType>.jav</uap:FileType>
+						<uap:FileType>.j</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:Logo>Assets\ExtensionIcons\Java\java.png</uap:Logo>
+					<uap:DisplayName>Java</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="json">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.json</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>JSON</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\Json\json.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="gcode">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.gcode</uap:FileType>
+						<uap:FileType>.ngc</uap:FileType>
+						<uap:FileType>.tap</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>G-Code</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\G-Code\gcode.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="vb">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.vb</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Visual Basic</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\VB\vb.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="arduino-sketch">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.ino</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Arduino sketch</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\Ino\ino.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="php">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.php</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>PHP</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\PHP\php.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="kotlin">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.kt</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Kotlin</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\Kotlin\KT.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="cpp">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.cpp</uap:FileType>
+						<uap:FileType>.cc</uap:FileType>
+						<uap:FileType>.cxx</uap:FileType>
+						<uap:FileType>.hpp</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>C++</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+					<uap:Logo>Assets\ExtensionIcons\C++\cpp.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="xml">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.xml</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>XML</uap:DisplayName>
+					<uap:EditFlags OpenIsSafe="true"/>
+					<uap:Logo>Assets\ExtensionIcons\xml\xml.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="cascading-style-sheets">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.css</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Cascading Style Sheets</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\CSS\css.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="ini">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.ini</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>INI</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\ini\ini.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="config">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.cfg</uap:FileType>
+						<uap:FileType>.properties</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:EditFlags OpenIsSafe="true"/>
+					<uap:Logo>Assets\ExtensionIcons\Config\Config.png</uap:Logo>
+					<uap:DisplayName>Config</uap:DisplayName>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="markdown">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.md</uap:FileType>
+						<uap:FileType>.markdown</uap:FileType>
+						<uap:FileType>.mdown</uap:FileType>
+						<uap:FileType>.markdn</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Markdown</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\Markdown\MD.png</uap:Logo>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="toml">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.toml</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>TOML configuration file</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\Toml\toml.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="latex">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.tex</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>LaTeX</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\LaTeX\latex.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+			<uap:Extension Category="windows.fileTypeAssociation">
+				<uap:FileTypeAssociation Name="csv">
+					<uap:SupportedFileTypes>
+						<uap:FileType>.csv</uap:FileType>
+					</uap:SupportedFileTypes>
+					<uap:DisplayName>Comma-separated values</uap:DisplayName>
+					<uap:Logo>Assets\ExtensionIcons\CSV\csv.png</uap:Logo>
+					<uap:EditFlags OpenIsSafe="true"/>
+				</uap:FileTypeAssociation>
+			</uap:Extension>
+		</Extensions>
+	</Application>
+</Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
 </Package>

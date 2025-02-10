@@ -1,5 +1,4 @@
 ﻿using Fastedit.Dialogs;
-using Fastedit.Settings;
 using System;
 using Windows.ApplicationModel;
 
@@ -9,8 +8,8 @@ namespace Fastedit.Helper
     {
         private static bool IsOnNewVersion(string version)
         {
-            string lastSavedVersion = AppSettings.GetSettings(AppSettingsValues.App_Version);
-            AppSettings.SaveSettings(AppSettingsValues.App_Version, version);
+            string lastSavedVersion = AppSettings.AppVersion;
+            AppSettings.AppVersion = version;
 
             //no version saved -> first start
             if (lastSavedVersion.Length == 0)

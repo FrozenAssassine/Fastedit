@@ -4,8 +4,8 @@ using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using TextControlBoxNS;
 
 namespace Fastedit.Tab
 {
@@ -14,11 +14,23 @@ namespace Fastedit.Tab
         public delegate void TabPageHeaderChangedEvent(string header);
         public event TabPageHeaderChangedEvent TabPageHeaderChanged;
 
-        public TextControlBox.TextControlBox textbox { get; private set; }
-
-        public TabPageItem(TabView tabView)
+        public TextControlBox textbox { get; private set; }
+        private TabView tabView;
+        public TabPageItem(TabView tabView, TabItemDatabaseItem databaseItem = null)
         {
-            Initialise(tabView);
+            this.tabView = tabView;
+            Initialise(tabView, databaseItem);
+
+            this.PointerWheelChanged += TabPageItem_PointerWheelChanged;
+        }
+
+        private void TabPageItem_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            int scroll = e.GetCurrentPoint(sender as UIElement).Properties.MouseWheelDelta / 120;
+            if(scroll > 0)
+                TabPageHelper.SelectNextTab(tabView);
+            else 
+                TabPageHelper.SelectPreviousTab(tabView);
         }
 
         //Remove the textbox from the current Grid:
@@ -27,7 +39,7 @@ namespace Fastedit.Tab
             if (this.Content is Grid grd)
             {
                 textbox.Margin = new Thickness(0, 0, 0, 0);
-                grd.Children.Clear();
+                grd.Children.Remove(textbox);
             }
         }
         //add the textbox back to the current Grid:
@@ -40,7 +52,7 @@ namespace Fastedit.Tab
         }
 
 
-        private void Initialise(TabView tabView)
+        private void Initialise(TabView tabView, TabItemDatabaseItem item)
         {
             textbox = TabPageHelper.CreateTextBox();
             //add a reference to the tabitem to the textbox
@@ -48,17 +60,16 @@ namespace Fastedit.Tab
 
             var grid = new Grid();
 
-            this.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Page2 };
+            this.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
 
             this.ContextFlyout = TabFlyout.CreateFlyout(this, tabView);
             this.Content = grid;
             grid.Children.Add(textbox);
 
             Encoding = DefaultValues.Encoding;
-            DatabaseItem = new TabItemDatabaseItem
+            DatabaseItem = item ?? new TabItemDatabaseItem
             {
                 FilePath = "",
-                FileToken = "",
                 IsModified = false,
                 ZoomFactor = 100,
             };
@@ -66,24 +77,44 @@ namespace Fastedit.Tab
 
         public bool DataIsLoaded = false;
 
-        public TextControlBox.Renderer.CodeLanguage CodeLanguage
+        public SyntaxHighlightID HighlightLanguage
         {
-            get => textbox.CodeLanguage;
             set
             {
-                textbox.CodeLanguage = value;
-                DatabaseItem.CodeLanguage = value == null ? null : value.Name;
+                textbox.SyntaxHighlighting = TextControlBox.GetSyntaxHighlightingFromID(value);
+                this.DatabaseItem.CodeLanguage = value.ToString();
             }
         }
 
         public int CountWords()
         {
-            int words = 0;
-            foreach (string line in textbox.Lines)
+            int wordCount = 0;
+
+            foreach (var line in textbox.Lines)
             {
-                words += line.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                var span = line.AsSpan();
+                int index = 0;
+
+                while (index < span.Length)
+                {
+                    while (index < span.Length && char.IsWhiteSpace(span[index]))
+                    {
+                        index++;
+                    }
+
+                    if (index < span.Length)
+                    {
+                        wordCount++;
+                    }
+
+                    while (index < span.Length && !char.IsWhiteSpace(span[index]))
+                    {
+                        index++;
+                    }
+                }
             }
-            return words;
+
+            return wordCount;
         }
         public bool HasHeader(string header)
         {
@@ -126,7 +157,12 @@ namespace Fastedit.Tab
 
             textbox.ZoomFactor = _DataBaseItem.ZoomFactor;
             SetHeader(_DataBaseItem.FileName);
-            textbox.CodeLanguage = TextControlBox.TextControlBox.GetCodeLanguageFromId(_DataBaseItem.CodeLanguage ?? "");
+
+            SyntaxHighlightID highlightID = SyntaxHighlightID.None;
+            if (Enum.TryParse(_DataBaseItem.CodeLanguage, true, out SyntaxHighlightID language))
+                highlightID = language;
+
+            textbox.SyntaxHighlighting = TextControlBox.GetSyntaxHighlightingFromID(highlightID);
         }
 
         private TabItemDatabaseItem _DataBaseItem;

@@ -13,7 +13,7 @@
         <controls:SetingsItemSeparator Header="Text"/>
         <controls:SettingsControl Header="Fontfamily" >
             <controls:SettingsControl.Content>
-                <ComboBox ItemsSource="{x:Bind Fonts}" SelectionChanged="FontFamilyCombobox_SelectionChanged" x:Name="FontFamilyCombobox" Width="120">
+                <ComboBox ItemsSource="{x:Bind Fonts}" SelectionChanged="FontFamilyCombobox_SelectionChanged" x:Name="FontFamilyCombobox" Width="200">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <TextBlock FontFamily="{x:Bind }" Text="{x:Bind}" />
@@ -24,7 +24,7 @@
         </controls:SettingsControl>
         <controls:SettingsControl Header="Fontsize">
             <controls:SettingsControl.Content>
-                <muxc:NumberBox x:Name="FontSizeNumberBox" Width="120" SpinButtonPlacementMode="Inline" ValueChanged="FontSizeNumberBox_ValueChanged" />
+                <NumberBox x:Name="FontSizeNumberBox" Width="200" SpinButtonPlacementMode="Inline" ValueChanged="FontSizeNumberBox_ValueChanged" />
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
@@ -55,7 +55,7 @@
         </controls:SettingsControl>
         <controls:SettingsControl Header="Number of spaces per tab" >
             <controls:SettingsControl.Content>
-                <Slider IsEnabled="{x:Bind SpacesOrTabsSwitch.IsOn, Mode=TwoWay}" Value="{x:Bind settings:DefaultValues.NumberOfSpacesPerTab, Mode=OneTime}" StepFrequency="2" Maximum="16" Minimum="2" TickPlacement="Inline" Width="120" x:Name="SpacesPerTabSlider" ValueChanged="SpacesPerTabSlider_ValueChanged"/>
+                <Slider Width="200" IsEnabled="{x:Bind SpacesOrTabsSwitch.IsOn, Mode=TwoWay}" Value="{x:Bind settings:DefaultValues.NumberOfSpacesPerTab, Mode=OneTime}" StepFrequency="2" Maximum="16" Minimum="2" TickPlacement="Inline" x:Name="SpacesPerTabSlider" ValueChanged="SpacesPerTabSlider_ValueChanged"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
     </StackPanel>

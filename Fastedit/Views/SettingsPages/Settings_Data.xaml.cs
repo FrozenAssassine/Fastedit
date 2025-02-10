@@ -2,9 +2,9 @@
 using Fastedit.Models;
 using Fastedit.Settings;
 using Fastedit.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Fastedit.Views.SettingsPages
 {
@@ -46,9 +46,9 @@ namespace Fastedit.Views.SettingsPages
         }
 
         //Clear recylcebin
-        private async void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
+        private void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
-            if (await RecycleBinDialog.ClearRecycleBin() == ClearRecycleBinResult.Success)
+            if (RecycleBinDialog.ClearRecycleBin() == ClearRecycleBinResult.Success)
                 InfoMessages.RecyclebinClearSucceed();
 
             InitSize();

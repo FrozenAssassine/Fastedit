@@ -2,8 +2,8 @@
 using Fastedit.Tab;
 using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
@@ -13,7 +13,6 @@ namespace Fastedit.Dialogs
         {
             var SaveDialog = new ContentDialog
             {
-                XamlRoot = root,
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
@@ -23,6 +22,7 @@ namespace Fastedit.Dialogs
                 SecondaryButtonText = "Don't save",
                 CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = root ?? App.m_window.Content.XamlRoot,
             };
             var res = await SaveDialog.ShowAsync();
             if (res == ContentDialogResult.Primary)

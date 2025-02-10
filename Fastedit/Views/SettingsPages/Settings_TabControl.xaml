@@ -11,7 +11,7 @@
         <controls:SetingsItemSeparator Header=""/>
         <controls:SettingsControl Header="Tab sizing mode">
             <controls:SettingsControl.Content>
-                <ComboBox Width="120" x:Name="TabSizecombobox" SelectionChanged="TabSizecombobox_SelectionChanged">
+                <ComboBox  Width="200" x:Name="TabSizecombobox" SelectionChanged="TabSizecombobox_SelectionChanged">
                     <ComboBoxItem Content="Equals"/>
                     <ComboBoxItem Content="Size to title"/>
                     <ComboBoxItem Content="Compact"/>
@@ -21,7 +21,7 @@
 
         <controls:SettingsControl Header="New tab title">
             <controls:SettingsControl.Content>
-                <TextBox Width="120" x:Name="newTabTitleTextbox" TextChanged="NewTabTitle_TextChanged"/>
+                <TextBox  Width="200" x:Name="newTabTitleTextbox" TextChanged="NewTabTitle_TextChanged"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
     </StackPanel>

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 
 namespace Fastedit.Views
 {
@@ -15,8 +15,6 @@ namespace Fastedit.Views
             Package.Current.Id.Version.Minor + "." +
             Package.Current.Id.Version.Build;
 
-        public string DeveloperName => Package.Current.PublisherDisplayName;
-
         public AboutPage()
         {
             this.InitializeComponent();
@@ -27,7 +25,7 @@ namespace Fastedit.Views
         private void SetChangelog()
         {
             //Simple parser to make headlines bigger and add paragraphs
-            var data = File.ReadAllLines(@"Assets\changelog.txt");
+            var data = File.ReadAllLines(Package.Current.InstalledLocation.Path + "\\Assets\\changelog.txt");
             List<Paragraph> paragraphs = new List<Paragraph> { new Paragraph() };
             for (int i = 0; i < data.Length; i++)
             {

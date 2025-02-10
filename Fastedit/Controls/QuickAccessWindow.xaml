@@ -26,12 +26,11 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Foreground="{x:Bind TextColor}"  VerticalAlignment="Bottom" Grid.Column="0" Text="{x:Bind Command}" x:Phase="1"/>
+                    <TextBlock Foreground="{x:Bind TextColor, Mode=OneWay}"  VerticalAlignment="Bottom" Grid.Column="0" Text="{x:Bind Command, Mode=OneWay}" x:Phase="1"/>
                     <Grid Visibility="{Binding Path=Shortcut, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}"  VerticalAlignment="Bottom" Grid.Column="1" BorderBrush="#555555" BorderThickness="1" CornerRadius="4">
-                        <TextBlock Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind Shortcut}" x:Phase="1" />
+                        <TextBlock Foreground="{x:Bind TextColor, Mode=OneWay}" Padding="2" Text="{x:Bind Shortcut, Mode=OneWay}" x:Phase="1" />
                     </Grid>
                     <TextBlock Visibility="{Binding Path=Shortcut, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter_Inverted}}" Foreground="{x:Bind TextColor}" Padding="2" Text="{x:Bind InfoText}" x:Phase="1" VerticalAlignment="Bottom" Grid.Column="1"/>
-
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -41,7 +40,7 @@
           BorderThickness="2" HorizontalAlignment="Stretch"
           CornerRadius="10"
           x:Name="grid"
-          BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}">
+          BorderBrush="{ThemeResource SolidBackgroundFillColorSecondaryBrush}">
         
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -100,7 +99,7 @@
         
         <TextBox Margin="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="searchbox" TextChanged="searchbox_TextChanged"/>
         
-        <ListView x:Load="False" Margin="0,40,0,0"
+        <ListView x:Load="False" Margin="0,40,0,5"
             x:Name="itemHostListView"
             ItemTemplate="{StaticResource RunCommandWindowItemTemplate}"
             ItemsSource="{x:Bind Items}"

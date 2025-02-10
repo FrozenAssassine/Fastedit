@@ -23,8 +23,8 @@
         <controls:SettingsControl Header="Clear recycle bin files">
             <controls:SettingsControl.Content>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0" x:Name="recyclebinFilesizeDisplay"/>
-                    <Button Content="Clear" Style="{ThemeResource AccentButtonStyle}">
+                    <TextBlock FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0" x:Name="recyclebinFilesizeDisplay"/>
+                    <Button Width="120" Content="Clear" Style="{ThemeResource AccentButtonStyle}">
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel>
@@ -41,8 +41,8 @@
         <controls:SettingsControl Header="Clear temporary files">
             <controls:SettingsControl.Content>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0" x:Name="temporaryFileSizeDisplay"/>
-                    <Button Style="{ThemeResource AccentButtonStyle}" Click="ClearTemporaryFiles_Click" Content="Clear"/>
+                    <TextBlock FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0" x:Name="temporaryFileSizeDisplay"/>
+                    <Button Width="120" Style="{ThemeResource AccentButtonStyle}" Click="ClearTemporaryFiles_Click" Content="Clear"/>
                 </StackPanel>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>

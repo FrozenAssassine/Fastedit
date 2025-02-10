@@ -7,53 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
+
 
 namespace Fastedit.Tab
 {
     public class TabDatabase
     {
         string DatabaseName = "database.db";
-
-        //Migrate the old database to the new one:
-        public static TabPageItem[] CheckOlddatabase(TabView tabView)
-        {
-            string path = Path.Combine(DefaultValues.DatabasePath, "Tabs.tdb");
-            if (!File.Exists(path))
-                return null;
-
-            var lines = File.ReadAllLines(path);
-            TabPageItem[] newItems = new TabPageItem[lines.Length];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                try
-                {
-                    var oldItem = JsonConvert.DeserializeObject<OldDBItem>(lines[i]);
-                    var resultItem = new TabItemDatabaseItem
-                    {
-                        FileToken = oldItem.TabToken,
-                        FileName = oldItem.TabHeader,
-                        IsModified = oldItem.TabModified,
-                        FilePath = oldItem.TabPath,
-                        Identifier = oldItem.TabName,
-                        ZoomFactor = (int)oldItem.ZoomFactor,
-                        SelectedIndex = oldItem.CurrentSelectedTabIndex,
-                    };
-
-                    newItems[i] = new TabPageItem(tabView)
-                    {
-                        DatabaseItem = resultItem,
-                    };
-                }
-                catch
-                {
-                    Debug.WriteLine("Database migration -> item parse exception");
-                }
-            }
-            File.Delete(path);
-            return newItems;
-        }
 
         public void SaveData(IList<object> TabItems, int SelectedIndex)
         {
@@ -62,13 +22,19 @@ namespace Fastedit.Tab
             {
                 if (TabItems[i] is TabPageItem tab)
                 {
+                    if (tab.IsLoaded)
+                    {
+                        tab.DatabaseItem.CharacterPos = tab.textbox.CursorPosition.CharacterPosition;
+                        tab.DatabaseItem.LinePos = tab.textbox.CursorPosition.LineNumber;
+                    }
+                    
                     tab.DatabaseItem.SelectedIndex = SelectedIndex;
                     databaseBuilder.AppendLine(JsonConvert.SerializeObject(tab.DatabaseItem));
                 }
             }
 
             //save all windows:
-            foreach (var window in TabWindowHelper.AppWindows)
+            foreach (var window in TabWindowHelper.OpenWindows)
             {
                 window.Value.DatabaseItem.SelectedIndex = SelectedIndex;
                 databaseBuilder.AppendLine(JsonConvert.SerializeObject(window.Value.DatabaseItem));
@@ -94,17 +60,14 @@ namespace Fastedit.Tab
 
             for (int i = 0; i < lines.Length; i++)
             {
-                yield return new TabPageItem(tabView)
-                {
-                    DatabaseItem = JsonConvert.DeserializeObject<TabItemDatabaseItem>(lines[i]),
-                };
+                var dbItem = JsonConvert.DeserializeObject<TabItemDatabaseItem>(lines[i]);
+                yield return new TabPageItem(tabView, dbItem);
             }
         }
 
-        public static async Task SaveTempFile(StorageFolder folder, TabPageItem tab)
+        public static void SaveTempFile(TabPageItem tab)
         {
-            var file = await folder.CreateFileAsync(tab.DatabaseItem.Identifier, CreationCollisionOption.OpenIfExists);
-            await FileIO.WriteTextAsync(file, tab.textbox.GetText());
+            File.WriteAllLines(Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier), tab.textbox.Lines);
         }
         public static void DeleteTempFile(TabPageItem tab)
         {
@@ -112,15 +75,14 @@ namespace Fastedit.Tab
             if (File.Exists(path))
                 File.Delete(path);
         }
-        public static async Task<string> ReadTempFile(TabPageItem tab)
+        public static string[] ReadTempFile(TabPageItem tab)
         {
             string path = Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier);
             if (File.Exists(path))
             {
-                StorageFile file = await StorageFile.GetFileFromPathAsync(path);
-                return await FileIO.ReadTextAsync(file);
+                return File.ReadAllLines(path);
             }
-            return "";
+            return [];
         }
     }
 }

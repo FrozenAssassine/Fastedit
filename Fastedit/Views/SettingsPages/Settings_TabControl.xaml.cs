@@ -3,7 +3,7 @@ using Fastedit.Settings;
 using System;
 using System.IO;
 using System.Linq;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Views.SettingsPages
 {
@@ -12,14 +12,14 @@ namespace Fastedit.Views.SettingsPages
         public Settings_TabControl()
         {
             this.InitializeComponent();
-            TabSizecombobox.SelectedIndex = AppSettings.GetSettingsAsInt(AppSettingsValues.Settings_TabViewWidthMode);
+            TabSizecombobox.SelectedIndex = AppSettings.TabViewWidthMode;
 
-            newTabTitleTextbox.Text = AppSettings.GetSettings(AppSettingsValues.Settings_NewTabTitle, DefaultValues.NewTabTitle) + AppSettings.GetSettings(AppSettingsValues.Settings_NewTabExtension, DefaultValues.NewTabExtension);
+            newTabTitleTextbox.Text = AppSettings.NewTabTitle + AppSettings.NewTabExtension;
         }
 
         private void TabSizecombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.Settings_TabViewWidthMode, TabSizecombobox.SelectedIndex);
+            AppSettings.TabViewWidthMode = TabSizecombobox.SelectedIndex;
         }
 
         private void NewTabTitle_TextChanged(object sender, TextChangedEventArgs e)
@@ -42,8 +42,8 @@ namespace Fastedit.Views.SettingsPages
                     }
                 }
 
-                AppSettings.SaveSettings(AppSettingsValues.Settings_NewTabTitle, Path.GetFileNameWithoutExtension(data.Trim()));
-                AppSettings.SaveSettings(AppSettingsValues.Settings_NewTabExtension, Path.GetExtension(data.Trim()));
+                AppSettings.NewTabExtension = Path.GetExtension(data.Trim());
+                AppSettings.NewTabTitle = Path.GetFileNameWithoutExtension(data.Trim());
             }
         }
     }

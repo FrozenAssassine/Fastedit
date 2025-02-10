@@ -1,36 +1,24 @@
-﻿using Fastedit.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.WindowManagement;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using Fastedit.Settings;
-using Windows.UI.Xaml.Media;
 using Fastedit.Dialogs;
-using Microsoft.UI.Xaml.Controls;
-using Fastedit.Controls;
+using Fastedit.Settings;
+using Fastedit.Views;
+using Microsoft.UI.Xaml;
 
 namespace Fastedit.Helper
 {
     internal class DesignWindowHelper
     {
-        static List<AppWindow> OpenWindows = new List<AppWindow>();
+        static List<(Window, Microsoft.UI.Windowing.AppWindow)> OpenWindows = new();
 
-        public static async void EditDesign(string designName)
+        public static void EditDesign(string designName)
         {
             var design = DesignHelper.GetDesignFromFile(Path.Combine(DefaultValues.DesignPath, designName));
 
             if (design == null)
                 return;
 
-            var window = await ShowWindow(design, designName);
-            if (window == null)
-                return;
+            ShowWindow(design, designName);
         }
 
         public static bool IsWindowOpen()
@@ -38,60 +26,62 @@ namespace Fastedit.Helper
             return OpenWindows.Count > 0;
         }
         
-        private static async Task<AppWindow> ShowWindow(FasteditDesign design, string designName)
+        private static Window ShowWindow(FasteditDesign design, string designName)
         {
-            var window = await AppWindow.TryCreateAsync();
-            window.TitleBar.ExtendsContentIntoTitleBar = true;
-            window.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            var window = new Window();
+            window.ExtendsContentIntoTitleBar = true;
+            window.AppWindow.Closing += AppWindow_Closing;
+            window.Content = new DesignEditor(design, designName);
+            window.Title = "Edit design " + designName;
 
-            ElementCompositionPreview.SetAppWindowContent(window, new DesignEditor(window, design, designName));
+            window.Activate();
 
-            window.CloseRequested += Window_CloseRequested;
-            if (await window.TryShowAsync())
-            {
-                OpenWindows.Add(window);
-                return window;
-            }
-            return null;
+            OpenWindows.Add((window, window.AppWindow));
+            return window;
         }
 
-        private static async void Window_CloseRequested(AppWindow sender, AppWindowCloseRequestedEventArgs args)
+        private static async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
-            var def = args.GetDeferral();
-            //Ask save the design when it was modified
-            if (ElementCompositionPreview.GetAppWindowContent(sender) is DesignEditor designEditor)
+            int index = OpenWindows.FindIndex(x => x.Item2 == sender);
+            if (index == -1)
             {
-                if (!designEditor.NeedSave)
-                {
-                    OpenWindows.Remove(sender);
-                    def.Complete();
-                    return;
-                }
+                return; //window not found
+            }
 
-                args.Cancel = true;
-                var res = await AskSaveDesignDialog.Show(designEditor);
-                switch (res)
-                {
-                    case Windows.UI.Xaml.Controls.ContentDialogResult.Primary:
-                        if (await designEditor.SaveDesign())
-                        {
-                            InfoMessages.SaveDesignSucceed();
-                            args.Cancel = false;
-                            OpenWindows.Remove(sender);
-                            def.Complete();
-                            return;
-                        }
-                        else
-                            InfoMessages.SaveDesignError();
-                        break;
-                    case Windows.UI.Xaml.Controls.ContentDialogResult.Secondary:
+            Window window = OpenWindows[index].Item1;
+            var designEditor = window.Content as DesignEditor;
+
+            if (designEditor == null || !designEditor.NeedSave)
+            {
+                OpenWindows.RemoveAt(index);
+                return; //close the window
+            }
+
+            args.Cancel = true; //prompt save
+
+            var res = await AskSaveDesignDialog.Show(designEditor);
+            switch (res)
+            {
+                case Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary:
+                    if (designEditor.SaveDesign())
+                    {
+                        InfoMessages.SaveDesignSucceed();
+                        OpenWindows.RemoveAt(index);
                         args.Cancel = false;
-                        OpenWindows.Remove(sender);
-                        break;
-                }
+                    }
+                    else
+                    {
+                        InfoMessages.SaveDesignError();
+                    }
+                    break;
+                case Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary:
+                    OpenWindows.RemoveAt(index);
+                    args.Cancel = false;
+                    break;
+                default:
+                    break;
             }
-
-            def.Complete();
         }
+
     }
 }

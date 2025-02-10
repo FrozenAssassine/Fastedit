@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
-        <Flyout x:Name="flyout">
+        <Flyout x:Name="flyout" Opening="flyout_Opening">
         </Flyout>
     </UserControl.Resources>
     <Button Height="35" MinWidth="80" Foreground="{x:Bind Foreground,Mode=OneWay}" Content="{x:Bind Text,Mode=OneWay}" Click="Button_Click" x:Name="button" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">

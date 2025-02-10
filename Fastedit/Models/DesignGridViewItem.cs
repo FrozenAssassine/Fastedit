@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml.Media;
+﻿using Microsoft.UI.Xaml.Media;
 
 namespace Fastedit.Models
 {
@@ -10,7 +10,8 @@ namespace Fastedit.Models
         public Brush TextBoxBackground { get; set; }
         public Brush LineNumberBackground { get; set; }
         public Brush TabPageBackground { get; set; }
-        public string DesignName { get; set; }
+        public string FileName { get; set; }
+        public string DisplayName { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
     }
