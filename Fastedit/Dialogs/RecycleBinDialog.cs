@@ -145,10 +145,9 @@ namespace Fastedit.Dialogs
 
         public static ClearRecycleBinResult ClearRecycleBin()
         {
-            try
-            {
+            try {
                 if (Directory.Exists(DefaultValues.RecycleBinPath))
-                    Directory.Delete(DefaultValues.RecycleBinPath);
+                    Directory.Delete(DefaultValues.RecycleBinPath, true);
             }
             catch
             {
@@ -157,8 +156,6 @@ namespace Fastedit.Dialogs
             }
 
             CheckAndCreateDirectory();
-
-            //check if all have been deleted
             return ClearRecycleBinResult.Success;
         }
         public static bool MoveFileToRecycleBin(TabPageItem tab)
