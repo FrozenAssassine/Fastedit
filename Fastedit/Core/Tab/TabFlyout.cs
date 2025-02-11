@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.System;
 using Microsoft.UI.Xaml.Input;
 
-namespace Fastedit.Tab
+namespace Fastedit.Core.Tab
 {
     public class TabFlyout
     {

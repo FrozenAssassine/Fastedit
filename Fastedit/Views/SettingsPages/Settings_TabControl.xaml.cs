@@ -1,5 +1,4 @@
 ﻿using Fastedit.Dialogs;
-using Fastedit.Settings;
 using System;
 using System.IO;
 using System.Linq;

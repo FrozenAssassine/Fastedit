@@ -1,12 +1,13 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Fastedit.Controls;
+using Fastedit.Core.Tab;
+using Fastedit.Core;
 
 namespace Fastedit.Views
 {
@@ -97,7 +98,7 @@ namespace Fastedit.Views
 
             //only add the file to the recyclebin when it has some content and was modified
             if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
-                RecycleBinDialog.MoveFileToRecycleBin(tab);
+                RecycleBinManager.MoveFileToRecycleBin(tab);
 
             await OpenFileHelper.OpenFileForTab(tab);
         }

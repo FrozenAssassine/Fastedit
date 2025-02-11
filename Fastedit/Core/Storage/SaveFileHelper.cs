@@ -1,6 +1,6 @@
-﻿using Fastedit.Dialogs;
-using Fastedit.Settings;
-using Fastedit.Tab;
+﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
+using Fastedit.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;

@@ -3,7 +3,7 @@ using Windows.Storage;
 using Windows.UI;
 using Microsoft.UI.Xaml.Markup;
 
-namespace Fastedit.Settings;
+namespace Fastedit.Core.Settings;
 
 public class SettingsManager
 {

@@ -1,13 +1,13 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Models;
-using Fastedit.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text;
 using Microsoft.UI.Xaml;
 using TextControlBoxNS;
+using Fastedit.Core.Settings;
 
-namespace Fastedit.Tab
+namespace Fastedit.Core.Tab
 {
     public class TabPageItem : TabViewItem
     {
@@ -21,22 +21,22 @@ namespace Fastedit.Tab
             this.tabView = tabView;
             Initialise(tabView, databaseItem);
 
-            this.PointerWheelChanged += TabPageItem_PointerWheelChanged;
+            PointerWheelChanged += TabPageItem_PointerWheelChanged;
         }
 
         private void TabPageItem_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             int scroll = e.GetCurrentPoint(sender as UIElement).Properties.MouseWheelDelta / 120;
-            if(scroll > 0)
+            if (scroll > 0)
                 TabPageHelper.SelectNextTab(tabView);
-            else 
+            else
                 TabPageHelper.SelectPreviousTab(tabView);
         }
 
         //Remove the textbox from the current Grid:
         public void RemoveTextbox()
         {
-            if (this.Content is Grid grd)
+            if (Content is Grid grd)
             {
                 textbox.Margin = new Thickness(0, 0, 0, 0);
                 grd.Children.Remove(textbox);
@@ -45,7 +45,7 @@ namespace Fastedit.Tab
         //add the textbox back to the current Grid:
         public void AddTextbox()
         {
-            if (this.Content is Grid grd)
+            if (Content is Grid grd)
             {
                 grd.Children.Add(textbox);
             }
@@ -60,10 +60,10 @@ namespace Fastedit.Tab
 
             var grid = new Grid();
 
-            this.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
+            IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
 
-            this.ContextFlyout = TabFlyout.CreateFlyout(this, tabView);
-            this.Content = grid;
+            ContextFlyout = TabFlyout.CreateFlyout(this, tabView);
+            Content = grid;
             grid.Children.Add(textbox);
 
             Encoding = DefaultValues.Encoding;
@@ -82,7 +82,7 @@ namespace Fastedit.Tab
             set
             {
                 textbox.SyntaxHighlighting = TextControlBox.GetSyntaxHighlightingFromID(value);
-                this.DatabaseItem.CodeLanguage = value.ToString();
+                DatabaseItem.CodeLanguage = value.ToString();
             }
         }
 
@@ -118,27 +118,27 @@ namespace Fastedit.Tab
         }
         public bool HasHeader(string header)
         {
-            if (this.DatabaseItem.FileName == null)
+            if (DatabaseItem.FileName == null)
                 return false;
 
-            return this.DatabaseItem.FileName.Equals(header, StringComparison.Ordinal);
+            return DatabaseItem.FileName.Equals(header, StringComparison.Ordinal);
         }
         public void SetHeader(string header)
         {
             if (DatabaseItem.IsModified)
             {
 
-                if (this.Header == null)
-                    this.Header = header ?? "";
+                if (Header == null)
+                    Header = header ?? "";
 
-                string currentHeader = this.Header.ToString();
+                string currentHeader = Header.ToString();
                 if (currentHeader.Length > 0)
                 {
-                    this.Header = header + (currentHeader[currentHeader.Length - 1] == '*' ? "" : "*");
+                    Header = header + (currentHeader[currentHeader.Length - 1] == '*' ? "" : "*");
                 }
             }
             else
-                this.Header = header;
+                Header = header;
 
             TabPageHeaderChanged?.Invoke(header);
 

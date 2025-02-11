@@ -1,10 +1,10 @@
-﻿using Fastedit.Settings;
-using Microsoft.Graphics.Canvas.Text;
+﻿using Microsoft.Graphics.Canvas.Text;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Fastedit.Core.Settings;
 
 
 namespace Fastedit.Views.SettingsPages;

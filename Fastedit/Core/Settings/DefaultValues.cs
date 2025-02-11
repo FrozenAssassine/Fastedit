@@ -3,7 +3,7 @@ using System.Text;
 using Windows.Storage;
 using Windows.UI;
 
-namespace Fastedit.Settings
+namespace Fastedit.Core.Settings
 {
     public class DefaultValues
     {

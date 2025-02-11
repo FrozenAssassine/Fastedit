@@ -1,4 +1,4 @@
-﻿using Fastedit.Settings;
+﻿using Fastedit.Core.Settings;
 using System.Diagnostics;
 
 internal class AppSettings

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Fastedit.Views.RecycleBinDialogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:Fastedit.Models"
+    mc:Ignorable="d" MinWidth="300" MinHeight="150">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{x:Bind recycleBinItems}" x:Name="itemListView" Grid.Row="0" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:RecycleBinItem">
+                    <Grid Padding="0,5,0,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{x:Bind FileName}" FontSize="16"/>
+                        <TextBlock Margin="0,5,0,0" Grid.Row="1" Text="{x:Bind CreationDate}" FontSize="11"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,10,0,-10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalAlignment="Center" Content="Delete" Click="DeleteSelected_Click"/>
+            <Button Grid.Column="1" HorizontalAlignment="Center" Content="Open" Click="OpenSelected_Click"/>
+            <Button Grid.Column="2" HorizontalAlignment="Center" Content="Clear" Click="ClearRecycleBin_Click"/>
+        </Grid>
+    </Grid>
+</Page>

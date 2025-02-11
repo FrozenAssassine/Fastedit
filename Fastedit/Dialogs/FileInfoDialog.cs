@@ -1,6 +1,5 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
 using System.IO;
 using System.Text;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Dialogs
 {

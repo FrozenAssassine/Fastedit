@@ -1,5 +1,5 @@
-﻿using Fastedit.Models;
-using Fastedit.Settings;
+﻿using Fastedit.Core.Settings;
+using Fastedit.Models;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 
 
-namespace Fastedit.Tab
+namespace Fastedit.Core.Tab
 {
     public class TabDatabase
     {
@@ -27,7 +27,7 @@ namespace Fastedit.Tab
                         tab.DatabaseItem.CharacterPos = tab.textbox.CursorPosition.CharacterPosition;
                         tab.DatabaseItem.LinePos = tab.textbox.CursorPosition.LineNumber;
                     }
-                    
+
                     tab.DatabaseItem.SelectedIndex = SelectedIndex;
                     databaseBuilder.AppendLine(JsonConvert.SerializeObject(tab.DatabaseItem));
                 }

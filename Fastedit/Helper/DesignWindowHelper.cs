@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Fastedit.Core.Settings;
 using Fastedit.Dialogs;
-using Fastedit.Settings;
 using Fastedit.Views;
 using Microsoft.UI.Xaml;
 

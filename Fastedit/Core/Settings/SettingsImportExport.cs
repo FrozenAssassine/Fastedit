@@ -1,13 +1,13 @@
-﻿using Fastedit.Models;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Models;
 using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fastedit.Settings;
+namespace Fastedit.Core.Settings;
 
 internal class SettingsImportExport
 {
@@ -36,7 +36,7 @@ internal class SettingsImportExport
             return SettingsImportExportResult.Cancelled;
 
         var result = OpenFileHelper.ReadLinesFromFile(file);
-        if(!result.succeeded)
+        if (!result.succeeded)
             return SettingsImportExportResult.Failed;
 
         foreach (var line in result.lines)

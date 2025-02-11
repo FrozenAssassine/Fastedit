@@ -1,9 +1,9 @@
 ﻿using Fastedit.Helper;
 using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Dialogs;
 

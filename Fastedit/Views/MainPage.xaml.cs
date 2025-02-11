@@ -2,8 +2,6 @@ using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Models;
-using Fastedit.Settings;
-using Fastedit.Tab;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -13,6 +11,8 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Controls;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
 
 namespace Fastedit
 {
@@ -359,7 +359,7 @@ namespace Fastedit
         }
         private async void RecycleBin_Click(object sender, RoutedEventArgs e)
         {
-            await new RecycleBinDialog(tabControl).ShowDialog();
+            await new RecycleBinDialog().ShowAsync(tabControl);
         }
         private async void SaveAll_Click(object sender, RoutedEventArgs e)
         {

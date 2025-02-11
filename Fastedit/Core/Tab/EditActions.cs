@@ -1,6 +1,6 @@
-﻿using Fastedit.Settings;
+﻿using Fastedit.Core.Settings;
 
-namespace Fastedit.Tab
+namespace Fastedit.Core.Tab
 {
     public class EditActions
     {

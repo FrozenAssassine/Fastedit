@@ -1,11 +1,11 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
-using Fastedit.Settings;
-using Fastedit.Tab;
 using System;
 using System.IO;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Views
 {

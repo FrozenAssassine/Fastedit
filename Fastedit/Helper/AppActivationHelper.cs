@@ -1,5 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
-using Fastedit.Tab;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Helper;
 

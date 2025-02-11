@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.AccessCache;
 using Windows.Storage;
-using Fastedit.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Storage
 {

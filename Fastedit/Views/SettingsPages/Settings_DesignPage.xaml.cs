@@ -4,8 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
 using System.IO;
-using Fastedit.Settings;
-using Fastedit.Tab;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

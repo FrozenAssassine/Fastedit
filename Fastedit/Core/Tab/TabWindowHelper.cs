@@ -1,5 +1,4 @@
 ﻿using Fastedit.Helper;
-using Fastedit.Settings;
 using Fastedit.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -10,8 +9,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.ApplicationModel;
 using System.IO;
+using Fastedit.Core.Settings;
 
-namespace Fastedit.Tab;
+namespace Fastedit.Core.Tab;
 
 internal class TabWindowHelper
 {
@@ -31,7 +31,7 @@ internal class TabWindowHelper
 
         tab.RemoveTextbox();
         tab.DatabaseItem.HasOwnWindow = true;
-        
+
         var window = new Window();
         window.Content = new TabWindowPage(tab, window);
         window.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));

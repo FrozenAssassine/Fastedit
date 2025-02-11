@@ -1,8 +1,8 @@
 ﻿using Fastedit.Models;
-using Fastedit.Tab;
 using Fastedit.Views;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Helper;
 

@@ -1,7 +1,4 @@
-﻿using Fastedit.Helper;
-using Fastedit.Storage;
-using Fastedit.Tab;
-using Fastedit.Views;
+﻿using Fastedit.Views;
 using System;
 using System.IO;
 using System.Threading.Tasks;

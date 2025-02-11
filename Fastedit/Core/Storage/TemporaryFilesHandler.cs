@@ -1,5 +1,5 @@
-﻿using Fastedit.Helper;
-using Fastedit.Settings;
+﻿using Fastedit.Core.Settings;
+using Fastedit.Helper;
 using System;
 using System.IO;
 using System.Threading.Tasks;

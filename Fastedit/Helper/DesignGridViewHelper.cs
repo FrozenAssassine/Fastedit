@@ -1,9 +1,7 @@
-﻿using Fastedit.Models;
-using Fastedit.Settings;
-using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using System.Diagnostics;
 using System.IO;
 
 namespace Fastedit.Helper;

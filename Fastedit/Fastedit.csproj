@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="Controls\SurroundWithFlyout.xaml" />
     <None Remove="Controls\TextStatusBar.xaml" />
+    <None Remove="Views\RecycleBinDialogPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +44,11 @@
     <Content Update="Assets\changelog.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\RecycleBinDialogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\SurroundWithFlyout.xaml">

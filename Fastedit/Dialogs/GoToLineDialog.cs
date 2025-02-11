@@ -1,5 +1,5 @@
-﻿using Fastedit.Helper;
-using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;

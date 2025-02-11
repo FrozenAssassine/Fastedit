@@ -1,4 +1,4 @@
-﻿namespace Fastedit.Settings;
+﻿namespace Fastedit.Core.Settings;
 
 public static class AppSettingsValues
 {

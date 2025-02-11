@@ -1,6 +1,7 @@
-﻿using Fastedit.Dialogs;
+﻿using Fastedit.Core;
+using Fastedit.Core.Settings;
+using Fastedit.Dialogs;
 using Fastedit.Models;
-using Fastedit.Settings;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -18,7 +19,7 @@ namespace Fastedit.Views.SettingsPages
         private void InitSize()
         {
             temporaryFileSizeDisplay.Text = TemporaryFilesHandler.GetSize();
-            recyclebinFilesizeDisplay.Text = RecycleBinDialog.GetSize();
+            recyclebinFilesizeDisplay.Text = RecycleBinManager.GetSize();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -48,7 +49,7 @@ namespace Fastedit.Views.SettingsPages
         //Clear recylcebin
         private void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
-            if (RecycleBinDialog.ClearRecycleBin() == ClearRecycleBinResult.Success)
+            if (RecycleBinManager.ClearRecycleBin() == ClearRecycleBinResult.Success)
                 InfoMessages.RecyclebinClearSucceed();
 
             InitSize();

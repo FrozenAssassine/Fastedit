@@ -1,6 +1,6 @@
-﻿using Fastedit.Tab;
-using System;
+﻿using System;
 using Microsoft.UI.Xaml;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Helper
 {

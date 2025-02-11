@@ -1,6 +1,5 @@
 using Fastedit.Dialogs;
 using Fastedit.Models;
-using Fastedit.Settings;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
@@ -14,6 +13,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using WinUIEx;
 using System.Diagnostics;
+using Fastedit.Core.Settings;
 
 namespace Fastedit.Helper
 {

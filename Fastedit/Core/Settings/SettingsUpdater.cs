@@ -1,12 +1,12 @@
 ﻿using Fastedit.Controls;
 using Fastedit.Helper;
-using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using TextControlBoxNS;
+using Fastedit.Core.Tab;
 
-namespace Fastedit.Settings
+namespace Fastedit.Core.Settings
 {
     public class SettingsUpdater
     {

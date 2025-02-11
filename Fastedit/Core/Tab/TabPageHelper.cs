@@ -1,6 +1,5 @@
 using Fastedit.Dialogs;
 using Fastedit.Helper;
-using Fastedit.Settings;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -12,8 +11,9 @@ using Windows.Storage;
 using Microsoft.UI.Xaml;
 using TextControlBoxNS;
 using System.Diagnostics;
+using Fastedit.Core.Settings;
 
-namespace Fastedit.Tab;
+namespace Fastedit.Core.Tab;
 
 public static class TabPageHelper
 {
@@ -257,7 +257,7 @@ public static class TabPageHelper
     {
         //only add the file to the recyclebin if it has text inside and was modified
         if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
-            if (!RecycleBinDialog.MoveFileToRecycleBin(tab))
+            if (!RecycleBinManager.MoveFileToRecycleBin(tab))
                 return false;
 
         tabView.TabItems.Remove(tab);
@@ -330,7 +330,7 @@ public static class TabPageHelper
             //Only load the last tab, the others will be saved as temporary files and loaded when needed
             var tab = OpenFileHelper.DoOpen(tabView, (files[i] as StorageFile).Path, i == files.Count - 1);
             if (tab == null)
-             return false;
+                return false;
 
             //select the last tab
             if (i == files.Count - 1)
