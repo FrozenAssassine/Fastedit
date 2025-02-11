@@ -151,6 +151,11 @@ namespace Fastedit.Storage
             {
                 Extension = { ".toml", },
                 ExtensionName = "TOML configuration file",
+            },
+            new ExtensionItem()
+            {
+                Extension = { ".sql", },
+                ExtensionName = "Structured Query Language",
             }
         };
     }
