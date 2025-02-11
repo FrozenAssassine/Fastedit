@@ -27,17 +27,8 @@ namespace Fastedit.Controls
         {
             if (currentTextbox == null)
                 return;
-
-            try
-            {
-                //begin the search
-                var res = currentTextbox.BeginSearch(searchword, wholeWord, matchCase);
-                ColorWindowBorder(res);
-            }
-            catch
-            {
-                //Due to bug in TextControlBox TODO! double check and fix!
-            }
+            var res = currentTextbox.BeginSearch(searchword, wholeWord, matchCase);
+            ColorWindowBorder(res);
         }
         private void ToggleVisibility(bool visible)
         {
