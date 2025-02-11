@@ -40,9 +40,9 @@
             </Grid>
 
             <controls:SetingsItemSeparator Header="More"/>
-            <controls:SettingsControl Tag="{x:Bind donoURL}" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Donate" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl Foreground="White" FontWeight="Bold" Background="#ff6433" Tag="https://ko-fi.com/K3K819KSLG" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Support me on Ko-fi" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
-                    <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                    <TextBlock Text="&#xe8a7;"  FontFamily="{StaticResource SymbolThemeFontFamily}" />
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
@@ -145,7 +145,7 @@
                 <RichTextBlock FontSize="18" IsTextSelectionEnabled="False">
                     <Paragraph Margin="0,30,0,0">
                         <Run>
-                            We are doing our best to prepare the content of this app. However, Fastedit cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Fastedit shall not be responsible for any losses and/or damages due to the usage of the information on our app. Our Disclaimer was generated with the help of the App Disclaimer Generator from App-Privacy-Policy.com                 
+                            We are doing our best to prepare the content of this app. However, Fastedit cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Fastedit shall not be responsible for any losses and/or damages due to the usage of the information on our app.
                         </Run>
                     </Paragraph>
                     <Paragraph Margin="0,30,0,0">

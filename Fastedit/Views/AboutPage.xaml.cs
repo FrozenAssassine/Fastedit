@@ -9,7 +9,6 @@ namespace Fastedit.Views
 {
     public sealed partial class AboutPage : Page
     {
-        public string donoURL = "https://www.paypal.com/donate?business=julius@frozenassassine.de&no_recurring=0&item_name=Support+FrozenAssassines+Work&currency_code=EUR";
         public string AppVersion =>
             Package.Current.Id.Version.Major + "." +
             Package.Current.Id.Version.Minor + "." +

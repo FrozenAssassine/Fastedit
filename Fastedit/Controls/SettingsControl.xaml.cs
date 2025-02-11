@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
@@ -13,6 +14,15 @@ namespace Fastedit.Controls
         public SettingsControl()
         {
             this.InitializeComponent();
+        }
+
+        private Brush _Background;
+        public new Brush Background
+        {
+            get => _Background;
+            set {
+                mainGrid.Background = _Background = value;
+            }
         }
 
         public bool Clickable { get; set; }
