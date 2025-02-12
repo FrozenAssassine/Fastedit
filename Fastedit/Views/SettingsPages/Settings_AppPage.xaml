@@ -11,34 +11,34 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <controls:SetingsItemSeparator Header="Menubar"/>
-            <controls:SettingsControl Header="Show Menubar">
+            <controls:SetingsItemSeparator x:Uid="Settings_App_MenubarHeader" Header="Menubar"/>
+            <controls:SettingsControl x:Uid="Settings_App_ShowMenubarHeader" Header="Show Menubar">
                 <controls:SettingsControl.Content>
                     <ToggleSwitch x:Name="ShowMenubarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowMenubar_Toggled"/>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
-            
-            <controls:SettingsControl Header="Menubar Alignment">
+
+            <controls:SettingsControl x:Uid="Settings_App_MenubarAlignmentHeader" Header="Menubar Alignment">
                 <controls:SettingsControl.Content>
                     <ComboBox Width="200" x:Name="menubarAlignmentCombobox" SelectionChanged="menubarAlignmentCombobox_SelectionChanged">
-                        <ComboBoxItem Content="Left" Tag="0"/>
-                        <ComboBoxItem Content="Center" Tag="1"/>
-                        <ComboBoxItem Content="Right" Tag="2"/>
+                        <ComboBoxItem x:Uid="Settings_App_AlignmentLeft" Content="Left" Tag="0"/>
+                        <ComboBoxItem x:Uid="Settings_App_AlignmentCenter" Content="Center" Tag="1"/>
+                        <ComboBoxItem x:Uid="Settings_App_AlignmentRight" Content="Right" Tag="2"/>
                     </ComboBox>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
-            <controls:SetingsItemSeparator Header="Statusbar"/>
+            <controls:SetingsItemSeparator x:Uid="Settings_App_StatusbarHeader" Header="Statusbar"/>
 
-            <controls:SettingsControl Header="Show Statusbar">
+            <controls:SettingsControl x:Uid="Settings_App_ShowStatusbarHeader" Header="Show Statusbar">
                 <controls:SettingsControl.Content>
                     <ToggleSwitch x:Name="ShowStatusbarToggleSwitch" Style="{StaticResource LeftSideToggleSwitch}" Toggled="ShowStatusbar_Toggled"/>
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
-            <Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0" >
+            <Expander HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,5,0,0">
                 <Expander.Header>
                     <Grid Height="70">
-                        <TextBlock Margin="10,0,0,0" Text="Statusbar" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock x:Uid="Settings_App_StatusbarText" Margin="10,0,0,0" Text="Statusbar" x:Name="textDisplay" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </Grid>
                 </Expander.Header>
                 <Expander.Content>
@@ -55,26 +55,26 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock FontSize="16" Text="File Name" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_FileNameText" FontSize="16" Text="File Name" Grid.Row="0" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showFileItem" Tag="0" Grid.Row="0" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Zoom" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_ZoomText" FontSize="16" Text="Zoom" Grid.Row="1" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showZoomItem" Tag="1" Grid.Row="1" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Line Number / Column" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_LineColumnText" FontSize="16" Text="Line Number / Column" Grid.Row="2" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showLineColumnItem" Tag="2" Grid.Row="2" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Words / Characters" Grid.Row="3" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_WordCharsText" FontSize="16" Text="Words / Characters" Grid.Row="3" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showWordChars" Tag="3" Grid.Row="3" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
-                        <ToggleSwitch x:Name="showEncodingItem" Tag="4" Grid.Row="4" Grid.Column="1"  Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+                        <TextBlock x:Uid="Settings_App_EncodingText" FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
+                        <ToggleSwitch x:Name="showEncodingItem" Tag="4" Grid.Row="4" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
                     </Grid>
                 </Expander.Content>
             </Expander>
 
-            <controls:SetingsItemSeparator Header="Window"/>
-            <controls:SettingsControl Header="Hide Title Bar" InfoText="Restart to fix rendering issues">
+            <controls:SetingsItemSeparator x:Uid="Settings_App_WindowHeader" Header="Window"/>
+            <controls:SettingsControl x:Uid="Settings_App_HideTitleBarHeader" Header="Hide Title Bar" InfoText="Restart to fix rendering issues">
                 <controls:SettingsControl.Content>
                     <ToggleSwitch x:Name="HideTitlebarToggle" Style="{StaticResource LeftSideToggleSwitch}" Toggled="HideTitlebar_Toggled"/>
                 </controls:SettingsControl.Content>

@@ -30,8 +30,8 @@
     </Page.Resources>
     <Grid Margin="0,30,0,0">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
-            <Button Margin="10,0,10,0" Content="New" Click="NewDesign_Click"/>
-            <Button Click="UpdateDesigns_Click">
+            <Button x:Uid="Settings_DesignPage_NewButton" Margin="10,0,10,0" Content="New" Click="NewDesign_Click"/>
+            <Button x:Uid="Settings_DesignPage_UpdateButton" Click="UpdateDesigns_Click">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F5" IsEnabled="True"/>
                 </Button.KeyboardAccelerators>
@@ -39,14 +39,14 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;"/>
                 </Button.Content>
             </Button>
-            <Button Margin="10,0,0,0" Content="Import" Click="ImportDesign_Click"/>
-            <Button Margin="10,0,0,0" Content="Reset defaults">
+            <Button x:Uid="Settings_DesignPage_ImportButton" Margin="10,0,0,0" Content="Import" Click="ImportDesign_Click"/>
+            <Button x:Uid="Settings_DesignPage_ResetDefaultsButton" Margin="10,0,0,0" Content="Reset defaults">
                 <Button.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All existing items will be replaced. Export items to backup them!" Margin="0,0,0,12" />
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" x:Uid="Settings_DesignPage_AllWillBeReplaced" Text="All existing items will be replaced. Export items to backup them!" Margin="0,0,0,12" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Style="{ThemeResource AccentButtonStyle}" Click="LoadDefaultDesigns_Click" Content="Confirm" />
+                                <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="Settings_DesignPage_ConfirmButton" Click="LoadDefaultDesigns_Click" Content="Confirm" />
                             </StackPanel>
                         </StackPanel>
                     </Flyout>
@@ -54,11 +54,11 @@
             </Button>
         </StackPanel>
         <GridView HorizontalAlignment="Center" Background="Transparent" Margin="0,80,0,0"
-            x:Name="designGridView"
-            IsItemClickEnabled="True"
-            ItemClick="BasicGridView_ItemClick"
-            SelectionMode="Single" 
-            ItemTemplate="{StaticResource DesignGridViewItemTemplate_Large}"/>
-
+        x:Name="designGridView"
+        x:Uid="Settings_DesignPage_GridView"
+        IsItemClickEnabled="True"
+        ItemClick="BasicGridView_ItemClick"
+        SelectionMode="Single" 
+        ItemTemplate="{StaticResource DesignGridViewItemTemplate_Large}"/>
     </Grid>
 </Page>

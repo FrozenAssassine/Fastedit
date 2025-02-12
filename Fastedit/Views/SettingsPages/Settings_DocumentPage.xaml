@@ -10,8 +10,8 @@
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Top">
-        <controls:SetingsItemSeparator Header="Text"/>
-        <controls:SettingsControl Header="Fontfamily" >
+        <controls:SetingsItemSeparator x:Uid="Settings_Page_Text_Separator" Header="Text"/>
+        <controls:SettingsControl x:Uid="Settings_Page_Font_Family_Control" Header="Font family">
             <controls:SettingsControl.Content>
                 <ComboBox ItemsSource="{x:Bind Fonts}" SelectionChanged="FontFamilyCombobox_SelectionChanged" x:Name="FontFamilyCombobox" Width="200">
                     <ComboBox.ItemTemplate>
@@ -22,38 +22,38 @@
                 </ComboBox>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Fontsize">
+        <controls:SettingsControl x:Uid="Settings_Page_Font_Size_Control" Header="Font size">
             <controls:SettingsControl.Content>
                 <NumberBox x:Name="FontSizeNumberBox" Width="200" SpinButtonPlacementMode="Inline" ValueChanged="FontSizeNumberBox_ValueChanged" />
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SetingsItemSeparator Header="Features"/>
+        <controls:SetingsItemSeparator x:Uid="Settings_Page_Features_Separator" Header="Features"/>
 
-        <controls:SettingsControl Header="Show linenumbers" >
+        <controls:SettingsControl x:Uid="Settings_Page_Show_Line_Numbers_Control" Header="Show line numbers">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinenumbersSwitch" Toggled="ShowLinenumbersSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SettingsControl Header="Show linehighlighter">
+        <controls:SettingsControl x:Uid="Settings_Page_Show_Line_Highlighter_Control" Header="Show line highlighter">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="ShowLinehighlighterSwitch" Toggled="ShowLinehighlighterSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Syntaxhighlighting" >
+        <controls:SettingsControl x:Uid="Settings_Page_Syntax_Highlighting_Control" Header="Syntax highlighting">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="EnableSyntaxhighlightingSwitch" Toggled="EnableSyntaxhighlightingSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SetingsItemSeparator Header="Tab key"/>
-        <controls:SettingsControl Header="Use spaces instead tabs(\t)" >
+        <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Tab key"/>
+        <controls:SettingsControl x:Uid="Settings_Page_Use_Spaces_Instead_Tabs_Control" Header="Use spaces instead of tabs (\t)">
             <controls:SettingsControl.Content>
                 <ToggleSwitch x:Name="SpacesOrTabsSwitch" Toggled="SpacesOrTabsSwitch_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Number of spaces per tab" >
+        <controls:SettingsControl x:Uid="Settings_Page_Number_Of_Spaces_Per_Tab_Control" Header="Number of spaces per tab">
             <controls:SettingsControl.Content>
                 <Slider Width="200" IsEnabled="{x:Bind SpacesOrTabsSwitch.IsOn, Mode=TwoWay}" Value="{x:Bind settings:DefaultValues.NumberOfSpacesPerTab, Mode=OneTime}" StepFrequency="2" Maximum="16" Minimum="2" TickPlacement="Inline" x:Name="SpacesPerTabSlider" ValueChanged="SpacesPerTabSlider_ValueChanged"/>
             </controls:SettingsControl.Content>
