@@ -19,8 +19,8 @@
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
         
-        <controls:SetingsItemSeparator Header="Clear folders"/>
-        <controls:SettingsControl Header="Clear recycle bin files">
+        <controls:SetingsItemSeparator Header="Clear Folders"/>
+        <controls:SettingsControl Header="Clear Recycle Bin">
             <controls:SettingsControl.Content>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontSize="18" VerticalAlignment="Center" Margin="0,0,10,0" x:Name="recyclebinFilesizeDisplay"/>

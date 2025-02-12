@@ -18,7 +18,7 @@
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
             
-            <controls:SettingsControl Header="Menubar alignment">
+            <controls:SettingsControl Header="Menubar Alignment">
                 <controls:SettingsControl.Content>
                     <ComboBox Width="200" x:Name="menubarAlignmentCombobox" SelectionChanged="menubarAlignmentCombobox_SelectionChanged">
                         <ComboBoxItem Content="Left" Tag="0"/>
@@ -55,16 +55,16 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock FontSize="16" Text="File name" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock FontSize="16" Text="File Name" Grid.Row="0" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showFileItem" Tag="0" Grid.Row="0" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
                         <TextBlock FontSize="16" Text="Zoom" Grid.Row="1" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showZoomItem" Tag="1" Grid.Row="1" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Linenumber/Column" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock FontSize="16" Text="Line Number / Column" Grid.Row="2" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showLineColumnItem" Tag="2" Grid.Row="2" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock FontSize="16" Text="Words/Characters" Grid.Row="3" Grid.Column="0"/>
+                        <TextBlock FontSize="16" Text="Words / Characters" Grid.Row="3" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showWordChars" Tag="3" Grid.Row="3" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
                         <TextBlock FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
@@ -74,7 +74,7 @@
             </Expander>
 
             <controls:SetingsItemSeparator Header="Window"/>
-            <controls:SettingsControl Header="Hide titlebar" InfoText="Restart to fix rendering issues">
+            <controls:SettingsControl Header="Hide Title Bar" InfoText="Restart to fix rendering issues">
                 <controls:SettingsControl.Content>
                     <ToggleSwitch x:Name="HideTitlebarToggle" Style="{StaticResource LeftSideToggleSwitch}" Toggled="HideTitlebar_Toggled"/>
                 </controls:SettingsControl.Content>
