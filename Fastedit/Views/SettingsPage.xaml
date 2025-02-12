@@ -23,7 +23,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="Tabview" Tag="TabviewPage" >
+                <NavigationViewItem Content="Tabs" Tag="TabviewPage" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7C3;"/>
                     </NavigationViewItem.Icon>
@@ -46,7 +46,7 @@
             <NavigationView.Header>
                 <Grid VerticalAlignment="Center" Margin="0,-40,0,0">
                     <TextBlock FontSize="48" Text="Hello" x:Name="pageNameDisplay" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Margin="0,10,20,0" x:Name="applySettingsButton" Click="ApplySettings_Click" Style="{ThemeResource AccentButtonStyle}" Content="Apply settings" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <Button Margin="0,10,20,0" x:Name="applySettingsButton" Click="ApplySettings_Click" Style="{ThemeResource AccentButtonStyle}" Content="Apply Settings" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </NavigationView.Header>
 

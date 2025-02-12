@@ -40,7 +40,7 @@
                 </Button.Content>
             </Button>
             <Button x:Uid="Settings_DesignPage_ImportButton" Margin="10,0,0,0" Content="Import" Click="ImportDesign_Click"/>
-            <Button x:Uid="Settings_DesignPage_ResetDefaultsButton" Margin="10,0,0,0" Content="Reset defaults">
+            <Button x:Uid="Settings_DesignPage_ResetDefaultsButton" Margin="10,0,0,0" Content="Reset Defaults">
                 <Button.Flyout>
                     <Flyout>
                         <StackPanel>

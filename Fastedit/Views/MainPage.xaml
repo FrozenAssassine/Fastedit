@@ -376,14 +376,14 @@
                                 <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Save as" Click="SaveFileAs_Click">
+                        <MenuFlyoutItem Text="Save As" Click="SaveFileAs_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="S" Modifiers="Control,Shift" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Save all" Click="SaveAll_Click"/>
+                        <MenuFlyoutItem Text="Save All" Click="SaveAll_Click"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Recycle bin" Click="RecycleBin_Click"/>
+                        <MenuFlyoutItem Text="Recycle Bin" Click="RecycleBin_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Settings" Click="Settings_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
@@ -421,7 +421,7 @@
                                 <KeyboardAccelerator Key="V" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Duplicate line" Click="DuplicateLine_Click">
+                        <MenuFlyoutItem Text="Duplicate Line" Click="DuplicateLine_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="D" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -437,13 +437,13 @@
                                 <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Go to" Click="GoToLine_Click">
+                        <MenuFlyoutItem Text="Go To" Click="GoToLine_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="G" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Select all" Click="SelectAll_Click">
+                        <MenuFlyoutItem Text="Select All" Click="SelectAll_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="A" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -458,7 +458,7 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="File info" Click="FileInfo_Click">
+                        <MenuFlyoutItem Text="File Info" Click="FileInfo_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="I" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -474,14 +474,13 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Close all" Click="CloseAll_Click"/>
+                        <MenuFlyoutItem Text="Close All" Click="CloseAll_Click"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
             <MenuBarItem Title="Advanced">
                     <MenuBarItem.Items>
-
-                        <MenuFlyoutSubItem Text="Syntaxhighlighting" x:Name="CodeLanguageSelector"/>
-                        <MenuFlyoutSubItem Text="TabKey">
+                        <MenuFlyoutSubItem Text="Syntax Highlighting" x:Name="CodeLanguageSelector"/>
+                        <MenuFlyoutSubItem Text="Tabs / Spaces">
                             <MenuFlyoutSubItem Text="Spaces">
                                 <MenuFlyoutItem Text="1" Click="TabSpaces_Click" Tag="1"/>
                                 <MenuFlyoutItem Text="2" Click="TabSpaces_Click" Tag="2"/>
@@ -493,7 +492,7 @@
                             <MenuFlyoutItem Text="Tabs" Click="TabSpaces_Click" Tag="-1"/>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Quick access" Click="ShowRunCommandWindow_Click">
+                        <MenuFlyoutItem Text="Quick Access" Click="ShowRunCommandWindow_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="B" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -512,7 +511,7 @@
                 </MenuBarItem>
                 <MenuBarItem Title="View">
                     <MenuBarItem.Items>
-                        <MenuFlyoutItem Text="Compact overlay" Click="CompactOverlayMode_Click">
+                        <MenuFlyoutItem Text="Compact Overlay" Click="CompactOverlayMode_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="K" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -523,12 +522,12 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Zoom in" Click="ZoomIn_Click">
+                        <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Zoom out" Click="ZoomOut_Click">
+                        <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
@@ -549,27 +548,27 @@
         
         <controls:QuickAccessWindow Closed="runCommandWindow_Closed" x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
             <controls:QuickAccessWindow.Items>
-                <models:QuickAccessWindowItem Command="Close tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
-                <models:QuickAccessWindowSubItem Command="Syntaxhighlighting" x:Name="RunCommandWindowItem_SyntaxHighlighting"/>
+                <models:QuickAccessWindowItem Command="Close Tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
+                <models:QuickAccessWindowSubItem Command="Syntax Highlighting" x:Name="RunCommandWindowItem_SyntaxHighlighting"/>
                 <models:QuickAccessWindowItem Command="New tab" Shortcut="Ctrl + T" RunCommandWindowItemClicked="NewFile_Click"/>
                 <models:QuickAccessWindowItem Command="Encoding" Shortcut="Ctrl + E" RunCommandWindowItemClicked="ChangeEncoding_Click"/>
                 <models:QuickAccessWindowItem Command="Copy" Shortcut="Ctrl + C" RunCommandWindowItemClicked="Copy_Click"/>
                 <models:QuickAccessWindowItem Command="Paste" Shortcut="Ctrl + V" RunCommandWindowItemClicked="Paste_Click"/>
                 <models:QuickAccessWindowItem Command="Cut" Shortcut="Ctrl + X" RunCommandWindowItemClicked="Cut_Click"/>
-                <models:QuickAccessWindowItem Command="Duplicate line" Shortcut="Ctrl + D" RunCommandWindowItemClicked="DuplicateLine_Click"/>
-                <models:QuickAccessWindowItem Command="File info" Shortcut="Ctrl + I" RunCommandWindowItemClicked="FileInfo_Click"/>
-                <models:QuickAccessWindowItem Command="Open file" Shortcut="Ctrl + O" RunCommandWindowItemClicked="OpenFile_Click"/>
-                <models:QuickAccessWindowItem Command="Recycle bin" RunCommandWindowItemClicked="RecycleBin_Click"/>
+                <models:QuickAccessWindowItem Command="Duplicate Line" Shortcut="Ctrl + D" RunCommandWindowItemClicked="DuplicateLine_Click"/>
+                <models:QuickAccessWindowItem Command="File Info" Shortcut="Ctrl + I" RunCommandWindowItemClicked="FileInfo_Click"/>
+                <models:QuickAccessWindowItem Command="Open File" Shortcut="Ctrl + O" RunCommandWindowItemClicked="OpenFile_Click"/>
+                <models:QuickAccessWindowItem Command="Recycle Bin" RunCommandWindowItemClicked="RecycleBin_Click"/>
                 <models:QuickAccessWindowItem Command="Redo" Shortcut="Ctrl + Y" RunCommandWindowItemClicked="Redo_Click"/>
                 <models:QuickAccessWindowItem Command="Undo" Shortcut="Ctrl + Z" RunCommandWindowItemClicked="Undo_Click"/>
-                <models:QuickAccessWindowItem Command="Zoom in" Shortcut="Ctrl + +" RunCommandWindowItemClicked="ZoomIn_Click"/>
-                <models:QuickAccessWindowItem Command="Zoom out" Shortcut="Ctrl + -" RunCommandWindowItemClicked="ZoomOut_Click"/>
-                <models:QuickAccessWindowItem Command="Save as" Shortcut="Ctrl + Shift + S" RunCommandWindowItemClicked="SaveFileAs_Click"/>
+                <models:QuickAccessWindowItem Command="Zoom In" Shortcut="Ctrl + +" RunCommandWindowItemClicked="ZoomIn_Click"/>
+                <models:QuickAccessWindowItem Command="Zoom Out" Shortcut="Ctrl + -" RunCommandWindowItemClicked="ZoomOut_Click"/>
+                <models:QuickAccessWindowItem Command="Save As" Shortcut="Ctrl + Shift + S" RunCommandWindowItemClicked="SaveFileAs_Click"/>
                 <models:QuickAccessWindowItem Command="Save" Shortcut="Ctrl + S" RunCommandWindowItemClicked="SaveFile_Click"/>
-                <models:QuickAccessWindowItem Command="Select all" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
-                <models:QuickAccessWindowItem Command="Reload settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
+                <models:QuickAccessWindowItem Command="Select All" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
+                <models:QuickAccessWindowItem Command="Reload Settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
                 <models:QuickAccessWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
-                <models:QuickAccessWindowSubItem Command="Spaces instead tabs">
+                <models:QuickAccessWindowSubItem Command="Spaces Instead Tabs">
                     <models:QuickAccessWindowSubItem.Items>
                         <models:QuickAccessWindowItem Command="1" Tag="1" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="TabSpaces_Click"/>
@@ -579,15 +578,15 @@
                         <models:QuickAccessWindowItem Command="16" Tag="16" RunCommandWindowItemClicked="TabSpaces_Click"/>
                     </models:QuickAccessWindowSubItem.Items>
                 </models:QuickAccessWindowSubItem>
-                <models:QuickAccessWindowItem Command="Tabs instead spaces" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                <models:QuickAccessWindowItem Command="Tabs Instead Spaces" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
                 <models:QuickAccessWindowItem Command="Settings" Shortcut="F1" RunCommandWindowItemClicked="Settings_Click"/>
                 <models:QuickAccessWindowItem Command="Fullscreen" Shortcut="F11" RunCommandWindowItemClicked="Fullscreen_Click"/>
-                <models:QuickAccessWindowItem Command="Compact overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
+                <models:QuickAccessWindowItem Command="Compact Overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
                 <models:QuickAccessWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
                 <models:QuickAccessWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
                 <models:QuickAccessWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>
-                <models:QuickAccessWindowItem Command="Save all" RunCommandWindowItemClicked="SaveAll_Click"/>
-                <models:QuickAccessWindowItem Command="Close all" RunCommandWindowItemClicked="CloseAll_Click"/>
+                <models:QuickAccessWindowItem Command="Save All" RunCommandWindowItemClicked="SaveAll_Click"/>
+                <models:QuickAccessWindowItem Command="Close All" RunCommandWindowItemClicked="CloseAll_Click"/>
                 <models:QuickAccessWindowItem Command="Surround With" Shortcut="Ctrl + Q" RunCommandWindowItemClicked="SurroundWith_Click"/>
                 <models:QuickAccessWindowSubItem TriggerOnSelecting="True" SelectedChanged="RunCommandWindowItem_Designs_SelectedChanged" Command="Design" x:Name="RunCommandWindowItem_Designs"/>
                 </controls:QuickAccessWindow.Items>
