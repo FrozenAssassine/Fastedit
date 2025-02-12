@@ -584,6 +584,7 @@ namespace Fastedit
 
         private void SurroundWith_Click(object sender, RoutedEventArgs e)
         {
+            if (currentlySelectedTabPage != null && currentlySelectedTabPage.textbox != null)
             surroundWithFlyout.ShowFlyout(currentlySelectedTabPage.textbox);
         }
     }

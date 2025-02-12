@@ -11,6 +11,9 @@ namespace Fastedit.Dialogs
     {
         public static async Task<bool> Show(TabPageItem tab, XamlRoot root = null)
         {
+            if (tab == null || tab.textbox == null)
+                return false;
+
             var renameTextbox = new TextBox { Text = tab.DatabaseItem.FileName };
             var renameDialog = new ContentDialog
             {

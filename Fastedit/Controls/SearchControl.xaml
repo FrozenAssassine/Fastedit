@@ -69,15 +69,15 @@
             <Button.Flyout>
                 <Flyout Placement="Bottom">
                     <StackPanel Padding="0" CornerRadius="5" Orientation="Vertical">
-                        <ToggleButton Width="110" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
-                        <ToggleButton Width="110" x:Name="FindWholeWordButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Whole word"/>
+                        <ToggleButton Click="SearchProperties_Changed" Width="110" x:Name="FindMatchCaseButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Match case"/>
+                        <ToggleButton Click="SearchProperties_Changed" Width="110" x:Name="FindWholeWordButton" CornerRadius="0" Background="Transparent" BorderThickness="0" Content="Whole word"/>
                     </StackPanel>
                 </Flyout>
             </Button.Flyout>
         </Button>
 
-        <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" KeyDown="ReplaceTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Replace..." x:Name="textToReplaceTextBox" Width="150" Height="30"/>
-        <Button Grid.Row="3" Grid.Column="3" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="StartReplaceButton" FontFamily="Segoe MDL2 Assets" Content="&#xF0AF;" Height="30" ToolTipService.ToolTip="Replace" Click="ReplaceCurrentButton_Click"/>
-        <Button Grid.Row="3" Grid.Column="4" Padding="0" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="ReplaceAllButton" Content="All" Height="30" ToolTipService.ToolTip="Replace all" Click="ReplaceAllButton_Click"/>
+        <TextBox  Width="150" Height="30" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" KeyDown="ReplaceTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Replace..." x:Name="textToReplaceTextBox"/>
+        <Button Height="30" Width="30" Grid.Row="3" Grid.Column="3" Margin="5,0,0,0" Padding="0" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="StartReplaceButton" FontFamily="Segoe MDL2 Assets" Content="&#xF0AF;" ToolTipService.ToolTip="Replace" Click="ReplaceCurrentButton_Click"/>
+        <Button Height="30" Width="30" Grid.Row="3" Grid.Column="4" Margin="5,0,0,0" Padding="0" CornerRadius="4" BorderThickness="0" Background="Transparent" x:Name="ReplaceAllButton" Content="All" ToolTipService.ToolTip="Replace all" Click="ReplaceAllButton_Click"/>
     </Grid>
 </UserControl>
