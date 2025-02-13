@@ -1,7 +1,5 @@
 ﻿using Fastedit.Helper;
 using Windows.Storage;
-using Windows.UI;
-using Microsoft.UI.Xaml.Markup;
 
 namespace Fastedit.Core.Settings;
 
@@ -29,15 +27,5 @@ public class SettingsManager
     public static bool GetSettingsAsBool(string value, bool defaultValue = false)
     {
         return ConvertHelper.ToBoolean(ApplicationData.Current.LocalSettings.Values[value] as string, defaultValue);
-    }
-    public static Color GetSettingsAsColor(string value, Color? defaultValue)
-    {
-        string readColor = ApplicationData.Current.LocalSettings.Values[value] as string;
-
-        if (readColor.Contains("#"))
-        {
-            return (Color)XamlBindingHelper.ConvertValue(typeof(Color), readColor);
-        }
-        return defaultValue ?? Color.FromArgb(0, 0, 0, 0);
     }
 }

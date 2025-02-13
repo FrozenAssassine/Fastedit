@@ -1,3 +1,4 @@
+using Fastedit.Core;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,16 +17,18 @@ namespace Fastedit
 
         public IntPtr WindowHandle;
 
+        public BackdropWindowManager backdropManager;
+
         public MainWindow()
         {
             this.InitializeComponent();
+            backdropManager = new BackdropWindowManager(this);
 
             this.WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
             XamlRoot = this.Content.XamlRoot;
             UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
             InfoMessagesPanel = this.infoMessagesPanel;
-
             this.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
 
             SetTitleBar(mainPage.TitleBarGrid);

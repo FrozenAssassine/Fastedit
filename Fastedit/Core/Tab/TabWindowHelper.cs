@@ -17,7 +17,7 @@ internal class TabWindowHelper
 {
     private static TabView tabView = null;
     private static bool closeWithoutChanging = true;
-
+    private static BackdropWindowManager backdropManager;
     public static Dictionary<Window, TabPageItem> OpenWindows { get; } = new();
 
     public static async Task<bool> ShowInNewWindow(TabView tabView, TabPageItem tab)
@@ -39,6 +39,8 @@ internal class TabWindowHelper
         window.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
         window.Closed += Window_Closed;
         window.Activate();
+
+        backdropManager = new BackdropWindowManager(window);
 
         OpenWindows.Add(window, tab);
         UpdateSettings();
@@ -97,16 +99,14 @@ internal class TabWindowHelper
 
             if (window.Content is TabWindowPage page)
             {
-                SettingsUpdater.SetWindowBackground(item.Key, DesignHelper.CurrentDesign);
+                SettingsUpdater.SetWindowBackground(backdropManager, DesignHelper.CurrentDesign);
 
-                //apply settings to textbox without updating the margin:
                 SettingsUpdater.UpdateTab(item.Value, false);
 
                 SettingsUpdater.SetSettingsToStatusbar(page.Statusbar, DesignHelper.CurrentDesign);
 
                 page.Statusbar.IsVisible = AppSettings.ShowStatusbar;
 
-                //apply to tab:
                 page.MainGrid.Background = gridBackground;
             }
         }

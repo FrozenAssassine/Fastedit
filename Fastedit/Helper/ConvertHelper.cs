@@ -12,15 +12,6 @@ namespace Fastedit.Helper
         {
             return visible ? Visibility.Visible : Visibility.Collapsed;
         }
-        public static double ToDouble(object value, double defaultValue = 0)
-        {
-            if (value != null)
-            {
-                if (double.TryParse(value.ToString(), out double Converted) == true)
-                    return Converted;
-            }
-            return defaultValue;
-        }
 
         public static int ToInt(object value, int defaultValue = 0)
         {
@@ -42,45 +33,10 @@ namespace Fastedit.Helper
             return defaultValue;
         }
 
-        public static float ToFloat(object value, float defaultValue = 0)
-        {
-            if (value != null)
-            {
-                if (float.TryParse(value.ToString(), out float converted) == true)
-                    return converted;
-            }
-            return defaultValue;
-        }
 
-        public static TextControlBoxNS.SyntaxHighlightID ToCodeLanguage(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return SyntaxHighlightID.None;
-
-            return Enum.TryParse(value, true, out SyntaxHighlightID result) ? result : SyntaxHighlightID.None;
-        }
-
-        public static Color ToColor(SolidColorBrush clr)
-        {
-            if (clr == null)
-                return Color.FromArgb(0, 0, 0, 0);
-            return clr.Color;
-        }
-
-        public static Color ToColor(Brush brush, Color? defaultValue = null)
-        {
-            if (brush == null)
-                return defaultValue ?? Color.FromArgb(0, 0, 0, 0);
-
-            if (brush is SolidColorBrush sbr)
-                return sbr.Color;
-            else if (brush is AcrylicBrush abr)
-                return abr.TintColor;
-            return defaultValue ?? Color.FromArgb(0, 0, 0, 0);
-        }
         public static Color ToColor(Color? color)
         {
-            return color ?? Color.FromArgb(0, 0, 0, 0);
+            return color.HasValue ? color.Value : Color.FromArgb(0, 0, 0, 0);
         }
         public static Color GetColorFromTheme(ElementTheme theme)
         {
