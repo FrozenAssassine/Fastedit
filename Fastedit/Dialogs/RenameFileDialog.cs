@@ -21,7 +21,7 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Rename: " + tab.DatabaseItem.FileName,
+                Title = "Rename " + tab.DatabaseItem.FileName,
                 Content = renameTextbox,
                 PrimaryButtonText = "Rename",
                 CloseButtonText = "Cancel",

@@ -21,12 +21,16 @@ namespace Fastedit.Helper
             return false;
         }
 
-        public static void CheckNewVersion()
+        public static string GetCurrentVersion()
         {
-            string version = Package.Current.Id.Version.Major + "." +
+            return Package.Current.Id.Version.Major + "." +
                 Package.Current.Id.Version.Minor + "." +
                 Package.Current.Id.Version.Build;
+        }
 
+        public static void CheckNewVersion()
+        {
+            var version = GetCurrentVersion();
             if (IsOnNewVersion(version))
             {
                 InfoMessages.NewVersionInfo(version);

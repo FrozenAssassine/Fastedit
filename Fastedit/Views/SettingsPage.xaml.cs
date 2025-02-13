@@ -18,7 +18,7 @@ namespace Fastedit.Views
         {
             ("AppPage", typeof(Settings_AppPage), "App"),
             ("TextboxPage", typeof(Settings_DocumentPage), "Textbox"),
-            ("TabviewPage", typeof(Settings_TabControl), "Tabview"),
+            ("TabviewPage", typeof(Settings_TabControl), "Tabs"),
             ("DesignPage", typeof(Settings_DesignPage), "Designs"),
             ("DataPage", typeof(Settings_Data), "Data"),
             ("AboutPage", typeof(AboutPage), "About"),

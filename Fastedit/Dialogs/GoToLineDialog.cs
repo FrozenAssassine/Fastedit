@@ -27,7 +27,7 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Go to line",
+                Title = "Go To Line",
                 Content = input,
                 PrimaryButtonText = "Ok",
                 CloseButtonText = "Cancel",

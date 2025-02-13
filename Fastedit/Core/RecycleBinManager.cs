@@ -40,7 +40,7 @@ public class RecycleBinManager
         }
         catch
         {
-            InfoMessages.ClearRecyclebinError();
+            InfoMessages.ClearRecycleBinError();
             return ClearRecycleBinResult.Exception;
         }
 
@@ -60,7 +60,7 @@ public class RecycleBinManager
         }
         catch (Exception ex)
         {
-            InfoMessages.MoveToRecyclebinError();
+            InfoMessages.MoveToRecycleBinError();
             Debug.WriteLine("Exception in RecycleBinDialog -> MoveFileToRecycleBin" + ex.Message);
             return false;
         }
@@ -91,7 +91,7 @@ public class RecycleBinManager
         }
         catch (Exception ex)
         {
-            InfoMessages.DeleteFromRecyclebinError();
+            InfoMessages.DeleteFromRecycleBinError();
             Debug.WriteLine("Exception in RecycleBinDialog --> RecyclebinWindow_PrimaryButtonClick:" + "\n" + ex.Message);
         }
     }
@@ -115,7 +115,7 @@ public class RecycleBinManager
         }
         catch
         {
-            InfoMessages.OpenFromRecyclebinError();
+            InfoMessages.OpenFromRecycleBinError();
         }
     }
 

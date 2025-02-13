@@ -33,7 +33,7 @@ namespace Fastedit.Views.SettingsPages
         {
             var res = await SettingsImportExport.Export();
             if (res == SettingsImportExportResult.Success)
-                InfoMessages.SettingsExportSucceed();
+                InfoMessages.SettingsExportSucceeded();
             else if (res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsExportFailed();
         }
@@ -41,7 +41,7 @@ namespace Fastedit.Views.SettingsPages
         {
             var res = await SettingsImportExport.Import();
             if (res == SettingsImportExportResult.Success)
-                InfoMessages.SettingsImportSucceed();
+                InfoMessages.SettingsImportSucceeded();
             else if(res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsImportFailed();
         }
@@ -50,14 +50,14 @@ namespace Fastedit.Views.SettingsPages
         private void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
             if (RecycleBinManager.ClearRecycleBin() == ClearRecycleBinResult.Success)
-                InfoMessages.RecyclebinClearSucceed();
+                InfoMessages.RecycleBinClearSucceeded();
 
             InitSize();
         }
         private async void ClearTemporaryFiles_Click(object sender, RoutedEventArgs e)
         {
             if (await TemporaryFilesHandler.Clear())
-                InfoMessages.ClearTemporaryFilesSucceed();
+                InfoMessages.ClearTemporaryFilesSucceeded();
             else
                 InfoMessages.ClearTemporaryFilesFailed();
 

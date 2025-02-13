@@ -170,7 +170,7 @@ namespace Fastedit.Views
         private void SaveDesign_Click(object sender, RoutedEventArgs e)
         {
             if (SaveDesign())
-                InfoMessages.SaveDesignSucceed();
+                InfoMessages.SaveDesignSucceeded();
             else
                 InfoMessages.SaveDesignError();
         }
