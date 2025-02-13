@@ -202,39 +202,18 @@ namespace Fastedit.Helper
 
             if (type == BackgroundType.Acrylic)
             {
-                 BackdropHelper.SetAcrylicBackdrop(window, color, ThemeHelper.CurrentTheme);
+                 //BackdropHelper.SetAcrylicBackdrop(window, color, ThemeHelper.CurrentTheme);
             }
             else if (type == BackgroundType.Solid)
             {
-                BackdropHelper.SetStaticBackdrop(window, color);
+                //BackdropHelper.SetStaticBackdrop(window, color);
             }
             else if (type == BackgroundType.Mica)
             {
-                BackdropHelper.TrySetMicaBackdrop(window);
+                //BackdropHelper.TrySetMicaBackdrop(window);
             }
         }
 
-        public static void SetBackground(Control element, Color color, BackgroundType type)
-        {
-            if (element == null)
-                return;
-
-            int transparency = color.A;
-            color.A = 255;
-            if (type == BackgroundType.Acrylic)
-            {
-                element.Background = new AcrylicBrush
-                {
-                    TintColor = color,
-                    TintOpacity = transparency / 255.0,
-                    FallbackColor = color,
-                };
-            }
-            else if (type == BackgroundType.Solid)
-            {
-                element.Background = new SolidColorBrush { Color = color };
-            }
-        }
         public static Brush CreateBackgroundBrush(Color color, ControlBackgroundType type)
         {
             int transparency = color.A;

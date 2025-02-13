@@ -6,8 +6,7 @@
     xmlns:local="using:Fastedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Activated="Window_Activated">
+    mc:Ignorable="d">
     <Grid>
         <local:MainPage x:Name="mainPage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <StackPanel Margin="20,40,20,20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>

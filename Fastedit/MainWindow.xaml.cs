@@ -1,4 +1,4 @@
-using Fastedit.Helper;
+using Fastedit.Core;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,9 +17,12 @@ namespace Fastedit
 
         public IntPtr WindowHandle;
 
+        public BackdropWindowManager backdropManager;
+
         public MainWindow()
         {
             this.InitializeComponent();
+            backdropManager = new BackdropWindowManager(this);
 
             this.WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
@@ -37,12 +40,6 @@ namespace Fastedit
         public void SendLaunchArguments()
         {
             mainPage.TriggerAppActivationAfterStart();
-        }
-
-        private void Window_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            if (BackdropHelper.currentBackdropConfig != null)
-                BackdropHelper.currentBackdropConfig.IsInputActive = true;
         }
     }
 }
