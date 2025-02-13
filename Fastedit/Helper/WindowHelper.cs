@@ -16,4 +16,16 @@ internal class WindowHelper
         bool isFullscreen = window.AppWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen;
         window.AppWindow.SetPresenter(isFullscreen ? AppWindowPresenterKind.Default : AppWindowPresenterKind.FullScreen);
     }
+
+    public static void ToggleTopMost(Window window)
+    {
+        if (window == null)
+            return;
+
+        var presenter = window.AppWindow.Presenter as OverlappedPresenter;
+        if (presenter == null)
+            return;
+
+        presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
+    }
 }

@@ -10,7 +10,6 @@ using System.IO;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using TextControlBoxNS;
-using Fastedit.Controls;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 
@@ -586,6 +585,11 @@ namespace Fastedit
         {
             if (currentlySelectedTabPage != null && currentlySelectedTabPage.textbox != null)
             surroundWithFlyout.ShowFlyout(currentlySelectedTabPage.textbox);
+        }
+
+        private void Toggle_TopMost_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ToggleTopMost(App.m_window);
         }
     }
 }

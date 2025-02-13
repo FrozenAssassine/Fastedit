@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
     xmlns:primitiveContract7Present="using:Microsoft.UI.Xaml.Controls.Primitives?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)" 
-    xmlns:tab="using:Fastedit.Tab" 
+    xmlns:tab="using:Fastedit.Core.Tab" 
     xmlns:controls="using:Fastedit.Controls"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" 
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" 
@@ -521,6 +521,7 @@
                                 <KeyboardAccelerator Key="F11" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
@@ -582,6 +583,7 @@
                 <models:QuickAccessWindowItem Command="Settings" Shortcut="F1" RunCommandWindowItemClicked="Settings_Click"/>
                 <models:QuickAccessWindowItem Command="Fullscreen" Shortcut="F11" RunCommandWindowItemClicked="Fullscreen_Click"/>
                 <models:QuickAccessWindowItem Command="Compact Overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>
+                <models:QuickAccessWindowItem Command="Always On Top" Shortcut="" RunCommandWindowItemClicked="Toggle_TopMost_Click"/>
                 <models:QuickAccessWindowItem Command="Search" Shortcut="Ctrl + F" RunCommandWindowItemClicked="Search_Click"/>
                 <models:QuickAccessWindowItem Command="Replace" Shortcut="Ctrl + R" RunCommandWindowItemClicked="Replace_Click"/>
                 <models:QuickAccessWindowItem Command="Undock Tab" Shortcut="Ctrl + L" RunCommandWindowItemClicked="UndockTab_Click"/>

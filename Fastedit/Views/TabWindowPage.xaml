@@ -38,6 +38,7 @@
                     <KeyboardAccelerator Key="F11"  IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Close" Icon="Cancel" Click="Close_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>

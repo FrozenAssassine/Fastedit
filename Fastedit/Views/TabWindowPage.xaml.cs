@@ -171,5 +171,10 @@ namespace Fastedit.Views
         {
             window.Close();
         }
+
+        private void Toggle_TopMost_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ToggleTopMost(window);
+        }
     }
 }
