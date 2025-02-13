@@ -65,7 +65,7 @@ namespace Fastedit.Helper
                 case Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary:
                     if (designEditor.SaveDesign())
                     {
-                        InfoMessages.SaveDesignSucceed();
+                        InfoMessages.SaveDesignSucceeded();
                         OpenWindows.RemoveAt(index);
                         args.Cancel = false;
                     }

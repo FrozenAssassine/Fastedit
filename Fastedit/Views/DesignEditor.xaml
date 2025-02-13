@@ -19,7 +19,7 @@
         </Grid>
         <StackPanel VerticalAlignment="Top" Margin="0,40,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Margin="5,0,5,0" Content="Apply" Click="ApplyDesign_Click"/>
-            <Button Click="SaveDesign_Click" Content="Save to file" Margin="5,0,5,0" Style="{ThemeResource AccentButtonStyle}"/>
+            <Button Click="SaveDesign_Click" Content="Save to File" Margin="5,0,5,0" Style="{ThemeResource AccentButtonStyle}"/>
         </StackPanel>
         <ScrollViewer Margin="0,80,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
             <StackPanel Margin="30,30,30,30">
@@ -33,7 +33,7 @@
                     </StackPanel>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Background color">
+                <controls:SettingsControl Header="Background Color">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="100" SelectionChanged="BackgroundType_Changed" SelectedIndex="{x:Bind currentDesign.BackgroundType, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="Acrylic"/>
@@ -45,27 +45,27 @@
                     </StackPanel>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Text color">
+                <controls:SettingsControl Header="Text Color">
                     <controls:ColorPickerButton ColorChanged="TextColor_Changed" Color="{x:Bind currentDesign.TextColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Selection color">
+                <controls:SettingsControl Header="Selection Color">
                     <controls:ColorPickerButton ColorChanged="SelectionColor_Changed" Color="{x:Bind currentDesign.SelectionColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Linenumber color">
+                <controls:SettingsControl Header="Line Number Color">
                     <controls:ColorPickerButton ColorChanged="LinenumberColor_Changed" Color="{x:Bind currentDesign.LineNumberColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Linenumber background color">
+                <controls:SettingsControl Header="Line Number Background Color">
                     <controls:ColorPickerButton ColorChanged="LinenumberBackgroundColor_Changed" Color="{x:Bind currentDesign.LineNumberBackground}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Linehighlighter background color">
+                <controls:SettingsControl Header="Line Highlighter Background Color">
                     <controls:ColorPickerButton ColorChanged="LinehighlighterColor_Changed" Color="{x:Bind currentDesign.LineHighlighterBackground}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Textbox background color">
+                <controls:SettingsControl Header="Textbox Background Color">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="100" SelectionChanged="TextboxBackgroundtype_Changed" SelectedIndex="{x:Bind currentDesign.TextboxBackgroundType, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="Acrylic"/>
@@ -76,35 +76,35 @@
                     </StackPanel>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Search highlight color">
+                <controls:SettingsControl Header="Search Highlight Color">
                     <controls:ColorPickerButton ColorChanged="SearchHighlightColor_Changed" Color="{x:Bind currentDesign.SearchHighlightColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Cursor color">
+                <controls:SettingsControl Header="Cursor Color">
                     <controls:ColorPickerButton ColorChanged="CursorColor_Changed" Color="{x:Bind currentDesign.CursorColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Selected tab text color">
+                <controls:SettingsControl Header="Selected Tab Text Color">
                     <controls:ColorPickerButton ColorChanged="SelectedTabTextColor_Changed" Color="{x:Bind currentDesign.SelectedTabPageHeaderTextColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Unselected tab text color">
+                <controls:SettingsControl Header="Unselected Tab Text Color">
                     <controls:ColorPickerButton ColorChanged="UnselectedTabTextColor_Changed" Color="{x:Bind currentDesign.UnSelectedTabPageHeaderTextColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Selected tab background color">
+                <controls:SettingsControl Header="Selected Tab Background Color">
                     <controls:ColorPickerButton ColorChanged="SelectedTabBackgroundColor_Changed" Color="{x:Bind currentDesign.SelectedTabPageHeaderBackground}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Unselected tab background color">
+                <controls:SettingsControl Header="Unselected Tab Background Color">
                     <controls:ColorPickerButton ColorChanged="UnselectedTabBackgroundColor_Changed" Color="{x:Bind currentDesign.UnselectedTabPageHeaderBackground}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Statusbar text color">
+                <controls:SettingsControl Header="Statusbar Text Color">
                     <controls:ColorPickerButton ColorChanged="StatusbarTextColor_Changed" Color="{x:Bind currentDesign.StatusbarTextColor}"/>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Statusbar background color">
+                <controls:SettingsControl Header="Statusbar Background Color">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="100" SelectionChanged="StatusbarBackgroundType_Changed" SelectedIndex="{x:Bind currentDesign.StatusbarBackgroundType, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="Acrylic"/>
@@ -115,7 +115,7 @@
                     </StackPanel>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Dialog background color">
+                <controls:SettingsControl Header="Dialog Background Color">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="100" SelectionChanged="DialogBackgroundType_Changed" SelectedIndex="{x:Bind currentDesign.DialogBackgroundType, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="Acrylic"/>
@@ -126,7 +126,7 @@
                     </StackPanel>
                 </controls:SettingsControl>
 
-                <controls:SettingsControl Header="Dialog text color">
+                <controls:SettingsControl Header="Dialog Text Color">
                     <controls:ColorPickerButton ColorChanged="DialogTextColor_Changed" Color="{x:Bind currentDesign.DialogTextColor}"/>
                 </controls:SettingsControl>
             </StackPanel>

@@ -46,7 +46,7 @@ namespace Fastedit.Storage
             }
             catch (UnauthorizedAccessException)
             {
-                InfoMessages.NoAccesToSaveFile();
+                InfoMessages.NoAccessToSaveFile();
             }
             catch (Exception ex)
             {

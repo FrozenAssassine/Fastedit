@@ -18,7 +18,7 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Recycle bin",
+                Title = "Recycle Bin",
                 CloseButtonText = "Close",
                 Content = new RecycleBinDialogPage(tabView),
                 XamlRoot = App.m_window.Content.XamlRoot

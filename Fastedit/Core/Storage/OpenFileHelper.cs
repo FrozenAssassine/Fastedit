@@ -41,7 +41,7 @@ namespace Fastedit.Storage
             }
             catch (UnauthorizedAccessException)
             {
-                InfoMessages.NoAccesToReadFile();
+                InfoMessages.NoAccessToReadFile();
                 return (null, null, false);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace Fastedit.Storage
             }
             catch (UnauthorizedAccessException)
             {
-                InfoMessages.NoAccesToReadFile();
+                InfoMessages.NoAccessToReadFile();
             }
             catch (Exception ex)
             {

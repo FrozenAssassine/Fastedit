@@ -37,14 +37,14 @@ namespace Fastedit.Dialogs
 
                     content.AppendLine("Path: " + tab.DatabaseItem.FilePath);
                     content.AppendLine("Created: " + file.DateCreated.ToString("G"));
-                    content.AppendLine("Last modified: " + fileProperties.DateModified.ToString("G"));
+                    content.AppendLine("Last Modified: " + fileProperties.DateModified.ToString("G"));
                     content.AppendLine("Size: " + SizeCalculationHelper.SplitSize(fileProperties.Size));
                 }
                 catch (FileNotFoundException) {  }
             }
 
             if (tab.textbox.SyntaxHighlighting != null)
-                content.AppendLine("Code language: " + tab.textbox.SyntaxHighlighting.Name);
+                content.AppendLine("Language: " + tab.textbox.SyntaxHighlighting.Name);
 
             content.AppendLine("Words: " + tab.CountWords());
             content.AppendLine("Lines: " + tab.textbox.NumberOfLines);

@@ -4,15 +4,13 @@ using System.IO;
 using Windows.ApplicationModel;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using Fastedit.Helper;
 
 namespace Fastedit.Views
 {
     public sealed partial class AboutPage : Page
     {
-        public string AppVersion =>
-            Package.Current.Id.Version.Major + "." +
-            Package.Current.Id.Version.Minor + "." +
-            Package.Current.Id.Version.Build;
+        public string AppVersion => VersionHelper.GetCurrentVersion();
 
         public AboutPage()
         {

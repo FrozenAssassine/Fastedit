@@ -13,7 +13,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Surround selection (Press Tab for more)" FontSize="12" Grid.Row="0"/>
+        <TextBlock Text="Surround Selection (Press Tab)" FontSize="12" Grid.Row="0"/>
         <Grid Grid.Row="1" Margin="0,5,0,0" KeyDown="UserControl_KeyDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

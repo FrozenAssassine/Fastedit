@@ -16,7 +16,7 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Save design?",
+                Title = "Save Design?",
                 Content = "Would you like to save the changes on " + Path.GetFileNameWithoutExtension(editor.CurrentDesignName) + "?",
                 PrimaryButtonText = "Save",
                 SecondaryButtonText = "Don't save",
