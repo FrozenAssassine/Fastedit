@@ -11,8 +11,6 @@ using Windows.Storage;
 using Windows.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
-using WinUIEx;
-using System.Diagnostics;
 using Fastedit.Core.Settings;
 
 namespace Fastedit.Helper
@@ -216,59 +214,20 @@ namespace Fastedit.Helper
             if (window == null)
                 return;
 
-
             if (type == BackgroundType.Acrylic)
             {
-                Debug.WriteLine("Try acrylic");
-                 BackdropHelper.TrySetAcrylicBackdrop(window);
+                 //BackdropHelper.SetAcrylicBackdrop(window, color, ThemeHelper.CurrentTheme);
             }
             else if (type == BackgroundType.Solid)
             {
-                Debug.WriteLine("Try solid");
-
-                //TODO!
-                //= new SolidColorBrush { Color = color };
+                //BackdropHelper.SetStaticBackdrop(window, color);
             }
             else if (type == BackgroundType.Mica)
             {
-                Debug.WriteLine("Try acrylic");
-
-                BackdropHelper.TrySetMicaBackdrop(window);
-            }
-            else if(type == BackgroundType.Transparent)
-            {
-                Debug.WriteLine("Try Transparent");
-
-                window.SystemBackdrop = new TransparentTintBackdrop { TintColor = color };
+                //BackdropHelper.TrySetMicaBackdrop(window);
             }
         }
 
-        public static void SetBackground(Control element, Color color, BackgroundType type)
-        {
-            if (element == null)
-                return;
-
-            //remove mica
-            int transparency = color.A;
-            color.A = 255;
-            if (type == BackgroundType.Transparent)
-            {
-                element.Background = null;
-            }
-            else if (type == BackgroundType.Acrylic)
-            {
-                element.Background = new AcrylicBrush
-                {
-                    TintColor = color,
-                    TintOpacity = transparency / 255.0,
-                    FallbackColor = color,
-                };
-            }
-            else if (type == BackgroundType.Solid)
-            {
-                element.Background = new SolidColorBrush { Color = color };
-            }
-        }
         public static Brush CreateBackgroundBrush(Color color, ControlBackgroundType type)
         {
             int transparency = color.A;
@@ -378,7 +337,7 @@ namespace Fastedit.Helper
     }
     public enum BackgroundType
     {
-        Acrylic, Solid, Mica, Transparent
+        Acrylic, Solid, Mica
     }
     public enum ControlBackgroundType
     {

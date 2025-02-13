@@ -14,7 +14,7 @@ public class DesignGridViewHelper
         return new DesignGridViewItem
         {
             TextColor = new SolidColorBrush(ConvertHelper.ToColor(design.TextColor)),
-            AppBackground = design.BackgroundType == BackgroundType.Transparent ? null : new SolidColorBrush(design.BackgroundType == BackgroundType.Mica ? ConvertHelper.GetColorFromTheme(design.Theme) : ConvertHelper.ToColor(design.BackgroundColor)),
+            AppBackground = new SolidColorBrush(design.BackgroundType == BackgroundType.Mica ? ConvertHelper.GetColorFromTheme(design.Theme) : ConvertHelper.ToColor(design.BackgroundColor)),
             TabPageBackground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderBackground)),
             FileName = DesignHelper.GetFileNameFromPath(path),
             DisplayName = DesignHelper.GetDesignNameFromPath(path),

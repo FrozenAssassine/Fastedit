@@ -75,7 +75,7 @@ namespace Fastedit.Core.Settings
                 }
                 else if (SettingsTabPageHelper.IsSettingsPage(tabView.TabItems[i]))
                 {
-                    DesignHelper.SetBackground(tabView.TabItems[i] as TabViewItem, ConvertHelper.ToColor(currentDesign.BackgroundColor), currentDesign.BackgroundType);
+                    (tabView.TabItems[i] as TabViewItem).Background = DesignHelper.CreateBackgroundBrush(ConvertHelper.ToColor(currentDesign.TextBoxBackground), currentDesign.TextboxBackgroundType);
                 }
             }
 
@@ -124,9 +124,9 @@ namespace Fastedit.Core.Settings
             textStatusBar.IsVisible = AppSettings.ShowStatusbar;
         }
 
-        public static void SetWindowBackground(Window window, FasteditDesign currentDesign)
+        public static void SetWindowBackground(BackdropWindowManager backdropManager, FasteditDesign currentDesign)
         {
-            DesignHelper.SetBackground(window, ConvertHelper.ToColor(currentDesign.BackgroundColor), currentDesign.BackgroundType);
+            backdropManager.SetBackdrop(DesignHelper.CurrentDesign.BackgroundType, DesignHelper.CurrentDesign);
         }
 
         public static void SetTitlebarSettings(FasteditDesign design)
@@ -157,7 +157,7 @@ namespace Fastedit.Core.Settings
             SetTabViewSettings(tabView, currentDesign);
 
             //MainWindow
-            SetWindowBackground(App.m_window, currentDesign);
+            SetWindowBackground(App.m_window.backdropManager, currentDesign);
 
             SetTitlebarSettings(currentDesign);
 

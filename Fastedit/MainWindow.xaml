@@ -6,7 +6,6 @@
     xmlns:local="using:Fastedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:winuiex="using:WinUIEx"
     mc:Ignorable="d">
     <Grid>
         <local:MainPage x:Name="mainPage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
