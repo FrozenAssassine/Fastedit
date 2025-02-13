@@ -28,7 +28,6 @@ namespace Fastedit.Core
         {
             if (Windows.System.DispatcherQueue.GetForCurrentThread() != null)
             {
-                // one already exists, so we'll just use it.
                 return;
             }
 
@@ -134,7 +133,12 @@ namespace Fastedit.Core
 
         private void SetStaticBackground(FasteditDesign design, bool clear = false)
         {
-            var grid = window.Content as Grid;
+            Grid grid;
+            if(window.Content is Page page)
+                grid = page.Content as Grid;
+            else 
+                grid = window.Content as Grid;
+
             grid.Background = clear ? null : new SolidColorBrush(ConvertHelper.ToColor(design.BackgroundColor));
         }
 
@@ -171,9 +175,9 @@ namespace Fastedit.Core
         {
             switch (((FrameworkElement)window.Content).ActualTheme)
             {
-                case ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
-                case ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;
-                case ElementTheme.Default: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Default; break;
+                case ElementTheme.Dark: m_configurationSource.Theme = SystemBackdropTheme.Dark; break;
+                case ElementTheme.Light: m_configurationSource.Theme = SystemBackdropTheme.Light; break;
+                case ElementTheme.Default: m_configurationSource.Theme = SystemBackdropTheme.Default; break;
             }
         }
     }
