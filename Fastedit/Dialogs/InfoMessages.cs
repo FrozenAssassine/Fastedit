@@ -54,6 +54,11 @@ public class InfoMessages
             TabPageHelper.mainPage.ShowSettings("AboutPage");
         };
 
-        new InfoBar().Show("New Version", "Welcome to Fastedit version " + version, btn, InfoBarSeverity.Success, 8);
+        new InfoBar().Show("New Version",
+            $"Welcome to Fastedit {version}!\nSome settings may not have loaded due to framework changes.\nBut now you have more file access rights, including saving and renaming drag-and-drop files.",
+            btn, 
+            InfoBarSeverity.Success, 
+            25
+            );
     }
 }

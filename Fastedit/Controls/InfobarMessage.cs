@@ -8,7 +8,7 @@ namespace Fastedit.Controls
 {
     public static class InfobarMessage
     {
-        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8)
         {
             Show(infobar, title, message, null, severity, showSeconds);
         }
@@ -19,6 +19,7 @@ namespace Fastedit.Controls
             infobar.ActionButton = actionButton;
             infobar.Severity = severity;
             infobar.IsOpen = true;
+            infobar.MaxWidth = 500;
             //this.Background = DialogHelper.ContentDialogBackground();
             //this.Foreground = DialogHelper.ContentDialogForeground();
             infobar.RequestedTheme = DialogHelper.DialogDesign;
