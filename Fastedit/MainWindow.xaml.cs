@@ -1,3 +1,4 @@
+using Fastedit.Helper;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -25,7 +26,6 @@ namespace Fastedit
             XamlRoot = this.Content.XamlRoot;
             UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
             InfoMessagesPanel = this.infoMessagesPanel;
-
             this.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
 
             SetTitleBar(mainPage.TitleBarGrid);
@@ -37,6 +37,12 @@ namespace Fastedit
         public void SendLaunchArguments()
         {
             mainPage.TriggerAppActivationAfterStart();
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            if (BackdropHelper.currentBackdropConfig != null)
+                BackdropHelper.currentBackdropConfig.IsInputActive = true;
         }
     }
 }
