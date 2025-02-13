@@ -53,10 +53,6 @@ namespace Fastedit.Controls
         {
             StatusbarItemClick?.Invoke(this, button);
         }
-        private void Copy_click(object sender, RoutedEventArgs e)
-        {
-            ClipboardHelper.Copy(ChangingText);
-        }
 
         private void flyout_Opening(object sender, object e)
         {

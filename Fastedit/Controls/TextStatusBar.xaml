@@ -34,7 +34,11 @@
             </controls:StatusbarItem.FlyoutContent>
         </controls:StatusbarItem>
         <controls:StatusbarItem Grid.Column="2" HorizontalAlignment="Left" StaticText="" x:Name="ItemWordCharacter"/>
-        <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Right" StaticText="Ln: " x:Name="ItemLineColumn"/>
+        <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Right" StaticText="Ln: " x:Name="ItemLineColumn" FlyoutOpening="ItemLineColumn_FlyoutOpening">
+            <controls:StatusbarItem.FlyoutContent>
+                <NumberBox Minimum="1" ValueChanged="GoToLineNumberBox_ValueChanged" Padding="5" Width="120" x:Name="GoToLineNumberBox" Header="Go To Line" PlaceholderText="Line..." KeyDown="GoToLineTextbox_KeyDown"/>
+            </controls:StatusbarItem.FlyoutContent>
+        </controls:StatusbarItem>
         <controls:StatusbarItem Grid.Column="4" HorizontalAlignment="Left" StaticText="" x:Name="ItemEncoding">
             <controls:StatusbarItem.CustomFlyout>
                 <MenuFlyout x:Name="EncodingFlyout">

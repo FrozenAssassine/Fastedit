@@ -12,8 +12,10 @@ namespace Fastedit.Controls;
 public sealed partial class TextStatusBar : UserControl
 {
     public Dictionary<string, StatusbarItem> StatusbarSortingNames;
+    private bool goToLineEnterPressed = false;
 
     public TabPageItem tabPage { get; set; }
+    
     private bool _IsVisible = true;
     public bool IsVisible { get => _IsVisible; set { _IsVisible = value; this.Visibility = ConvertHelper.BoolToVisibility(value); } }
 
@@ -176,7 +178,37 @@ public sealed partial class TextStatusBar : UserControl
             return;
 
         await RenameFileDialog.Show(this.tabPage);
-
         UpdateFile();
+    }
+
+    private void ItemLineColumn_FlyoutOpening()
+    {
+        if (this.tabPage == null)
+            return;
+
+        GoToLineNumberBox.Maximum = this.tabPage.textbox.NumberOfLines;
+    }
+
+
+    private void GoToLineTextbox_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        if (this.tabPage == null)
+            return;
+
+        if (e.Key == Windows.System.VirtualKey.Enter)
+        {
+            goToLineEnterPressed = true;
+        }
+    }
+
+    private void GoToLineNumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+    {
+        if (goToLineEnterPressed)
+        {
+            goToLineEnterPressed = false;
+            this.tabPage.textbox.GoToLine((int)GoToLineNumberBox.Value - 1);
+
+            ItemLineColumn.HideFlyout();
+        }
     }
 }
