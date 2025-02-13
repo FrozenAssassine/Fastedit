@@ -68,6 +68,7 @@ namespace Fastedit.Helper
                         InfoMessages.SaveDesignSucceeded();
                         OpenWindows.RemoveAt(index);
                         args.Cancel = false;
+                        window.Close();
                     }
                     else
                     {
@@ -77,6 +78,7 @@ namespace Fastedit.Helper
                 case Microsoft.UI.Xaml.Controls.ContentDialogResult.Secondary:
                     OpenWindows.RemoveAt(index);
                     args.Cancel = false;
+                    window.Close();
                     break;
                 default:
                     break;
