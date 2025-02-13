@@ -1,5 +1,5 @@
 ﻿#Version 2.6.0 [20.02.2025]
-	• transitioned form UWP to WinUI-3
+	• transitioned from UWP to WinUI-3
 	• more rights to open and save files even with drag drop
 	• remvoved share option in rightclick menu on tab
 	• added statusbar in undocked document/tab
@@ -13,6 +13,7 @@
 	• fixed a bug, where opening a file using rightclick would create a new tab sometimes
 	• fixed a bug, where the app crashed when closing settings as last tab
 	• fixed a bug, where close all lead to crash if a tab was not loaded yet
+	• fixed a bug, where the quick access did not focus the items in a sub categorie
 
 ---
 #Version 2.5.0 [09.09.2023]

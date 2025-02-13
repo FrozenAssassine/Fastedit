@@ -73,6 +73,12 @@ namespace Fastedit.Helper
 
             try
             {
+                if(!force && Directory.Exists(DefaultValues.DesignPath) && Directory.GetFiles(DefaultValues.DesignPath).Length > 0)
+                {
+                    //the directory already contain designs
+                    return;
+                }
+
                 string installedLocation = $"{Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\Designs";
                 foreach (var file in Directory.GetFiles(installedLocation))
                 {
