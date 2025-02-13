@@ -27,7 +27,7 @@ public class InfoMessages
     public static void DeleteDesignError(string design = "") => new InfoBar().Show("Delete Design", "Could not delete design" + (design.Length > 0 ? "\n" + design : ""), InfoBarSeverity.Error);
     public static void ImportDesignError() => new InfoBar().Show("Import Design", "Could not import design", InfoBarSeverity.Error);
     public static void ExportDesignError() => new InfoBar().Show("Export Design", "Could not export design", InfoBarSeverity.Error);
-    public static void OneDesignNeedsToBeLeft() => new InfoBar().Show("Could Not Delete", "Could not delete the design because at least one design must always remain", InfoBarSeverity.Warning);
+    public static void OneDesignMustRemain() => new InfoBar().Show("Could Not Delete", "Could not delete the design because at least one design must remain", InfoBarSeverity.Warning);
     public static void SaveDesignError() => new InfoBar().Show("Save Design", "Could not save the design", InfoBarSeverity.Error);
     public static void SaveDesignSucceeded() => new InfoBar().Show("Save Design", "The design was saved successfully", InfoBarSeverity.Success);
     public static void CloseDesignEditor() => new InfoBar().Show("Close Design Editor", "Please close all instances of the design editor", InfoBarSeverity.Warning);

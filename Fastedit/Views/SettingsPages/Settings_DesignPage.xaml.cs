@@ -53,11 +53,11 @@ namespace Fastedit.Views.SettingsPages
                 InfoMessages.ImportDesignError();
         }
 
-        private async void DeleteDesign_Click(object sender, RoutedEventArgs e)
+        private void DeleteDesign_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem item && item.Tag != null)
             {
-                if (await DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
+                if (DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
                     UpdateDesigns_Click(null, null);
                 else
                     InfoMessages.DeleteDesignError();
@@ -107,6 +107,14 @@ namespace Fastedit.Views.SettingsPages
         {
             string fileName = (sender as MenuFlyoutItem).Tag.ToString();
             TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
+        }
+
+        private void DuplicateDesign_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = (sender as MenuFlyoutItem).Tag.ToString();
+            var duplicateFileName = DesignHelper.DuplicateDesign(fileName);
+            if (duplicateFileName != null)
+                DesignGridViewHelper.UpdateItems(designGridView);
         }
     }
 }

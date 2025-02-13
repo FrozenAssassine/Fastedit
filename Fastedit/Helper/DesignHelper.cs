@@ -147,6 +147,20 @@ namespace Fastedit.Helper
             }
         }
 
+        public static string DuplicateDesign(string designName)
+        {
+            if (string.IsNullOrEmpty(designName))
+                return null;
+
+            var sourcePath = Path.Join(DefaultValues.DesignPath, designName);
+
+            var path = Path.GetDirectoryName(sourcePath);
+            var duplicateFileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(path, designName));
+
+            File.Copy(sourcePath, Path.Join(path, duplicateFileName));
+            return duplicateFileName;
+        }
+
         public static FasteditDesign LoadDefaultDesign()
         {
             string installedLocation = $"{Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\Designs" + DefaultValues.DefaultDesignName;
@@ -278,17 +292,14 @@ namespace Fastedit.Helper
 
         public static async Task<bool> ExportDesign(string designName)
         {
-            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
-            if (file == null)
-                return false; 
-            
-            var newFile = await SaveFileHelper.PickFile(".json", "Json");
+            var newFile = await SaveFileHelper.PickFile(".json", "Json", designName);
             if (newFile.Length == 0)
-                return true; //no file was picked
+                return true;
 
             try
             {
-                File.WriteAllText(newFile, await FileIO.ReadTextAsync(file));
+                var currentFileContent = File.ReadAllText(Path.Combine(DefaultValues.DesignPath, designName));
+                File.WriteAllText(newFile, currentFileContent);
                 return true;
             }
             catch { }
@@ -312,19 +323,14 @@ namespace Fastedit.Helper
             catch { }
             return false;
         }
-        public static async Task<bool> DeleteDesign(string designName, GridView designGridView)
+        public static bool DeleteDesign(string designName, GridView designGridView)
         {
-            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
-            if (file == null)
-                return false;
-
-            //when the active design was deleted
             if (designName.Equals(AppSettings.CurrentDesign))
             {
                 var files = Directory.GetFiles(DefaultValues.DesignPath);
                 if (files.Length <= 1)
                 {
-                    InfoMessages.OneDesignNeedsToBeLeft();
+                    InfoMessages.OneDesignMustRemain();
                     return true;
                 }
 
@@ -333,11 +339,12 @@ namespace Fastedit.Helper
 
                 AppSettings.CurrentDesign = Path.GetFileName(files[0]);
             }
+
             if(designGridView.Items.Count  == 1)
                 designGridView.SelectedIndex = 0;
             try
             {
-                await file.DeleteAsync();
+                File.Delete(Path.Combine(DefaultValues.DesignPath, designName));
                 return true;
             }
             catch { }
