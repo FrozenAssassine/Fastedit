@@ -32,7 +32,7 @@ namespace Fastedit.Helper
             window.ExtendsContentIntoTitleBar = true;
             window.AppWindow.Closing += AppWindow_Closing;
             window.Content = new DesignEditor(design, designName);
-            window.Title = "Edit design " + designName;
+            window.Title = "Edit Design " + designName;
 
             window.Activate();
 
