@@ -26,6 +26,9 @@ namespace Fastedit.Core.Tab
 
         private void TabPageItem_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            if (e.KeyModifiers != Windows.System.VirtualKeyModifiers.Shift)
+                return;
+
             int scroll = e.GetCurrentPoint(sender as UIElement).Properties.MouseWheelDelta / 120;
             if (scroll > 0)
                 TabPageHelper.SelectNextTab(tabView);
