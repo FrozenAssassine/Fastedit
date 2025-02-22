@@ -27,7 +27,7 @@
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.0-alpha" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.0-alpha.2" />
 	  <PackageReference Include="WinUIEx" Version="2.5.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
