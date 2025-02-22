@@ -131,12 +131,19 @@ namespace Fastedit
                 args.Cancel = true;
                 return;
             }
+
             args.Data.RequestedOperation = DataPackageOperation.Move;
         }
         private async void tabControl_TabDragCompleted(TabView sender, TabViewTabDragCompletedEventArgs args)
         {
             if (args.Tab == SettingsTabPageHelper.settingsPage)
                 return;
+
+            if (args.DropResult == DataPackageOperation.Move)
+            {
+                return; // Tab was reordered inside the tab control, no need to open a new window
+            }
+
 
             await TabWindowHelper.ShowInNewWindow(tabControl, args.Tab as TabPageItem);
         }
