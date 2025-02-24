@@ -1,72 +1,64 @@
-﻿using Fastedit.Models;
-using Fastedit.Settings;
-using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Models;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
-namespace Fastedit.Helper
+namespace Fastedit.Helper;
+
+public class DesignGridViewHelper
 {
-    public class DesignGridViewHelper
+    //Manage the GridView with design items
+    public static DesignGridViewItem CreateItem(FasteditDesign design, string path)
     {
-        //Manage the GridView with design items
-        public static DesignGridViewItem CreateItem(FasteditDesign design, string designName)
+        return new DesignGridViewItem
         {
-            return new DesignGridViewItem
-            {
-                TextColor = new SolidColorBrush(ConvertHelper.ToColor(design.TextColor)),
-                AppBackground = design.BackgroundType == BackgroundType.Null ? null : new SolidColorBrush(design.BackgroundType == BackgroundType.Mica ? ConvertHelper.GetColorFromTheme(design.Theme) : ConvertHelper.ToColor(design.BackgroundColor)),
-                TabPageBackground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderBackground)),
-                DesignName = designName,
-                LineNumberBackground = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberBackground)),
-                LineNumberColor = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberColor)),
-                TextBoxBackground = new SolidColorBrush(ConvertHelper.ToColor(design.TextBoxBackground)),
-                Width = 200,
-                Height = 130
-            };
-        }
-        public static async Task LoadItems(GridView designGridView)
+            TextColor = new SolidColorBrush(ConvertHelper.ToColor(design.TextColor)),
+            AppBackground = new SolidColorBrush(design.BackgroundType == BackgroundType.Mica ? ConvertHelper.GetColorFromTheme(design.Theme) : ConvertHelper.ToColor(design.BackgroundColor)),
+            TabPageBackground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderBackground)),
+            FileName = DesignHelper.GetFileNameFromPath(path),
+            DisplayName = DesignHelper.GetDesignNameFromPath(path),
+            LineNumberBackground = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberBackground)),
+            LineNumberColor = new SolidColorBrush(ConvertHelper.ToColor(design.LineNumberColor)),
+            TextBoxBackground = new SolidColorBrush(ConvertHelper.ToColor(design.TextBoxBackground)),
+            Width = 200,
+            Height = 130
+        };
+    }
+    public static void LoadItems(GridView designGridView)
+    {
+        int index = 0;
+        int toSelectIndex = 0;
+        string currentDesign = AppSettings.CurrentDesign;
+
+        foreach(var designFile in DesignHelper.GetDesignsFilesFromFolder())
         {
-            if (!Directory.Exists(DefaultValues.DesignPath))
+            index++;
+            var design = DesignHelper.GetDesignFromFile(designFile);
+            if (design == null)
+                continue;
+
+            string fileName = DesignHelper.GetFileNameFromPath(designFile);
+            designGridView.Items.Add(CreateItem(design, fileName));
+
+            if (Path.GetFileName(currentDesign).Equals(fileName))
             {
-                AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, "0");
-                await DesignHelper.CopyDefaultDesigns();
-                return;
-            }
-
-            var files = Directory.GetFiles(DefaultValues.DesignPath);
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                var design = DesignHelper.GetDesignFromFile(files[i]);
-                if (design != null)
-                {
-                    string name = DesignHelper.GetDesingNameFromPath(files[i]);
-                    designGridView.Items.Add(CreateItem(design, name));
-
-                    if (AppSettings.GetSettings(AppSettingsValues.Settings_DesignName) == name)
-                    {
-                        designGridView.SelectedIndex = i >= designGridView.Items.Count ? 0 : i;
-                    }
-                }
+                toSelectIndex = index - 1;
             }
         }
-        public static void GridViewClick(ItemClickEventArgs e)
+        designGridView.SelectedIndex = toSelectIndex;
+    }
+    public static void GridViewClick(ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is DesignGridViewItem item && item != null)
         {
-            if (e.ClickedItem is DesignGridViewItem item && item != null)
-            {
-                AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, item.DesignName);
-                TabPageHelper.mainPage.ApplySettings();
-
-                CursorHelper.SetArrow();
-            }
+            AppSettings.CurrentDesign = item.FileName;
+            TabPageHelper.mainPage.ApplySettings();
         }
-        public static async void UpdateItems(GridView designGridView)
-        {
-            designGridView.Items.Clear();
-            await LoadItems(designGridView);
-        }
+    }
+    public static void UpdateItems(GridView designGridView)
+    {
+        designGridView.Items.Clear();
+        LoadItems(designGridView);
     }
 }

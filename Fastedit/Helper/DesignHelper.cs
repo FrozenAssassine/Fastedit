@@ -1,6 +1,5 @@
 using Fastedit.Dialogs;
 using Fastedit.Models;
-using Fastedit.Settings;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
@@ -10,9 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Fastedit.Core.Settings;
 
 namespace Fastedit.Helper
 {
@@ -20,18 +19,18 @@ namespace Fastedit.Helper
     {
         public static FasteditDesign CurrentDesign = null;
 
-        public static async Task LoadDesign()
+        public static void LoadDesign()
         {
-            var designName = AppSettings.GetSettings(AppSettingsValues.Settings_DesignName, DefaultValues.DefaultDesignName);
+            var designName = AppSettings.CurrentDesign;
             string path = Path.Combine(DefaultValues.DesignPath, designName);
 
             if (File.Exists(path))
             {
                 CurrentDesign = GetDesignFromFile(path);
             }
-            //When the design could not get loaded, load alternative design:
+            //if the design could not get loaded, load alternative design:
             if (CurrentDesign == null)
-                CurrentDesign = await LoadDefaultDesign();
+                CurrentDesign = LoadDefaultDesign();
 
             //if the design still could not get loaded, load some data
             if (CurrentDesign == null)
@@ -63,49 +62,69 @@ namespace Fastedit.Helper
                 };
             }
         }
-        public static async Task CopyDefaultDesigns()
+        public static void CopyDefaultDesigns(bool force = false)
         {
-            if (AppSettings.GetSettingsAsInt(AppSettingsValues.DesignLoaded) != 0)
+            if (!force && AppSettings.DesignLoaded)
                 return;
 
-            //the designs are not loaded into the folder
-            AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 1);
+            AppSettings.DesignLoaded = true;
 
             try
             {
-                string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-                StorageFolder sourceFolder = await StorageFolder.GetFolderFromPathAsync($"{root}\\Assets\\Designs");
-                StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
-
-                var files = await sourceFolder.GetFilesAsync();
-                foreach (var file in files)
+                if(!force && Directory.Exists(DefaultValues.DesignPath) && Directory.GetFiles(DefaultValues.DesignPath).Length > 0)
                 {
-                    if (file != null)
-                        await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
+                    //the directory already contain designs
+                    return;
+                }
+
+                string installedLocation = $"{Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\Designs";
+                foreach (var file in Directory.GetFiles(installedLocation))
+                {
+                    if (string.IsNullOrEmpty(file))
+                        continue;
+
+                    File.Copy(file, Path.Combine(DefaultValues.DesignPath, Path.GetFileName(file)), true);
                 }
             }
             catch
             {
-                AppSettings.SaveSettings(AppSettingsValues.DesignLoaded, 0);
+                AppSettings.DesignLoaded = false;
             }
         }
 
-        public static string GetDesingNameFromPath(string path)
+        public static string[] GetDesignsFilesFromFolder()
+        {
+            if (!Directory.Exists(DefaultValues.DesignPath))
+            {
+                AppSettings.DesignLoaded = false;
+                CopyDefaultDesigns();
+                return null;
+            }
+
+            return Directory.GetFiles(DefaultValues.DesignPath);
+        }
+
+        public static string GetFileNameFromPath(string path)
         {
             return Path.GetFileName(path);
         }
-        private static async Task<bool> IsValidDesign(StorageFile file)
+        public static string GetDesignNameFromPath(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path).Replace("_", " ");
+        }
+
+        private static bool IsValidDesign(string file)
         {
             if (file == null)
                 return false;
 
             try
             {
-                return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file)) != null;
+                return JsonConvert.DeserializeObject<FasteditDesign>(File.ReadAllText(file)) != null;
             }
             catch (Exception ex)
             {
-                InfoMessages.DesignLoadError(file.DisplayName, ex);
+                InfoMessages.DesignLoadError(Path.GetFileName(file), ex);
             }
 
             return false;
@@ -121,18 +140,31 @@ namespace Fastedit.Helper
             }
             catch (Exception ex)
             {
-                InfoMessages.DesignLoadError(GetDesingNameFromPath(path), ex);
+                InfoMessages.DesignLoadError(GetFileNameFromPath(path), ex);
                 return null;
             }
         }
 
-        public static async Task<FasteditDesign> LoadDefaultDesign()
+        public static string DuplicateDesign(string designName)
         {
-            string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+            if (string.IsNullOrEmpty(designName))
+                return null;
+
+            var sourcePath = Path.Join(DefaultValues.DesignPath, designName);
+
+            var path = Path.GetDirectoryName(sourcePath);
+            var duplicateFileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(path, designName));
+
+            File.Copy(sourcePath, Path.Join(path, duplicateFileName));
+            return duplicateFileName;
+        }
+
+        public static FasteditDesign LoadDefaultDesign()
+        {
+            string installedLocation = $"{Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\Designs" + DefaultValues.DefaultDesignName;
             try
             {
-                var file = await StorageFile.GetFileFromPathAsync($"{root}\\Assets\\Designs" + DefaultValues.DefaultDesignName);
-                return JsonConvert.DeserializeObject<FasteditDesign>(await FileIO.ReadTextAsync(file));
+                return JsonConvert.DeserializeObject<FasteditDesign>(File.ReadAllText(installedLocation));
             }
             catch (FileNotFoundException)
             {
@@ -151,25 +183,24 @@ namespace Fastedit.Helper
             return true;
         }
 
-        public static async Task<StorageFile> CreateDesign(string name)
+        public static string CreateDesign(string name)
         {
             if (name == null)
                 return null;
 
-            var folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
-            var designFile = await folder.CreateFileAsync(name);
-
+            var path = Path.Combine(DefaultValues.DesignPath, name);
             var design = new FasteditDesign();
-            await SaveDesign(design, designFile);
-            return designFile;
+            if(SaveDesign(design, path))
+                return path;
+            return null;
         }
         
-        public static async Task<bool> SaveDesign(FasteditDesign design, StorageFile file)
+        public static bool SaveDesign(FasteditDesign design, string path)
         {
             try
             {
                 string data = JsonConvert.SerializeObject(design);
-                await FileIO.WriteTextAsync(file, data);
+                File.WriteAllText(path, data);
                 return true;
             }
             catch
@@ -178,40 +209,25 @@ namespace Fastedit.Helper
             }
         }
 
-        public static void SetBackground(Control element, Color color, BackgroundType type)
+        public static void SetBackground(Window window, Color color, BackgroundType type)
         {
-            if (element == null)
+            if (window == null)
                 return;
 
-            //remove mica
-            if (BackdropMaterial.GetApplyToRootOrPageBackground(element) && type != BackgroundType.Mica)
-                BackdropMaterial.SetApplyToRootOrPageBackground(element, false);
-
-            int transparency = color.A;
-            color.A = 255;
-            if (type == BackgroundType.Null)
+            if (type == BackgroundType.Acrylic)
             {
-                element.Background = null;
-            }
-            else if (type == BackgroundType.Acrylic)
-            {
-                element.Background = new AcrylicBrush
-                {
-                    TintColor = color,
-                    TintOpacity = transparency / 255.0,
-                    FallbackColor = color,
-                    BackgroundSource = AcrylicBackgroundSource.HostBackdrop,
-                };
+                 //BackdropHelper.SetAcrylicBackdrop(window, color, ThemeHelper.CurrentTheme);
             }
             else if (type == BackgroundType.Solid)
             {
-                element.Background = new SolidColorBrush { Color = color };
+                //BackdropHelper.SetStaticBackdrop(window, color);
             }
             else if (type == BackgroundType.Mica)
             {
-                BackdropMaterial.SetApplyToRootOrPageBackground(element, true);
+                //BackdropHelper.TrySetMicaBackdrop(window);
             }
         }
+
         public static Brush CreateBackgroundBrush(Color color, ControlBackgroundType type)
         {
             int transparency = color.A;
@@ -219,12 +235,11 @@ namespace Fastedit.Helper
 
             if (type == ControlBackgroundType.Acrylic)
             {
-                return new Windows.UI.Xaml.Media.AcrylicBrush
+                return new AcrylicBrush
                 {
                     TintColor = color,
                     TintOpacity = transparency / 255.0,
                     FallbackColor = color,
-                    BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.Backdrop,
                 };
             }
             else if (type == ControlBackgroundType.Solid)
@@ -236,17 +251,14 @@ namespace Fastedit.Helper
 
         public static async Task<bool> ExportDesign(string designName)
         {
-            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
-            if (file == null)
-                return false; 
-            
-            var newFile = await SaveFileHelper.PickFile(".json", "Json");
-            if (newFile == null)
-                return true; //no file was picked
+            var newFile = await SaveFileHelper.PickFile(".json", "Json", designName);
+            if (newFile.Length == 0)
+                return true;
 
             try
             {
-                await FileIO.WriteTextAsync(newFile, await FileIO.ReadTextAsync(file));
+                var currentFileContent = File.ReadAllText(Path.Combine(DefaultValues.DesignPath, designName));
+                File.WriteAllText(newFile, currentFileContent);
                 return true;
             }
             catch { }
@@ -255,49 +267,43 @@ namespace Fastedit.Helper
         public static async Task<bool> ImportDesign()
         {
             var file = await OpenFileHelper.PickFile(".json");
-            if (file == null)
+            if (file.Length == 0)
                 return true; //no file was picked
 
             //validate the design
-            var desing = IsValidDesign(file);
-            if (desing == null)
+            if (!IsValidDesign(file))
                 return false;
             try
             {
-                //copy the design to the app folder
-                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(DefaultValues.DesignPath);
-                await file.CopyAsync(folder, file.Name, NameCollisionOption.GenerateUniqueName);
+                string fileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(DefaultValues.DesignPath, Path.GetFileName(file)));
+                File.Copy(file, Path.Join(DefaultValues.DesignPath, fileName));
                 return true;
             }
             catch { }
             return false;
         }
-        public static async Task<bool> DeleteDesign(string designName, GridView designGridView)
+        public static bool DeleteDesign(string designName, GridView designGridView)
         {
-            var file = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, designName));
-            if (file == null)
-                return false;
-
-            //when the active design was deleted
-            if (designName.Equals(AppSettings.GetSettings(AppSettingsValues.Settings_DesignName)))
+            if (designName.Equals(AppSettings.CurrentDesign))
             {
                 var files = Directory.GetFiles(DefaultValues.DesignPath);
                 if (files.Length <= 1)
                 {
-                    InfoMessages.OneDesignNeedsToBeLeft();
+                    InfoMessages.OneDesignMustRemain();
                     return true;
                 }
 
                 //select the item
-                designGridView.SelectedItem = designGridView.Items.FirstOrDefault(x => (x as DesignGridViewItem).DesignName.Equals(designName));
+                designGridView.SelectedItem = designGridView.Items.FirstOrDefault(x => (x as DesignGridViewItem).FileName.Equals(designName));
 
-                AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, Path.GetFileName(files[0]));
+                AppSettings.CurrentDesign = Path.GetFileName(files[0]);
             }
+
             if(designGridView.Items.Count  == 1)
                 designGridView.SelectedIndex = 0;
             try
             {
-                await file.DeleteAsync();
+                File.Delete(Path.Combine(DefaultValues.DesignPath, designName));
                 return true;
             }
             catch { }
@@ -331,7 +337,7 @@ namespace Fastedit.Helper
     }
     public enum BackgroundType
     {
-        Acrylic, Solid, Mica, Null
+        Acrylic, Solid, Mica
     }
     public enum ControlBackgroundType
     {

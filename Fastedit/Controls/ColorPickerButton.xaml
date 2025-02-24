@@ -9,13 +9,13 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Border Margin="0,0,0,0" BorderThickness="1" Width="150" Height="30" BorderBrush="White" CornerRadius="5" Tapped="Rectangle_Tapped" x:Name="Colordisplay">
+    <Border Margin="0,0,0,0" BorderBrush="{ThemeResource TextFillColorPrimaryBrush}" BorderThickness="1" Width="150" Height="30" CornerRadius="5" Tapped="Rectangle_Tapped" x:Name="Colordisplay">
         <Border.Background>
             <SolidColorBrush Color="{x:Bind ColorPickerFlyout.Color, Mode=OneWay}"/>
         </Border.Background>
         <FlyoutBase.AttachedFlyout>
             <Flyout x:Name="flyout" Closed="PickerFlyout_Closed">
-                <muxc:ColorPicker Margin="0,0,0,0" IsMoreButtonVisible="True" x:Name="ColorPickerFlyout" IsAlphaEnabled="True" ColorSpectrumShape="Ring" HorizontalAlignment="Left"/>
+                <ColorPicker Margin="0,0,0,0" IsMoreButtonVisible="True" x:Name="ColorPickerFlyout" IsAlphaEnabled="True" ColorSpectrumShape="Ring" HorizontalAlignment="Left"/>
             </Flyout>
         </FlyoutBase.AttachedFlyout>
     </Border>

@@ -4,8 +4,9 @@ using Fastedit.Views.SettingsPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Input;
 
 namespace Fastedit.Views
 {
@@ -17,7 +18,7 @@ namespace Fastedit.Views
         {
             ("AppPage", typeof(Settings_AppPage), "App"),
             ("TextboxPage", typeof(Settings_DocumentPage), "Textbox"),
-            ("TabviewPage", typeof(Settings_TabControl), "Tabview"),
+            ("TabviewPage", typeof(Settings_TabControl), "Tabs"),
             ("DesignPage", typeof(Settings_DesignPage), "Designs"),
             ("DataPage", typeof(Settings_Data), "Data"),
             ("AboutPage", typeof(AboutPage), "About"),
@@ -57,12 +58,12 @@ namespace Fastedit.Views
         {
             SettingsParameter?.MainPage.ApplySettings();
 
-            CursorHelper.SetArrow();
+            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
         }
 
-        private void Page_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void Page_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            CursorHelper.SetArrow();
+            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
         }
     }
 }

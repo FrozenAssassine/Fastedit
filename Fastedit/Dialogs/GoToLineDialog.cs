@@ -1,9 +1,8 @@
-﻿using Fastedit.Helper;
-using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
@@ -17,7 +16,7 @@ namespace Fastedit.Dialogs
             var input = new NumberBox
             {
                 SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Inline,
-                VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Stretch,
+                VerticalAlignment = Microsoft.UI.Xaml.VerticalAlignment.Stretch,
                 Maximum = tab.textbox.NumberOfLines,
                 Minimum = 0,
                 LargeChange = 50,
@@ -28,11 +27,12 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Go to line",
+                Title = "Go To Line",
                 Content = input,
                 PrimaryButtonText = "Ok",
                 CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = App.m_window.Content.XamlRoot
             };
             var res = await dialog.ShowAsync();
 

@@ -1,11 +1,11 @@
-using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml.Controls;
-using System.ComponentModel;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Navigation;
+using System.IO;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,9 +21,9 @@ namespace Fastedit.Views.SettingsPages
             this.InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await DesignGridViewHelper.LoadItems(designGridView);
+            DesignGridViewHelper.LoadItems(designGridView);
             base.OnNavigatedTo(e);
         }
         private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -53,11 +53,11 @@ namespace Fastedit.Views.SettingsPages
                 InfoMessages.ImportDesignError();
         }
 
-        private async void DeleteDesign_Click(object sender, RoutedEventArgs e)
+        private void DeleteDesign_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem item && item.Tag != null)
             {
-                if (await DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
+                if (DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
                     UpdateDesigns_Click(null, null);
                 else
                     InfoMessages.DeleteDesignError();
@@ -78,10 +78,43 @@ namespace Fastedit.Views.SettingsPages
             if (designName == null)
                 return;
 
-            var file = await DesignHelper.CreateDesign(designName);
+            var file = DesignHelper.CreateDesign(designName);
 
             DesignGridViewHelper.UpdateItems(designGridView);
-            DesignWindowHelper.EditDesign(file.Name);
+            DesignWindowHelper.EditDesign(Path.GetFileName(file));
+        }
+
+        private void LoadDefaultDesigns_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var file in Directory.GetFiles(DefaultValues.DesignPath))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch
+                {
+                    InfoMessages.DeleteDesignError(file);
+                }
+            }
+
+            DesignHelper.CopyDefaultDesigns(true);
+
+            DesignGridViewHelper.UpdateItems(designGridView);
+        }
+
+        private void EditDesignJson_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = (sender as MenuFlyoutItem).Tag.ToString();
+            TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
+        }
+
+        private void DuplicateDesign_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = (sender as MenuFlyoutItem).Tag.ToString();
+            var duplicateFileName = DesignHelper.DuplicateDesign(fileName);
+            if (duplicateFileName != null)
+                DesignGridViewHelper.UpdateItems(designGridView);
         }
     }
 }

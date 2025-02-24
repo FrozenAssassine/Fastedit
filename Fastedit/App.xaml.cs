@@ -1,76 +1,41 @@
-﻿using System;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+﻿using Fastedit.Helper;
+using Microsoft.UI.Xaml;
 
-namespace Fastedit
+namespace Fastedit;
+
+public partial class App : Application
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    sealed partial class App : Application
+    public static MainWindow m_window;
+    private readonly SingleInstanceDesktopApp _singleInstanceApp;
+
+    public App()
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
+        this.InitializeComponent();
+
+        _singleInstanceApp = new SingleInstanceDesktopApp("fastedit.juliuskirsch");
+        _singleInstanceApp.Launched += _singleInstanceApp_Launched;
+    }
+
+    private void _singleInstanceApp_Launched(object sender, SingleInstanceLaunchEventArgs e)
+    {
+        if (e.IsFirstLaunch)
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
-            SetSystemGroupAsync();
+            m_window = new MainWindow();
+            m_window.Activate();
         }
 
-        //Enable recent files in the taskbar rightclick menu
-        private async void SetSystemGroupAsync()
+        //file activation
+        if (e.Arguments != null && e.Arguments.Length > 0)
         {
-            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
-            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.Recent;
-            await jumpList.SaveAsync();
-        }
+            AppActivationHelper.appActivationArguments = e.Arguments;
 
-        private Frame CreateRootFrame()
-        {
-            if (!(Window.Current.Content is Frame rootFrame))
-            {
-                rootFrame = new Frame
-                {
-                    //Language = Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride
-                };
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-            }
-            return rootFrame;
+            if(!e.IsFirstLaunch)
+                m_window.SendLaunchArguments();
         }
+    }
 
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            CreateRootFrame().Navigate(typeof(MainPage), args);
-            Window.Current.Activate();
-        }
-
-        protected override void OnFileActivated(FileActivatedEventArgs args)
-        {
-            CreateRootFrame().Navigate(typeof(MainPage), args);
-            Window.Current.Activate();
-            base.OnFileActivated(args);
-        }
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
-        {
-            CreateRootFrame().Navigate(typeof(MainPage));
-            Window.Current.Activate();
-        }
-
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-        private void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            deferral.Complete();
-        }
+    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    {
+        _singleInstanceApp.Launch(args.Arguments);
     }
 }

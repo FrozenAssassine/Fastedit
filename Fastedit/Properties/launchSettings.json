@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Fastedit (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Fastedit (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

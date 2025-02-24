@@ -1,4 +1,4 @@
-﻿using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Models

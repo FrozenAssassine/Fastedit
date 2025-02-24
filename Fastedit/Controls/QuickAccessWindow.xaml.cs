@@ -1,18 +1,12 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Models;
-using Fastedit.Tab;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Controls
 {
@@ -40,6 +34,9 @@ namespace Fastedit.Controls
             Items.Add(FileNameDisplay);
         }
 
+        public delegate void ClosedEvent();
+        public event ClosedEvent Closed;
+        
         public void UpdateColors()
         {
             UpdateColors(Items);
@@ -92,6 +89,7 @@ namespace Fastedit.Controls
 
             currentPage = null;
             hideControlAnimation.Begin();
+            Closed?.Invoke();
         }
         public List<IQuickAccessWindowItem> Items { get; set; } = new List<IQuickAccessWindowItem>();
 
@@ -103,7 +101,7 @@ namespace Fastedit.Controls
             if (tabView.SelectedItem is TabPageItem selectedTab)
             {
                 WordCountDisplay.InfoText = selectedTab.CountWords().ToString();
-                CharacterCountDisplay.InfoText = selectedTab.textbox.CharacterCount.ToString();
+                CharacterCountDisplay.InfoText = selectedTab.textbox.CharacterCount().ToString();
                 LineCountDisplay.InfoText = selectedTab.textbox.NumberOfLines.ToString();
                 EncodingDisplay.InfoText = EncodingHelper.GetEncodingName(selectedTab.Encoding);
                 FilePathDisplay.InfoText = selectedTab.DatabaseItem.FilePath;
@@ -164,8 +162,8 @@ namespace Fastedit.Controls
         {
             if (clickedItem is QuickAccessWindowItem item)
             {
-                item.InvokeEvent();
                 Hide();
+                item.InvokeEvent();
             }
             else if (clickedItem is QuickAccessWindowSubItem subItem)
             {
@@ -173,23 +171,28 @@ namespace Fastedit.Controls
                 currentPage = subItem;
                 searchbox.Text = "";
                 itemHostListView.ItemsSource = subItem.Items;
-                itemHostListView.SelectedIndex = 0;
+                itemHostListView.LayoutUpdated += (sender, e) =>
+                {
+                    if(itemHostListView.SelectedItem == null)
+                        itemHostListView.SelectedIndex = 0;
+                };
             }
             else if (clickedItem is QuickAccessWindowCustomItem customItem)
             {
                 //select a tabpage
                 if (customItem.Tag is TabPageItem tab)
                 {
-                    TabPageHelper.mainPage.ChangeSelectedTab(tab);
                     Hide();
+                    TabPageHelper.mainPage.ChangeSelectedTab(tab);
                 }
             }
             else if (clickedItem is QuickAccessWindowInfoItem infoitem)
             {
-                ClipboardHelper.Copy(infoitem.InfoText);
                 Hide();
+                ClipboardHelper.Copy(infoitem.InfoText);
             }
         }
+
         private void UserControl_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Escape)
@@ -209,6 +212,10 @@ namespace Fastedit.Controls
                 {
                     itemHostListView.SelectedIndex++;
                     itemHostListView.ScrollIntoView(itemHostListView.Items[itemHostListView.SelectedIndex]);
+
+                    //for live changes like desing page
+                    if (currentPage != null && currentPage.TriggerOnSelecting && itemHostListView.SelectedIndex != -1)
+                        currentPage.CallChangedEvent(itemHostListView.SelectedItem as IQuickAccessWindowItem);
                 }
 
                 if (itemHostListView.SelectedItem == null)
@@ -222,8 +229,11 @@ namespace Fastedit.Controls
                 {
                     itemHostListView.SelectedIndex--;
                     itemHostListView.ScrollIntoView(itemHostListView.Items[itemHostListView.SelectedIndex]);
-                }
 
+                    //for live changes like desing page
+                    if (currentPage != null && currentPage.TriggerOnSelecting && itemHostListView.SelectedIndex != -1)
+                        currentPage.CallChangedEvent(itemHostListView.SelectedItem as IQuickAccessWindowItem);
+                }
             }
             else if (e.Key == Windows.System.VirtualKey.Enter)
             {
@@ -237,6 +247,5 @@ namespace Fastedit.Controls
         {
             this.Visibility = Visibility.Collapsed;
         }
-   
     }
 }

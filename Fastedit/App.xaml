@@ -1,12 +1,12 @@
-﻿<Application
+<?xml version="1.0" encoding="utf-8"?>
+<Application
     x:Class="Fastedit.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Fastedit" 
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
+    xmlns:local="using:Fastedit">
     <Application.Resources>
-        <controls:XamlControlsResources>
-            <controls:XamlControlsResources.MergedDictionaries>
+        <XamlControlsResources>
+            <XamlControlsResources.MergedDictionaries>
                 <!-- Other app resources here -->
                 <ResourceDictionary>
                     <Style x:Key="LeftSideToggleSwitch" TargetType="ToggleSwitch">
@@ -224,12 +224,12 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="{ThemeResource ToggleSwitchPostContentMargin}"/>
                                             </Grid.RowDefinitions>
-                                            
+
                                             <Grid x:Name="SwitchAreaGrid" Background="{ThemeResource ToggleSwitchContainerBackground}" Grid.ColumnSpan="3" Control.IsTemplateFocusTarget="True" Margin="0,5" Grid.RowSpan="3"/>
-                                            
+
                                             <ContentPresenter x:Name="OffContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding OffContentTemplate}" Grid.Column="0" Content="{TemplateBinding OffContent}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Opacity="0" Grid.RowSpan="3" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                             <ContentPresenter x:Name="OnContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding OnContentTemplate}" Grid.Column="0" Content="{TemplateBinding OnContent}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Opacity="0" Grid.RowSpan="3" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                            
+
                                             <Rectangle Grid.Column="2" x:Name="OuterBorder" Fill="{ThemeResource ToggleSwitchFillOff}" Height="20" Grid.Row="1" RadiusX="10" RadiusY="10" Stroke="{ThemeResource ToggleSwitchStrokeOff}" StrokeThickness="2" Width="44"/>
                                             <Rectangle Grid.Column="2" x:Name="SwitchKnobBounds" Fill="{ThemeResource ToggleSwitchFillOn}" Height="20" Opacity="0" Grid.Row="1" RadiusX="10" RadiusY="10" Stroke="{ThemeResource ToggleSwitchStrokeOn}" StrokeThickness="{ThemeResource ToggleSwitchOnStrokeThickness}" Width="44"/>
 
@@ -240,7 +240,7 @@
                                                 <Ellipse x:Name="SwitchKnobOn" Fill="{ThemeResource ToggleSwitchKnobFillOn}" Height="14" Opacity="0" Width="14"/>
                                                 <Ellipse x:Name="SwitchKnobOff" Fill="{ThemeResource ToggleSwitchKnobFillOff}" Height="14" Width="14"/>
                                             </Grid>
-                                            
+
                                             <Thumb x:Name="SwitchThumb" AutomationProperties.AccessibilityView="Raw" Grid.ColumnSpan="3" Grid.RowSpan="3">
                                                 <Thumb.Template>
                                                     <ControlTemplate TargetType="Thumb">
@@ -255,7 +255,7 @@
                         </Setter>
                     </Style>
                 </ResourceDictionary>
-            </controls:XamlControlsResources.MergedDictionaries>
-        </controls:XamlControlsResources>
+            </XamlControlsResources.MergedDictionaries>
+        </XamlControlsResources>
     </Application.Resources>
 </Application>

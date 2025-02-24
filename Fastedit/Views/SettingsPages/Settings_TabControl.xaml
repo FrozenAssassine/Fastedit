@@ -9,19 +9,19 @@
  
     <StackPanel>
         <controls:SetingsItemSeparator Header=""/>
-        <controls:SettingsControl Header="Tab sizing mode">
+        <controls:SettingsControl Header="Tab Sizing Mode" x:Uid="Settings_TabControl_TabSizingMode">
             <controls:SettingsControl.Content>
-                <ComboBox Width="120" x:Name="TabSizecombobox" SelectionChanged="TabSizecombobox_SelectionChanged">
-                    <ComboBoxItem Content="Equals"/>
-                    <ComboBoxItem Content="Size to title"/>
-                    <ComboBoxItem Content="Compact"/>
+                <ComboBox Width="200" x:Name="TabSizecombobox" SelectionChanged="TabSizecombobox_SelectionChanged">
+                    <ComboBoxItem Content="Equals" x:Uid="Settings_TabControl_SizeMode_Equals"/>
+                    <ComboBoxItem Content="Size to title" x:Uid="Settings_TabControl_SizeMode_Title"/>
+                    <ComboBoxItem Content="Compact" x:Uid="Settings_TabControl_SizeMode_Compact"/>
                 </ComboBox>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SettingsControl Header="New tab title">
+        <controls:SettingsControl Header="New Tab Title" x:Uid="Settings_TabControl_NewTabTitle">
             <controls:SettingsControl.Content>
-                <TextBox Width="120" x:Name="newTabTitleTextbox" TextChanged="NewTabTitle_TextChanged"/>
+                <TextBox Width="200" x:Name="newTabTitleTextbox" TextChanged="NewTabTitle_TextChanged"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
     </StackPanel>

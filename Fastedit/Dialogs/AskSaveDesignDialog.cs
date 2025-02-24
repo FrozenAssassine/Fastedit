@@ -1,14 +1,8 @@
-﻿using Fastedit.Helper;
-using Fastedit.Storage;
-using Fastedit.Tab;
-using Fastedit.Views;
+﻿using Fastedit.Views;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
@@ -22,7 +16,7 @@ namespace Fastedit.Dialogs
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Save design?",
+                Title = "Save Design?",
                 Content = "Would you like to save the changes on " + Path.GetFileNameWithoutExtension(editor.CurrentDesignName) + "?",
                 PrimaryButtonText = "Save",
                 SecondaryButtonText = "Don't save",

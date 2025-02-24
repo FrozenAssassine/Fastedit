@@ -1,40 +1,31 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
-using Fastedit.Settings;
-using Fastedit.Tab;
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.WindowManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
 
 namespace Fastedit.Views
 {
     public sealed partial class DesignEditor : Page
     {
         FasteditDesign currentDesign = null;
-        AppWindow window = null;
 
-        public DesignEditor(AppWindow window, FasteditDesign design, string designName)
+        public DesignEditor(FasteditDesign design, string designName)
         {
             this.InitializeComponent();
             this.currentDesign = design;
             this.CurrentDesignName = designName;
-            this.window = window;
 
-            window.Title = "Edit design " + designName;
+            this.titlebarHeader.Text = "Edit " + designName;
         }
         public string CurrentDesignName { get; private set; }
         public bool NeedSave { get; private set; } = false;
-        public async Task<bool> SaveDesign()
+        public bool SaveDesign()
         {
-            StorageFile designFile = await StorageFile.GetFileFromPathAsync(Path.Combine(DefaultValues.DesignPath, CurrentDesignName));
-            if (designFile == null)
-                return false;
-
-            return await DesignHelper.SaveDesign(currentDesign, designFile);
+            return DesignHelper.SaveDesign(currentDesign, Path.Combine(DefaultValues.DesignPath, CurrentDesignName));
         }
         //Change events:
         private void Theme_Changed(object sender, SelectionChangedEventArgs e)
@@ -167,19 +158,19 @@ namespace Fastedit.Views
         private void ApplyDesign_Click(object sender, RoutedEventArgs e)
         {
             //The design is already selected
-            if (!AppSettings.GetSettings(AppSettingsValues.Settings_DesignName).Equals(CurrentDesignName))
+            if (!AppSettings.CurrentDesign.Equals(CurrentDesignName))
             {
-                AppSettings.SaveSettings(AppSettingsValues.Settings_DesignName, CurrentDesignName);
+                AppSettings.CurrentDesign = CurrentDesignName;
             }
 
             DesignHelper.CurrentDesign = currentDesign;
             TabPageHelper.mainPage.ApplySettings(currentDesign);
         }
 
-        private async void SaveDesign_Click(object sender, RoutedEventArgs e)
+        private void SaveDesign_Click(object sender, RoutedEventArgs e)
         {
-            if (await SaveDesign())
-                InfoMessages.SaveDesignSucceed();
+            if (SaveDesign())
+                InfoMessages.SaveDesignSucceeded();
             else
                 InfoMessages.SaveDesignError();
         }

@@ -1,9 +1,9 @@
 ﻿using Fastedit.Helper;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Media;
 using System.ComponentModel;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
@@ -14,7 +14,9 @@ namespace Fastedit.Controls
             this.InitializeComponent();
         }
 
-        public string Text { get => StaticText + ChangingText; }
+        public string Text { get => CustomText ?? StaticText + ChangingText; }
+        private string _CustomText;
+        public string CustomText { get => _CustomText; set { _CustomText = value; NotifyPropertyChanged("Text"); } }
         public FlyoutBase CustomFlyout { set => button.Flyout = value; }
         public UIElement FlyoutContent
         {
@@ -35,6 +37,9 @@ namespace Fastedit.Controls
         public delegate void StatusbarItemClickEvent(StatusbarItem sender, Button children);
         public event StatusbarItemClickEvent StatusbarItemClick;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event FlyoutOpeningEvent FlyoutOpening;
+        public delegate void FlyoutOpeningEvent();
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -48,10 +53,10 @@ namespace Fastedit.Controls
         {
             StatusbarItemClick?.Invoke(this, button);
         }
-        private void Copy_click(object sender, RoutedEventArgs e)
-        {
-            ClipboardHelper.Copy(ChangingText);
-        }
 
+        private void flyout_Opening(object sender, object e)
+        {
+            FlyoutOpening?.Invoke();
+        }
     }
 }

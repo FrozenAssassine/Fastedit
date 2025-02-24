@@ -1,71 +1,31 @@
-﻿using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
-using Windows.UI.WindowManagement;
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 
-namespace Fastedit.Helper
+namespace Fastedit.Helper;
+
+internal class WindowHelper
 {
-    internal class WindowHelper
+    public static void ToggleCompactOverlay(Window window)
     {
-        public static async Task<bool> RestartAsync()
-        {
-            var result = await CoreApplication.RequestRestartAsync("Application Restart Programmatically ");
+        bool isCompactOverlay = window.AppWindow.Presenter.Kind == AppWindowPresenterKind.CompactOverlay;
+        window.AppWindow.SetPresenter(isCompactOverlay ? AppWindowPresenterKind.Default : AppWindowPresenterKind.CompactOverlay);
+    }
 
-            if (result == AppRestartFailureReason.NotInForeground ||
-                result == AppRestartFailureReason.RestartPending ||
-                result == AppRestartFailureReason.Other)
-            {
-                var msgBox = new MessageDialog("Restart Failed", result.ToString());
-                await msgBox.ShowAsync();
-                return false;
-            }
-            return true;
-        }
+    public static void ToggleFullscreen(Window window)
+    {
+        bool isFullscreen = window.AppWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen;
+        window.AppWindow.SetPresenter(isFullscreen ? AppWindowPresenterKind.Default : AppWindowPresenterKind.FullScreen);
+    }
 
-        private static bool FullScreen(bool Fullscreen)
-        {
-            try
-            {
-                if (Fullscreen)
-                    return ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                else
-                    ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public static bool ToggleFullscreen()
-        {
-            return FullScreen(!ApplicationView.GetForCurrentView().IsFullScreenMode);
-        }
+    public static void ToggleTopMost(Window window)
+    {
+        if (window == null)
+            return;
 
-        public static async void ToggleCompactOverlay()
-        {
-            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(
-                ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default ? ApplicationViewMode.CompactOverlay : ApplicationViewMode.Default);
-        }
+        var presenter = window.AppWindow.Presenter as OverlappedPresenter;
+        if (presenter == null)
+            return;
 
-        public static void ToggleCompactOverlayForAppWindow(AppWindow window)
-        {
-            window.Presenter.RequestPresentation(
-                window.Presenter.GetConfiguration().Kind == AppWindowPresentationKind.CompactOverlay ? 
-                AppWindowPresentationKind.Default :
-                AppWindowPresentationKind.CompactOverlay
-                );
-        }
-
-        public static void ToggleFullscreenForAppWindow(AppWindow window)
-        {
-            window.Presenter.RequestPresentation(
-                window.Presenter.GetConfiguration().Kind == AppWindowPresentationKind.FullScreen ?
-                AppWindowPresentationKind.Default :
-                AppWindowPresentationKind.FullScreen
-                );
-        }
+        presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
     }
 }

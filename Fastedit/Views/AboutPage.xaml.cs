@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
+using Fastedit.Helper;
 
 namespace Fastedit.Views
 {
     public sealed partial class AboutPage : Page
     {
-        public string donoURL = "https://www.paypal.com/donate?business=julius@frozenassassine.de&no_recurring=0&item_name=Support+FrozenAssassines+Work&currency_code=EUR";
-        public string AppVersion =>
-            Package.Current.Id.Version.Major + "." +
-            Package.Current.Id.Version.Minor + "." +
-            Package.Current.Id.Version.Build;
-
-        public string DeveloperName => Package.Current.PublisherDisplayName;
+        public string AppVersion => VersionHelper.GetCurrentVersion();
 
         public AboutPage()
         {
@@ -27,7 +22,7 @@ namespace Fastedit.Views
         private void SetChangelog()
         {
             //Simple parser to make headlines bigger and add paragraphs
-            var data = File.ReadAllLines(@"Assets\changelog.txt");
+            var data = File.ReadAllLines(Package.Current.InstalledLocation.Path + "\\Assets\\changelog.txt");
             List<Paragraph> paragraphs = new List<Paragraph> { new Paragraph() };
             for (int i = 0; i < data.Length; i++)
             {

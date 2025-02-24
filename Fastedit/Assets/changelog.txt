@@ -1,4 +1,22 @@
-﻿#Version 2.5.0 [09/09/2023]
+﻿#Version 2.6.0 [20.02.2025]
+	• transitioned from UWP to WinUI-3
+	• more rights to open and save files even with drag drop
+	• remvoved share option in rightclick menu on tab
+	• added statusbar in undocked document/tab
+	• improved statusbar with zooming flyout and word/character count
+	• option to hide titlebar
+	• option to quickly select the design from the QuickAccess window (Ctrl + Shift + P) -> Design
+	• added surround with flyout by pressing Ctrl + Q
+	• added rename dialog to undocked tab
+	• many textbox improvements upgraded to V1.1.0
+	• bugfixes
+	• fixed a bug, where opening a file using rightclick would create a new tab sometimes
+	• fixed a bug, where the app crashed when closing settings as last tab
+	• fixed a bug, where close all lead to crash if a tab was not loaded yet
+	• fixed a bug, where the quick access did not focus the items in a sub categorie
+
+---
+#Version 2.5.0 [09.09.2023]
 	• Added a right-click menu to copy text from the status bar item.
 	• Added support for "Open With" and "Save" for .tex, .csv, and .toml file formats.
 	• Moved the "Syntax Highlighting" option "None" to the top.
@@ -9,7 +27,7 @@
 	• Fixed design1 to have a solid background color for the dialog.
 
 ---
-#Version 2.4.0 [7/10/2023]
+#Version 2.4.0 [10.07.2023]
 	• Added CSS syntaxhighlighting
 	• Added autopairing for brackets and quotation marks
 	• Added rename file dialog
@@ -26,7 +44,7 @@
 	• Fixed a bug where replace all did not change the modified state
 
 ---
-#Version 2.3.0 [05/13/2023]
+#Version 2.3.0 [13.05.2023]
 	• Added encoding to fileinfo
 	• Added selection to fileinfo
 	• Added property to align the menubar left/right/center
@@ -37,7 +55,7 @@
 	• Updated to TextControlBox 1.7.1
 
 ---
-#Version 2.2.0 [02/16/2023]
+#Version 2.2.0 [16.02.2023]
 	• Added design editor
 	• Added delete/import/export functionality to designs
 	• Added close and add -tab button to vertical tab flyout
@@ -49,7 +67,7 @@
 	• Renamed "New window" to "Undock tab"
 
 ---
-#Version 2.1.1 [02/07/2023]
+#Version 2.1.1 [07.02.2023]
 	• Fixed a bug where the settings were visible in the open tab flyout
 	• Fixed a bug where the quick access flyout did not resize properly
 	• Fixed a bug where closing a not loaded tab, caused an empty file to be saved
@@ -57,7 +75,7 @@
 	• Renamed headline in settings from Design to Designs
 
 ---
-#Version 2.1.0 [02/03/2023]
+#Version 2.1.0 [03.02.2023]
 	• Added statusbar customization (show/hide items)
 	• Added shortcut to reload settings and design [Ctrl + Alt + R]
 	• Added mousebutton 4 and 5 to switch between tabs
@@ -67,14 +85,14 @@
 	• Added light dismiss to Quick Access
 
 ---
-#Version 2.0.1 [01/31/2023]
+#Version 2.0.1 [31.01.2023]
 	• Fixed a bug where the app crashed on first start
 	• Updated to TextControlBox V1.5.0 
 	• Fixed a bug where the app crashed when a infobar was shown
 	• Fixed a bug where saving a file did some weird things with the file
 
 ---
-#Version 2.0.0 [01/17/2023]
+#Version 2.0.0 [17.01.2023]
 	• rebuilt the app from the ground up
 	• faster and way more stable database
 	• syntaxhighlighting
@@ -91,13 +109,13 @@
 	• Close all not implemented
 
 ---
-#Version 1.6.2 [05/20/2022]
+#Version 1.6.2 [20.05.2022]
 	• Added a searchbox to the secondary instance
 	• Fixed very small bugs
 	• Improved search experience
 
 ---
-#Version 1.5.2 [05/06/2022]
+#Version 1.5.2 [06.05.2022]
 	• Added number of lines to fileinfo
 	• Added a compact overlay mode for secondary instance
 	• Improved startup performance mostly for a larger amount of tabs
@@ -107,14 +125,14 @@
 	  if the app was already running
 
 ---
-#Version 1.4.2 [04/25/2022]
+#Version 1.4.2 [25.04.2022]
 	• Fixed a bug, where the tabs overlayed the Minimize, Maximize and Close button
 	• Fixed a bug, where a saved document was unsaved after reopening
 	• Added an option, to load a backup of your database
 	• Added an option, to create a backup of your database
 
 ---
-#Version 1.3.2 [04/16/2022]
+#Version 1.3.2 [16.04.2022]
 	• Added surround with function when pressing Control + Q
 	• Change the shortcut for the settings to F1
 	• Added a menubar right below the tabs, you can align it Left, Right, Center, or disable it
@@ -133,7 +151,7 @@
 	• Added a github button to the About section to link to the Fastedit repository
 
 ---
-#Version 1.2.2 [03/17/2022]
+#Version 1.2.2 [17.03.2022]
 	• Updated the Search and Goto line UI
 	• Added an option to center or align the Search and Goto line dialog left
 	• Added more encodings
@@ -141,12 +159,12 @@
 	• Fixed a bug which always closed the selected tab, also when you closed another
 	
 ---
-#Version 1.1.2 [03/02/2022]
+#Version 1.1.2 [02.03.2022]
 	• Fixed a minor bug which caused the app to crashes
 	  when opening settings when they were already opened
 
 ---
-#Version 1.1.1 - [03/01/2022]
+#Version 1.1.1 - [01.03.2022]
 
 - Features and improvements:
 	• Added markdown preview with customizable preview-window position
@@ -166,7 +184,7 @@
 	  was reversed
 
 ---
-#Version 1.0.1  -  02/09/2022
+#Version 1.0.1  -  09.02.2022
 
 - Features and improvements:
 	• Added the ability to expand the current Document 
@@ -195,4 +213,4 @@
 	  because it caused too many crashes -> I will add this in the future
 
 ---
-#Version 1.0.0  -  01/24/2022
+#Version 1.0.0  -  24.01.2022

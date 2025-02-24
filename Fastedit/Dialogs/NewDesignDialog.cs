@@ -1,12 +1,7 @@
 ﻿using Fastedit.Helper;
-using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Fastedit.Dialogs
 {
@@ -16,7 +11,7 @@ namespace Fastedit.Dialogs
         {
             TextBox designName_Textbox = new TextBox
             {
-                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch
+                HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch
             };
             var dialog = new ContentDialog
             {
@@ -28,6 +23,7 @@ namespace Fastedit.Dialogs
                 PrimaryButtonText = "Done",
                 CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = App.m_window.Content.XamlRoot
             };
             var res = await dialog.ShowAsync();
             if(res == ContentDialogResult.Primary && designName_Textbox.Text.Length > 0)

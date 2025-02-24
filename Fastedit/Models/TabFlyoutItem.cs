@@ -1,4 +1,4 @@
-﻿using Fastedit.Tab;
+﻿using Fastedit.Core.Tab;
 using System;
 
 namespace Fastedit.Models

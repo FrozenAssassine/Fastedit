@@ -1,26 +1,18 @@
-﻿using Fastedit.Settings;
-using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using Microsoft.UI.Xaml.Controls;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media;
 using Fastedit.Helper;
+using Microsoft.UI.Xaml.Input;
 
 namespace Fastedit.Controls
 {
     
-    public sealed partial class ColorPickerButton : Windows.UI.Xaml.Controls.UserControl
+    public sealed partial class ColorPickerButton : UserControl
     {
         private bool _IsCompact;
-        private readonly Color buttonbordercolor;
 
         public ColorPickerButton()
         {
             this.InitializeComponent();
-
-            buttonbordercolor = ThemeHelper.CurrentTheme == ElementTheme.Light ? Colors.Black : Colors.White;
-            Colordisplay.BorderBrush = new SolidColorBrush(buttonbordercolor);
         }
 
         //public properties and events:
@@ -55,7 +47,7 @@ namespace Fastedit.Controls
 
 
         //private events
-        private void Rectangle_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!IsUsedAsDisplay)
             {

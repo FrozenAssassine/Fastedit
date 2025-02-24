@@ -32,15 +32,17 @@
                     <FontIcon Margin="0,0,5,0" Grid.Column="3" Glyph="&#xE77B;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     <StackPanel Grid.Column="4">
                         <TextBlock FontSize="16" TextAlignment="Center" Text="Developer"/>
-                        <TextBlock TextAlignment="Center" Text="{x:Bind DeveloperName}"/>
+                        <TextBlock TextAlignment="Center" >
+                            <Hyperlink  NavigateUri="https://frozenassassine.de/?ref=fastedit">Julius Kirsch</Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                 </Grid>
             </Grid>
 
             <controls:SetingsItemSeparator Header="More"/>
-            <controls:SettingsControl Tag="{x:Bind donoURL}" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Donate" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl Foreground="White" FontWeight="Bold" Background="#ff6433" Tag="https://ko-fi.com/K3K819KSLG" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Support me on Ko-fi" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
-                    <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}" />
+                    <TextBlock Text="&#xe8a7;"  FontFamily="{StaticResource SymbolThemeFontFamily}" />
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
@@ -62,88 +64,88 @@
                 </StackPanel>
             </Grid>
 
-            <muxc:Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
+            <Expander HorizontalContentAlignment="Left" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xf6fa;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                         <TextBlock VerticalAlignment="Center" FontSize="20" Text="Additional dependencies used"/>
                     </StackPanel>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
+                </Expander.Header>
+                <Expander.Content>
                     <StackPanel>
-                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/Microsoft/microsoft-ui-xaml" Content="Microsoft Ui Xaml"/>
-                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/FrozenAssassine/TextControlBox-UWP" Content="TextControlBox"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/FrozenAssassine/TextControlBox-Winui" Content="TextControlBox"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/Microsoft/WindowsAppSdk" Content="Windows App Sdk"/>
                         <HyperlinkButton FontSize="16" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
                     </StackPanel>
-                </muxc:Expander.Content>
-            </muxc:Expander>
-            <muxc:Expander HorizontalContentAlignment="Stretch" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
+                </Expander.Content>
+            </Expander>
+            <Expander HorizontalContentAlignment="Stretch" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE9D5;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                         <TextBlock VerticalAlignment="Center" FontSize="20" Text="Changelog"/>
                     </StackPanel>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
+                </Expander.Header>
+                <Expander.Content>
                     <ScrollViewer HorizontalAlignment="Stretch" MaxHeight="400"  HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
                         <RichTextBlock HorizontalAlignment="Stretch" x:Name="ChangelogDisplay"/>
                     </ScrollViewer>
-                </muxc:Expander.Content>
-            </muxc:Expander>
+                </Expander.Content>
+            </Expander>
             <controls:SetingsItemSeparator Header="Legal"/>
 
-            <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock FontSize="20" VerticalAlignment="Center" Margin="0,4,10,0" Text="&#xE72E;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                         <TextBlock VerticalAlignment="Center" FontSize="20" Text="Privacy Policy"/>
                     </StackPanel>
-                </muxc:Expander.Header>
+                </Expander.Header>
                 <RichTextBlock HorizontalAlignment="Center">
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run  x:Uid="PrivacyPolicy_Part1">By using the app you are consenting to our policies regarding the collection, use and disclosure of personal information set out in this privacy policy.</Run>
+                        <Run >By using the app you are consenting to our policies regarding the collection, use and disclosure of personal information set out in this privacy policy.</Run>
                     </Paragraph>
                     <Paragraph Margin="0,20,0,0" FontSize="20">
-                        <Run x:Uid="PrivacyPolicy_Title2">Collection of Personal Information</Run>
+                        <Run >Collection of Personal Information</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run x:Uid="PrivacyPolicy_Part2">We do not collect, store, use or share any information, personal or otherwise.</Run>
+                        <Run>We do not collect, store, use or share any information, personal or otherwise.</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="20">
-                        <Run x:Uid="PrivacyPolicy_Title3">Email</Run>
+                        <Run >Email</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run x:Uid="PrivacyPolicy_Part3">If you email the developer for support or other feedback, the emails with email addresses will be retained for quality assurance purposes. The email addresses will be used only to reply to the concerns or suggestions raised and will never be used for any marketing purpose.</Run>
+                        <Run>If you email the developer for support or other feedback, the emails with email addresses will be retained for quality assurance purposes. The email addresses will be used only to reply to the concerns or suggestions raised and will never be used for any marketing purpose.</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="20">
-                        <Run x:Uid="PrivacyPolicy_Title4">Disclosure of Personal Information</Run>
+                        <Run>Disclosure of Personal Information</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run x:Uid="PrivacyPolicy_Part4">We will not disclose your information to any third party except if you expressly consent or where required by law.</Run>
+                        <Run>We will not disclose your information to any third party except if you expressly consent or where required by law.</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="20">
-                        <Run x:Uid="PrivacyPolicy_Title5">Contacting Us</Run>
+                        <Run>Contacting Us</Run>
                     </Paragraph>
                     <Paragraph Margin="0,10,0,0" FontSize="16">
-                        <Run x:Uid="PrivacyPolicy_Part5">If you have any questions regarding this privacy policy, you can email</Run>
+                        <Run>If you have any questions regarding this privacy policy, you can email</Run>
                     </Paragraph>
                     <Paragraph FontSize="16">
                         <Run>contact@frozenassassine.de</Run>
                     </Paragraph>
                 </RichTextBlock>
-            </muxc:Expander>
+            </Expander>
 
-            <muxc:Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock FontSize="20" VerticalAlignment="Center" Margin="0,4,10,0" Text="&#xF0EF;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                         <TextBlock VerticalAlignment="Center" FontSize="20" Text="Disclaimer"/>
                     </StackPanel>
-                </muxc:Expander.Header>
+                </Expander.Header>
                 <RichTextBlock FontSize="18" IsTextSelectionEnabled="False">
                     <Paragraph Margin="0,30,0,0">
                         <Run>
-                            We are doing our best to prepare the content of this app. However, Fastedit cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Fastedit shall not be responsible for any losses and/or damages due to the usage of the information on our app. Our Disclaimer was generated with the help of the App Disclaimer Generator from App-Privacy-Policy.com                 
+                            We are doing our best to prepare the content of this app. However, Fastedit cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Fastedit shall not be responsible for any losses and/or damages due to the usage of the information on our app.
                         </Run>
                     </Paragraph>
                     <Paragraph Margin="0,30,0,0">
@@ -157,7 +159,7 @@
                         </Run>
                     </Paragraph>
                 </RichTextBlock>
-            </muxc:Expander>
+            </Expander>
         </StackPanel>
     </Grid>
 </Page>

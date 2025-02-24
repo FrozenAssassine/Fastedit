@@ -1,6 +1,6 @@
 ﻿using Fastedit.Helper;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 
 namespace Fastedit.Dialogs
 {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Fastedit.Controls.TextStatusBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
+    mc:Ignorable="d">
+
+    <Grid Height="30" x:Name="statusbar">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <controls:StatusbarItem Grid.Column="0" HorizontalAlignment="Left" StaticText="" x:Name="ItemFileName" StatusbarItemClick="ItemFileName_StatusbarItemClick"/>
+        <controls:StatusbarItem PointerWheelChanged="ItemZoom_PointerWheelChanged" FlyoutOpening="Statusbar_Zoom_FlyoutOpening" Grid.Column="1" HorizontalAlignment="Left" StaticText="Zoom: " x:Name="ItemZoom">
+            <controls:StatusbarItem.FlyoutContent>
+                <Grid IsDoubleTapEnabled="True" DoubleTapped="ResetZoom_DoubleClicked">
+                    <TextBlock>
+                        <TextBlock.Inlines>
+                            <Run Text="Zoom"/>
+                            <Bold>
+                                <Run Text="{x:Bind zoomSlider.Value, Mode=OneWay}"/>
+                            </Bold>
+                            <Run Text="%"/>
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Slider Margin="0,20,0,0" Padding="10,0,10,0" Width="180" StepFrequency="5" Maximum="400" Minimum="4" x:Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged"/>
+                </Grid>
+            </controls:StatusbarItem.FlyoutContent>
+        </controls:StatusbarItem>
+        <controls:StatusbarItem Grid.Column="2" HorizontalAlignment="Left" StaticText="" x:Name="ItemWordCharacter"/>
+        <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Right" StaticText="Ln: " x:Name="ItemLineColumn" FlyoutOpening="ItemLineColumn_FlyoutOpening">
+            <controls:StatusbarItem.FlyoutContent>
+                <NumberBox Minimum="1" ValueChanged="GoToLineNumberBox_ValueChanged" Padding="5" Width="120" x:Name="GoToLineNumberBox" Header="Go To Line" PlaceholderText="Line..." KeyDown="GoToLineTextbox_KeyDown"/>
+            </controls:StatusbarItem.FlyoutContent>
+        </controls:StatusbarItem>
+        <controls:StatusbarItem Grid.Column="4" HorizontalAlignment="Left" StaticText="" x:Name="ItemEncoding">
+            <controls:StatusbarItem.CustomFlyout>
+                <MenuFlyout x:Name="EncodingFlyout">
+                </MenuFlyout>
+            </controls:StatusbarItem.CustomFlyout>
+        </controls:StatusbarItem>
+    </Grid>
+</UserControl>

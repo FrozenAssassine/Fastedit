@@ -1,39 +1,70 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
-using Fastedit.Tab;
 using System;
-using System.Linq;
-using Windows.UI.WindowManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Fastedit.Controls;
+using Fastedit.Core.Tab;
+using Fastedit.Core;
 
 namespace Fastedit.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class TabWindowPage : Page
     {
-        public AppWindow window { get; set; }
+        public Window window { get; set; }
         public TabPageItem tab { get; set; }
         public Grid MainGrid => mainGrid;
+        public Grid Titlebar => titlebar;
+        public TextStatusBar Statusbar => textStatusBar;
 
-        public TabWindowPage(TabPageItem tab, AppWindow window)
+        public TabWindowPage(TabPageItem tab, Window window)
         {
             this.InitializeComponent();
 
             this.tab = tab;
             this.window = window;
 
+            this.Loaded += TabWindowPage_Loaded;
+        }
+
+        private void TabWindowPage_Loaded(object sender, RoutedEventArgs e)
+        {
             Grid.SetRow(tab.textbox, 1);
+
             //Add the textbox to the contentControl
             this.mainGrid.Children.Add(tab.textbox);
 
             tab.textbox.ContextFlyout = RightClickMenu;
+
+            InitStatusbar();
+        }
+
+        private void InitStatusbar()
+        {
+            textStatusBar.tabPage = tab;
+            textStatusBar.window = window;
+            textStatusBar.UpdateAll();
+
+            this.tab.textbox.SelectionChanged += Textbox_SelectionChanged;
+            this.tab.textbox.TextChanged += Textbox_TextChanged;
+            this.tab.textbox.ZoomChanged += Textbox_ZoomChanged;
+        }
+
+        private void Textbox_ZoomChanged(TextControlBoxNS.TextControlBox sender, int zoomFactor)
+        {
+            textStatusBar.UpdateZoom();
+        }
+
+        private void Textbox_TextChanged(TextControlBoxNS.TextControlBox sender)
+        {
+            textStatusBar.UpdateText();
+        }
+
+        private void Textbox_SelectionChanged(TextControlBoxNS.TextControlBox sender, TextControlBoxNS.SelectionChangedEventHandler args)
+        {
+            textStatusBar.UpdateSelectionChanged();
         }
 
         public void Close()
@@ -47,11 +78,11 @@ namespace Fastedit.Views
 
         private void Fullscreen_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.ToggleFullscreenForAppWindow(window);
+            WindowHelper.ToggleFullscreen(window);
         }
         private void CompactOverlay_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.ToggleCompactOverlayForAppWindow(window);
+            WindowHelper.ToggleCompactOverlay(window);
         }
         private async void SaveAs_Click(object sender, RoutedEventArgs e)
         {
@@ -66,17 +97,25 @@ namespace Fastedit.Views
             if (tab.DatabaseItem.IsModified && !await AskSaveDialog.Show(tab, this.XamlRoot))
                 return;
 
-            //only add the file to the recylcbin when it has some content and was modified
-            if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount > 0)
-                await RecycleBinDialog.MoveFileToRecycleBin(tab);
+            //only add the file to the recyclebin when it has some content and was modified
+            if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
+                RecycleBinManager.MoveFileToRecycleBin(tab);
 
             await OpenFileHelper.OpenFileForTab(tab);
         }
 
+        private async void Rename()
+        {
+            if (await RenameFileDialog.Show(tab, this.XamlRoot))
+            {
+                textStatusBar.UpdateFile();
+            }
+        }
+
         private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            var ctrl = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
-            var shift = Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+            var ctrl = KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control);
+            var shift = KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Shift);
             if (ctrl)
             {
                 switch (e.Key)
@@ -102,13 +141,17 @@ namespace Fastedit.Views
                 }
                 return;
             }
-            
+
             if (e.Key == Windows.System.VirtualKey.F11)
             {
                 Fullscreen_Click(null, null);
             }
+
+            if (e.Key == Windows.System.VirtualKey.F2)
+            {
+                Rename();
+            }
         }
-        public Grid Titlebar => titlebar;
 
         private void Cut_Click(object sender, RoutedEventArgs e)
         {
@@ -125,10 +168,14 @@ namespace Fastedit.Views
             tab.textbox.Copy();
         }
 
-        private async void Close_Click(object sender, RoutedEventArgs e)
+        private void Close_Click(object sender, RoutedEventArgs e)
         {
-            if (window != null)
-                await window.CloseAsync();
+            window.Close();
+        }
+
+        private void Toggle_TopMost_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ToggleTopMost(window);
         }
     }
 }

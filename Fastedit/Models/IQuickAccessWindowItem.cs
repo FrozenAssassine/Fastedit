@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media;
+﻿using System.ComponentModel;
+using Microsoft.UI.Xaml.Media;
 
 namespace Fastedit.Models
 {
-    public interface IQuickAccessWindowItem
+    public interface IQuickAccessWindowItem: INotifyPropertyChanged
     {
         string Command { get; set; }
         string Shortcut { get; set; }

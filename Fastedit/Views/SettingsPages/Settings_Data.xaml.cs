@@ -1,10 +1,11 @@
-﻿using Fastedit.Dialogs;
+﻿using Fastedit.Core;
+using Fastedit.Core.Settings;
+using Fastedit.Dialogs;
 using Fastedit.Models;
-using Fastedit.Settings;
 using Fastedit.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Fastedit.Views.SettingsPages
 {
@@ -18,7 +19,7 @@ namespace Fastedit.Views.SettingsPages
         private void InitSize()
         {
             temporaryFileSizeDisplay.Text = TemporaryFilesHandler.GetSize();
-            recyclebinFilesizeDisplay.Text = RecycleBinDialog.GetSize();
+            recyclebinFilesizeDisplay.Text = RecycleBinManager.GetSize();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -32,7 +33,7 @@ namespace Fastedit.Views.SettingsPages
         {
             var res = await SettingsImportExport.Export();
             if (res == SettingsImportExportResult.Success)
-                InfoMessages.SettingsExportSucceed();
+                InfoMessages.SettingsExportSucceeded();
             else if (res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsExportFailed();
         }
@@ -40,23 +41,23 @@ namespace Fastedit.Views.SettingsPages
         {
             var res = await SettingsImportExport.Import();
             if (res == SettingsImportExportResult.Success)
-                InfoMessages.SettingsImportSucceed();
+                InfoMessages.SettingsImportSucceeded();
             else if(res == SettingsImportExportResult.Failed)
                 InfoMessages.SettingsImportFailed();
         }
 
         //Clear recylcebin
-        private async void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
+        private void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
-            if (await RecycleBinDialog.ClearRecycleBin() == ClearRecycleBinResult.Success)
-                InfoMessages.RecyclebinClearSucceed();
+            if (RecycleBinManager.ClearRecycleBin() == ClearRecycleBinResult.Success)
+                InfoMessages.RecycleBinClearSucceeded();
 
             InitSize();
         }
         private async void ClearTemporaryFiles_Click(object sender, RoutedEventArgs e)
         {
             if (await TemporaryFilesHandler.Clear())
-                InfoMessages.ClearTemporaryFilesSucceed();
+                InfoMessages.ClearTemporaryFilesSucceeded();
             else
                 InfoMessages.ClearTemporaryFilesFailed();
 

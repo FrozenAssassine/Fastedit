@@ -1,21 +1,20 @@
-﻿using Fastedit.Helper;
-using Fastedit.Settings;
-using Fastedit.Tab;
-using System.Diagnostics;
-using TextControlBox.Helper;
+﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Tab;
+using Fastedit.Helper;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using TextControlBoxNS;
 using Windows.System;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
     public sealed partial class SearchControl : UserControl
     {
-        private TextControlBox.TextControlBox currentTextbox = null;
-        private TabPageItem currentTab = null;
+        private TextControlBox currentTextbox = null;
+        public TabPageItem currentTab = null;
+        public bool searchOpen = false;
 
         private SearchWindowState searchWindowState = SearchWindowState.Hidden;
 
@@ -26,19 +25,8 @@ namespace Fastedit.Controls
 
         private void BeginSearch(string searchword, bool matchCase, bool wholeWord)
         {
-            if (currentTextbox == null)
-                return;
-
-            try
-            {
-                //begin the search
-                var res = currentTextbox.BeginSearch(searchword, wholeWord, matchCase);
-                ColorWindowBorder(res);
-            }
-            catch
-            {
-                //Due to bug in TextControlBox
-            }
+            var res = currentTextbox.BeginSearch(searchword, wholeWord, matchCase);
+            ColorWindowBorder(res);
         }
         private void ToggleVisibility(bool visible)
         {
@@ -73,13 +61,18 @@ namespace Fastedit.Controls
 
         public void ShowSearch(TabPageItem tab)
         {
-            if (tab == null)
+            if (tab == null || tab.textbox == null)
                 return;
+
+            if (currentTextbox != null)
+                currentTextbox.EndSearch();
+
             currentTextbox = tab.textbox;
             currentTab = tab;
+            searchOpen = true;
 
             //hide the window when in search state or show it when in hidden state or show it when hidden:
-            if (searchWindowState == SearchWindowState.Default)
+            if (searchWindowState == SearchWindowState.Default && !currentTextbox.HasSelection)
                 hideWindow();
             else if (searchWindowState == SearchWindowState.Expanded)
                 collapseReplace();
@@ -89,19 +82,25 @@ namespace Fastedit.Controls
                 collapseReplace();
             }
 
-
-            if (currentTextbox.SelectionLength > 0 && currentTextbox.SelectionLength < 200)
+            if (currentTextbox.HasSelection && currentTextbox.CalculateSelectionPosition().Length < 200)
+            {
                 textToFindTextbox.Text = currentTextbox.SelectedText;
+            }
 
             textToFindTextbox.Focus(FocusState.Keyboard);
             textToFindTextbox.SelectAll();
         }
         public void ShowReplace(TabPageItem tab)
         {
-            if (tab == null)
+            if (tab == null || tab.textbox == null)
                 return;
+
+            if (currentTextbox != null)
+                currentTextbox.EndSearch();
+
             currentTextbox = tab.textbox;
             currentTab = tab;
+            searchOpen = true;
 
             //hide the window when in replace state or expand it when in search state or show it when hidden:
             if (searchWindowState == SearchWindowState.Expanded)
@@ -114,8 +113,10 @@ namespace Fastedit.Controls
                 expandReplace();
             }
 
-            if (currentTextbox.SelectionLength > 0 && currentTextbox.SelectionLength < 200)
+            if (currentTextbox.HasSelection && currentTextbox.CalculateSelectionPosition().Length < 200)
+            {
                 textToFindTextbox.Text = currentTextbox.SelectedText;
+            }
 
             textToReplaceTextBox.Focus(FocusState.Keyboard);
             textToReplaceTextBox.SelectAll();
@@ -124,9 +125,19 @@ namespace Fastedit.Controls
         }
         public void Close()
         {
+            if (!searchOpen || currentTextbox == null)
+                return;
+
+            searchOpen = false;
             currentTextbox.EndSearch();
             hideWindow();
+            currentTextbox.Focus(FocusState.Programmatic);
+
             currentTextbox = null;
+        }
+        private void UpdateSearch()
+        {
+            BeginSearch(textToFindTextbox.Text, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
         }
 
         private void ReplaceTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -138,13 +149,13 @@ namespace Fastedit.Controls
         }
         private void SearchTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            if (currentTextbox == null)
+                return;
+
             //Search down on Enter and up on Shift + Enter//
-            var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            var shift = KeyHelper.IsKeyPressed(VirtualKey.Shift);
             if (e.Key == VirtualKey.Enter)
             {
-                if (currentTextbox == null)
-                    return;
-
                 if (shift)
                     currentTextbox.FindPrevious();
                 else
@@ -153,31 +164,14 @@ namespace Fastedit.Controls
         }
         private void SearchUpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentTextbox == null)
-                return;
-
             currentTextbox.FindPrevious();
         }
         private void SearchDownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentTextbox == null)
-                return;
             currentTextbox.FindNext();
-        }
-        private void FindMatchCaseButton_Click(object sender, RoutedEventArgs e)
-        {
-            //AppSettings.SaveSettings("FindMatchCase", FindMatchCaseButton.IsChecked);
-        }
-        private void FindWholeWordButton_Click(object sender, RoutedEventArgs e)
-        {
-            //if (SaveToSettings)
-            //appsettings.SaveSettings("FindWholeWord", FindWholeWordButton.IsChecked);
         }
         private void ReplaceAllButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentTextbox == null)
-                return;
-
             var res = currentTextbox.ReplaceAll(
                 textToFindTextbox.Text,
                 textToReplaceTextBox.Text,
@@ -185,18 +179,12 @@ namespace Fastedit.Controls
                 FindWholeWordButton.IsChecked ?? false
                 );
 
-            if (res == SearchResult.Found)
-            {
-                currentTab.DatabaseItem.IsModified = true;
-                currentTab.UpdateHeader();
-            }
-
             ColorWindowBorder(res);
         }
         private void ReplaceCurrentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentTextbox == null)
-                return;
+            var res = currentTextbox.ReplaceNext(textToReplaceTextBox.Text);
+            ColorWindowBorder(res);
         }
         private void SearchWindow_CloseButtonClick(object sender, RoutedEventArgs e)
         {
@@ -204,7 +192,6 @@ namespace Fastedit.Controls
         }
         private void ExpandSearchBoxForReplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Search: " + searchWindowState);
             if (searchWindowState == SearchWindowState.Expanded)
                 ShowSearch(currentTab);
             else
@@ -212,27 +199,26 @@ namespace Fastedit.Controls
         }
         private void TextBoxes_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
-            {
-                tb.SelectAll();
-            }
+            (sender as TextBox)?.SelectAll();
         }
 
         private void textToFindTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BeginSearch(textToFindTextbox.Text, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
+            UpdateSearch();
+        }
+        private void SearchProperties_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateSearch();
         }
 
         private void collapseSearchAnimation_Completed(object sender, object e)
         {
             ToggleVisibility(false);
         }
-
         private void expandSearchAnimation_Completed(object sender, object e)
         {
             ToggleVisibility(true);
         }
-
         private void hideSearchAnimation_Completed(object sender, object e)
         {
             this.Visibility = Visibility.Collapsed;

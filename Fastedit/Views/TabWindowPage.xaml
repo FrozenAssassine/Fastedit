@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fastedit.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
     mc:Ignorable="d" KeyDown="Page_KeyDown">
     <Page.Resources>
         <MenuFlyout x:Key="rightClickMenu" x:Name="RightClickMenu">
@@ -22,13 +22,13 @@
                     <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Save as" Click="SaveAs_Click" Icon="SaveLocal">
+            <MenuFlyoutItem Text="Save As" Click="SaveAs_Click" Icon="SaveLocal">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="S" Modifiers="Control, Shift"  IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Compact overlay" Click="CompactOverlay_Click">
+            <MenuFlyoutItem Text="Compact Overlay" Click="CompactOverlay_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="K" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
@@ -38,6 +38,7 @@
                     <KeyboardAccelerator Key="F11"  IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Close" Icon="Cancel" Click="Close_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
@@ -51,10 +52,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" VerticalAlignment="Center" x:Name="titlebar">
             <SymbolIcon Margin="10,0,0,0" VerticalAlignment="Center" Symbol="Page2" HorizontalAlignment="Left" />
             <TextBlock VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind tab.Header, Mode=OneWay}" HorizontalAlignment="Left"/>
         </Grid>
+
+        <controls:TextStatusBar Grid.Row="2" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" x:Name="textStatusBar"/>
     </Grid>
 </Page>
