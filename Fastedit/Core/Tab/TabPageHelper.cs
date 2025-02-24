@@ -260,6 +260,9 @@ public static class TabPageHelper
             if (!RecycleBinManager.MoveFileToRecycleBin(tab))
                 return false;
 
+        if(mainPage.SearchControl.currentTab == tab)
+            mainPage.SearchControl.Close();
+
         tabView.TabItems.Remove(tab);
         TabDatabase.DeleteTempFile(tab);
         return !tabView.TabItems.Contains(tab);

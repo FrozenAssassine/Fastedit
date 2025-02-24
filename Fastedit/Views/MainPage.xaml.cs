@@ -30,7 +30,7 @@ namespace Fastedit
         public TabView tabView => this.tabControl;
         public QuickAccessWindow RunCommandWindow => this.runCommandWindow;
         public Grid TitleBarGrid => this.customDragRegion;
-
+        public SearchControl SearchControl => this.searchControl;
         public MainPage()
         {
             this.InitializeComponent();
@@ -252,6 +252,9 @@ namespace Fastedit
                     break;
                 case VirtualKey.F11:
                     Fullscreen_Click(null, null);
+                    break;
+                case VirtualKey.Escape:
+                    searchControl.Close();
                     break;
             }
         }

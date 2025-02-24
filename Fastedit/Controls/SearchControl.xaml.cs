@@ -64,6 +64,9 @@ namespace Fastedit.Controls
             if (tab == null || tab.textbox == null)
                 return;
 
+            if (currentTextbox != null)
+                currentTextbox.EndSearch();
+
             currentTextbox = tab.textbox;
             currentTab = tab;
             searchOpen = true;
@@ -119,9 +122,14 @@ namespace Fastedit.Controls
         }
         public void Close()
         {
+            if (!searchOpen || currentTextbox == null)
+                return;
+
             searchOpen = false;
             currentTextbox.EndSearch();
             hideWindow();
+            currentTextbox.Focus(FocusState.Programmatic);
+
             currentTextbox = null;
         }
         private void UpdateSearch()
@@ -138,13 +146,13 @@ namespace Fastedit.Controls
         }
         private void SearchTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            if (currentTextbox == null)
+                return;
+
             //Search down on Enter and up on Shift + Enter//
             var shift = KeyHelper.IsKeyPressed(VirtualKey.Shift);
             if (e.Key == VirtualKey.Enter)
             {
-                if (currentTextbox == null)
-                    return;
-
                 if (shift)
                     currentTextbox.FindPrevious();
                 else
