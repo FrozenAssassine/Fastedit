@@ -44,6 +44,7 @@ namespace Fastedit.Views
         private void InitStatusbar()
         {
             textStatusBar.tabPage = tab;
+            textStatusBar.window = window;
             textStatusBar.UpdateAll();
 
             this.tab.textbox.SelectionChanged += Textbox_SelectionChanged;

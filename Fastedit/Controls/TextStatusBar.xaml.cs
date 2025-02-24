@@ -15,7 +15,7 @@ public sealed partial class TextStatusBar : UserControl
     private bool goToLineEnterPressed = false;
 
     public TabPageItem tabPage { get; set; }
-    
+    public Window window { get; set; }
     private bool _IsVisible = true;
     public bool IsVisible { get => _IsVisible; set { _IsVisible = value; this.Visibility = ConvertHelper.BoolToVisibility(value); } }
 
@@ -177,7 +177,7 @@ public sealed partial class TextStatusBar : UserControl
         if (this.tabPage == null)
             return;
 
-        await RenameFileDialog.Show(this.tabPage);
+        await RenameFileDialog.Show(this.tabPage, window != null ? window.Content.XamlRoot : null);
         UpdateFile();
     }
 
