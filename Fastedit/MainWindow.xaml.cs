@@ -39,7 +39,10 @@ namespace Fastedit
 
         public void SendLaunchArguments()
         {
-            mainPage.TriggerAppActivationAfterStart();
+            this.DispatcherQueue.TryEnqueue(() =>
+            {
+                mainPage.TriggerAppActivationAfterStart();
+            });
         }
     }
 }

@@ -94,7 +94,10 @@ namespace Fastedit.Controls
         {
             if (tab == null || tab.textbox == null)
                 return;
-            
+
+            if (currentTextbox != null)
+                currentTextbox.EndSearch();
+
             currentTextbox = tab.textbox;
             currentTab = tab;
             searchOpen = true;

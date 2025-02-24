@@ -28,6 +28,35 @@ namespace Fastedit.Storage
             return $"{fileNameWithoutExtension}({count++}){extension}";
         }
 
+        public static async Task<bool> WriteLinesToFile(string path, IEnumerable<string> lines, Encoding encoding)
+        {
+            if (string.IsNullOrWhiteSpace(path) || lines == null || encoding == null)
+                return false;
+
+            try
+            {
+                using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 65536, useAsync: true))
+                using (var writer = new StreamWriter(stream, encoding))
+                {
+                    foreach (var line in lines)
+                    {
+                        await writer.WriteLineAsync(line);
+                    }
+                }
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                InfoMessages.NoAccessToSaveFile();
+            }
+            catch (Exception ex)
+            {
+                InfoMessages.UnhandledException(ex.Message);
+            }
+
+            return false;
+        }
+
         public static async Task<bool> WriteTextToFileAsync(string path, string text, Encoding encoding)
         {
             if (string.IsNullOrWhiteSpace(path) || text == null || encoding == null)
@@ -36,7 +65,7 @@ namespace Fastedit.Storage
             try
             {
                 // Open the file stream with async enabled
-                using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 65536, useAsync: true))
                 using (var writer = new StreamWriter(stream, encoding))
                 {
                     // Write the text asynchronously
@@ -67,7 +96,7 @@ namespace Fastedit.Storage
             if (tab.DatabaseItem.WasNeverSaved)
                 return await SaveFileAs(tab);
 
-            bool result = await WriteTextToFileAsync(tab.DatabaseItem.FilePath, tab.textbox.GetText(), tab.Encoding);
+            bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding);
             if (result)
             {
                 TabPageHelper.UpdateSaveStatus(tab, false);
@@ -94,7 +123,7 @@ namespace Fastedit.Storage
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
-                await WriteTextToFileAsync(file.Path, tab.textbox.GetText(), tab.Encoding);
+                await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding);
 
                 tab.DatabaseItem.FilePath = file.Path;
                 tab.DatabaseItem.FileName = file.Name;
