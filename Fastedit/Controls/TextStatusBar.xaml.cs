@@ -19,6 +19,12 @@ public sealed partial class TextStatusBar : UserControl
     private bool _IsVisible = true;
     public bool IsVisible { get => _IsVisible; set { _IsVisible = value; this.Visibility = ConvertHelper.BoolToVisibility(value); } }
 
+    public new Brush Background
+    {
+        get => statusbar.Background;
+        set => statusbar.Background = value;
+    }
+
     public TextStatusBar()
     {
         this.InitializeComponent();
