@@ -96,32 +96,32 @@ namespace Fastedit
         }
         private void Initialise()
         {
-            if (!FirstLoaded)
+            if (FirstLoaded)
+                return;
+
+            FirstLoaded = true;
+
+            //Create all needed folders when they don't exist:
+            if (!Directory.Exists(DefaultValues.DatabasePath))
+                Directory.CreateDirectory(DefaultValues.DatabasePath);
+            if (!Directory.Exists(DefaultValues.DesignPath))
+                Directory.CreateDirectory(DefaultValues.DesignPath);
+
+            //copy the designs only on first start or when forced by user
+            DesignHelper.CopyDefaultDesigns();
+
+            //Add all the controls, that need to be hidden when in settings
+            ControlsToHideInSettings = [mainMenubar, textStatusBar, runCommandWindow];
+
+            //Create additinal controls:
+            CreateMenubarFromLanguage();
+
+            if (!AppSettings.FirstStart)
             {
-                FirstLoaded = true;
-
-                //Create all needed folders when they don't exist:
-                if (!Directory.Exists(DefaultValues.DatabasePath))
-                    Directory.CreateDirectory(DefaultValues.DatabasePath);
-                if (!Directory.Exists(DefaultValues.DesignPath))
-                    Directory.CreateDirectory(DefaultValues.DesignPath);
-
-                //copy the designs only on first start or when forced by user
-                DesignHelper.CopyDefaultDesigns();
-
-                //Add all the controls, that need to be hidden when in settings
-                ControlsToHideInSettings = [mainMenubar, textStatusBar, runCommandWindow];
-
-                //Create additinal controls:
-                CreateMenubarFromLanguage();
-
-                if (AppSettings.FirstStart)
-                {
-                    AppSettings.FirstStart = true;
-                    InfoMessages.WelcomeMessage();
-                }
+                AppSettings.FirstStart = true;
+                InfoMessages.WelcomeMessage();
             }
-            }
+        }
 
         private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
