@@ -550,7 +550,7 @@
         <controls:QuickAccessWindow Closed="runCommandWindow_Closed" x:Name="runCommandWindow" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
             <controls:QuickAccessWindow.Items>
                 <models:QuickAccessWindowItem Command="Close Tab" Shortcut="Ctrl + W" RunCommandWindowItemClicked="CloseTab_Click"/>
-                <models:QuickAccessWindowSubItem Command="Syntax Highlighting" x:Name="RunCommandWindowItem_SyntaxHighlighting"/>
+                <models:QuickAccessWindowSubItem TriggerOnSelecting="True" Command="Syntax Highlighting" SelectedChanged="RunCommandWindowItem_SytaxHighlighting_SelectedChanged"  x:Name="RunCommandWindowItem_SyntaxHighlighting"/>
                 <models:QuickAccessWindowItem Command="New tab" Shortcut="Ctrl + T" RunCommandWindowItemClicked="NewFile_Click"/>
                 <models:QuickAccessWindowItem Command="Encoding" Shortcut="Ctrl + E" RunCommandWindowItemClicked="ChangeEncoding_Click"/>
                 <models:QuickAccessWindowItem Command="Copy" Shortcut="Ctrl + C" RunCommandWindowItemClicked="Copy_Click"/>

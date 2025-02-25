@@ -12,6 +12,7 @@ using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
+using System.Diagnostics;
 
 namespace Fastedit
 {
@@ -582,6 +583,10 @@ namespace Fastedit
             ApplySettings();
         }
 
+        private void RunCommandWindowItem_SytaxHighlighting_SelectedChanged(IQuickAccessWindowItem item)
+        {
+            SyntaxHighlighting_Click(item, null);
+        }
         public void SelectedTabChanged()
         {
             TabView_SelectionChanged(tabControl, null);
