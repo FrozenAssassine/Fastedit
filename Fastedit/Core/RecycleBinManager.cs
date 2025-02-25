@@ -28,6 +28,8 @@ public class RecycleBinManager
 
     public static string[] GetTrashedFiles()
     {
+        if (!Directory.Exists(DefaultValues.RecycleBinPath))
+            return [];
         return Directory.GetFiles(DefaultValues.RecycleBinPath);
     }
 
