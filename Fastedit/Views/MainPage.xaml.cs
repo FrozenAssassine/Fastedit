@@ -82,6 +82,17 @@ namespace Fastedit
             AppActivationHelper.HandleAppActivation(tabControl);
         }
 
+        private void MakeAppTitle(object selectedTab)
+        {
+            string title = "";
+            if (selectedTab == null || tabControl.TabItems.Count == 0)
+                title = "Fastedit";
+            else if (selectedTab is TabPageItem tab)
+                title = $"Fastedit - {tab.Header}";
+            else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
+                title = "Fastedit - Settings";
+                App.m_window.Title = title;
+        }
         private void Initialise()
         {
             if (!FirstLoaded)
@@ -288,6 +299,8 @@ namespace Fastedit
         {
             if (searchControl.searchOpen && tabControl.SelectedItem == null)
                 searchControl.Visibility = Visibility.Collapsed;
+
+            MakeAppTitle(tabControl.SelectedItem);
 
             if (tabControl.SelectedItem is TabPageItem tab)
             {
