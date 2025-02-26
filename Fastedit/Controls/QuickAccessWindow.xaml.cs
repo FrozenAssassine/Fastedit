@@ -100,7 +100,7 @@ namespace Fastedit.Controls
 
             if (tabView.SelectedItem is TabPageItem selectedTab)
             {
-                WordCountDisplay.InfoText = selectedTab.CountWords().ToString();
+                WordCountDisplay.InfoText = selectedTab.textbox.WordCount().ToString();
                 CharacterCountDisplay.InfoText = selectedTab.textbox.CharacterCount().ToString();
                 LineCountDisplay.InfoText = selectedTab.textbox.NumberOfLines.ToString();
                 EncodingDisplay.InfoText = EncodingHelper.GetEncodingName(selectedTab.Encoding);

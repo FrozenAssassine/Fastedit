@@ -85,7 +85,7 @@ public sealed partial class TextStatusBar : UserControl
             return;
         }
         int charCount = tabPage.textbox.CharacterCount();
-        ItemWordCharacter.CustomText = (charCount > 5_000_000 ? "" : $"W: {tabPage.CountWords()}, ") + $"C: {charCount}";
+        ItemWordCharacter.CustomText = (charCount > 5_000_000 ? "" : $"W: {tabPage.textbox.WordCount()}, ") + $"C: {charCount}";
     }
     public void UpdateZoom()
     {

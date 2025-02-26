@@ -46,7 +46,7 @@ namespace Fastedit.Dialogs
             if (tab.textbox.SyntaxHighlighting != null)
                 content.AppendLine("Language: " + tab.textbox.SyntaxHighlighting.Name);
 
-            content.AppendLine("Words: " + tab.CountWords());
+            content.AppendLine("Words: " + tab.textbox.WordCount());
             content.AppendLine("Lines: " + tab.textbox.NumberOfLines);
             content.AppendLine("Characters: " + tab.textbox.CharacterCount());
             content.AppendLine("Encoding: " + EncodingHelper.GetEncodingName(tab.Encoding));
