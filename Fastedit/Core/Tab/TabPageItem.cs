@@ -16,6 +16,7 @@ namespace Fastedit.Core.Tab
 
         public TextControlBox textbox { get; private set; }
         private TabView tabView;
+        
         public TabPageItem(TabView tabView, TabItemDatabaseItem databaseItem = null)
         {
             this.tabView = tabView;
@@ -54,6 +55,13 @@ namespace Fastedit.Core.Tab
             }
         }
 
+        public void UpdateTabIcon()
+        {
+            this.IconSource = 
+                new FontIconSource { 
+                    Glyph = this.DatabaseItem.IsModified ? "\uE915" : "\uE7C3" 
+                };
+        }
 
         private void Initialise(TabView tabView, TabItemDatabaseItem item)
         {
@@ -62,8 +70,6 @@ namespace Fastedit.Core.Tab
             textbox.Tag = this;
 
             var grid = new Grid();
-
-            IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
 
             ContextFlyout = TabFlyout.CreateFlyout(this, tabView);
             Content = grid;
@@ -76,6 +82,8 @@ namespace Fastedit.Core.Tab
                 IsModified = false,
                 ZoomFactor = 100,
             };
+
+            UpdateTabIcon();
         }
 
         public bool DataIsLoaded = false;
@@ -89,36 +97,6 @@ namespace Fastedit.Core.Tab
             }
         }
 
-        public int CountWords()
-        {
-            int wordCount = 0;
-
-            foreach (var line in textbox.Lines)
-            {
-                var span = line.AsSpan();
-                int index = 0;
-
-                while (index < span.Length)
-                {
-                    while (index < span.Length && char.IsWhiteSpace(span[index]))
-                    {
-                        index++;
-                    }
-
-                    if (index < span.Length)
-                    {
-                        wordCount++;
-                    }
-
-                    while (index < span.Length && !char.IsWhiteSpace(span[index]))
-                    {
-                        index++;
-                    }
-                }
-            }
-
-            return wordCount;
-        }
         public bool HasHeader(string header)
         {
             if (DatabaseItem.FileName == null)
@@ -130,7 +108,6 @@ namespace Fastedit.Core.Tab
         {
             if (DatabaseItem.IsModified)
             {
-
                 if (Header == null)
                     Header = header ?? "";
 
@@ -143,8 +120,9 @@ namespace Fastedit.Core.Tab
             else
                 Header = header;
 
-            TabPageHeaderChanged?.Invoke(header);
+            UpdateTabIcon();
 
+            TabPageHeaderChanged?.Invoke(header);
             DatabaseItem.FileName = header;
         }
         //Ensure the save status of the file to be displayed in the header
