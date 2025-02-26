@@ -56,7 +56,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" VerticalAlignment="Center" x:Name="titlebar">
             <SymbolIcon Margin="10,0,0,0" VerticalAlignment="Center" Symbol="Page2" HorizontalAlignment="Left" />
-            <TextBlock VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind tab.Header, Mode=OneWay}" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="titleText" VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind tab.Header, Mode=OneWay}" HorizontalAlignment="Left"/>
         </Grid>
 
         <controls:TextStatusBar Grid.Row="2" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" x:Name="textStatusBar"/>

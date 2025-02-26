@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using Newtonsoft.Json.Linq;
 
 namespace Fastedit.Helper
 {
@@ -8,18 +9,20 @@ namespace Fastedit.Helper
 
         public static ElementTheme CurrentTheme
         {
-            get
-            {
-                if (App.m_window.Content is FrameworkElement frame)
-                    return frame.RequestedTheme;
-                return ElementTheme.Default;
-            }
-            set
-            {
-                if (App.m_window.Content is FrameworkElement frame)
-                    frame.RequestedTheme = value;
-            }
+            get { return GetWindowTheme(App.m_window); }
+            set { SetWindowTheme(App.m_window, value); }
         }
 
+        public static void SetWindowTheme(Window window, ElementTheme theme)
+        {
+            if (window.Content is FrameworkElement frame)
+                frame.RequestedTheme = theme;
+        }
+        public static ElementTheme GetWindowTheme(Window window)
+        {
+            if (window.Content is FrameworkElement frame)
+                return frame.RequestedTheme;
+            return ElementTheme.Default;
+        }
     }
 }

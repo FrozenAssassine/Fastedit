@@ -18,6 +18,7 @@ namespace Fastedit.Views
         public Grid MainGrid => mainGrid;
         public Grid Titlebar => titlebar;
         public TextStatusBar Statusbar => textStatusBar;
+        public TextBlock TitleText => titleText;
 
         public TabWindowPage(TabPageItem tab, Window window)
         {
@@ -71,6 +72,10 @@ namespace Fastedit.Views
         {
             //Show the default rightclick menu
             tab.textbox.ContextFlyout = null;
+
+            this.tab.textbox.SelectionChanged -= Textbox_SelectionChanged;
+            this.tab.textbox.TextChanged -= Textbox_TextChanged;
+            this.tab.textbox.ZoomChanged -= Textbox_ZoomChanged;
 
             Grid.SetRow(tab.textbox, 0);
             this.mainGrid.Children.Remove(tab.textbox);

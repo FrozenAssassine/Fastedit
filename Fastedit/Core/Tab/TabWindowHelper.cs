@@ -92,7 +92,9 @@ internal class TabWindowHelper
 
     public static void UpdateSettings()
     {
-        var gridBackground = new SolidColorBrush(ConvertHelper.ToColor(DesignHelper.CurrentDesign.SelectedTabPageHeaderBackground));
+        var design = DesignHelper.CurrentDesign;
+
+        var gridBackground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderBackground));
         foreach (var item in OpenWindows)
         {
             var window = item.Key;
@@ -106,8 +108,10 @@ internal class TabWindowHelper
                 SettingsUpdater.SetSettingsToStatusbar(page.Statusbar, DesignHelper.CurrentDesign);
 
                 page.Statusbar.IsVisible = AppSettings.ShowStatusbar;
+                ThemeHelper.SetWindowTheme(window, design.Theme);
 
                 page.MainGrid.Background = gridBackground;
+                page.TitleText.Foreground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderTextColor));
             }
         }
     }
