@@ -17,7 +17,7 @@ namespace Fastedit.Core.Tab
             flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
             flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
             flyout.Items.Add(new MenuFlyoutSeparator());
-            flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock));
+            flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock, VirtualKeyModifiers.Control, VirtualKey.L));
             flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
             flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
             return flyout;
