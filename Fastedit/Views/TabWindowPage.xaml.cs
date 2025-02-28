@@ -91,11 +91,11 @@ public sealed partial class TabWindowPage : Page
     }
     private async void SaveAs_Click(object sender, RoutedEventArgs e)
     {
-        await SaveFileHelper.SaveFileAs(tab);
+        await SaveFileHelper.SaveFileAs(tab, this.window);
     }
     private async void Save_Click(object sender, RoutedEventArgs e)
     {
-        await SaveFileHelper.Save(tab);
+        await SaveFileHelper.Save(tab, this.window);
     }
     private async void Open_Click(object sender, RoutedEventArgs e)
     {
@@ -106,7 +106,10 @@ public sealed partial class TabWindowPage : Page
         if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
             RecycleBinManager.MoveFileToRecycleBin(tab);
 
-        await OpenFileHelper.OpenFileForTab(tab);
+        if(await OpenFileHelper.OpenFileForTab(tab, this.window))
+        {
+            window.Title = tab.DatabaseItem.FileName;
+        }
     }
 
     private async void Rename()

@@ -1,6 +1,7 @@
 ﻿using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,7 @@ public class SaveFileHelper
 
         return false;
     }
-    public static async Task<bool> Save(TabPageItem tab)
+    public static async Task<bool> Save(TabPageItem tab, Window window = null)
     {
         if (tab == null)
             return false;
@@ -94,7 +95,7 @@ public class SaveFileHelper
             TabPageHelper.LoadUnloadedTab(tab);
 
         if (tab.DatabaseItem.WasNeverSaved)
-            return await SaveFileAs(tab);
+            return await SaveFileAs(tab, window);
 
         bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding);
         if (result)
@@ -103,7 +104,7 @@ public class SaveFileHelper
         }
         return result;
     }
-    public static async Task<bool> SaveFileAs(TabPageItem tab)
+    public static async Task<bool> SaveFileAs(TabPageItem tab, Window window = null)
     {
         if (tab == null)
             return false;
@@ -111,7 +112,9 @@ public class SaveFileHelper
 
         var savePicker = new Windows.Storage.Pickers.FileSavePicker();
         savePicker.FileTypeChoices.Add("Current extension", [Path.GetExtension(tab.DatabaseItem.FileName)]);
-        WinRT.Interop.InitializeWithWindow.Initialize(savePicker, App.m_window.WindowHandle);
+        WinRT.Interop.InitializeWithWindow.Initialize(savePicker,
+            window != null ? WinRT.Interop.WindowNative.GetWindowHandle(window) : App.m_window.WindowHandle
+            );
 
         for (int i = 0; i < FileExtensions.FileExtentionList.Count; i++)
         {

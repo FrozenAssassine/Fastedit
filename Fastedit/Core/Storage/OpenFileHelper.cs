@@ -1,6 +1,7 @@
 ﻿using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -160,12 +161,12 @@ public class OpenFileHelper
         return false;
     }
 
-    public static async Task<bool> OpenFileForTab(TabPageItem tab)
+    public static async Task<bool> OpenFileForTab(TabPageItem tab, Window window = null)
     {
         var picker = new Windows.Storage.Pickers.FileOpenPicker();
         picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
         picker.FileTypeFilter.Add("*");
-        WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, window != null ? WinRT.Interop.WindowNative.GetWindowHandle(window) : App.m_window.WindowHandle);
 
         var file = await picker.PickSingleFileAsync();
         if (file == null)
