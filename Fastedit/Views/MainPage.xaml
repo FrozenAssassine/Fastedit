@@ -22,6 +22,7 @@
                       Background="Transparent"
                       x:Name="tabControl"
                       CanReorderTabs="True"
+                      AddTabButtonClick="TabView_AddTabButton_Click"
                       TabCloseRequested="TabView_CloseTabButtonClick"
                       SelectionChanged="TabView_SelectionChanged"
                       CanDragTabs="true"

@@ -284,6 +284,11 @@ public sealed partial class MainPage : Page
     }
 
     //TabControl
+    private void TabView_AddTabButton_Click(TabView sender, object args)
+    {
+        TabPageHelper.AddNewTab(tabControl, true);
+        verticalTabsFlyout?.UpdateFlyoutIfOpen();
+    }
     private void AddTabButton_Click(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
     {
         TabPageHelper.AddNewTab(tabControl, true);
