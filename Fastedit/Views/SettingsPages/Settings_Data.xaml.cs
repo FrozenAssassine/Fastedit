@@ -46,7 +46,6 @@ namespace Fastedit.Views.SettingsPages
                 InfoMessages.SettingsImportFailed();
         }
 
-        //Clear recylcebin
         private void ClearRecyclebin_Click(object sender, RoutedEventArgs e)
         {
             if (RecycleBinManager.ClearRecycleBin() == ClearRecycleBinResult.Success)

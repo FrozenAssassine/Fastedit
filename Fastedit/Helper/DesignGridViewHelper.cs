@@ -8,7 +8,6 @@ namespace Fastedit.Helper;
 
 public class DesignGridViewHelper
 {
-    //Manage the GridView with design items
     public static DesignGridViewItem CreateItem(FasteditDesign design, string path)
     {
         return new DesignGridViewItem

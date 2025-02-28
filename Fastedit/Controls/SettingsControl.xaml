@@ -11,7 +11,7 @@
 
     <Grid PointerEntered="UserControl_PointerEntered" 
           PointerExited="UserControl_PointerExited"
-          PointerPressed="mainGrid_PointerPressed" 
+          PointerPressed="MainGrid_PointerPressed" 
           VerticalAlignment="Stretch" 
           HorizontalAlignment="Stretch" 
           MinWidth="{ThemeResource FlyoutThemeMinWidth}" 

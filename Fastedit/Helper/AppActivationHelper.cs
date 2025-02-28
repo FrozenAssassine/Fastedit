@@ -12,7 +12,7 @@ public class AppActivationHelper
         if (appActivationArguments == null)
             return false;
 
-        //var args = Environment.GetCommandLineArgs();
+        //TODO! var args = Environment.GetCommandLineArgs();
 
         return HandleFileActivation(tabView);
     }

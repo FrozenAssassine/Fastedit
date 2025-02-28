@@ -47,7 +47,6 @@ namespace Fastedit.Core.Settings
             tab.textbox.FontFamily = new FontFamily(AppSettings.FontFamily);
 
             tab.textbox.ShowLineHighlighter = AppSettings.ShowLineHighlighter;
-
             tab.textbox.ShowLineNumbers = AppSettings.ShowLineNumbers;
 
             tab.textbox.EnableSyntaxHighlighting = AppSettings.SyntaxHighlighting;
@@ -80,12 +79,7 @@ namespace Fastedit.Core.Settings
             }
 
             //Load tabs or spaces
-            object tag;
-            if (!AppSettings.UseSpacesInsteadTabs)
-                tag = "-1";
-            else
-                tag = AppSettings.SpacesPerTab;
-
+            object tag = AppSettings.UseSpacesInsteadTabs ? AppSettings.SpacesPerTab : "-1";
             TabPageHelper.TabsOrSpaces(tabView, tag);
         }
         public static void SetSettingsToStatusbar(TextStatusBar statusbar, FasteditDesign design)

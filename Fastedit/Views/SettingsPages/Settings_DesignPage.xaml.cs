@@ -7,114 +7,108 @@ using System.IO;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+namespace Fastedit.Views.SettingsPages;
 
-namespace Fastedit.Views.SettingsPages
+public sealed partial class Settings_DesignPage : Page
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class Settings_DesignPage : Page
+    public Settings_DesignPage()
     {
-        public Settings_DesignPage()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
+    }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            DesignGridViewHelper.LoadItems(designGridView);
-            base.OnNavigatedTo(e);
-        }
-        private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            DesignGridViewHelper.GridViewClick(e);
-        }
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        DesignGridViewHelper.LoadItems(designGridView);
+        base.OnNavigatedTo(e);
+    }
+    private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        DesignGridViewHelper.GridViewClick(e);
+    }
 
-        private void UpdateDesigns_Click(object sender, RoutedEventArgs e)
-        {
-            DesignGridViewHelper.UpdateItems(designGridView);
-        }
+    private void UpdateDesigns_Click(object sender, RoutedEventArgs e)
+    {
+        DesignGridViewHelper.UpdateItems(designGridView);
+    }
 
-        private async void ExportDesign_Click(object sender, RoutedEventArgs e)
+    private async void ExportDesign_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is MenuFlyoutItem item && item.Tag != null)
         {
-            if (sender is MenuFlyoutItem item && item.Tag != null)
-            {
-                if (!await DesignHelper.ExportDesign(item.Tag.ToString()))
-                    InfoMessages.ExportDesignError();
-            }
+            if (!await DesignHelper.ExportDesign(item.Tag.ToString()))
+                InfoMessages.ExportDesignError();
         }
+    }
 
-        private async void ImportDesign_Click(object sender, RoutedEventArgs e)
+    private async void ImportDesign_Click(object sender, RoutedEventArgs e)
+    {
+        if (await DesignHelper.ImportDesign())
+            UpdateDesigns_Click(null, null);
+        else
+            InfoMessages.ImportDesignError();
+    }
+
+    private void DeleteDesign_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is MenuFlyoutItem item && item.Tag != null)
         {
-            if (await DesignHelper.ImportDesign())
+            if (DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
                 UpdateDesigns_Click(null, null);
             else
-                InfoMessages.ImportDesignError();
+                InfoMessages.DeleteDesignError();
         }
+    }
 
-        private void DeleteDesign_Click(object sender, RoutedEventArgs e)
+    private void EditDesign_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is MenuFlyoutItem item)
         {
-            if (sender is MenuFlyoutItem item && item.Tag != null)
+            DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
+        }
+    }
+
+    private async void NewDesign_Click(object sender, RoutedEventArgs e)
+    {
+        string designName = await NewDesignDialog.Show();
+        if (designName == null)
+            return;
+
+        var file = DesignHelper.CreateDesign(designName);
+
+        DesignGridViewHelper.UpdateItems(designGridView);
+        DesignWindowHelper.EditDesign(Path.GetFileName(file));
+    }
+
+    private void LoadDefaultDesigns_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (var file in Directory.GetFiles(DefaultValues.DesignPath))
+        {
+            try
             {
-                if (DesignHelper.DeleteDesign(item.Tag.ToString(), designGridView))
-                    UpdateDesigns_Click(null, null);
-                else
-                    InfoMessages.DeleteDesignError();
+                File.Delete(file);
+            }
+            catch
+            {
+                InfoMessages.DeleteDesignError(file);
             }
         }
 
-        private void EditDesign_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is MenuFlyoutItem item)
-            {
-                DesignWindowHelper.EditDesign(ConvertHelper.ToString(item.Tag));
-            }
-        }
+        DesignHelper.CopyDefaultDesigns(true);
 
-        private async void NewDesign_Click(object sender, RoutedEventArgs e)
-        {
-            string designName = await NewDesignDialog.Show();
-            if (designName == null)
-                return;
+        DesignGridViewHelper.UpdateItems(designGridView);
+    }
 
-            var file = DesignHelper.CreateDesign(designName);
+    private void EditDesignJson_Click(object sender, RoutedEventArgs e)
+    {
+        string fileName = (sender as MenuFlyoutItem).Tag.ToString();
+        TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
+    }
 
+    private void DuplicateDesign_Click(object sender, RoutedEventArgs e)
+    {
+        string fileName = (sender as MenuFlyoutItem).Tag.ToString();
+        var duplicateFileName = DesignHelper.DuplicateDesign(fileName);
+        if (duplicateFileName != null)
             DesignGridViewHelper.UpdateItems(designGridView);
-            DesignWindowHelper.EditDesign(Path.GetFileName(file));
-        }
-
-        private void LoadDefaultDesigns_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var file in Directory.GetFiles(DefaultValues.DesignPath))
-            {
-                try
-                {
-                    File.Delete(file);
-                }
-                catch
-                {
-                    InfoMessages.DeleteDesignError(file);
-                }
-            }
-
-            DesignHelper.CopyDefaultDesigns(true);
-
-            DesignGridViewHelper.UpdateItems(designGridView);
-        }
-
-        private void EditDesignJson_Click(object sender, RoutedEventArgs e)
-        {
-            string fileName = (sender as MenuFlyoutItem).Tag.ToString();
-            TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
-        }
-
-        private void DuplicateDesign_Click(object sender, RoutedEventArgs e)
-        {
-            string fileName = (sender as MenuFlyoutItem).Tag.ToString();
-            var duplicateFileName = DesignHelper.DuplicateDesign(fileName);
-            if (duplicateFileName != null)
-                DesignGridViewHelper.UpdateItems(designGridView);
-        }
     }
 }

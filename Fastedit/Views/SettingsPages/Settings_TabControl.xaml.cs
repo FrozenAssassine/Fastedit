@@ -23,27 +23,24 @@ namespace Fastedit.Views.SettingsPages
 
         private void NewTabTitle_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (sender is TextBox textbox)
+            //validate data:
+            string data = (sender as TextBox).Text;
+            if (data.Length == 0)
+                return;
+
+            //check for invalid characters
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            for (int i = 0; i < data.Length; i++)
             {
-                //validate data:
-                string data = textbox.Text;
-                if (data.Length == 0)
-                    return;
-
-                //check for invalid characters
-                char[] invalidChars = Path.GetInvalidFileNameChars();
-                for (int i = 0; i < data.Length; i++)
+                if (invalidChars.Contains(data[i]))
                 {
-                    if (invalidChars.Contains(data[0]))
-                    {
-                        InfoMessages.FileNameInvalidCharacters();
-                        return;
-                    }
+                    InfoMessages.FileNameInvalidCharacters();
+                    return;
                 }
-
-                AppSettings.NewTabExtension = Path.GetExtension(data.Trim());
-                AppSettings.NewTabTitle = Path.GetFileNameWithoutExtension(data.Trim());
             }
+
+            AppSettings.NewTabExtension = Path.GetExtension(data.Trim());
+            AppSettings.NewTabTitle = Path.GetFileNameWithoutExtension(data.Trim());
         }
     }
 }

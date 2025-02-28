@@ -10,18 +10,18 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <Storyboard x:Name="collapseSearchAnimation" >
-            <DoubleAnimation Completed="collapseSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="80.0" To="45.0" Duration="0:0:0.1" />
+            <DoubleAnimation Completed="CollapseSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="80.0" To="45.0" Duration="0:0:0.1" />
             <DoubleAnimation Storyboard.TargetName="expandSearchButtonRotation" EnableDependentAnimation="True" Storyboard.TargetProperty="RotationZ" From="-180" To="0" Duration="0:0:0.1" />
         </Storyboard>
         <Storyboard x:Name="expandSearchAnimation">
-            <DoubleAnimation Completed="expandSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45.0" To="80.0" Duration="0:0:0.1" />
+            <DoubleAnimation Completed="ExpandSearchAnimation_Completed" Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45.0" To="80.0" Duration="0:0:0.1" />
             <DoubleAnimation Storyboard.TargetName="expandSearchButtonRotation" EnableDependentAnimation="True" Storyboard.TargetProperty="RotationZ" From="0" To="-180.0" Duration="0:0:0.1" />
         </Storyboard>
         <Storyboard x:Name="showSearchAnimation">
             <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="0" To="45" Duration="0:0:0.1" />
             <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Width" From="0" To="340" Duration="0:0:0.2" />
         </Storyboard>
-        <Storyboard x:Name="hideSearchAnimation" Completed="hideSearchAnimation_Completed">
+        <Storyboard x:Name="hideSearchAnimation" Completed="HideSearchAnimation_Completed">
             <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" From="45" To="0" Duration="0:0:0.1" />
             <DoubleAnimation Storyboard.TargetName="SearchWindow" EnableDependentAnimation="True" Storyboard.TargetProperty="Width" From="340" To="0" Duration="0:0:0.2" />
         </Storyboard>
@@ -56,7 +56,7 @@
                 <PlaneProjection RotationZ="0" x:Name="expandSearchButtonRotation"/>
             </Button.Projection>
         </Button>
-        <TextBox Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" TextChanged="textToFindTextbox_TextChanged" KeyDown="SearchTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Find..." x:Name="textToFindTextbox" Width="150" Height="30"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" TextChanged="TextToFindTextbox_TextChanged" KeyDown="SearchTextBox_KeyDown" GotFocus="TextBoxes_GotFocus" PlaceholderText="Find..." x:Name="textToFindTextbox" Width="150" Height="30"/>
 
         <Button Grid.Row="1" Grid.Column="3" Padding="0" Margin="5,0,0,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70D;" Click="SearchDownButton_Click"/>
         <Button Grid.Row="1" Grid.Column="4" Padding="0" Margin="5,0,0,0" Width="30" Height="30" CornerRadius="4" BorderThickness="0" Background="Transparent" FontFamily="Segoe MDL2 Assets" Content="&#xE70E;" Click="SearchUpButton_Click"/>

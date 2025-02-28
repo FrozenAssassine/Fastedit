@@ -65,7 +65,6 @@ namespace Fastedit.Controls
         }
         public void Show(TabView tabView)
         {
-            //Add the current tabpages:
             AddCurrentTabPages(tabView);
             UpdateLiveCommands(tabView);
             Items.AddRange(CurrentTabPages);
@@ -84,7 +83,6 @@ namespace Fastedit.Controls
         }
         public void Hide()
         {
-            //Remove all tabs
             Items.RemoveAll(x => x.Tag is TabPageItem);
 
             currentPage = null;
@@ -110,7 +108,7 @@ namespace Fastedit.Controls
         }
         private void AddCurrentTabPages(TabView tabView)
         {
-            //remove when there are too many
+            //remove if there are too many tabs
             if (CurrentTabPages.Count > tabView.TabItems.Count)
             {
                 CurrentTabPages.RemoveRange(0, CurrentTabPages.Count - tabView.TabItems.Count);

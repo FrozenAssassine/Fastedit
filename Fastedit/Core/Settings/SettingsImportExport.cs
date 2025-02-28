@@ -13,7 +13,12 @@ internal class SettingsImportExport
 {
     public static async Task<SettingsImportExportResult> Export()
     {
-        var file = await SaveFileHelper.PickFile(".fasteditsettings", "Fastedit settings");
+        var file = await SaveFileHelper.PickFile(
+            ".fasteditsettings", 
+            "Fastedit settings", 
+            "Settings_" + new DateTime().ToString("dd.MM.yyyy")
+            );
+
         if (file.Length == 0)
             return SettingsImportExportResult.Cancelled;
 
@@ -42,13 +47,13 @@ internal class SettingsImportExport
         foreach (var line in result.lines)
         {
             string trimmedLine = line.Trim();
-            if (trimmedLine.Length > 0)
+            if (trimmedLine.Length == 0)
+                continue;
+
+            var splitted = trimmedLine.Split("=", StringSplitOptions.RemoveEmptyEntries);
+            if (splitted.Length > 1)
             {
-                var splitted = trimmedLine.Split("=", StringSplitOptions.RemoveEmptyEntries);
-                if (splitted.Length > 1)
-                {
-                    SettingsManager.SaveSettings(splitted[0], splitted[1]);
-                }
+                SettingsManager.SaveSettings(splitted[0], splitted[1]);
             }
         }
 

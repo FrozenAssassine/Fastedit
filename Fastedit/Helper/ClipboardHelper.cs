@@ -1,14 +1,13 @@
 ﻿using Windows.ApplicationModel.DataTransfer;
 
-namespace Fastedit.Helper
+namespace Fastedit.Helper;
+
+internal class ClipboardHelper
 {
-    internal class ClipboardHelper
+    public static void Copy(string text)
     {
-        public static void Copy(string text)
-        {
-            var package = new DataPackage();
-            package.SetText(text);
-            Clipboard.SetContent(package);
-        }
+        var package = new DataPackage();
+        package.SetText(text);
+        Clipboard.SetContent(package);
     }
 }

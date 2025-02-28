@@ -2,39 +2,38 @@
 using System;
 using Windows.ApplicationModel;
 
-namespace Fastedit.Helper
+namespace Fastedit.Helper;
+
+public class VersionHelper
 {
-    public class VersionHelper
+    private static bool IsOnNewVersion(string version)
     {
-        private static bool IsOnNewVersion(string version)
-        {
-            string lastSavedVersion = AppSettings.AppVersion;
-            AppSettings.AppVersion = version;
+        string lastSavedVersion = AppSettings.AppVersion;
+        AppSettings.AppVersion = version;
 
-            //no version saved -> first start
-            if (lastSavedVersion.Length == 0)
-                return false;
-
-            if (!version.Equals(lastSavedVersion, StringComparison.Ordinal))
-                return true;
-
+        //no version saved -> first start
+        if (lastSavedVersion.Length == 0)
             return false;
-        }
 
-        public static string GetCurrentVersion()
-        {
-            return Package.Current.Id.Version.Major + "." +
-                Package.Current.Id.Version.Minor + "." +
-                Package.Current.Id.Version.Build;
-        }
+        if (!version.Equals(lastSavedVersion, StringComparison.Ordinal))
+            return true;
 
-        public static void CheckNewVersion()
+        return false;
+    }
+
+    public static string GetCurrentVersion()
+    {
+        return Package.Current.Id.Version.Major + "." +
+            Package.Current.Id.Version.Minor + "." +
+            Package.Current.Id.Version.Build;
+    }
+
+    public static void CheckNewVersion()
+    {
+        var version = GetCurrentVersion();
+        if (IsOnNewVersion(version))
         {
-            var version = GetCurrentVersion();
-            if (IsOnNewVersion(version))
-            {
-                InfoMessages.NewVersionInfo(version);
-            }
+            InfoMessages.NewVersionInfo(version);
         }
     }
 }

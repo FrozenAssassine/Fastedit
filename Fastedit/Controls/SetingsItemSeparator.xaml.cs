@@ -1,16 +1,12 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
-namespace Fastedit.Controls
+namespace Fastedit.Controls;
+public sealed partial class SetingsItemSeparator : UserControl
 {
-    public sealed partial class SetingsItemSeparator : UserControl
+    public SetingsItemSeparator()
     {
-        public SetingsItemSeparator()
-        {
-            this.InitializeComponent();
-        }
-
-        public string Header { get; set; }
+        this.InitializeComponent();
     }
+
+    public string Header { get; set; }
 }

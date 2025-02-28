@@ -4,26 +4,25 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Fastedit.Dialogs
+namespace Fastedit.Dialogs;
+
+public class AskSaveDesignDialog
 {
-    public class AskSaveDesignDialog
+    public static async Task<ContentDialogResult> Show(DesignEditor editor)
     {
-        public static async Task<ContentDialogResult> Show(DesignEditor editor)
+        var SaveDialog = new ContentDialog
         {
-            var SaveDialog = new ContentDialog
-            {
-                XamlRoot = editor.XamlRoot,
-                Background = DialogHelper.ContentDialogBackground(),
-                Foreground = DialogHelper.ContentDialogForeground(),
-                RequestedTheme = DialogHelper.DialogDesign,
-                Title = "Save Design?",
-                Content = "Would you like to save the changes on " + Path.GetFileNameWithoutExtension(editor.CurrentDesignName) + "?",
-                PrimaryButtonText = "Save",
-                SecondaryButtonText = "Don't save",
-                CloseButtonText = "Cancel",
-                DefaultButton = ContentDialogButton.Primary,
-            };
-            return await SaveDialog.ShowAsync();
-        }
+            XamlRoot = editor.XamlRoot,
+            Background = DialogHelper.ContentDialogBackground(),
+            Foreground = DialogHelper.ContentDialogForeground(),
+            RequestedTheme = DialogHelper.DialogDesign,
+            Title = "Save Design?",
+            Content = "Would you like to save the changes on " + Path.GetFileNameWithoutExtension(editor.CurrentDesignName) + "?",
+            PrimaryButtonText = "Save",
+            SecondaryButtonText = "Don't save",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+        };
+        return await SaveDialog.ShowAsync();
     }
 }

@@ -20,8 +20,6 @@ namespace Fastedit.Controls
             infobar.Severity = severity;
             infobar.IsOpen = true;
             infobar.MaxWidth = 500;
-            //this.Background = DialogHelper.ContentDialogBackground();
-            //this.Foreground = DialogHelper.ContentDialogForeground();
             infobar.RequestedTheme = DialogHelper.DialogDesign;
 
             MainWindow.InfoMessagesPanel.Children.Add(infobar);

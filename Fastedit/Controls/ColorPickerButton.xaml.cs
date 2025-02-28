@@ -4,25 +4,15 @@ using Fastedit.Helper;
 using Microsoft.UI.Xaml.Input;
 
 namespace Fastedit.Controls
-{
-    
+{ 
     public sealed partial class ColorPickerButton : UserControl
     {
         private bool _IsCompact;
 
-        public ColorPickerButton()
-        {
-            this.InitializeComponent();
-        }
-
-        //public properties and events:
         public bool IsUsedAsDisplay { get; set; }
         public bool IsAlphaEnabled
         {
-            set
-            {
-                ColorPickerFlyout.IsAlphaEnabled = value;
-            }
+            set { ColorPickerFlyout.IsAlphaEnabled = value; }
         }
 
         public Color? Color
@@ -45,8 +35,11 @@ namespace Fastedit.Controls
         public delegate void ColorChangedEvent(ColorPicker args);
         public event ColorChangedEvent ColorChanged;
 
+        public ColorPickerButton()
+        {
+            this.InitializeComponent();
+        }
 
-        //private events
         private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!IsUsedAsDisplay)

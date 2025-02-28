@@ -6,7 +6,6 @@ using Microsoft.UI.Xaml.Media;
 using System.Runtime.InteropServices;
 using Windows.UI;
 using WinRT;
-using WinUIEx;
 
 namespace Fastedit.Core
 {

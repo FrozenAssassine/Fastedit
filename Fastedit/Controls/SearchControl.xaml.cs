@@ -37,23 +37,23 @@ namespace Fastedit.Controls
         {
             SearchWindow.BorderBrush = new SolidColorBrush(result == SearchResult.Found ? DefaultValues.correctInputColor : DefaultValues.wrongInputColor);
         }
-        private void hideWindow()
+        private void HideWindow()
         {
             hideSearchAnimation.Begin();
             searchWindowState = SearchWindowState.Hidden;
         }
-        private void showWindow()
+        private void ShowWindow()
         {
             this.Visibility = Visibility.Visible;
             showSearchAnimation.Begin();
             searchWindowState = SearchWindowState.Default;
         }
-        private void expandReplace()
+        private void ExpandReplace()
         {
             expandSearchAnimation.Begin();
             searchWindowState = SearchWindowState.Expanded;
         }
-        private void collapseReplace()
+        private void CollapseReplace()
         {
             collapseSearchAnimation.Begin();
             searchWindowState = SearchWindowState.Default;
@@ -73,13 +73,13 @@ namespace Fastedit.Controls
 
             //hide the window when in search state or show it when in hidden state or show it when hidden:
             if (searchWindowState == SearchWindowState.Default && !currentTextbox.HasSelection)
-                hideWindow();
+                HideWindow();
             else if (searchWindowState == SearchWindowState.Expanded)
-                collapseReplace();
+                CollapseReplace();
             else
             {
-                showWindow();
-                collapseReplace();
+                ShowWindow();
+                CollapseReplace();
             }
 
             if (currentTextbox.HasSelection && currentTextbox.CalculateSelectionPosition().Length < 200)
@@ -104,13 +104,13 @@ namespace Fastedit.Controls
 
             //hide the window when in replace state or expand it when in search state or show it when hidden:
             if (searchWindowState == SearchWindowState.Expanded)
-                hideWindow();
+                HideWindow();
             else if (searchWindowState == SearchWindowState.Default)
-                expandReplace();
+                ExpandReplace();
             else
             {
-                showWindow();
-                expandReplace();
+                ShowWindow();
+                ExpandReplace();
             }
 
             if (currentTextbox.HasSelection && currentTextbox.CalculateSelectionPosition().Length < 200)
@@ -130,7 +130,7 @@ namespace Fastedit.Controls
 
             searchOpen = false;
             currentTextbox.EndSearch();
-            hideWindow();
+            HideWindow();
             currentTextbox.Focus(FocusState.Programmatic);
 
             currentTextbox = null;
@@ -202,7 +202,7 @@ namespace Fastedit.Controls
             (sender as TextBox)?.SelectAll();
         }
 
-        private void textToFindTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextToFindTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateSearch();
         }
@@ -211,15 +211,15 @@ namespace Fastedit.Controls
             UpdateSearch();
         }
 
-        private void collapseSearchAnimation_Completed(object sender, object e)
+        private void CollapseSearchAnimation_Completed(object sender, object e)
         {
             ToggleVisibility(false);
         }
-        private void expandSearchAnimation_Completed(object sender, object e)
+        private void ExpandSearchAnimation_Completed(object sender, object e)
         {
             ToggleVisibility(true);
         }
-        private void hideSearchAnimation_Completed(object sender, object e)
+        private void HideSearchAnimation_Completed(object sender, object e)
         {
             this.Visibility = Visibility.Collapsed;
         }

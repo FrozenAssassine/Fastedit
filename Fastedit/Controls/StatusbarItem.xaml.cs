@@ -54,7 +54,7 @@ namespace Fastedit.Controls
             StatusbarItemClick?.Invoke(this, button);
         }
 
-        private void flyout_Opening(object sender, object e)
+        private void Flyout_Opening(object sender, object e)
         {
             FlyoutOpening?.Invoke();
         }
