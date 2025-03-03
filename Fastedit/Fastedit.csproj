@@ -19,15 +19,17 @@
     <Content Remove="C:\Users\juliu\.nuget\packages\textcontrolbox.winui.juliuskirsch\1.1.0\contentFiles\any\net8.0-windows10.0.19041\nuget\Icon1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Designs\Hacker_Green.json" />
+    <None Remove="Assets\Designs\Neon_Night.json" />
     <None Remove="Controls\SurroundWithFlyout.xaml" />
     <None Remove="Controls\TextStatusBar.xaml" />
     <None Remove="Views\RecycleBinDialogPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250208002-preview1" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.0-alpha.2" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.0-alpha.3" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

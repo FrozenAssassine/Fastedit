@@ -86,6 +86,7 @@
 		"G": 255,
 		"B": 255
 	},
+	"StatusbarBackgroundType": 1,
 	"StatusbarBackgroundColor": {
 		"A": 0,
 		"R": 0,

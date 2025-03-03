@@ -86,13 +86,14 @@
 		"G": 255,
 		"B": 255
 	},
+	"StatusbarBackgroundType": 1,
 	"StatusbarBackgroundColor": {
 		"A": 0,
 		"R": 0,
 		"G": 0,
 		"B": 0
 	},
-	"DialogBackgroundType": 1,
+	"DialogBackgroundType": 0,
 	"DialogBackgroundColor": {
 		"A": 255,
 		"R": 35,
