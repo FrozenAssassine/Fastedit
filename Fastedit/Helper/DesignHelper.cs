@@ -208,36 +208,16 @@ public class DesignHelper
         }
     }
 
-    public static void SetBackground(Window window, Color color, BackgroundType type)
-    {
-        if (window == null)
-            return;
-
-        if (type == BackgroundType.Acrylic)
-        {
-             //BackdropHelper.SetAcrylicBackdrop(window, color, ThemeHelper.CurrentTheme);
-        }
-        else if (type == BackgroundType.Solid)
-        {
-            //BackdropHelper.SetStaticBackdrop(window, color);
-        }
-        else if (type == BackgroundType.Mica)
-        {
-            //BackdropHelper.TrySetMicaBackdrop(window);
-        }
-    }
-
     public static Brush CreateBackgroundBrush(Color color, ControlBackgroundType type)
     {
-        int transparency = color.A;
-        color.A = 255;
-
+        double transparency = color.A / 255.0;
         if (type == ControlBackgroundType.Acrylic)
         {
+            color.A = 255;
             return new AcrylicBrush
             {
                 TintColor = color,
-                TintOpacity = transparency / 255.0,
+                TintOpacity = transparency,
                 FallbackColor = color,
             };
         }
