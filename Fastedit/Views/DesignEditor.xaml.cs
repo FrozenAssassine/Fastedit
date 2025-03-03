@@ -25,7 +25,10 @@ public sealed partial class DesignEditor : Page
     public bool NeedSave { get; private set; } = false;
     public bool SaveDesign()
     {
-        return DesignHelper.SaveDesign(currentDesign, Path.Combine(DefaultValues.DesignPath, CurrentDesignName));
+        bool res = DesignHelper.SaveDesign(currentDesign, Path.Combine(DefaultValues.DesignPath, CurrentDesignName));
+        if (res)
+            NeedSave = false;
+        return res;
     }
     //Change events:
     private void Theme_Changed(object sender, SelectionChangedEventArgs e)
