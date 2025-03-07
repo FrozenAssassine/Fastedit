@@ -1,19 +1,31 @@
-﻿#Version 2.6.0 [20.02.2025]
-	• transitioned from UWP to WinUI-3
-	• more rights to open and save files even with drag drop
-	• remvoved share option in rightclick menu on tab
-	• added statusbar in undocked document/tab
-	• improved statusbar with zooming flyout and word/character count
-	• option to hide titlebar
-	• option to quickly select the design from the QuickAccess window (Ctrl + Shift + P) -> Design
-	• added surround with flyout by pressing Ctrl + Q
-	• added rename dialog to undocked tab
-	• many textbox improvements upgraded to V1.1.0
-	• bugfixes
-	• fixed a bug, where opening a file using rightclick would create a new tab sometimes
-	• fixed a bug, where the app crashed when closing settings as last tab
-	• fixed a bug, where close all lead to crash if a tab was not loaded yet
-	• fixed a bug, where the quick access did not focus the items in a sub categorie
+﻿#Version 2.6.0 [07.03.2025]
+
+	• Added option to show default title bar
+	• Added "Surround with" flyout by pressing Ctrl + Q
+	• Added rename dialog to undocked tab
+	• Added status bar in undocked document/tab
+	• Added new designs: Hacker Green and Neon Night
+	• Added selected document name in app title
+	• Added document icon change based on save state
+	• Added scroll through tabs with Shift + Mouse Wheel
+	• Added ability to change syntax highlighting using arrow keys in QuickAccess
+	• Added ability to change design using arrow keys in QuickAccess
+	• Added zooming flyout and word/character count to status bar 
+
+	• Transitioned from UWP to WinUI-3
+	• -> More rights to open and save files even with drag & drop
+	• Updated to TextControlBox v1.1.1
+	• Switched to SaveLines instead of SaveText
+
+	• Fixed design editor prompting to save after saving
+	• Fixed design of single-tab window
+	• Fixed proper XAML root for undocked tab
+	• Fixed a bug where opening a file using right-click would sometimes create a new tab
+	• Fixed a bug where the app crashed when closing settings as the last tab
+	• Fixed a bug where "Close All" led to a crash if a tab was not loaded yet
+	• Fixed a bug where Quick Access did not focus items in a subcategory
+	• Fixed close search in the last tab when opening another
+	• Fixed tab reordering issue
 
 ---
 #Version 2.5.0 [09.09.2023]
