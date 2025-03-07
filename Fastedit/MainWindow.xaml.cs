@@ -12,17 +12,17 @@ namespace Fastedit
     {
         public static DispatcherQueue UIDispatcherQueue = null;
         public static XamlRoot XamlRoot = null;
-
         public static StackPanel InfoMessagesPanel;
-
         public IntPtr WindowHandle;
-
-        public BackdropWindowManager backdropManager;
+        public readonly BackdropWindowManager backdropManager;
+        public readonly RestoreWindowManager restoreWindowManager;
 
         public MainWindow()
         {
             this.InitializeComponent();
             backdropManager = new BackdropWindowManager(this);
+            restoreWindowManager = new RestoreWindowManager(this);
+            restoreWindowManager.RestoreSettings();
 
             this.WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
 

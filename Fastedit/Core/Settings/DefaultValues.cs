@@ -31,5 +31,10 @@ namespace Fastedit.Core.Settings
         public static string StatusbarSorting = "Zoom:1|LineColumn:1|Encoding:1|FileName:1|WordChar:1";
         public static int MenubarAlignment = 0;
         public static bool HideTitlebar = true;
+
+        public const int windowWidth = 1100;
+        public const int windowHeight = 700;
+        public const int windowLeft = -1;
+        public const int windowTop = -1;
     }
 }

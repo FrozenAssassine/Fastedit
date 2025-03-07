@@ -27,4 +27,10 @@ public static class AppSettingsValues
     public const string Settings_TabViewWidthMode = "TabWidthMode";
     public const string Settings_MenubarAlignment = "MenubarAlignment";
     public const string Settings_DesignName = "CurrentDesign";
+
+    public const string windowWidth = "windowWidth";
+    public const string windowHeight = "windowHeight";
+    public const string windowLeft = "windowLeft";
+    public const string windowTop = "windowTop";
+    public const string windowState = "windowState";
 }

@@ -1,4 +1,5 @@
 ﻿using Fastedit.Core.Settings;
+using Microsoft.UI.Windowing;
 using System.Diagnostics;
 
 internal class AppSettings
@@ -120,5 +121,31 @@ internal class AppSettings
     {
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_HideTitlebar, DefaultValues.HideTitlebar);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_HideTitlebar, value);
+    }
+
+    public static int WindowWidth
+    {
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.windowWidth, DefaultValues.windowWidth);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowWidth, value);
+    }
+    public static int WindowHeight
+    {
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.windowHeight, DefaultValues.windowHeight);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowHeight, value);
+    }
+    public static int WindowLeft
+    {
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.windowLeft, DefaultValues.windowLeft);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowLeft, value);
+    }
+    public static int WindowTop
+    {
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.windowTop, DefaultValues.windowTop);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowTop, value);
+    }
+    public static OverlappedPresenterState WindowState
+    {
+        get => (OverlappedPresenterState)SettingsManager.GetSettingsAsInt(AppSettingsValues.windowState, 2);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowState, value.GetHashCode());
     }
 }
