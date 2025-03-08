@@ -31,10 +31,22 @@ namespace Fastedit
             InfoMessagesPanel = this.infoMessagesPanel;
             this.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
 
-            SetTitleBar(mainPage.TitleBarGrid);
+            this.mainPage.TitleBarGrid.LayoutUpdated += TitleBarGrid_LayoutUpdated;
+            this.Closed += MainWindow_Closed;
+
 
             this.Title = "Fastedit";
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            this.mainPage.TitleBarGrid.LayoutUpdated -= TitleBarGrid_LayoutUpdated;
+        }
+
+        private void TitleBarGrid_LayoutUpdated(object sender, object e)
+        {
+            SetTitleBar(mainPage.TitleBarGrid);
         }
 
         public void SendLaunchArguments()
