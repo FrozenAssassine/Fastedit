@@ -14,22 +14,26 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <AssemblyName>$(MSBuildProjectName.Replace("-", "_"))</AssemblyName>
 	  <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
+	  <PackageCertificateThumbprint>9528B8A89B3432F61C4F321BE3088D9488AE2140</PackageCertificateThumbprint>
+	  <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+	  <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+	  <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+	  <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+	  <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+	  <GenerateTestArtifacts>True</GenerateTestArtifacts>
+	  <AppxBundle>Always</AppxBundle>
+	  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	  <AssemblyVersion>2.6.0</AssemblyVersion>
+	  <Version>2.6.0</Version>
+	  <Authors>Julius Kirsch</Authors>
+	  <Copyright>Copyright © 2022-2025</Copyright>
+	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="C:\Users\juliu\.nuget\packages\textcontrolbox.winui.juliuskirsch\1.1.0\contentFiles\any\net8.0-windows10.0.19041\nuget\Icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Assets\Designs\Hacker_Green.json" />
-    <None Remove="Assets\Designs\Neon_Night.json" />
-    <None Remove="Controls\SurroundWithFlyout.xaml" />
-    <None Remove="Controls\TextStatusBar.xaml" />
-    <None Remove="Views\RecycleBinDialogPage.xaml" />
-  </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250208002-preview1" />
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.0-alpha.3" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.1.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -50,16 +54,15 @@
     <Page Update="Views\RecycleBinDialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\SurroundWithFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\TextStatusBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+	<Page Update="Views\MainPage.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	</Page>
   </ItemGroup>
 
   <!--
