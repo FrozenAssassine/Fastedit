@@ -22,26 +22,8 @@ public class RestoreWindowManager
         SaveSettings();
     }
 
-    public static bool IsWindowPositionValid(Window window, RectInt32 restoreBounds)
-    {
-        var displayArea = DisplayArea.GetFromRect(restoreBounds, DisplayAreaFallback.Nearest);
-
-        if (displayArea != null)
-        {
-            var screenBounds = displayArea.WorkArea;
-
-            return restoreBounds.X >= screenBounds.X &&
-                   restoreBounds.Y >= screenBounds.Y &&
-                   restoreBounds.X + restoreBounds.Width <= screenBounds.X + screenBounds.Width &&
-                   restoreBounds.Y + restoreBounds.Height <= screenBounds.Y + screenBounds.Height;
-        }
-        return false;
-    }
-
     public void RestoreSettings()
     {
-        var state = WindowStateHelper.SetWindowState(window, AppSettings.WindowState);
-
         var width = AppSettings.WindowWidth;
         var height = AppSettings.WindowHeight;
         var left = AppSettings.WindowLeft;
@@ -52,15 +34,12 @@ public class RestoreWindowManager
         if (height < 100)
             height = 700;
 
-        if (state != OverlappedPresenterState.Maximized)
-        {
-            RectInt32 restoreBounds = new RectInt32(left, top, width, height);
-            if (IsWindowPositionValid(window, restoreBounds))
-                window.AppWindow.MoveAndResize(restoreBounds);
-            else
-                window.AppWindow.Resize(new SizeInt32(width, height));
-        }
-        Debug.WriteLine(left + ":" + top + ":" + width + ":" + height);
+        RectInt32 restoreBounds = new RectInt32(left, top, width, height);
+
+        window.AppWindow.MoveAndResize(restoreBounds);
+        window.AppWindow.Resize(new SizeInt32(width, height));
+
+        WindowStateHelper.SetWindowState(window, AppSettings.WindowState);
     }
 
     private void SaveSettings()
