@@ -97,7 +97,6 @@ internal class TabWindowHelper
     {
         var design = DesignHelper.CurrentDesign;
 
-        var gridBackground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderBackground));
         foreach (var item in OpenWindows)
         {
             var window = item.Key;
@@ -113,7 +112,6 @@ internal class TabWindowHelper
                 page.Statusbar.IsVisible = AppSettings.ShowStatusbar;
                 ThemeHelper.SetWindowTheme(window, design.Theme);
 
-                page.MainGrid.Background = gridBackground;
                 page.TitleText.Foreground = new SolidColorBrush(ConvertHelper.ToColor(design.SelectedTabPageHeaderTextColor));
             }
         }
