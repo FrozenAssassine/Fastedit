@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using TextControlBoxNS;
 using Fastedit.Core.Tab;
+using System.Diagnostics;
 
 namespace Fastedit.Core.Settings
 {
@@ -41,6 +42,17 @@ namespace Fastedit.Core.Settings
 
         private static void UpdateTabSettings(TabPageItem tab, TextControlBoxDesign textboxDesign, ElementTheme theme, bool setMargin = true)
         {
+            //setting the design before the textbox loaded does not work, because xaml overwrites it
+            if (!tab.textbox.IsLoaded)
+            {
+                tab.textbox.Loaded += (sender) =>
+                {
+                    tab.textbox.RequestedTheme = theme;
+                };
+            }
+            else
+                tab.textbox.RequestedTheme = theme;
+
             tab.textbox.Design = textboxDesign;
 
             tab.textbox.FontSize = AppSettings.FontSize;
@@ -50,11 +62,11 @@ namespace Fastedit.Core.Settings
             tab.textbox.ShowLineNumbers = AppSettings.ShowLineNumbers;
 
             tab.textbox.EnableSyntaxHighlighting = AppSettings.SyntaxHighlighting;
-            tab.textbox.RequestedTheme = theme;
 
             if (setMargin)
                 tab.textbox.Margin = TabPageHelper.TabMargin;
         }
+
         public static void UpdateTab(TabPageItem tab, bool setMargin = true)
         {
             UpdateTabSettings(tab, textboxDesign, DesignHelper.CurrentDesign.Theme, setMargin);
