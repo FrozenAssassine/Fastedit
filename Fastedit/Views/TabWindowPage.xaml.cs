@@ -19,8 +19,9 @@ public sealed partial class TabWindowPage : Page
     public Grid Titlebar => titlebar;
     public TextStatusBar Statusbar => textStatusBar;
     public TextBlock TitleText => titleText;
+    public BackdropWindowManager backDropWindowManager;
 
-    public TabWindowPage(TabPageItem tab, Window window)
+    public TabWindowPage(TabPageItem tab, Window window, BackdropWindowManager backDropWindowManager)
     {
         this.InitializeComponent();
 
@@ -28,6 +29,7 @@ public sealed partial class TabWindowPage : Page
         this.window = window;
 
         this.Loaded += TabWindowPage_Loaded;
+        this.backDropWindowManager = backDropWindowManager;
     }
 
     private void TabWindowPage_Loaded(object sender, RoutedEventArgs e)

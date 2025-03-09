@@ -17,7 +17,6 @@ internal class TabWindowHelper
 {
     private static TabView tabView = null;
     private static bool closeWithoutChanging = true;
-    private static BackdropWindowManager backdropManager;
     public static Dictionary<Window, TabPageItem> OpenWindows { get; } = new();
 
     public static async Task<bool> ShowInNewWindow(TabView tabView, TabPageItem tab)
@@ -33,14 +32,12 @@ internal class TabWindowHelper
         tab.DatabaseItem.HasOwnWindow = true;
 
         var window = new Window();
-        window.Content = new TabWindowPage(tab, window);
+        window.Content = new TabWindowPage(tab, window, new BackdropWindowManager(window));
         window.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));
         window.Title = tab.DatabaseItem.FileName;
         window.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
         window.Closed += Window_Closed;
         window.Activate();
-
-        backdropManager = new BackdropWindowManager(window);
 
         OpenWindows.Add(window, tab);
         UpdateSettings();
@@ -101,7 +98,7 @@ internal class TabWindowHelper
 
             if (window.Content is TabWindowPage page)
             {
-                SettingsUpdater.SetWindowBackground(backdropManager, DesignHelper.CurrentDesign);
+                SettingsUpdater.SetWindowBackground(page.backDropWindowManager, DesignHelper.CurrentDesign);
 
                 SettingsUpdater.UpdateTab(item.Value, false);
 
