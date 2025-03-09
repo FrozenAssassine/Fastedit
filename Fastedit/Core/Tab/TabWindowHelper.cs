@@ -26,6 +26,12 @@ internal class TabWindowHelper
         if (tab == null)
             return false;
 
+        //load the tab otherwise it has no text
+        if (!tab.DataIsLoaded)
+        {
+            TabPageHelper.LoadUnloadedTab(tab);
+        }
+
         tabView.TabItems.Remove(tab);
 
         tab.RemoveTextbox();
