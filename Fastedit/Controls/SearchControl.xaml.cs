@@ -64,19 +64,21 @@ namespace Fastedit.Controls
             if (tab == null || tab.textbox == null)
                 return;
 
-            if (currentTextbox != null)
+            if (currentTextbox != null && currentTextbox != tab.textbox)
+            {
                 currentTextbox.EndSearch();
+                this.searchWindowState = SearchWindowState.Hidden;
+            }
 
             currentTextbox = tab.textbox;
             currentTab = tab;
             searchOpen = true;
 
-            //hide the window when in search state or show it when in hidden state or show it when hidden:
-            if (searchWindowState == SearchWindowState.Default && !currentTextbox.HasSelection)
-                HideWindow();
-            else if (searchWindowState == SearchWindowState.Expanded)
+            if (searchWindowState == SearchWindowState.Expanded)
+            {
                 CollapseReplace();
-            else
+            }
+            else if (searchWindowState == SearchWindowState.Hidden)
             {
                 ShowWindow();
                 CollapseReplace();
@@ -90,28 +92,32 @@ namespace Fastedit.Controls
             textToFindTextbox.Focus(FocusState.Keyboard);
             textToFindTextbox.SelectAll();
         }
+
         public void ShowReplace(TabPageItem tab)
         {
             if (tab == null || tab.textbox == null)
                 return;
 
-            if (currentTextbox != null)
+            if (currentTextbox != null && currentTextbox != tab.textbox)
+            {
                 currentTextbox.EndSearch();
+                this.searchWindowState = SearchWindowState.Hidden;
+            }
 
             currentTextbox = tab.textbox;
             currentTab = tab;
             searchOpen = true;
 
-            //hide the window when in replace state or expand it when in search state or show it when hidden:
-            if (searchWindowState == SearchWindowState.Expanded)
-                HideWindow();
-            else if (searchWindowState == SearchWindowState.Default)
+            if (searchWindowState == SearchWindowState.Default)
+            {
                 ExpandReplace();
-            else
+            }
+            else if (searchWindowState == SearchWindowState.Hidden)
             {
                 ShowWindow();
                 ExpandReplace();
             }
+
 
             if (currentTextbox.HasSelection && currentTextbox.CalculateSelectionPosition().Length < 200)
             {
@@ -123,6 +129,7 @@ namespace Fastedit.Controls
             textToFindTextbox.Focus(FocusState.Keyboard);
             textToFindTextbox.SelectAll();
         }
+
         public void Close()
         {
             if (!searchOpen || currentTextbox == null)
@@ -135,6 +142,7 @@ namespace Fastedit.Controls
 
             currentTextbox = null;
         }
+
         private void UpdateSearch()
         {
             BeginSearch(textToFindTextbox.Text, FindMatchCaseButton.IsChecked ?? false, FindWholeWordButton.IsChecked ?? false);
