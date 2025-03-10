@@ -203,7 +203,7 @@ public class DesignHelper
     {
         try
         {
-            string data = JsonConvert.SerializeObject(design);
+            string data = JsonConvert.SerializeObject(design, Formatting.Indented);
             File.WriteAllText(path, data);
             return true;
         }
