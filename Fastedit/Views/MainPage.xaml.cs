@@ -12,6 +12,8 @@ using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
+using System.Collections.Generic;
+using Fastedit.Extensibility;
 
 namespace Fastedit;
 
@@ -563,6 +565,15 @@ public sealed partial class MainPage : Page
             runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
             RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
         }
+    }
+    private SyntaxHighlightLanguage[] LoadHighlightersFromExtensions()
+    {
+        List<SyntaxHighlightLanguage> hightlighters = new List<SyntaxHighlightLanguage>();
+        for (int i = 0; i < ExtensionHelper.Extensions.Count; i++)
+            for (int j = 0; j < ExtensionHelper.Extensions[i].Interfaces.Length; j++)
+                if (ExtensionHelper.Extensions[i].Interfaces[j] is CustomSyntaxHighlightLanguage c)
+                    hightlighters.Add(c);
+        return hightlighters.ToArray();
     }
 
     private void RunCommandWindow_ChangeDesign_Click(object sender, RoutedEventArgs e)
