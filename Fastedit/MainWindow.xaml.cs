@@ -1,4 +1,5 @@
 using Fastedit.Core;
+using Fastedit.Helper;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -37,6 +38,8 @@ namespace Fastedit
 
             this.Title = "Fastedit";
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));
+
+            ExtensionHelper.Init();
         }
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)
