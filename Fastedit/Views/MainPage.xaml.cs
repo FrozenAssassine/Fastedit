@@ -325,18 +325,12 @@ public sealed partial class MainPage : Page
 
             currentlySelectedTabPage = null;
             SettingsTabPageHelper.SettingsSelected = true;
-            SettingsTabPageHelper.HideControls();
-            return;
         }
+
+        SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
 
         if (tabControl.TabItems.Count == 0)
             currentlySelectedTabPage = null;
-
-        //show hidden controls
-        if (!SettingsTabPageHelper.SettingsSelected)
-        {
-            SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
-        }
     }
 
     //Drag drop

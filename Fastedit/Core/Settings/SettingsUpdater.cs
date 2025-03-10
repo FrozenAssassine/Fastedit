@@ -109,9 +109,11 @@ namespace Fastedit.Core.Settings
         }
         public static void SetControlsVisibility(TabView tabView, MenuBar menuBar, TextStatusBar textStatusBar)
         {
-            //do not apply -> controls will be visible in settings
             if (SettingsTabPageHelper.SettingsSelected)
+            {
+                SettingsTabPageHelper.HideControls();
                 return;
+            }
 
             menuBar.Visibility = ConvertHelper.BoolToVisibility(AppSettings.ShowMenubar);
 

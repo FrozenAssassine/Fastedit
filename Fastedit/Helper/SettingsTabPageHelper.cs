@@ -53,7 +53,7 @@ public class SettingsTabPageHelper
     public static void CloseSettings(TabView tabView)
     {
         tabView.TabItems.Remove(settingsPage);
-        SettingsPageOpen = false;
+        SettingsPageOpen = SettingsSelected = false;
         SettingsTabClosed?.Invoke();
     }
     public static bool IsSettingsPage(object item)
