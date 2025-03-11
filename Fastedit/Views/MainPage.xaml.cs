@@ -566,9 +566,9 @@ public sealed partial class MainPage : Page
             RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
         }
     }
-    private SyntaxHighlightLanguage[] LoadHighlightersFromExtensions()
+    private CustomSyntaxHighlightLanguage[] LoadHighlightersFromExtensions()
     {
-        List<SyntaxHighlightLanguage> hightlighters = new List<SyntaxHighlightLanguage>();
+        List<CustomSyntaxHighlightLanguage> hightlighters = new List<CustomSyntaxHighlightLanguage>();
         for (int i = 0; i < ExtensionHelper.Extensions.Count; i++)
             for (int j = 0; j < ExtensionHelper.Extensions[i].Interfaces.Length; j++)
                 if (ExtensionHelper.Extensions[i].Interfaces[j] is CustomSyntaxHighlightLanguage c)

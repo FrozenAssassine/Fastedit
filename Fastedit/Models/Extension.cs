@@ -79,4 +79,9 @@ internal class Extension
 
         return sb.ToString();
     }
+
+    public string GetPluginInterfaceGUID(IExtensionInterface extInterface)
+    {
+        return extInterface.GetType().GUID.ToString();
+    }
 }
