@@ -329,8 +329,12 @@ public sealed partial class MainPage : Page
 
         SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
 
+        textStatusBar.IsEnabled = tabControl.TabItems.Count > 0;
+
         if (tabControl.TabItems.Count == 0)
+        {
             currentlySelectedTabPage = null;
+        }
     }
 
     //Drag drop
