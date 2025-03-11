@@ -556,23 +556,27 @@ public sealed partial class MainPage : Page
             runCommandWindowItem.RunCommandWindowItemClicked += SyntaxHighlighting_Click;
             RunCommandWindowItem_SyntaxHighlighting.Items.Add(runCommandWindowItem);
         }
-
-        foreach(var path in DesignHelper.GetDesignsFilesFromFolder())
-        {
-            var runCommandWindowItem = new QuickAccessWindowItem
-            {
-                Command = DesignHelper.GetDesignNameFromPath(path),
-                Tag = path,
-            };
-            runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
-            RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
-        }
     }
 
     private void RunCommandWindow_ChangeDesign_Click(object sender, RoutedEventArgs e)
     {
         AppSettings.CurrentDesign = (sender as QuickAccessWindowItem).Tag.ToString();
         ApplySettings();
+    }
+    private void RunCommandWindowItem_Designs_ItemSelected()
+    {
+        RunCommandWindowItem_Designs.Items.Clear();
+        foreach (var path in DesignHelper.GetDesignsFilesFromFolder())
+        {
+            var runCommandWindowItem = new QuickAccessWindowItem
+            {
+                Command = DesignHelper.GetDesignNameFromPath(path),
+                Tag = path,
+                TextColor = runCommandWindow.textColor,
+            };
+            runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
+            RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
+        }
     }
     private void RunCommandWindowItem_Designs_SelectedChanged(IQuickAccessWindowItem item)
     {

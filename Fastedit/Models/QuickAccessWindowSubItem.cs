@@ -18,6 +18,12 @@ namespace Fastedit.Models
 
         public delegate void SelectedChangedEvent(IQuickAccessWindowItem item);
         public event SelectedChangedEvent SelectedChanged;
+
+        //occures, if this item gets selected.
+        //use to load data like designs or syntax highlights dynamically
+        public delegate void ItemSelectedEvent();
+        public event ItemSelectedEvent ItemSelected;
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void CallPropertyChanged(string property)
@@ -28,6 +34,11 @@ namespace Fastedit.Models
         public void CallChangedEvent(IQuickAccessWindowItem item)
         {
             SelectedChanged?.Invoke(item);
+        }
+
+        public void CallItemSelectedEvent()
+        {
+            this.ItemSelected?.Invoke();
         }
     }
 }

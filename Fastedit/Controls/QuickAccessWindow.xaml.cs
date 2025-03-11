@@ -7,11 +7,13 @@ using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Fastedit.Core.Tab;
+using Microsoft.UI.Xaml.Media;
 
 namespace Fastedit.Controls
 {
     public sealed partial class QuickAccessWindow : UserControl
     {
+        public SolidColorBrush textColor { get; private set; } = null;
         List<QuickAccessWindowCustomItem> CurrentTabPages = new List<QuickAccessWindowCustomItem>();
         QuickAccessWindowSubItem currentPage = null;
 
@@ -21,7 +23,7 @@ namespace Fastedit.Controls
         QuickAccessWindowInfoItem EncodingDisplay = new QuickAccessWindowInfoItem { Command = "Current Encoding" };
         QuickAccessWindowInfoItem FilePathDisplay = new QuickAccessWindowInfoItem { Command = "File Path" };
         QuickAccessWindowInfoItem FileNameDisplay = new QuickAccessWindowInfoItem { Command = "File Name" };
-
+        
         public QuickAccessWindow()
         {
             this.InitializeComponent();
@@ -43,7 +45,7 @@ namespace Fastedit.Controls
         }
         public void UpdateColors(List<IQuickAccessWindowItem> items)
         {
-            var textcolor = DialogHelper.ContentDialogForeground();
+            textColor = DialogHelper.ContentDialogForeground();
             grid.Background = DialogHelper.ContentDialogBackground();
             foreach (var item in items)
             {
@@ -51,7 +53,7 @@ namespace Fastedit.Controls
                 {
                     UpdateColors(sub_item.Items);
                 }
-                item.TextColor = textcolor;
+                item.TextColor = textColor;
             }
             grid.RequestedTheme = DialogHelper.DialogDesign;
         }
@@ -167,6 +169,7 @@ namespace Fastedit.Controls
             {
                 //change the source -> like switching to sub page:
                 currentPage = subItem;
+                subItem.CallItemSelectedEvent();
                 searchbox.Text = "";
                 itemHostListView.ItemsSource = subItem.Items;
                 itemHostListView.LayoutUpdated += (sender, e) =>
