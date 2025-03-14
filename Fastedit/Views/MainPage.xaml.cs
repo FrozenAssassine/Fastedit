@@ -309,12 +309,12 @@ public sealed partial class MainPage : Page
                 return;
 
             SettingsTabPageHelper.SettingsSelected = false;
+            
+            TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
             //set the focus to the textbox:
             tab.textbox.Focus(FocusState.Programmatic);
             searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
-
-            TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
             textStatusBar.UpdateAll();
         }
@@ -335,6 +335,8 @@ public sealed partial class MainPage : Page
         {
             currentlySelectedTabPage = null;
         }
+
+        currentlySelectedTabPage?.textbox?.Focus(FocusState.Programmatic);
     }
 
     //Drag drop
