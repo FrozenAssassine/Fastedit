@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Fastedit.Views.DialogPages.SetupDialogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Views.DialogPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
+    MinWidth="1000"
+    mc:Ignorable="d" Width="1000" Height="500">
+
+    <Pivot  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <PivotItem Header="Design">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ScrollView Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+                    <controls:DesignGridView Loaded="designGridView_Loaded" x:Name="designGridView"/>
+                </ScrollView>
+            </Grid>
+        </PivotItem>
+        <PivotItem Header="Unread">
+            <TextBlock Text="unread emails go here." />
+        </PivotItem>
+    </Pivot>
+</Page>

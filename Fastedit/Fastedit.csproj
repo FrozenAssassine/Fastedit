@@ -29,6 +29,11 @@
 	  <Copyright>Copyright © 2022-2025</Copyright>
 	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Designs\Simple_Dark.json" />
+    <None Remove="Controls\DesignGridView.xaml" />
+    <None Remove="Views\DialogPages\SetupDialogPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
@@ -51,6 +56,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\DesignGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\RecycleBinDialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -63,6 +73,11 @@
 	<Page Update="Views\MainPage.xaml">
 	  <Generator>MSBuild:Compile</Generator>
 	</Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DialogPages\SetupDialogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--

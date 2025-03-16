@@ -12,6 +12,7 @@ using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
+using Fastedit.Views.DialogPages;
 
 namespace Fastedit;
 
@@ -75,6 +76,8 @@ public sealed partial class MainPage : Page
 
             progressBar.IsActive = false;
         }
+
+        await SetupDialog.Show();
     }
 
     public void TriggerAppActivationAfterStart()
