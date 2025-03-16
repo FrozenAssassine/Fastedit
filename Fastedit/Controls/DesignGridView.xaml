@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Fastedit.Controls.DesignGridView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fastedit.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:Fastedit.Models"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DesignGridViewItemTemplate_Large" x:DataType="models:DesignGridViewItem">
+            <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Tag="{x:Bind FileName}" Text="Export" Click="ExportDesign_Click">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xEDE1;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Icon="Copy" Text="Duplicate" Click="DuplicateDesign_Click" Tag="{x:Bind FileName}"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Icon="Delete" Tag="{x:Bind FileName}" Text="Delete" Click="DeleteDesign_Click"/>
+                        <MenuFlyoutItem Icon="Edit" Text="Edit" Click="EditDesign_Click" Tag="{x:Bind FileName}"/>
+                        <MenuFlyoutItem Text="Edit Json" Click="EditDesignJson_Click" Tag="{x:Bind FileName}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE932;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+                <Rectangle Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{x:Bind TabPageBackground}"/>
+                <Rectangle Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Left" Fill="{x:Bind LineNumberBackground}"/>
+                <Grid Background="{x:Bind TabPageBackground}" Width="40" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,0,0"/>
+                <Rectangle Margin="20,20,0,0" Fill="{x:Bind TextBoxBackground}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <TextBlock Margin="5,20,0,0" FontSize="20" HorizontalAlignment="Left" Text="1234" TextWrapping="Wrap" Width="10" Foreground="{x:Bind LineNumberColor}"/>
+                <TextBlock Margin="30,20,0,0" FontSize="20" Text="{x:Bind DisplayName}" Foreground="{x:Bind TextColor}"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <GridView HorizontalAlignment="Center" Background="Transparent" Margin="0,80,0,0"
+        x:Name="designGridView"
+        x:Uid="Settings_DesignPage_GridView"
+        IsItemClickEnabled="True"
+        ItemClick="BasicGridView_ItemClick"
+        SelectionMode="Single" 
+        ItemTemplate="{StaticResource DesignGridViewItemTemplate_Large}"/>
+</UserControl>
