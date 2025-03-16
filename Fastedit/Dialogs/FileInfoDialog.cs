@@ -57,10 +57,11 @@ public class FileInfoDialog
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
             Title = "Info " + tab.DatabaseItem.FileName,
-            Content = new TextBlock { Text = content.ToString(), IsTextSelectionEnabled = true },
+            Content = new TextBlock { MaxWidth = 500, Text = content.ToString(), IsTextSelectionEnabled = true, TextWrapping=Microsoft.UI.Xaml.TextWrapping.Wrap },
             CloseButtonText = "Ok",
             DefaultButton = ContentDialogButton.Close,
-            XamlRoot = App.m_window.Content.XamlRoot
+            XamlRoot = App.m_window.Content.XamlRoot,
+            
         };
         await dialog.ShowAsync();
     }

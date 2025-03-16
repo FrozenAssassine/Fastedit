@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using Fastedit.Core.Tab;
+using Fastedit.Extensions;
 
 namespace Fastedit.Dialogs;
 
@@ -15,6 +16,7 @@ internal class RenameFileDialog
             return false;
 
         var renameTextbox = new TextBox { Text = tab.DatabaseItem.FileName };
+
         var renameDialog = new ContentDialog
         {
             XamlRoot = root ?? App.m_window.Content.XamlRoot,
@@ -28,7 +30,16 @@ internal class RenameFileDialog
             DefaultButton = ContentDialogButton.Primary,
         };
 
-        renameTextbox.Select(0, tab.DatabaseItem.FileName.LastIndexOf("."));
+        renameTextbox.TextChanged += (sender, e) =>
+        {
+            renameDialog.IsPrimaryButtonEnabled = renameTextbox.Text.Length > 0 && !renameTextbox.Text.ContainsInvalidPathChars();
+        };
+
+        int dotIndex = tab.DatabaseItem.FileName.LastIndexOf(".");
+        if (dotIndex > 0)
+            renameTextbox.Select(0, dotIndex);
+        else
+            renameTextbox.SelectAll();
 
         var res = await renameDialog.ShowAsync();
         if (res == ContentDialogResult.Primary)

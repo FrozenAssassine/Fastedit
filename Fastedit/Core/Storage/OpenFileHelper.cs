@@ -130,6 +130,8 @@ public class OpenFileHelper
         var picker = new Windows.Storage.Pickers.FileOpenPicker();
         picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
         picker.FileTypeFilter.Add("*");
+        picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
+
         WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
 
         bool res = true;
@@ -166,6 +168,7 @@ public class OpenFileHelper
         var picker = new Windows.Storage.Pickers.FileOpenPicker();
         picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
         picker.FileTypeFilter.Add("*");
+        picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
         WinRT.Interop.InitializeWithWindow.Initialize(picker, window != null ? WinRT.Interop.WindowNative.GetWindowHandle(window) : App.m_window.WindowHandle);
 
         var file = await picker.PickSingleFileAsync();
@@ -181,6 +184,7 @@ public class OpenFileHelper
         var picker = new Windows.Storage.Pickers.FileOpenPicker();
         picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
         picker.FileTypeFilter.Add(extension);
+        picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
         WinRT.Interop.InitializeWithWindow.Initialize(picker, App.m_window.WindowHandle);
 
         var file = await picker.PickSingleFileAsync();

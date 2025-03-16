@@ -17,7 +17,7 @@ public sealed partial class TextStatusBar : UserControl
     public TabPageItem tabPage { get; set; }
     public Window window { get; set; }
     private bool _IsVisible = true;
-    public bool IsVisible { get => _IsVisible; set { _IsVisible = value; this.Visibility = ConvertHelper.BoolToVisibility(value); } }
+    public bool IsVisible { get => _IsVisible; set { _IsVisible = value; this.Visibility = ConvertHelper.BoolToVisibility(value); UpdateAll(); } }
 
     public new Brush Background
     {

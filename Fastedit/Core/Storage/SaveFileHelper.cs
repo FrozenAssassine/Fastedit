@@ -122,7 +122,7 @@ public class SaveFileHelper
             savePicker.FileTypeChoices.TryAdd(item.ExtensionName, item.Extension);
         }
         savePicker.SuggestedFileName = tab.DatabaseItem.FileName;
-
+        savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
         StorageFile file = await savePicker.PickSaveFileAsync();
         if (file != null)
         {
@@ -164,6 +164,7 @@ public class SaveFileHelper
         var savePicker = new Windows.Storage.Pickers.FileSavePicker();
         savePicker.FileTypeChoices.Add(extensionDisplayName, new List<string>() { extension });
         savePicker.SuggestedFileName = fileName;
+        savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
         WinRT.Interop.InitializeWithWindow.Initialize(savePicker, App.m_window.WindowHandle);
 
         var file = await savePicker.PickSaveFileAsync();

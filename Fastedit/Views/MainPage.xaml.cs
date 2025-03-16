@@ -309,12 +309,12 @@ public sealed partial class MainPage : Page
                 return;
 
             SettingsTabPageHelper.SettingsSelected = false;
+            
+            TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
             //set the focus to the textbox:
             tab.textbox.Focus(FocusState.Programmatic);
             searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
-
-            TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
             textStatusBar.UpdateAll();
         }
@@ -325,18 +325,18 @@ public sealed partial class MainPage : Page
 
             currentlySelectedTabPage = null;
             SettingsTabPageHelper.SettingsSelected = true;
-            SettingsTabPageHelper.HideControls();
-            return;
         }
+
+        SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
+
+        textStatusBar.IsEnabled = tabControl.TabItems.Count > 0;
 
         if (tabControl.TabItems.Count == 0)
-            currentlySelectedTabPage = null;
-
-        //show hidden controls
-        if (!SettingsTabPageHelper.SettingsSelected)
         {
-            SettingsUpdater.SetControlsVisibility(tabControl, mainMenubar, textStatusBar);
+            currentlySelectedTabPage = null;
         }
+
+        currentlySelectedTabPage?.textbox?.Focus(FocusState.Programmatic);
     }
 
     //Drag drop
@@ -558,23 +558,27 @@ public sealed partial class MainPage : Page
             runCommandWindowItem.RunCommandWindowItemClicked += SyntaxHighlighting_Click;
             RunCommandWindowItem_SyntaxHighlighting.Items.Add(runCommandWindowItem);
         }
-
-        foreach(var path in DesignHelper.GetDesignsFilesFromFolder())
-        {
-            var runCommandWindowItem = new QuickAccessWindowItem
-            {
-                Command = DesignHelper.GetDesignNameFromPath(path),
-                Tag = path,
-            };
-            runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
-            RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
-        }
     }
 
     private void RunCommandWindow_ChangeDesign_Click(object sender, RoutedEventArgs e)
     {
         AppSettings.CurrentDesign = (sender as QuickAccessWindowItem).Tag.ToString();
         ApplySettings();
+    }
+    private void RunCommandWindowItem_Designs_ItemSelected()
+    {
+        RunCommandWindowItem_Designs.Items.Clear();
+        foreach (var path in DesignHelper.GetDesignsFilesFromFolder())
+        {
+            var runCommandWindowItem = new QuickAccessWindowItem
+            {
+                Command = DesignHelper.GetDesignNameFromPath(path),
+                Tag = path,
+                TextColor = runCommandWindow.textColor,
+            };
+            runCommandWindowItem.RunCommandWindowItemClicked += RunCommandWindow_ChangeDesign_Click;
+            RunCommandWindowItem_Designs.Items.Add(runCommandWindowItem);
+        }
     }
     private void RunCommandWindowItem_Designs_SelectedChanged(IQuickAccessWindowItem item)
     {

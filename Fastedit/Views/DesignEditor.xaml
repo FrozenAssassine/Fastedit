@@ -39,7 +39,6 @@
                             <ComboBoxItem Content="Acrylic"/>
                             <ComboBoxItem Content="Solid"/>
                             <ComboBoxItem Content="Mica"/>
-                            <ComboBoxItem Content="Transparent"/>
                         </ComboBox>
                         <controls:ColorPickerButton ColorChanged="BackgroundColor_Changed" Margin="5,0,0,0" Color="{x:Bind currentDesign.BackgroundColor}"/>
                     </StackPanel>

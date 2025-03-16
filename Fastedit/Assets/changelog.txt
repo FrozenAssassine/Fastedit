@@ -1,4 +1,24 @@
-﻿#Version 2.6.0 [07.03.2025]
+﻿#Version 2.6.1 [12.03.2025]
+	• Added default location for save file and open file picker
+	• Added formatting for newly created designs (JSON)
+	• Added status bar disabled when no tab is open
+	
+	• Updated to TextControlBox v1.1.3
+
+	• Fixed focus of textbox when switching/closing tabs
+	• Fixed cursor always at position 0, when switching tabs
+	• Fixed designs not updated in quick access
+	• Fixed rename dialog no longer allows empty or invalid names
+	• Fixed unloaded tabs now correctly display text when undocked
+	• Fixed status bar glitching inside the text box
+	• Fixed status bar not updating after show/hide toggle
+	• Fixed default design now includes some default color data
+	• Fixed info dialog now has proper word wrapping
+	• Fixed various UI glitches in the status bar and settings
+	• Fixed search toggle replace issue and other search related problems
+	• Fixed wrong background in undocked tabs
+
+#Version 2.6.0 [07.03.2025]
 
 	• Added option to show default title bar
 	• Added "Surround with" flyout by pressing Ctrl + Q

@@ -1,8 +1,7 @@
 ﻿using Fastedit.Dialogs;
-using System;
 using System.IO;
-using System.Linq;
 using Microsoft.UI.Xaml.Controls;
+using Fastedit.Extensions;
 
 namespace Fastedit.Views.SettingsPages
 {
@@ -28,15 +27,10 @@ namespace Fastedit.Views.SettingsPages
             if (data.Length == 0)
                 return;
 
-            //check for invalid characters
-            char[] invalidChars = Path.GetInvalidFileNameChars();
-            for (int i = 0; i < data.Length; i++)
+            if (data.ContainsInvalidPathChars())
             {
-                if (invalidChars.Contains(data[i]))
-                {
-                    InfoMessages.FileNameInvalidCharacters();
-                    return;
-                }
+                InfoMessages.FileNameInvalidCharacters();
+                return;
             }
 
             AppSettings.NewTabExtension = Path.GetExtension(data.Trim());

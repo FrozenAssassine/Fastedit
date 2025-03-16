@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using TextControlBoxNS;
 using Fastedit.Core.Tab;
-using System.Diagnostics;
 
 namespace Fastedit.Core.Settings
 {
@@ -109,11 +108,14 @@ namespace Fastedit.Core.Settings
         }
         public static void SetControlsVisibility(TabView tabView, MenuBar menuBar, TextStatusBar textStatusBar)
         {
-            //do not apply -> controls will be visible in settings
             if (SettingsTabPageHelper.SettingsSelected)
+            {
+                SettingsTabPageHelper.HideControls();
                 return;
+            }
 
             menuBar.Visibility = ConvertHelper.BoolToVisibility(AppSettings.ShowMenubar);
+            textStatusBar.IsVisible = AppSettings.ShowStatusbar;
 
             TabPageHelper.TabMargin.Top = GetHeightWithVisibility(menuBar);
             TabPageHelper.TabMargin.Bottom = GetHeightWithVisibility(textStatusBar);
@@ -126,8 +128,6 @@ namespace Fastedit.Core.Settings
                     tab.textbox.Margin = TabPageHelper.TabMargin;
                 }
             }
-
-            textStatusBar.IsVisible = AppSettings.ShowStatusbar;
         }
 
         public static void SetWindowBackground(BackdropWindowManager backdropManager, FasteditDesign currentDesign)

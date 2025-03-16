@@ -18,6 +18,35 @@ public class DesignHelper
 {
     public static FasteditDesign CurrentDesign = null;
 
+    public static FasteditDesign CreateDefaultDesign() 
+    {
+        return new FasteditDesign
+        {
+            BackgroundColor = Color.FromArgb(255, 30, 30, 30),
+            BackgroundType = BackgroundType.Solid,
+            CursorColor = Color.FromArgb(255, 200, 200, 200),
+            DialogBackgroundColor = Color.FromArgb(255, 40, 40, 40),
+            DialogBackgroundType = ControlBackgroundType.Acrylic,
+            DialogTextColor = Color.FromArgb(255, 220, 220, 220),
+            LineHighlighterBackground = Color.FromArgb(100, 50, 50, 50),
+            LineNumberBackground = Color.FromArgb(255, 35, 35, 35),
+            LineNumberColor = Color.FromArgb(255, 150, 150, 150),
+            SearchHighlightColor = Color.FromArgb(100, 255, 200, 0),
+            SelectedTabPageHeaderBackground = Color.FromArgb(255, 45, 45, 45),
+            SelectedTabPageHeaderTextColor = Color.FromArgb(255, 220, 220, 220),
+            SelectionColor = Color.FromArgb(100, 100, 100, 100),
+            StatusbarBackgroundColor = Color.FromArgb(255, 30, 30, 30),
+            StatusbarBackgroundType = ControlBackgroundType.Acrylic,
+            StatusbarTextColor = Color.FromArgb(255, 200, 200, 200),
+            TextBoxBackground = Color.FromArgb(255, 35, 35, 35),
+            TextboxBackgroundType = ControlBackgroundType.Acrylic,
+            TextColor = Color.FromArgb(255, 230, 230, 230),
+            Theme = ElementTheme.Dark,
+            UnselectedTabPageHeaderBackground = Color.FromArgb(255, 25, 25, 25),
+            UnSelectedTabPageHeaderTextColor = Color.FromArgb(255, 160, 160, 160),
+        };
+    }
+
     public static void LoadDesign()
     {
         var designName = AppSettings.CurrentDesign;
@@ -34,31 +63,7 @@ public class DesignHelper
         //if the design still could not get loaded, load some data
         if (CurrentDesign == null)
         {
-            CurrentDesign = new FasteditDesign
-            {
-                BackgroundColor = Color.FromArgb(100, 0, 0, 0),
-                BackgroundType = BackgroundType.Solid,
-                CursorColor = Color.FromArgb(255, 255, 255, 255),
-                DialogBackgroundColor = Color.FromArgb(30, 20, 20, 20),
-                DialogBackgroundType = ControlBackgroundType.Acrylic,
-                DialogTextColor = Color.FromArgb(255, 255, 255, 255),
-                LineHighlighterBackground = Color.FromArgb(50, 0, 0, 0),
-                LineNumberBackground = Color.FromArgb(0, 0, 0, 0),
-                LineNumberColor = Color.FromArgb(0, 0, 0, 0),
-                SearchHighlightColor = Color.FromArgb(0, 0, 0, 0),
-                SelectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
-                SelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
-                SelectionColor = Color.FromArgb(0, 0, 0, 0),
-                StatusbarBackgroundColor = Color.FromArgb(0, 0, 0, 0),
-                StatusbarBackgroundType = ControlBackgroundType.Acrylic,
-                StatusbarTextColor = Color.FromArgb(0, 0, 0, 0),
-                TextBoxBackground = Color.FromArgb(0, 0, 0, 0),
-                TextboxBackgroundType = ControlBackgroundType.Acrylic,
-                TextColor = Color.FromArgb(0, 0, 0, 0),
-                Theme = ElementTheme.Dark,
-                UnselectedTabPageHeaderBackground = Color.FromArgb(0, 0, 0, 0),
-                UnSelectedTabPageHeaderTextColor = Color.FromArgb(0, 0, 0, 0),
-            };
+            CurrentDesign = CreateDefaultDesign();
         }
     }
     public static void CopyDefaultDesigns(bool force = false)
@@ -188,7 +193,7 @@ public class DesignHelper
             return null;
 
         var path = Path.Combine(DefaultValues.DesignPath, name);
-        var design = new FasteditDesign();
+        var design = CreateDefaultDesign();
         if(SaveDesign(design, path))
             return path;
         return null;
@@ -198,7 +203,7 @@ public class DesignHelper
     {
         try
         {
-            string data = JsonConvert.SerializeObject(design);
+            string data = JsonConvert.SerializeObject(design, Formatting.Indented);
             File.WriteAllText(path, data);
             return true;
         }
