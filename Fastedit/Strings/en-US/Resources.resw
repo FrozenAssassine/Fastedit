@@ -129,4 +129,208 @@
   <data name="View_MainPage_SaveFile.Text" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="View_MainPage_File.Title" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="View_MainPage_SaveAll.Text" xml:space="preserve">
+    <value>Save All</value>
+  </data>
+  <data name="View_MainPage_RecycleBin.Text" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+  <data name="View_MainPage_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="View_MainPage_Edit.Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="View_MainPage_Undo.Text" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="View_MainPage_Redo.Text" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="View_MainPage_Cut.Text" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="View_MainPage_Copy.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="View_MainPage_Paste.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="View_MainPage_DuplicateLine.Text" xml:space="preserve">
+    <value>Duplicate Line</value>
+  </data>
+  <data name="View_MainPage_Search.Text" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="View_MainPage_Replace.Text" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="View_MainPage_GoToLine.Text" xml:space="preserve">
+    <value>Go To</value>
+  </data>
+  <data name="View_MainPage_SelectAll.Text" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="View_MainPage_Document.Title" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="View_MainPage_CloseTab.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="View_MainPage_FileInfo.Text" xml:space="preserve">
+    <value>File Info</value>
+  </data>
+  <data name="View_MainPage_ChangeEncoding.Text" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="View_MainPage_UndockTab.Text" xml:space="preserve">
+    <value>Undock Tab</value>
+  </data>
+  <data name="View_MainPage_CloseAllTabs.Text" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="View_MainPage_Advanced.Title" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="View_MainPage_SyntaxHighlighting.Text" xml:space="preserve">
+    <value>Syntax Highlighting</value>
+  </data>
+  <data name="View_MainPage_TabsSpaces.Text" xml:space="preserve">
+    <value>Tabs / Spaces</value>
+  </data>
+  <data name="View_MainPage_Spaces.Text" xml:space="preserve">
+    <value>Spaces</value>
+  </data>
+  <data name="RunCommandWindow_CloseTab.Command" xml:space="preserve">
+    <value>Close Tab</value>
+  </data>
+  <data name="RunCommandWindow_SyntaxHighlighting.Command" xml:space="preserve">
+    <value>Syntax Highlighting</value>
+  </data>
+  <data name="RunCommandWindow_NewTab.Command" xml:space="preserve">
+    <value>New Tab</value>
+  </data>
+  <data name="RunCommandWindow_Encoding.Command" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="RunCommandWindow_Copy.Command" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="RunCommandWindow_Paste.Command" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="RunCommandWindow_Cut.Command" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="RunCommandWindow_DuplicateLine.Command" xml:space="preserve">
+    <value>Duplicate Line</value>
+  </data>
+  <data name="RunCommandWindow_FileInfo.Command" xml:space="preserve">
+    <value>File Info</value>
+  </data>
+  <data name="RunCommandWindow_OpenFile.Command" xml:space="preserve">
+    <value>Open File</value>
+  </data>
+  <data name="RunCommandWindow_RecycleBin.Command" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+  <data name="RunCommandWindow_Redo.Command" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="RunCommandWindow_Undo.Command" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="RunCommandWindow_ZoomIn.Command" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="RunCommandWindow_ZoomOut.Command" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="RunCommandWindow_SaveAs.Command" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="RunCommandWindow_Save.Command" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="RunCommandWindow_SelectAll.Command" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="RunCommandWindow_ReloadSettings.Command" xml:space="preserve">
+    <value>Reload Settings</value>
+  </data>
+  <data name="RunCommandWindow_Rename.Command" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="RunCommandWindow_SpacesInsteadTabs.Command" xml:space="preserve">
+    <value>Spaces Instead of Tabs</value>
+  </data>
+  <data name="RunCommandWindow_TabsInsteadSpaces.Command" xml:space="preserve">
+    <value>Tabs Instead of Spaces</value>
+  </data>
+  <data name="RunCommandWindow_Settings.Command" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="RunCommandWindow_Fullscreen.Command" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="RunCommandWindow_CompactOverlay.Command" xml:space="preserve">
+    <value>Compact Overlay</value>
+  </data>
+  <data name="RunCommandWindow_AlwaysOnTop.Command" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
+  <data name="RunCommandWindow_Find.Command" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="RunCommandWindow_Replace.Command" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="RunCommandWindow_UndockTab.Command" xml:space="preserve">
+    <value>Undock Tab</value>
+  </data>
+  <data name="RunCommandWindow_SaveAll.Command" xml:space="preserve">
+    <value>Save All</value>
+  </data>
+  <data name="RunCommandWindow_CloseAll.Command" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="RunCommandWindow_SurroundWith.Command" xml:space="preserve">
+    <value>Surround With</value>
+  </data>
+  <data name="RunCommandWindow_Design.Command" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="View_MainPage_CompactOverlay.Text" xml:space="preserve">
+    <value>Compact Overlay</value>
+  </data>
+  <data name="View_MainPage_Fullscreen.Text" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="View_MainPage_TopMost.Text" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
+  <data name="View_MainPage_ZoomIn.Text" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="View_MainPage_ZoomOut.Text" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="View_MainPage_QuickAccess.Text" xml:space="preserve">
+    <value>Quick Access</value>
+  </data>
+  <data name="View_MainPage_Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="View_MainPage_SurroundWith.Text" xml:space="preserve">
+    <value>Surround With</value>
+  </data>
+  <data name="View_MainPage_View.Title" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="View_MainPage_VerticalFlyout_ShowAllTabs.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show all Tabs; Ctrl + M (Type to search)</value>
+  </data>
 </root>
