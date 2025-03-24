@@ -1,0 +1,109 @@
+﻿{
+  "Theme": 2,
+  "BackgroundType": 0,
+  "BackgroundColor": {
+    "A": 255,
+    "R": 20,
+    "G": 20,
+    "B": 30
+  },
+  "TextColor": {
+    "A": 255,
+    "R": 220,
+    "G": 220,
+    "B": 220
+  },
+  "SelectionColor": {
+    "A": 150,
+    "R": 0,
+    "G": 120,
+    "B": 200
+  },
+  "LineNumberColor": {
+    "A": 200,
+    "R": 0,
+    "G": 200,
+    "B": 150
+  },
+  "LineNumberBackground": {
+    "A": 50,
+    "R": 15,
+    "G": 15,
+    "B": 25
+  },
+  "LineHighlighterBackground": {
+    "A": 80,
+    "R": 50,
+    "G": 50,
+    "B": 80
+  },
+  "TextboxBackgroundType": 2,
+  "TextBoxBackground": {
+    "A": 255,
+    "R": 10,
+    "G": 10,
+    "B": 20
+  },
+  "CursorColor": {
+    "A": 255,
+    "R": 255,
+    "G": 140,
+    "B": 0
+  },
+  "SearchHighlightColor": {
+    "A": 180,
+    "R": 255,
+    "G": 120,
+    "B": 0
+  },
+  "SelectedTabPageHeaderTextColor": {
+    "A": 255,
+    "R": 255,
+    "G": 200,
+    "B": 100
+  },
+  "UnSelectedTabPageHeaderTextColor": {
+    "A": 180,
+    "R": 180,
+    "G": 180,
+    "B": 180
+  },
+  "UnselectedTabPageHeaderBackground": {
+    "A": 100,
+    "R": 30,
+    "G": 30,
+    "B": 45
+  },
+  "SelectedTabPageHeaderBackground": {
+    "A": 150,
+    "R": 50,
+    "G": 50,
+    "B": 100
+  },
+  "StatusbarTextColor": {
+    "A": 255,
+    "R": 200,
+    "G": 200,
+    "B": 200
+  },
+  "StatusbarBackgroundType": 2,
+  "StatusbarBackgroundColor": {
+    "A": 255,
+    "R": 10,
+    "G": 10,
+    "B": 30
+  },
+  "DialogBackgroundColor": {
+    "A": 255,
+    "R": 15,
+    "G": 15,
+    "B": 25
+  },
+  "DialogTextColor": {
+    "A": 255,
+    "R": 220,
+    "G": 220,
+    "B": 220
+  },
+  "DialogBackgroundType": 0
+}

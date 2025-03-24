@@ -1,4 +1,7 @@
-﻿#Version 2.6.1 [12.03.2025]
+﻿#Version 2.6.2 [18.03.2025]
+	• Updated to TextControlBox v1.1.4
+
+#Version 2.6.1 [12.03.2025]
 	• Added default location for save file and open file picker
 	• Added formatting for newly created designs (JSON)
 	• Added status bar disabled when no tab is open
