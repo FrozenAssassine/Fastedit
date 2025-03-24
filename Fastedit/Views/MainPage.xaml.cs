@@ -88,7 +88,7 @@ public sealed partial class MainPage : Page
         if (selectedTab == null || tabControl.TabItems.Count == 0)
             title = "Fastedit";
         else if (selectedTab is TabPageItem tab)
-            title = $"Fastedit - {tab.Header}";
+            title = $"{tab.Header}";
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
             title = "Fastedit - Settings";
             App.m_window.Title = title;
