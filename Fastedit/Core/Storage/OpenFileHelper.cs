@@ -93,13 +93,16 @@ public class OpenFileHelper
         tab.DatabaseItem.FileName = Path.GetFileName(path);
         tab.Encoding = res.encoding;
 
-        if (load)
-            tab.textbox.LoadLines(res.lines);
+        tab.textbox.Loaded += (sender) =>
+        {
+            if (load)
+                tab.textbox.LoadLines(res.lines);
 
-        TabPageHelper.SelectHighlightLanguageByPath(tab);
+            TabPageHelper.SelectHighlightLanguageByPath(tab);
+            tab.textbox.GoToLine(0);
+            tab.textbox.ScrollLineIntoView(0);
+        };
 
-        tab.textbox.GoToLine(0);
-        tab.textbox.ScrollLineIntoView(0);
         tab.DataIsLoaded = load;
         tab.DatabaseItem.IsModified = false;
         tab.SetHeader(tab.DatabaseItem.FileName);
@@ -111,6 +114,7 @@ public class OpenFileHelper
 
         return true;
     }
+
     public static TabPageItem DoOpen(TabView tabView, string path, bool load = true, bool select = false)
     {
         var tab = TabPageHelper.AddNewTab(tabView, false);

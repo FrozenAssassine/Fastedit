@@ -90,8 +90,8 @@ public static class TabPageHelper
         tab.textbox.Loaded += (sender) =>
         {
             tab.textbox.Focus(FocusState.Programmatic);
+            SettingsUpdater.UpdateTab(tab);
         };
-        SettingsUpdater.UpdateTab(tab);
 
         if (Select)
             tabView.SelectedItem = tab;

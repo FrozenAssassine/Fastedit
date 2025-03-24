@@ -1,5 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Fastedit.Core.Tab;
+using System;
+using System.Linq;
 
 namespace Fastedit.Helper;
 
@@ -12,9 +14,29 @@ public class AppActivationHelper
         if (appActivationArguments == null)
             return false;
 
-        //TODO! var args = Environment.GetCommandLineArgs();
+        var args = Environment.GetCommandLineArgs();
+        if(args.Length == 0)
+            return HandleFileActivation(tabView);
 
-        return HandleFileActivation(tabView);
+        return HandleCommandLineActivation(tabView, args);
+    }
+
+    private static bool HandleCommandLineActivation(TabView tabView, string[] args)
+    {
+        //no file, just open the app
+        if (args.Length == 1)
+            return true;
+        int successfullyOpened = 0;
+        if (args.Length >= 2)
+        {
+            string[] files = args.Skip(1).ToArray();
+            foreach (var file in files)
+            {
+                if (TabPageHelper.OpenAndShowFile(tabView, file, false))
+                    successfullyOpened++;
+            }
+        }
+        return successfullyOpened != 0;
     }
 
     private static bool HandleFileActivation(TabView tabView)

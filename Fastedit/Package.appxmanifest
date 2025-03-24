@@ -45,6 +45,14 @@
 		  </uap:DefaultTile >
       </uap:VisualElements>
 		<Extensions>
+			<uap5:Extension
+				Category="windows.appExecutionAlias"
+				Executable="fastedit.exe"
+				EntryPoint="Windows.FullTrustApplication">
+				<uap5:AppExecutionAlias>
+					<uap5:ExecutionAlias Alias="fastedit.exe" />
+				</uap5:AppExecutionAlias>
+			</uap5:Extension>
 			<uap:Extension Category="windows.fileTypeAssociation" >
 				<uap:FileTypeAssociation Name="assembly">
 					<uap:DisplayName>Assembly</uap:DisplayName>
