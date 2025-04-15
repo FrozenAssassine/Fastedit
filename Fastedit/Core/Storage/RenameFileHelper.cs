@@ -39,6 +39,7 @@ internal class RenameFileHelper
             try 
             {
                 Directory.Move(sourceFile, destFile);
+                tab.DatabaseItem.FilePath = destFile;
                 tab.SetHeader(newName);
             }
             catch (Exception ex)
