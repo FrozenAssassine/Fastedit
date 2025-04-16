@@ -54,8 +54,8 @@ public class InfoMessages
             TabPageHelper.mainPage.ShowSettings("AboutPage");
         };
 
-        new InfoBar().Show("New Version",
-            $"Welcome to Fastedit {version}!\nSome settings may not have loaded due to framework changes.\nBut now you have more file access rights, including saving and renaming drag-and-drop files.",
+        new InfoBar().Show($"Welcome to Fastedit {version}!",
+            $"• Added search in undocked tab.\n• New default design\n• Fixed rename bug, where the path persisted with old file name\n• Updated TextControlBox to V1.1.5",
             btn, 
             InfoBarSeverity.Success, 
             25

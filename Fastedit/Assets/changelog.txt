@@ -1,4 +1,10 @@
-﻿#Version 2.6.2 [18.03.2025]
+﻿#Version 2.7.0 [17.04.2025]
+	• Added search/replace in Undocked Tab
+	• New default design on first start
+	• Fixed a bug, where a renamed tab did not reflect the change in the file path
+	• Updated to TextControlBox v1.1.5
+
+#Version 2.6.2 [18.03.2025]
 	• Updated to TextControlBox v1.1.4
 
 #Version 2.6.1 [12.03.2025]

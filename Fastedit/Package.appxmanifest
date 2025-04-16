@@ -12,7 +12,7 @@
   <Identity
     Name="52804JuliusKirsch.Fastedit"
     Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
-    Version="2.6.2.0" />
+    Version="2.7.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="6468b0e9-d4a1-486d-a6a7-2a98b08cd65f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
