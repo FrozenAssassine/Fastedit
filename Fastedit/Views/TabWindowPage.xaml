@@ -45,6 +45,16 @@
                     <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Find" Click="OpenSearch_Click">
+                <MenuFlyoutItem.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
+                </MenuFlyoutItem.KeyboardAccelerators>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Replace" Click="OpenReplace_Click">
+                <MenuFlyoutItem.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
+                </MenuFlyoutItem.KeyboardAccelerators>
+            </MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
 
@@ -59,6 +69,8 @@
             <TextBlock x:Name="titleText" VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind tab.Header, Mode=OneWay}" HorizontalAlignment="Left"/>
         </Grid>
 
+        <Grid Grid.Row="1" x:Name="textBoxWrapper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <controls:SearchControl HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Width="350" Visibility="Collapsed" x:Name="searchControl"/>
         <controls:TextStatusBar Grid.Row="2" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" x:Name="textStatusBar"/>
     </Grid>
 </Page>
