@@ -2,20 +2,43 @@
 using Fastedit.Core.Tab;
 using System;
 using System.Linq;
+using Microsoft.Windows.AppLifecycle;
+using Windows.Storage;
 using System.Diagnostics;
-using System.IO;
+using Windows.ApplicationModel.Activation;
+using System.Collections.Generic;
 
 namespace Fastedit.Helper;
 
 public class AppActivationHelper
 {
-    public static string appActivationArguments = null;
+    public static AppActivationArguments activatedEventArgs;
 
     public static bool HandleAppActivation(TabView tabView)
     {
-        if (appActivationArguments != null)
-            return HandleFileActivation(tabView);
+        if (activatedEventArgs == null)
+            return false;
 
+        if (activatedEventArgs.Kind == ExtendedActivationKind.Launch)
+        {
+            activatedEventArgs = null;
+            return false;
+        }
+
+        if (activatedEventArgs.Kind == ExtendedActivationKind.File)
+        {
+            var files = (activatedEventArgs.Data as FileActivatedEventArgs).Files;
+            activatedEventArgs = null;
+
+            return HandleFileActivation(tabView, files);
+        }
+
+        if(activatedEventArgs.Kind == ExtendedActivationKind.CommandLineLaunch)
+        {
+            Debug.WriteLine(activatedEventArgs.Data.GetType());
+        }
+
+        activatedEventArgs = null;
         var args = Environment.GetCommandLineArgs();
         if (args.Length == 0)
             return false;
@@ -41,14 +64,19 @@ public class AppActivationHelper
         return successfullyOpened != 0;
     }
 
-    private static bool HandleFileActivation(TabView tabView)
+    private static bool HandleFileActivation(TabView tabView, IReadOnlyList<IStorageItem> files)
     {
-        var file = appActivationArguments;
-        if (file == null || file.Length == 0)
+        if (files == null)
             return false;
 
-        appActivationArguments = null;
-
-        return TabPageHelper.OpenAndShowFile(tabView, file, true);
+        bool oneSuccess = false;
+        foreach (var file in files)
+        {
+            if(TabPageHelper.OpenAndShowFile(tabView, file.Path, true))
+            {
+                oneSuccess = true;
+            }
+        }
+        return oneSuccess;
     }
 }

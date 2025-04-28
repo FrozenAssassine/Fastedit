@@ -34,10 +34,10 @@ namespace Fastedit
             this.mainPage.TitleBarGrid.LayoutUpdated += TitleBarGrid_LayoutUpdated;
             this.Closed += MainWindow_Closed;
 
-
             this.Title = "Fastedit";
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));
         }
+
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)
         {

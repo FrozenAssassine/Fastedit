@@ -79,7 +79,10 @@ public sealed partial class MainPage : Page
 
     public void TriggerAppActivationAfterStart()
     {
-        AppActivationHelper.HandleAppActivation(tabControl);
+        this.DispatcherQueue.TryEnqueue(() =>
+        {
+            AppActivationHelper.HandleAppActivation(tabControl);
+        });
     }
 
     private void MakeAppTitle(object selectedTab)

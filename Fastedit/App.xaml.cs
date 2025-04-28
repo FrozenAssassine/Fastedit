@@ -1,5 +1,7 @@
 ﻿using Fastedit.Helper;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
+using System;
 
 namespace Fastedit;
 
@@ -12,30 +14,48 @@ public partial class App : Application
     {
         this.InitializeComponent();
 
-        _singleInstanceApp = new SingleInstanceDesktopApp("fastedit.juliuskirsch");
-        _singleInstanceApp.Launched += _singleInstanceApp_Launched;
+        //_singleInstanceApp = new SingleInstanceDesktopApp("fastedit.juliuskirsch");
+        //_singleInstanceApp.Launched += _singleInstanceApp_Launched;
     }
 
-    private void _singleInstanceApp_Launched(object sender, SingleInstanceLaunchEventArgs e)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        if (e.IsFirstLaunch)
+        var appInstance = AppInstance.GetCurrent();
+        var activatedArgs = appInstance.GetActivatedEventArgs();
+
+        var mainInstance = AppInstance.FindOrRegisterForKey("fastedit.juliuskirsch");
+
+        if (!mainInstance.IsCurrent)
+        {
+            await mainInstance.RedirectActivationToAsync(activatedArgs);
+            Environment.Exit(0);
+            return;
+        }
+
+        // Register event to handle future activations
+        appInstance.Activated += AppInstance_Activated; ;
+
+        // Create and show main window
+        m_window = new MainWindow();
+        m_window.Activate();
+
+        HandleActivation(activatedArgs);
+    }
+
+    private void AppInstance_Activated(object sender, AppActivationArguments e)
+    {
+        if (m_window == null)
         {
             m_window = new MainWindow();
             m_window.Activate();
         }
 
-        //file activation
-        if (e.Arguments != null && e.Arguments.Length > 0)
-        {
-            AppActivationHelper.appActivationArguments = e.Arguments;
-
-            if(!e.IsFirstLaunch)
-                m_window.SendLaunchArguments();
-        }
+        HandleActivation(e);
     }
 
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    private void HandleActivation(AppActivationArguments args)
     {
-        _singleInstanceApp.Launch(args.Arguments);
+        AppActivationHelper.activatedEventArgs = args;
+        m_window?.SendLaunchArguments();
     }
 }
