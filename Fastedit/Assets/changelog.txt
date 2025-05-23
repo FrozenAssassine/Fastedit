@@ -1,4 +1,8 @@
-﻿#Version 2.7.0 [17.04.2025]
+﻿#Version 2.7.1 [23.05.2025]
+	• Fixed a bug which did not properly open associated files 
+	• Removed command line launch due to weird behaviours
+
+#Version 2.7.0 [17.04.2025]
 	• Added search/replace in Undocked Tab
 	• New default design on first start
 	• Fixed a bug, where a renamed tab did not reflect the change in the file path
