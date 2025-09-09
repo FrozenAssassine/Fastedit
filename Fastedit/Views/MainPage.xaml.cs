@@ -622,4 +622,10 @@ public sealed partial class MainPage : Page
     {
         WindowHelper.ToggleTopMost(App.m_window);
     }
+
+    private async void SupportDevelopment_Click(object sender, RoutedEventArgs e)
+    {
+        await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.paypal.com/donate/?hosted_button_id=Q7YWPMBV6YNCQ"));
+
+    }
 }

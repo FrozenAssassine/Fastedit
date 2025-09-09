@@ -506,6 +506,8 @@
                                 <KeyboardAccelerator Key="F1" IsEnabled="False" Modifiers="None"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Support Development" Click="SupportDevelopment_Click"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
 

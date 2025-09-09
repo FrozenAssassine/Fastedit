@@ -40,7 +40,7 @@
             </Grid>
 
             <controls:SetingsItemSeparator Header="More"/>
-            <controls:SettingsControl Foreground="White" FontWeight="Bold" Background="#ff6433" Tag="https://ko-fi.com/K3K819KSLG" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Support me on Ko-fi" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl Foreground="White" FontWeight="Bold" Background="#182c8c" Tag="https://www.paypal.com/donate/?hosted_button_id=Q7YWPMBV6YNCQ" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xE716;" Header="Support my development on Paypal" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock Text="&#xe8a7;"  FontFamily="{StaticResource SymbolThemeFontFamily}" />
                 </controls:SettingsControl.Content>
