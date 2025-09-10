@@ -55,7 +55,7 @@ public class InfoMessages
         };
 
         new InfoBar().Show($"Welcome to Fastedit {version}!",
-            $"• Added search in undocked tab.\n• New default design\n• Fixed rename bug, where the path persisted with old file name\n• Updated TextControlBox to V1.1.5",
+            $"• Added LUA support\n• Updated to TextControlBox v1.3.0\n• Updated to latest WinAppSDK 1.8.x",
             btn, 
             InfoBarSeverity.Success, 
             25

@@ -1,4 +1,9 @@
-﻿#Version 2.7.1 [23.05.2025]
+﻿#Version 2.7.2 [10.09.2025]
+	• Added LUA support
+	• Updated to TextControlBox v1.3.0
+	• Updated to latest WinAppSDK 1.8.x
+
+#Version 2.7.1 [23.05.2025]
 	• Fixed a bug which did not properly open associated files 
 	• Removed command line launch due to weird behaviours
 
