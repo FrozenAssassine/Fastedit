@@ -16,7 +16,7 @@ internal class SettingsImportExport
         var file = await SaveFileHelper.PickFile(
             ".fasteditsettings", 
             "Fastedit settings", 
-            "Settings_" + new DateTime().ToString("dd.MM.yyyy")
+            "Settings_" + DateTime.Now.ToString("dd.MM.yyyy")
             );
 
         if (file.Length == 0)
