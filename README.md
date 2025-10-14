@@ -16,9 +16,7 @@
 Introducing Fastedit, designed to make editing and organizing your documents effortless. With the ability to open multiple tabs, you can easily edit or view multiple documents at once. The app also features line numbering and custom designs to personalize your experience. A session snapshot feature ensures your work is saved and opens up exactly as you left it. Additionally, the line highlighter and syntax highlighting features make editing code or important information super efficient. Plus, the ability to edit documents in a second instance and a recycle bin to recover deleted files, ensure that you never lose any important work. Upgrade your editing experience with Fastedit.
 
 ## Support my work  
-<a href='https://ko-fi.com/K3K819KSLG' target='_blank'>  
-    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />  
-</a>
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=PPME7KF7KF7QS)
 
 ## 📥 Download
 <a href="https://apps.microsoft.com/detail/Fastedit/9NTQ53W18DPW?launch=true
