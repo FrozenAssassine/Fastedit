@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.UI.Xaml;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
+using System.Diagnostics;
 
 namespace Fastedit.Core.Tab;
 
@@ -136,6 +137,7 @@ public class TabPageItem : TabViewItem
         if (DatabaseItem == null)
             return;
 
+        LineEnding = _DataBaseItem.LineEnding;
         textbox.ZoomFactor = _DataBaseItem.ZoomFactor;
         SetHeader(_DataBaseItem.FileName);
 
@@ -159,6 +161,15 @@ public class TabPageItem : TabViewItem
             if (_DataBaseItem == null)
                 return;
             _DataBaseItem.Encoding = EncodingHelper.GetIndexByEncoding(value);
+        }
+    }
+
+    public LineEnding LineEnding
+    {
+        get => _DataBaseItem.LineEnding;
+        set
+        {
+            textbox.LineEnding = _DataBaseItem.LineEnding = value;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using TextControlBoxNS;
 using Windows.Storage;
 
 namespace Fastedit.Storage;
@@ -29,10 +31,12 @@ public class SaveFileHelper
         return $"{fileNameWithoutExtension}({count++}){extension}";
     }
 
-    public static async Task<bool> WriteLinesToFile(string path, IEnumerable<string> lines, Encoding encoding)
+    public static async Task<bool> WriteLinesToFile(string path, IEnumerable<string> lines, Encoding encoding, LineEnding lineEnding)
     {
         if (string.IsNullOrWhiteSpace(path) || lines == null || encoding == null)
             return false;
+
+        string lineEndingStr = LineEndingHelper.GetLineEndingString(lineEnding);
 
         try
         {
@@ -41,9 +45,13 @@ public class SaveFileHelper
             {
                 foreach (var line in lines)
                 {
-                    await writer.WriteLineAsync(line);
+                    await writer.WriteAsync(line.AsMemory());
+                    await writer.WriteAsync(lineEndingStr.AsMemory());
                 }
+
+                await writer.FlushAsync();
             }
+
             return true;
         }
         catch (UnauthorizedAccessException)
@@ -97,7 +105,7 @@ public class SaveFileHelper
         if (tab.DatabaseItem.WasNeverSaved)
             return await SaveFileAs(tab, window);
 
-        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding);
+        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.textbox.LineEnding);
         if (result)
         {
             TabPageHelper.UpdateSaveStatus(tab, false);
@@ -126,7 +134,7 @@ public class SaveFileHelper
         StorageFile file = await savePicker.PickSaveFileAsync();
         if (file != null)
         {
-            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding);
+            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.textbox.LineEnding);
 
             tab.DatabaseItem.FilePath = file.Path;
             tab.DatabaseItem.FileName = file.Name;

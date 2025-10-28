@@ -4,8 +4,10 @@ using Fastedit.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace Fastedit.Controls;
 
@@ -29,12 +31,8 @@ public sealed partial class TextStatusBar : UserControl
     {
         this.InitializeComponent();
 
-        foreach (var encoding in EncodingHelper.AllEncodings)
-        {
-            var item = new MenuFlyoutItem { Text = encoding.name, Tag = encoding.encoding };
-            item.Click += ChangeEncoding_Click;
-            EncodingFlyout.Items.Add(item);
-        }
+        LoadEncodings();
+        LoadLineEndings();
 
         StatusbarSortingNames = new()
         {
@@ -42,9 +40,32 @@ public sealed partial class TextStatusBar : UserControl
             { "LineColumn", ItemLineColumn },
             { "Encoding", ItemEncoding },
             { "FileName", ItemFileName },
-            { "WordChar", ItemWordCharacter }
+            { "WordChar", ItemWordCharacter },
+            {"showLineEndings", ItemLineEndings },
         };
     }
+
+    private void LoadLineEndings()
+    {
+        int lineEndingIndex = 0;
+        foreach (var lineEnding in Enum.GetValues(typeof(TextControlBoxNS.LineEnding)))
+        {
+            var item = new MenuFlyoutItem { Text = lineEnding.ToString(), Tag = lineEndingIndex++ };
+            item.Click += ChangeLineEnding_Click;
+            LineEndingsFlyout.Items.Add(item);
+        }
+    }
+
+    private void LoadEncodings()
+    {
+        foreach (var encoding in EncodingHelper.AllEncodings)
+        {
+            var item = new MenuFlyoutItem { Text = encoding.name, Tag = encoding.encoding };
+            item.Click += ChangeEncoding_Click;
+            EncodingFlyout.Items.Add(item);
+        }
+    }
+
     public void ToggleItemVisibility(SolidColorBrush textColor)
     {
         //show them all (fallback)
@@ -133,6 +154,20 @@ public sealed partial class TextStatusBar : UserControl
         ItemFileName.ChangingText = tabPage.DatabaseItem.FileName;
     }
 
+    public void UpdateLineEndings()
+    {
+        if (!IsVisible) 
+            return;
+
+        if(tabPage == null)
+        {
+            ItemLineEndings.ChangingText = "-";
+            return;
+        }
+
+        ItemLineEndings.ChangingText = tabPage.LineEnding.ToString();
+    }
+
     public void UpdateAll()
     {
         UpdateSelectionChanged();
@@ -140,6 +175,7 @@ public sealed partial class TextStatusBar : UserControl
         UpdateEncoding();
         UpdateFile();
         UpdateText();
+        UpdateLineEndings();
     }
     private void ZoomSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
     {
@@ -147,6 +183,16 @@ public sealed partial class TextStatusBar : UserControl
             return;
 
         tabPage.textbox.ZoomFactor = (int)zoomSlider.Value;
+    }
+
+    private void ChangeLineEnding_Click(object sender, RoutedEventArgs e)
+    {
+        if (tabPage == null)
+            return;
+
+        tabPage.DatabaseItem.IsModified = true;
+        tabPage.LineEnding = (TextControlBoxNS.LineEnding)(int)(sender as MenuFlyoutItem).Tag;
+        UpdateLineEndings();
     }
 
     private void ChangeEncoding_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

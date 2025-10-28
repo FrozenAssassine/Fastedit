@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using TextControlBoxNS;
 
 namespace Fastedit.Models
 {
@@ -15,6 +16,7 @@ namespace Fastedit.Models
         public bool HasOwnWindow { get; set; }
         public int CharacterPos { get; set; }
         public int LinePos { get; set; }
+        public LineEnding LineEnding { get; set; }
         [JsonIgnore]
         public bool WasNeverSaved => this.FilePath.Length == 0;
     }

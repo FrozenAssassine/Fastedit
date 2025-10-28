@@ -34,7 +34,9 @@ public sealed partial class Settings_AppPage : Page
             { showLineColumnItem, "LineColumn" },
             { showEncodingItem, "Encoding" },
             { showFileItem, "FileName" },
-            { showWordChars, "WordChar" }
+            { showWordChars, "WordChar" },
+            { showLineEndings, "LineEndings" }
+
         };
 
         StatusbarStrings = new Dictionary<string, ToggleSwitch>
@@ -43,7 +45,8 @@ public sealed partial class Settings_AppPage : Page
             {"LineColumn",showLineColumnItem},
             {"Encoding", showEncodingItem},
             {"FileName", showFileItem},
-            {"WordChar", showWordChars }
+            {"WordChar", showWordChars },
+            {"LineEndings", showLineEndings }
         };
 
         //turn them all on (fallback)
