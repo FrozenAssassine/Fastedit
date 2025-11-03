@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml;
 using TextControlBoxNS;
 using System.Diagnostics;
 using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 
 namespace Fastedit.Core.Tab;
 
@@ -315,12 +316,12 @@ public static class TabPageHelper
         return await OpenFileHelper.OpenFile(tabView);
     }
 
-    public static bool OpenAndShowFile(TabView tabView, string filePath, bool select = false)
+    public static async Task<bool> OpenAndShowFile(TabView tabView, string filePath, bool select = false)
     {
-        return OpenFileHelper.DoOpen(tabView, filePath, true, select) != null;
+        return await OpenFileHelper.DoOpenAsync(tabView, filePath, true, select) != null;
     }
 
-    public static bool OpenFiles(TabView tabView, IReadOnlyList<IStorageItem> files)
+    public static async Task<bool> OpenFiles(TabView tabView, IReadOnlyList<IStorageItem> files)
     {
         if (files.Count == 0)
             return false;
@@ -331,7 +332,7 @@ public static class TabPageHelper
                 continue;
 
             //Only load the last tab, the others will be saved as temporary files and loaded when needed
-            var tab = OpenFileHelper.DoOpen(tabView, (files[i] as StorageFile).Path, i == files.Count - 1);
+            var tab = await OpenFileHelper.DoOpenAsync(tabView, (files[i] as StorageFile).Path, i == files.Count - 1);
             if (tab == null)
                 return false;
 

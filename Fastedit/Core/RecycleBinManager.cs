@@ -1,4 +1,5 @@
 ﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -96,7 +97,7 @@ public class RecycleBinManager
         }
     }
 
-    public static void ReopenSelected(ListView itemListView, TabView tabView, ObservableCollection<RecycleBinItem> recycleBinItems)
+    public static async void ReopenSelected(ListView itemListView, TabView tabView, ObservableCollection<RecycleBinItem> recycleBinItems)
     {
         if (itemListView.SelectedItems.Count == 0)
             return;
@@ -105,7 +106,7 @@ public class RecycleBinManager
             while (itemListView.SelectedItems.Count > 0)
             {
                 var selecteditem = itemListView.SelectedItems[itemListView.SelectedItems.Count - 1] as RecycleBinItem;
-                var res = OpenFileHelper.DoOpen(tabView, selecteditem.FilePath, true);
+                var res = await OpenFileHelper.DoOpenAsync(tabView, selecteditem.FilePath, true);
                 if (res != null)
                 {
                     File.Delete(selecteditem.FilePath);

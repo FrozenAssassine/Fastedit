@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fastedit.Storage;
+namespace Fastedit.Core.Storage;
 
 public class OpenFileHelper
 {
@@ -22,33 +22,86 @@ public class OpenFileHelper
             yield return line;
         }
     }
-    public static (string[] lines, Encoding encoding, bool succeeded) ReadLinesFromFile(string path, Encoding encoding = null)
+    private static (IEnumerable<string> lines, bool mixedEndings) GetLinesAndDetectMixed(StreamReader reader)
+    {
+        var sb = new StringBuilder();
+        var lines = new List<string>();
+        bool seenCRLF = false;
+        bool seenLF = false;
+        bool seenCR = false;
+
+        int prevChar = -1;
+        int c;
+        while ((c = reader.Read()) != -1)
+        {
+            if (c == '\r')
+            {
+                // Look ahead for possible \r\n
+                int next = reader.Peek();
+                if (next == '\n')
+                {
+                    reader.Read(); // consume \n
+                    seenCRLF = true;
+                }
+                else
+                {
+                    seenCR = true;
+                }
+
+                lines.Add(sb.ToString());
+                sb.Clear();
+            }
+            else if (c == '\n')
+            {
+                // Only LF
+                seenLF = true;
+                lines.Add(sb.ToString());
+                sb.Clear();
+            }
+            else
+            {
+                sb.Append((char)c);
+            }
+
+            prevChar = c;
+        }
+
+        // Handle last line if no newline at end
+        if (sb.Length > 0)
+            lines.Add(sb.ToString());
+
+        bool mixed = (seenCRLF ? 1 : 0) + (seenLF ? 1 : 0) + (seenCR ? 1 : 0) > 1;
+
+        return (lines, mixed);
+    }
+
+    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings) ReadLinesFromFile(string path, Encoding encoding = null)
     {
         if (string.IsNullOrWhiteSpace(path))
-            return (null, null, false);
+            return (null, null, false, false);
 
         try
         {
             using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 65536, useAsync: false);
             using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
             {
-                var lines = GetLines(reader).ToArray();
+                var getLinesResult = GetLinesAndDetectMixed(reader);
 
                 encoding ??= reader.CurrentEncoding;
 
-                return (lines, encoding, true);
+                return (getLinesResult.lines.ToArray(), encoding, true, getLinesResult.mixedEndings);
             }
         }
         catch (UnauthorizedAccessException)
         {
             InfoMessages.NoAccessToReadFile();
-            return (null, null, false);
+            return (null, null, false, false);
         }
         catch (Exception ex)
         {
             InfoMessages.UnhandledException(ex.Message);
         }
-        return (null, null, false);
+        return (null, null, false, false);
     }
 
     public static async Task<(string text, Encoding encoding, bool succeeded)> ReadTextFromFileAsync(string path, Encoding encoding = null)
@@ -80,7 +133,7 @@ public class OpenFileHelper
         return ("", Encoding.Default, false);
     }
 
-    private static bool DoOpenTab(TabPageItem tab, string path, bool load = true)
+    private static async Task<bool> DoOpenTab(TabPageItem tab, string path, bool load = true)
     {
         if (path == null)
             return false;
@@ -88,6 +141,15 @@ public class OpenFileHelper
         var res = ReadLinesFromFile(path);
         if (!res.succeeded)
             return false;
+
+        if (res.mixedLineEndings)
+        {
+            var mixedDialogRes = await MixedLineEndingsWarningDialog.Show();
+            if (mixedDialogRes.confirmed)
+                tab.LineEnding = mixedDialogRes.lineEnding;
+            else
+                return false;
+        }
 
         tab.DatabaseItem.FilePath = path;
         tab.DatabaseItem.FileName = Path.GetFileName(path);
@@ -115,10 +177,10 @@ public class OpenFileHelper
         return true;
     }
 
-    public static TabPageItem DoOpen(TabView tabView, string path, bool load = true, bool select = false)
+    public static async Task<TabPageItem> DoOpenAsync(TabView tabView, string path, bool load = true, bool select = false)
     {
         var tab = TabPageHelper.AddNewTab(tabView, false);
-        if (!DoOpenTab(tab, path, load))
+        if (!await DoOpenTab(tab, path, load))
         {
             tabView.TabItems.Remove(tab);
             return null;
@@ -142,7 +204,7 @@ public class OpenFileHelper
         var files = await picker.PickMultipleFilesAsync();
         foreach (var file in files)
         {
-            var tab = DoOpen(tabView, file.Path);
+            var tab = await DoOpenAsync(tabView, file.Path);
             if (tab != null)
                 tabView.SelectedItem = tab;
             else
@@ -179,7 +241,7 @@ public class OpenFileHelper
         if (file == null)
             return false;
 
-        DoOpenTab(tab, file.Path);
+        await DoOpenTab(tab, file.Path);
         return tab != null;
     }
 

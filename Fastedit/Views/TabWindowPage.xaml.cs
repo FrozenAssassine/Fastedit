@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Input;
 using Fastedit.Controls;
 using Fastedit.Core.Tab;
 using Fastedit.Core;
+using Fastedit.Core.Storage;
 
 namespace Fastedit.Views;
 
@@ -104,7 +105,7 @@ public sealed partial class TabWindowPage : Page
         if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
             RecycleBinManager.MoveFileToRecycleBin(tab);
 
-        if(await OpenFileHelper.OpenFileForTab(tab, this.window))
+        if (await OpenFileHelper.OpenFileForTab(tab, this.window))
         {
             window.Title = tab.DatabaseItem.FileName;
         }

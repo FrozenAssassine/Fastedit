@@ -45,10 +45,10 @@ public sealed partial class DesignGridView : UserControl
     }
 
 
-    private void EditDesignJson_Click(object sender, RoutedEventArgs e)
+    private async void EditDesignJson_Click(object sender, RoutedEventArgs e)
     {
         string fileName = (sender as MenuFlyoutItem).Tag.ToString();
-        TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
+        await TabPageHelper.OpenAndShowFile(TabPageHelper.mainPage.tabView, Path.Combine(DefaultValues.DesignPath, fileName), true);
     }
 
     private void DuplicateDesign_Click(object sender, RoutedEventArgs e)

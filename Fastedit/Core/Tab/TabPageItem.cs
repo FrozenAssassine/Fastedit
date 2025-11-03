@@ -82,6 +82,7 @@ public class TabPageItem : TabViewItem
             FilePath = "",
             IsModified = false,
             ZoomFactor = 100,
+            LineEnding = LineEnding.CRLF,
         };
 
         UpdateTabIcon();

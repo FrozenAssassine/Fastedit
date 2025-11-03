@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Fastedit.Core.Tab;
 using Microsoft.UI.Windowing;
+using System.Threading.Tasks;
 
 namespace Fastedit.Helper;
 
@@ -8,14 +9,14 @@ public class AppActivationHelper
 {
     public static string appActivationArguments = null;
 
-    public static bool HandleAppActivation(TabView tabView)
+    public static async Task<bool> HandleAppActivation(TabView tabView)
     {
         if (appActivationArguments != null)
-            return HandleFileActivation(tabView);
+            return await HandleFileActivation(tabView);
         return false;
     }
 
-    private static bool HandleFileActivation(TabView tabView)
+    private static async Task<bool> HandleFileActivation(TabView tabView)
     {
         var presenter = App.m_window.AppWindow.Presenter as OverlappedPresenter;
         presenter.Minimize();
@@ -27,6 +28,6 @@ public class AppActivationHelper
 
         appActivationArguments = null;
 
-        return TabPageHelper.OpenAndShowFile(tabView, file, true);
+        return await TabPageHelper.OpenAndShowFile(tabView, file, true);
     }
 }

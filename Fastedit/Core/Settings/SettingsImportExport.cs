@@ -1,4 +1,5 @@
-﻿using Fastedit.Core.Tab;
+﻿using Fastedit.Core.Storage;
+using Fastedit.Core.Tab;
 using Fastedit.Models;
 using Fastedit.Storage;
 using System;

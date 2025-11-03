@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Fastedit.Core.Tab;
+using Fastedit.Core.Storage;
 
 namespace Fastedit.Dialogs;
 

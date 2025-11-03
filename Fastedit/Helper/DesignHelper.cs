@@ -11,6 +11,7 @@ using Windows.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 
 namespace Fastedit.Helper;
 

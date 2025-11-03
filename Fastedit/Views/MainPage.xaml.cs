@@ -12,6 +12,7 @@ using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
+using System.Threading.Tasks;
 
 namespace Fastedit;
 
@@ -64,7 +65,7 @@ public sealed partial class MainPage : Page
             await TabPageHelper.LoadTabDatabase(tabControl, tabdatabase);
 
             //Handle activation from files on start and check whether a new tab needs to be created
-            if (!AppActivationHelper.HandleAppActivation(tabControl) && tabControl.TabItems.Count == 0)
+            if (!await AppActivationHelper.HandleAppActivation(tabControl) && tabControl.TabItems.Count == 0)
             {
                 TabPageHelper.AddNewTab(tabView, true);
             }
@@ -77,9 +78,9 @@ public sealed partial class MainPage : Page
         }
     }
 
-    public void TriggerAppActivationAfterStart()
+    public async Task TriggerAppActivationAfterStart()
     {
-        AppActivationHelper.HandleAppActivation(tabControl);
+        await AppActivationHelper.HandleAppActivation(tabControl);
     }
 
     private void MakeAppTitle(object selectedTab)
@@ -345,7 +346,7 @@ public sealed partial class MainPage : Page
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
         {
             var files = await e.DataView.GetStorageItemsAsync();
-            TabPageHelper.OpenFiles(tabControl, files);
+            await TabPageHelper.OpenFiles(tabControl, files);
         }
     }
     private void Page_DragOver(object sender, DragEventArgs e)
