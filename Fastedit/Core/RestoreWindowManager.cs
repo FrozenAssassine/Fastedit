@@ -36,7 +36,10 @@ public class RestoreWindowManager
 
         RectInt32 restoreBounds = new RectInt32(left, top, width, height);
 
-        window.AppWindow.MoveAndResize(restoreBounds);
+        //minimized windows have weird positions
+        if (left != -32000 && top != -32000)
+            window.AppWindow.MoveAndResize(restoreBounds);
+
         window.AppWindow.Resize(new SizeInt32(width, height));
 
         WindowStateHelper.SetWindowState(window, AppSettings.WindowState);
