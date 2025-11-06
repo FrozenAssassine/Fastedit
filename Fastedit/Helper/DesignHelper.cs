@@ -45,6 +45,7 @@ public class DesignHelper
             Theme = ElementTheme.Dark,
             UnselectedTabPageHeaderBackground = Color.FromArgb(255, 25, 25, 25),
             UnSelectedTabPageHeaderTextColor = Color.FromArgb(255, 160, 160, 160),
+            WhitespaceCharacterColor = Color.FromArgb(255, 140, 140, 140)
         };
     }
 
@@ -319,6 +320,7 @@ public class FasteditDesign
     public Color? DialogBackgroundColor { get; set; }
     public Color? DialogTextColor { get; set; }
     public ControlBackgroundType DialogBackgroundType { get; set; }
+    public Color? WhitespaceCharacterColor { get; set; } = Color.FromArgb(255, 140, 140, 140);
 }
 public enum BackgroundType
 {

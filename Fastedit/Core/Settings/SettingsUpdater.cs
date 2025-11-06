@@ -5,6 +5,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using TextControlBoxNS;
 using Fastedit.Core.Tab;
+using Microsoft.UI;
+using Windows.UI;
 
 namespace Fastedit.Core.Settings
 {
@@ -35,7 +37,8 @@ namespace Fastedit.Core.Settings
                 ConvertHelper.ToColor(currentDesign.LineHighlighterBackground),
                 ConvertHelper.ToColor(currentDesign.LineNumberColor),
                 ConvertHelper.ToColor(currentDesign.LineNumberBackground),
-                ConvertHelper.ToColor(currentDesign.SearchHighlightColor)
+                ConvertHelper.ToColor(currentDesign.SearchHighlightColor),
+                ConvertHelper.ToColor(currentDesign.WhitespaceCharacterColor)
             );
         }
 

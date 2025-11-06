@@ -29,6 +29,7 @@ public static class TabPageHelper
             VerticalAlignment = VerticalAlignment.Stretch,
             Margin = TabMargin,
             ControlW_SelectWord = false,
+            ShowWhitespaceCharacters = true,
         };
         textbox.TextChanged += Textbox_TextChanged;
         textbox.ZoomChanged += Textbox_ZoomChanged;
@@ -140,7 +141,7 @@ public static class TabPageHelper
         tabView.SelectedIndex = -1;
         await Task.Delay(20); //textbox sometimes does not load without the delay
         int selectingIndex = tabData.ElementAt(0).DatabaseItem.SelectedIndex;
-        tabView.SelectedIndex = selectingIndex < 0 ? 0 : selectingIndex >= tabView.TabItems.Count ? tabView.TabItems.Count - 1 : selectingIndex;
+        tabView.SelectedIndex = Math.Clamp(selectingIndex, 0, tabView.TabItems.Count - 1);
     }
 
     public static void SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
