@@ -41,7 +41,7 @@ public sealed partial class TextStatusBar : UserControl
             { "Encoding", ItemEncoding },
             { "FileName", ItemFileName },
             { "WordChar", ItemWordCharacter },
-            {"showLineEndings", ItemLineEndings },
+            { "LineEndings", ItemLineEndings },
         };
     }
 

@@ -33,6 +33,8 @@ public sealed partial class Settings_DocumentPage : Page
         ShowLinenumbersSwitch.IsOn = AppSettings.ShowLineNumbers;
         EnableSyntaxhighlightingSwitch.IsOn = AppSettings.SyntaxHighlighting;
         ShowLinehighlighterSwitch.IsOn = AppSettings.ShowLineHighlighter;
+
+        ShowWhitespaceCharacters.IsOn = AppSettings.ShowWhitespaceCharacters;
     }
 
     private void SpacesOrTabsSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -66,5 +68,10 @@ public sealed partial class Settings_DocumentPage : Page
     private void EnableSyntaxhighlightingSwitch_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.SyntaxHighlighting = EnableSyntaxhighlightingSwitch.IsOn;
+    }
+
+    private void ShowWhitespaceCharacters_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.ShowWhitespaceCharacters = ShowWhitespaceCharacters.IsOn;
     }
 }

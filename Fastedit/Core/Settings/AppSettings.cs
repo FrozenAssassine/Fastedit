@@ -148,4 +148,9 @@ internal class AppSettings
         get => (OverlappedPresenterState)SettingsManager.GetSettingsAsInt(AppSettingsValues.windowState, 2);
         set => SettingsManager.SaveSettings(AppSettingsValues.windowState, value.GetHashCode());
     }
+    public static bool ShowWhitespaceCharacters
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_ShowWhitespaceCharacters, DefaultValues.ShowWhitespaceCharacters);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_ShowWhitespaceCharacters, value);
+    }
 }

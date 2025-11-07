@@ -64,6 +64,7 @@ namespace Fastedit.Core.Settings
             tab.textbox.ShowLineNumbers = AppSettings.ShowLineNumbers;
 
             tab.textbox.EnableSyntaxHighlighting = AppSettings.SyntaxHighlighting;
+            tab.textbox.ShowWhitespaceCharacters = AppSettings.ShowWhitespaceCharacters;
 
             if (setMargin)
                 tab.textbox.Margin = TabPageHelper.TabMargin;

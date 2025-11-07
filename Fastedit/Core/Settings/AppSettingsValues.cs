@@ -17,6 +17,7 @@ public static class AppSettingsValues
 
     public const string Settings_UseSpacesInsteadTabs = "UseSpacesInsteadTabs";
     public const string Settings_SpacesPerTab = "SpacesPerTab";
+    public const string Settings_ShowWhitespaceCharacters = "ShowWhitespaceCharacters";
 
     public const string Settings_HideTitlebar = "HideTitlebar";
     public const string Settings_ShowStatusbar = "ShowStatusbar";

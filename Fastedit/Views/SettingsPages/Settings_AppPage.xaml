@@ -71,7 +71,7 @@
                         <TextBlock x:Uid="Settings_App_EncodingText" FontSize="16" Text="Encoding" Grid.Row="4" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showEncodingItem" Tag="4" Grid.Row="4" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock x:Uid="Settings_App_LineEndingsText" FontSize="16" Text="Line Endings" Grid.Row="4" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_LineEndingsText" FontSize="16" Text="Line Endings" Grid.Row="5" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showLineEndings" Tag="5" Grid.Row="5" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
                     </Grid>
                 </Expander.Content>
