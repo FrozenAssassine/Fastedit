@@ -12,11 +12,6 @@
             <MenuFlyoutItem Text="Paste" Click="Paste_Click" Icon="Paste"/>
             <MenuFlyoutItem Text="Cut" Click="Cut_Click" Icon="Cut"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Open" Click="Open_Click" Icon="OpenFile">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="O" Modifiers="Control" IsEnabled="False"/>
-                </MenuFlyoutItem.KeyboardAccelerators>
-            </MenuFlyoutItem>
             <MenuFlyoutItem Text="Save" Click="Save_Click" Icon="Save">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>

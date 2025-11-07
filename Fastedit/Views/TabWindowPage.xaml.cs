@@ -96,20 +96,6 @@ public sealed partial class TabWindowPage : Page
     {
         await SaveFileHelper.Save(tab, this.window);
     }
-    private async void Open_Click(object sender, RoutedEventArgs e)
-    {
-        if (tab.DatabaseItem.IsModified && !await AskSaveDialog.Show(tab, this.XamlRoot))
-            return;
-
-        //only add the file to the recyclebin when it has some content and was modified
-        if (tab.DatabaseItem.IsModified && tab.textbox.CharacterCount() > 0)
-            RecycleBinManager.MoveFileToRecycleBin(tab);
-
-        if (await OpenFileHelper.OpenFileForTab(tab, this.window))
-        {
-            window.Title = tab.DatabaseItem.FileName;
-        }
-    }
 
     private async void Rename()
     {
@@ -135,9 +121,6 @@ public sealed partial class TabWindowPage : Page
                         SaveAs_Click(null, null);
                     else
                         Save_Click(null, null);
-                    break;
-                case Windows.System.VirtualKey.O:
-                    Open_Click(null, null);
                     break;
                 case Windows.System.VirtualKey.K:
                     CompactOverlay_Click(null, null);
