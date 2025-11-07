@@ -50,6 +50,7 @@ public class FileInfoDialog
         content.AppendLine("Lines: " + tab.textbox.NumberOfLines);
         content.AppendLine("Characters: " + tab.textbox.CharacterCount());
         content.AppendLine("Encoding: " + EncodingHelper.GetEncodingName(tab.Encoding));
+        content.AppendLine("Line Ending: " + tab.LineEnding.ToString());
 
         var dialog = new ContentDialog
         {
