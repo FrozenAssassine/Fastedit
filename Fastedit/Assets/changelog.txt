@@ -1,4 +1,14 @@
-﻿#Version 2.7.2 [10.09.2025]
+﻿#Version 2.8.0 [07.11.2025]
+	• Added line ending information in file info dialog
+	• Added mixed line ending warning dialog upon opening files
+	• Added option to enable/disable the visualization of whitespace characters with dots and arrows
+	• Added line ending information and switcher to the statusbar
+	• Fixed opening files in undocked tab disabled, since it caused issues
+	• Fixed issues with window placement, size and state saving across sessions
+	• Fixed a bug, where the datetime in the export settings filename was not correctly formatted.
+	• Updated to TextControlBox v1.4.0
+
+#Version 2.7.2 [10.09.2025]
 	• Added LUA support
 	• Updated to TextControlBox v1.3.0
 	• Updated to latest WinAppSDK 1.8.x

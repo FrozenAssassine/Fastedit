@@ -54,11 +54,12 @@ public class InfoMessages
             TabPageHelper.mainPage.ShowSettings("AboutPage");
         };
 
-        new InfoBar().Show($"Welcome to Fastedit {version}!",
-            $"• Added LUA support\n• Updated to TextControlBox v1.3.0\n• Updated to latest WinAppSDK 1.8.x",
-            btn, 
-            InfoBarSeverity.Success, 
+        new InfoBar().Show(
+            $"Welcome to Fastedit {version}!",
+            "• Added line ending info in file info dialog\n• Added mixed line ending warning on file open\n• Added option to toggle whitespace visualization (dots/arrows)\n• Added line ending info & switcher to statusbar\n• Fixed issues with undocked tab file opening\n• Fixed window placement, size & state saving\n• Fixed export filename datetime formatting\n• Updated to TextControlBox v1.4.0",
+            btn,
+            InfoBarSeverity.Success,
             25
-            );
+        );
     }
 }
