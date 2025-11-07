@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextControlBoxNS;
 
 namespace Fastedit.Core.Storage;
 
@@ -22,7 +23,7 @@ public class OpenFileHelper
             yield return line;
         }
     }
-    private static (IEnumerable<string> lines, bool mixedEndings) GetLinesAndDetectMixed(StreamReader reader)
+    private static (IEnumerable<string> lines, bool mixedEndings, LineEnding lineEnding) GetLinesAndDetectMixed(StreamReader reader)
     {
         var sb = new StringBuilder();
         var lines = new List<string>();
@@ -30,17 +31,15 @@ public class OpenFileHelper
         bool seenLF = false;
         bool seenCR = false;
 
-        int prevChar = -1;
         int c;
         while ((c = reader.Read()) != -1)
         {
             if (c == '\r')
             {
-                // Look ahead for possible \r\n
                 int next = reader.Peek();
                 if (next == '\n')
                 {
-                    reader.Read(); // consume \n
+                    reader.Read();
                     seenCRLF = true;
                 }
                 else
@@ -53,7 +52,6 @@ public class OpenFileHelper
             }
             else if (c == '\n')
             {
-                // Only LF
                 seenLF = true;
                 lines.Add(sb.ToString());
                 sb.Clear();
@@ -62,23 +60,28 @@ public class OpenFileHelper
             {
                 sb.Append((char)c);
             }
-
-            prevChar = c;
         }
 
-        // Handle last line if no newline at end
         if (sb.Length > 0)
             lines.Add(sb.ToString());
 
         bool mixed = (seenCRLF ? 1 : 0) + (seenLF ? 1 : 0) + (seenCR ? 1 : 0) > 1;
 
-        return (lines, mixed);
+        LineEnding ending = LineEnding.CRLF;
+        if (!mixed)
+        {
+            if (seenCRLF) ending = LineEnding.CRLF;
+            else if (seenLF) ending = LineEnding.LF;
+            else if (seenCR) ending = LineEnding.CR;
+        }
+
+        return (lines, mixed, ending);
     }
 
-    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings) ReadLinesFromFile(string path, Encoding encoding = null)
+    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding) ReadLinesFromFile(string path, Encoding encoding = null)
     {
         if (string.IsNullOrWhiteSpace(path))
-            return (null, null, false, false);
+            return (null, null, false, false, LineEnding.CRLF);
 
         try
         {
@@ -89,19 +92,19 @@ public class OpenFileHelper
 
                 encoding ??= reader.CurrentEncoding;
 
-                return (getLinesResult.lines.ToArray(), encoding, true, getLinesResult.mixedEndings);
+                return (getLinesResult.lines.ToArray(), encoding, true, getLinesResult.mixedEndings, getLinesResult.lineEnding);
             }
         }
         catch (UnauthorizedAccessException)
         {
             InfoMessages.NoAccessToReadFile();
-            return (null, null, false, false);
+            return (null, null, false, false, LineEnding.CRLF);
         }
         catch (Exception ex)
         {
             InfoMessages.UnhandledException(ex.Message);
         }
-        return (null, null, false, false);
+        return (null, null, false, false, LineEnding.CRLF);
     }
 
     public static async Task<(string text, Encoding encoding, bool succeeded)> ReadTextFromFileAsync(string path, Encoding encoding = null)
@@ -142,23 +145,27 @@ public class OpenFileHelper
         if (!res.succeeded)
             return false;
 
+        LineEnding lineEnding;
         if (res.mixedLineEndings)
         {
             var mixedDialogRes = await MixedLineEndingsWarningDialog.Show();
             if (mixedDialogRes.confirmed)
-                tab.LineEnding = mixedDialogRes.lineEnding;
+                lineEnding = mixedDialogRes.lineEnding;
             else
                 return false;
         }
+        else
+            lineEnding = res.lineEnding;
 
-        tab.DatabaseItem.FilePath = path;
+            tab.DatabaseItem.FilePath = path;
         tab.DatabaseItem.FileName = Path.GetFileName(path);
         tab.Encoding = res.encoding;
+        tab.LineEnding = lineEnding;
 
         tab.textbox.Loaded += (sender) =>
         {
             if (load)
-                tab.textbox.LoadLines(res.lines);
+                tab.textbox.LoadLines(res.lines, lineEnding);
 
             TabPageHelper.SelectHighlightLanguageByPath(tab);
             tab.textbox.GoToLine(0);

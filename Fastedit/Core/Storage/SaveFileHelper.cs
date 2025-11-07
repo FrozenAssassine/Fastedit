@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,7 +106,7 @@ public class SaveFileHelper
         if (tab.DatabaseItem.WasNeverSaved)
             return await SaveFileAs(tab, window);
 
-        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.textbox.LineEnding);
+        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
         if (result)
         {
             TabPageHelper.UpdateSaveStatus(tab, false);
@@ -134,7 +135,7 @@ public class SaveFileHelper
         StorageFile file = await savePicker.PickSaveFileAsync();
         if (file != null)
         {
-            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.textbox.LineEnding);
+            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
 
             tab.DatabaseItem.FilePath = file.Path;
             tab.DatabaseItem.FileName = file.Name;
