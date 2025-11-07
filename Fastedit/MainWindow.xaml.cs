@@ -16,12 +16,14 @@ namespace Fastedit
         public IntPtr WindowHandle;
         public readonly BackdropWindowManager backdropManager;
         public readonly RestoreWindowManager restoreWindowManager;
+        private readonly WindowStateManager windowStateManager;
 
         public MainWindow()
         {
             this.InitializeComponent();
             backdropManager = new BackdropWindowManager(this);
-            restoreWindowManager = new RestoreWindowManager(this);
+            windowStateManager = new WindowStateManager(this);
+            restoreWindowManager = new RestoreWindowManager(this, windowStateManager);
             restoreWindowManager.RestoreSettings();
 
             this.WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);

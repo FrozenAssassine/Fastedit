@@ -10,10 +10,12 @@ namespace Fastedit.Core;
 public class RestoreWindowManager
 {
     private Window window;
-    public RestoreWindowManager(Window window)
+    private WindowStateManager windowStateManager;
+
+    public RestoreWindowManager(Window window, WindowStateManager windowStateManager)
     {
         this.window = window;
-
+        this.windowStateManager = windowStateManager;
         window.AppWindow.Closing += AppWindow_Closing;
     }
 
@@ -36,22 +38,18 @@ public class RestoreWindowManager
 
         RectInt32 restoreBounds = new RectInt32(left, top, width, height);
 
-        //minimized windows have weird positions
-        if (left != -32000 && top != -32000)
-            window.AppWindow.MoveAndResize(restoreBounds);
-
-        window.AppWindow.Resize(new SizeInt32(width, height));
-
+        window.AppWindow.MoveAndResize(restoreBounds);
         WindowStateHelper.SetWindowState(window, AppSettings.WindowState);
     }
 
     private void SaveSettings()
     {
-        AppSettings.WindowWidth = window.AppWindow.Size.Width;
-        AppSettings.WindowHeight = window.AppWindow.Size.Height;
-        AppSettings.WindowLeft = window.AppWindow.Position.X;
-        AppSettings.WindowTop = window.AppWindow.Position.Y;
-        var state = WindowStateHelper.GetWindowState(window);
-        AppSettings.WindowState = state;
+         var windowPosSize = windowStateManager.GetWindowSizePosStateIndependent();
+
+        AppSettings.WindowWidth = windowPosSize.size.Width;
+        AppSettings.WindowHeight = windowPosSize.size.Height;
+        AppSettings.WindowLeft = windowPosSize.position.X;
+        AppSettings.WindowTop = windowPosSize.position.Y;
+        AppSettings.WindowState = windowPosSize.state;
     }
 }
