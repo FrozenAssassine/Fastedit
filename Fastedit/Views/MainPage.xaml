@@ -688,9 +688,9 @@
                 <models:QuickAccessWindowItem Command="Select All" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
                 <models:QuickAccessWindowItem Command="Reload Settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
                 <models:QuickAccessWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
-                <models:QuickAccessWindowSubItem Command="Spaces Instead Tabs">
+                <models:QuickAccessWindowSubItem Command="Tabs/Spaces">
                     <models:QuickAccessWindowSubItem.Items>
-                        <models:QuickAccessWindowItem Command="1" Tag="1" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                        <models:QuickAccessWindowItem Command="Tabs" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="4" Tag="4" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="8" Tag="8" RunCommandWindowItemClicked="TabSpaces_Click"/>
@@ -698,7 +698,6 @@
                         <models:QuickAccessWindowItem Command="16" Tag="16" RunCommandWindowItemClicked="TabSpaces_Click"/>
                     </models:QuickAccessWindowSubItem.Items>
                 </models:QuickAccessWindowSubItem>
-                <models:QuickAccessWindowItem Command="Tabs Instead Spaces" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
                 <models:QuickAccessWindowItem Command="Settings" Shortcut="F1" RunCommandWindowItemClicked="Settings_Click"/>
                 <models:QuickAccessWindowItem Command="Fullscreen" Shortcut="F11" RunCommandWindowItemClicked="Fullscreen_Click"/>
                 <models:QuickAccessWindowItem Command="Compact Overlay" Shortcut="Ctrl + K" RunCommandWindowItemClicked="CompactOverlayMode_Click"/>

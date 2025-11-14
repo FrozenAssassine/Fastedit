@@ -35,7 +35,13 @@ public static class TabPageHelper
         textbox.ZoomChanged += Textbox_ZoomChanged;
         textbox.SelectionChanged += Textbox_SelectionChanged;
         textbox.TabsSpacesChanged += Textbox_TabsSpacesChanged;
+        textbox.LinkClicked += Textbox_LinkClicked;
         return textbox;
+    }
+
+    private static async void Textbox_LinkClicked(string url)
+    {
+        await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
     }
 
     private static void Textbox_TabsSpacesChanged(TextControlBox sender, bool spacesInsteadTabs, int spaces)

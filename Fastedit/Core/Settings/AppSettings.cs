@@ -153,4 +153,10 @@ internal class AppSettings
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_ShowWhitespaceCharacters, DefaultValues.ShowWhitespaceCharacters);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_ShowWhitespaceCharacters, value);
     }
+
+    public static bool EnableClickableLinks
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_EnableClickableLinks, DefaultValues.EnableClickableLinks);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_EnableClickableLinks, value);
+    }
 }

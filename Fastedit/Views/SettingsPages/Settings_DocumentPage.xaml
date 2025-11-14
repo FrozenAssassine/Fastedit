@@ -53,7 +53,13 @@
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Tab Key"/>
+        <controls:SettingsControl x:Uid="Settings_Page_EnableClickableLinks" Header="Enable clickable links in the text">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="EnableClickableLinks" Toggled="EnableClickableLinks_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+            <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Tab Key"/>
         <controls:SettingsControl x:Uid="Settings_Page_Use_Spaces_Instead_Tabs_Control" Header="Use Spaces Instead of Tabs (\t)">
             <controls:SettingsControl.Content>
                 <ToggleSwitch x:Name="SpacesOrTabsSwitch" Toggled="SpacesOrTabsSwitch_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>

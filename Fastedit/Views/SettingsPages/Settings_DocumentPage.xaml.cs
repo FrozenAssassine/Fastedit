@@ -35,6 +35,7 @@ public sealed partial class Settings_DocumentPage : Page
         ShowLinehighlighterSwitch.IsOn = AppSettings.ShowLineHighlighter;
 
         ShowWhitespaceCharacters.IsOn = AppSettings.ShowWhitespaceCharacters;
+        EnableClickableLinks.IsOn = AppSettings.EnableClickableLinks;
     }
 
     private void SpacesOrTabsSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -73,5 +74,10 @@ public sealed partial class Settings_DocumentPage : Page
     private void ShowWhitespaceCharacters_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.ShowWhitespaceCharacters = ShowWhitespaceCharacters.IsOn;
+    }
+
+    private void EnableClickableLinks_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.EnableClickableLinks = EnableClickableLinks.IsOn;
     }
 }

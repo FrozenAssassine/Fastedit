@@ -65,6 +65,7 @@ namespace Fastedit.Core.Settings
 
             tab.textbox.EnableSyntaxHighlighting = AppSettings.SyntaxHighlighting;
             tab.textbox.ShowWhitespaceCharacters = AppSettings.ShowWhitespaceCharacters;
+            tab.textbox.HighlightLinks = AppSettings.EnableClickableLinks;
 
             if (setMargin)
                 tab.textbox.Margin = TabPageHelper.TabMargin;
