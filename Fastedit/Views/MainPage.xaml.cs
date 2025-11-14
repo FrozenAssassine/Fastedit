@@ -119,6 +119,7 @@ public sealed partial class MainPage : Page
 
         //load line ending items to menubar!
         LineEndingHelper.MakeAndAddLineEndingItems(LineEndingMenubarFlyout, LineEnding_Click);
+        LineEndingHelper.MakeAndAddLineEndingItems(RunCommandWindowItem_LineEndings, LineEnding_Click);
 
         if (!AppSettings.FirstStart)
         {
