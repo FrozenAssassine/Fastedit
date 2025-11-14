@@ -15,6 +15,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <controls:StatusbarItem Grid.Column="0" HorizontalAlignment="Left" StaticText="" x:Name="ItemFileName" StatusbarItemClick="ItemFileName_StatusbarItemClick"/>
@@ -50,6 +51,19 @@
         <controls:StatusbarItem Grid.Column="5" HorizontalAlignment="Left" StaticText="" x:Name="ItemLineEndings">
             <controls:StatusbarItem.CustomFlyout>
                 <MenuFlyout x:Name="LineEndingsFlyout">
+                </MenuFlyout>
+            </controls:StatusbarItem.CustomFlyout>
+        </controls:StatusbarItem>
+        <controls:StatusbarItem Grid.Column="6" HorizontalAlignment="Left" StaticText="" x:Name="ItemTabsSpaces">
+            <controls:StatusbarItem.CustomFlyout>
+                <MenuFlyout x:Name="TabsSpacesFlyout" Opened="TabsSpacesFlyout_Opened">
+                    <RadioMenuFlyoutItem Text="Use Tab (\t)" Click="TabSpaces_Click" Tag="-1"/>
+                    <MenuFlyoutSeparator/>
+                    <RadioMenuFlyoutItem Text="2 Spaces" Click="TabSpaces_Click" Tag="2"/>
+                    <RadioMenuFlyoutItem Text="4 Spaces" Click="TabSpaces_Click" Tag="4"/>
+                    <RadioMenuFlyoutItem Text="8 Spaces" Click="TabSpaces_Click" Tag="8"/>
+                    <RadioMenuFlyoutItem Text="12 Spaces" Click="TabSpaces_Click" Tag="12"/>
+                    <RadioMenuFlyoutItem Text="16 Spaces" Click="TabSpaces_Click" Tag="16"/>
                 </MenuFlyout>
             </controls:StatusbarItem.CustomFlyout>
         </controls:StatusbarItem>

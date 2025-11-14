@@ -95,7 +95,7 @@ namespace Fastedit.Core.Settings
 
             //Load tabs or spaces
             object tag = AppSettings.UseSpacesInsteadTabs ? AppSettings.SpacesPerTab : "-1";
-            TabPageHelper.TabsOrSpaces(tabView, tag);
+            TabPageHelper.TabsOrSpacesForAll(tabView, tag);
         }
         public static void SetSettingsToStatusbar(TextStatusBar statusbar, FasteditDesign design)
         {

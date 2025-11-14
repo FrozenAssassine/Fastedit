@@ -6,8 +6,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace Fastedit.Controls;
 
@@ -42,6 +40,7 @@ public sealed partial class TextStatusBar : UserControl
             { "FileName", ItemFileName },
             { "WordChar", ItemWordCharacter },
             { "LineEndings", ItemLineEndings },
+            { "TabsSpaces", ItemTabsSpaces },
         };
     }
 
@@ -168,6 +167,25 @@ public sealed partial class TextStatusBar : UserControl
         ItemLineEndings.ChangingText = tabPage.LineEnding.ToString();
     }
 
+    public void UpdateTabsSpaces()
+    {
+        if (!IsVisible)
+            return;
+
+        if (tabPage == null)
+        {
+            ItemTabsSpaces.ChangingText = "-";
+            return;
+        }
+
+        string content;
+        if (tabPage.textbox.UseSpacesInsteadTabs)
+            content = $"Spaces: {tabPage.textbox.NumberOfSpacesForTab}";
+        else
+            content = $"Tabs";
+        ItemTabsSpaces.ChangingText = content;
+    }
+
     public void UpdateAll()
     {
         UpdateSelectionChanged();
@@ -176,6 +194,7 @@ public sealed partial class TextStatusBar : UserControl
         UpdateFile();
         UpdateText();
         UpdateLineEndings();
+        UpdateTabsSpaces();
     }
     private void ZoomSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
     {
@@ -261,6 +280,33 @@ public sealed partial class TextStatusBar : UserControl
             this.tabPage.textbox.GoToLine((int)GoToLineNumberBox.Value - 1);
 
             ItemLineColumn.HideFlyout();
+        }
+    }
+
+    private void TabSpaces_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.tabPage == null)
+            return;
+
+        int tabs = ConvertHelper.ToInt((sender as RadioMenuFlyoutItem).Tag, -1);
+        tabPage.SetTabsSpaces(tabs);
+    }
+
+    private void TabsSpacesFlyout_Opened(object sender, object e)
+    {
+        string tag = (tabPage.textbox.UseSpacesInsteadTabs ? tabPage.textbox.NumberOfSpacesForTab : -1).ToString();
+
+        foreach (MenuFlyoutItemBase item in TabsSpacesFlyout.Items)
+        {
+            if (item is RadioMenuFlyoutItem radioItem)
+            {
+                if (radioItem.Tag.Equals(tag))
+                {
+                    radioItem.IsChecked = true;
+                    continue;
+                }
+                radioItem.IsChecked = false;
+            }
         }
     }
 }

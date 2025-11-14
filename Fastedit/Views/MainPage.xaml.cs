@@ -122,7 +122,26 @@ public sealed partial class MainPage : Page
             InfoMessages.WelcomeMessage();
         }
     }
+    public void HighlightTabsSpacesMenubarItem()
+    {
+        if (currentlySelectedTabPage == null)
+            return;
 
+        string tag = (currentlySelectedTabPage.textbox.UseSpacesInsteadTabs ? currentlySelectedTabPage.textbox.NumberOfSpacesForTab : -1).ToString();
+
+        foreach (MenuFlyoutItemBase item in TabsSpacesMenubarFlyout.Items)
+        {
+            if (item is RadioMenuFlyoutItem radioItem)
+            {
+                if (radioItem.Tag.Equals(tag))
+                {
+                    radioItem.IsChecked = true;
+                    continue;
+                }
+                radioItem.IsChecked = false;
+            }
+        }
+    }
     private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
     {
         if (DesignWindowHelper.IsWindowOpen())
@@ -313,6 +332,8 @@ public sealed partial class MainPage : Page
             
             TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
+            this.HighlightTabsSpacesMenubarItem();
+
             //set the focus to the textbox:
             tab.textbox.Focus(FocusState.Programmatic);
             searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
@@ -484,13 +505,15 @@ public sealed partial class MainPage : Page
         if (currentlySelectedTabPage == null)
             return;
 
-        if (sender is MenuFlyoutItem item)
+        if (sender is RadioMenuFlyoutItem item)
         {
-            TabPageHelper.TabsOrSpaces(tabControl, item.Tag);
+            //only set this per current document
+            currentlySelectedTabPage.SetTabsSpaces((int)item.Tag);
         }
         else if (sender is QuickAccessWindowItem runitem)
         {
-            TabPageHelper.TabsOrSpaces(tabControl, runitem.Tag);
+            //only set this per current document
+            currentlySelectedTabPage.SetTabsSpaces((int)runitem.Tag);
         }
     }
     private void Fullscreen_Click(object sender, RoutedEventArgs e)

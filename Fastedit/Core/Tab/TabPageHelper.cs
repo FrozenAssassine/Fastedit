@@ -34,7 +34,13 @@ public static class TabPageHelper
         textbox.TextChanged += Textbox_TextChanged;
         textbox.ZoomChanged += Textbox_ZoomChanged;
         textbox.SelectionChanged += Textbox_SelectionChanged;
+        textbox.TabsSpacesChanged += Textbox_TabsSpacesChanged;
         return textbox;
+    }
+
+    private static void Textbox_TabsSpacesChanged(TextControlBox sender, bool spacesInsteadTabs, int spaces)
+    {
+        mainPage.TextStatusBar.UpdateTabsSpaces();
     }
 
     //textbox events:
@@ -270,7 +276,7 @@ public static class TabPageHelper
         return !tabView.TabItems.Contains(tab);
     }
 
-    public static void TabsOrSpaces(TabView tabView, object tag)
+    public static void TabsOrSpacesForAll(TabView tabView, object tag)
     {
         if (tag == null)
             return;
@@ -279,13 +285,7 @@ public static class TabPageHelper
         for (int i = 0; i < tabView.TabItems.Count; i++)
         {
             if (tabView.TabItems[i] is TabPageItem tab)
-            {
-                tab.textbox.UseSpacesInsteadTabs = number != -1;
-                if (number != -1)
-                {
-                    tab.textbox.NumberOfSpacesForTab = number;
-                }
-            }
+                tab.SetTabsSpaces(number);
         }
 
         AppSettings.SpacesPerTab = number;

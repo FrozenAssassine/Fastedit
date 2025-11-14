@@ -12,11 +12,9 @@ namespace Fastedit.Core.Tab;
 
 public class TabPageItem : TabViewItem
 {
-    public delegate void TabPageHeaderChangedEvent(string header);
-    public event TabPageHeaderChangedEvent TabPageHeaderChanged;
-
     public TextControlBox textbox { get; private set; }
     private TabView tabView;
+    private MainPage mainPage;
     
     public TabPageItem(TabView tabView, TabItemDatabaseItem databaseItem = null)
     {
@@ -124,7 +122,6 @@ public class TabPageItem : TabViewItem
 
         UpdateTabIcon();
 
-        TabPageHeaderChanged?.Invoke(header);
         DatabaseItem.FileName = header;
     }
     //Ensure the save status of the file to be displayed in the header
@@ -172,5 +169,13 @@ public class TabPageItem : TabViewItem
         {
             textbox.LineEnding = _DataBaseItem.LineEnding = value;
         }
+    }
+
+    public void SetTabsSpaces(int spaces = -1)
+    {
+        //-1 = use tabs positive values => spaces
+        this.textbox.UseSpacesInsteadTabs = spaces != -1;
+        if(spaces > 0)
+            this.textbox.NumberOfSpacesForTab = spaces;
     }
 }

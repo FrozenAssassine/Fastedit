@@ -35,18 +35,18 @@ public sealed partial class Settings_AppPage : Page
             { showEncodingItem, "Encoding" },
             { showFileItem, "FileName" },
             { showWordChars, "WordChar" },
-            { showLineEndings, "LineEndings" }
-
+            { showLineEndings, "LineEndings" },
+            { showTabsSpaces, "TabsSpaces"}
         };
-
         StatusbarStrings = new Dictionary<string, ToggleSwitch>
-       {
-            {"Zoom", showZoomItem},
-            {"LineColumn",showLineColumnItem},
-            {"Encoding", showEncodingItem},
-            {"FileName", showFileItem},
-            {"WordChar", showWordChars },
-            {"LineEndings", showLineEndings }
+        {
+            { "Zoom", showZoomItem},
+            { "LineColumn",showLineColumnItem},
+            { "Encoding", showEncodingItem},
+            { "FileName", showFileItem},
+            { "WordChar", showWordChars },
+            { "LineEndings", showLineEndings },
+            { "TabsSpaces", showTabsSpaces }
         };
 
         //turn them all on (fallback)
