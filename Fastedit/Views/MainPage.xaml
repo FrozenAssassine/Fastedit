@@ -609,6 +609,7 @@
                                 <RadioMenuFlyoutItem Text="16 Spaces" Click="TabSpaces_Click" Tag="16"/>
                             </MenuFlyoutSubItem.Items>
                         </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="Line Ending" x:Name="LineEndingMenubarFlyout"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Quick Access" Click="ShowRunCommandWindow_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>

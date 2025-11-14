@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using TextControlBoxNS;
 
 namespace Fastedit.Controls;
 
@@ -46,13 +47,7 @@ public sealed partial class TextStatusBar : UserControl
 
     private void LoadLineEndings()
     {
-        int lineEndingIndex = 0;
-        foreach (var lineEnding in Enum.GetValues(typeof(TextControlBoxNS.LineEnding)))
-        {
-            var item = new MenuFlyoutItem { Text = lineEnding.ToString(), Tag = lineEndingIndex++ };
-            item.Click += ChangeLineEnding_Click;
-            LineEndingsFlyout.Items.Add(item);
-        }
+        LineEndingHelper.MakeAndAddLineEndingItems(LineEndingsFlyout, ChangeLineEnding_Click);
     }
 
     private void LoadEncodings()
@@ -204,13 +199,13 @@ public sealed partial class TextStatusBar : UserControl
         tabPage.textbox.ZoomFactor = (int)zoomSlider.Value;
     }
 
-    private void ChangeLineEnding_Click(object sender, RoutedEventArgs e)
+    private void ChangeLineEnding_Click(LineEnding lineEnding)
     {
         if (tabPage == null)
             return;
 
         tabPage.DatabaseItem.IsModified = true;
-        tabPage.LineEnding = (TextControlBoxNS.LineEnding)(int)(sender as MenuFlyoutItem).Tag;
+        tabPage.LineEnding = lineEnding;
         UpdateLineEndings();
     }
 

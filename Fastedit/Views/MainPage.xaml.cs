@@ -75,6 +75,7 @@ public sealed partial class MainPage : Page
             VersionHelper.CheckNewVersion();
 
             progressBar.IsActive = false;
+
         }
     }
 
@@ -115,6 +116,9 @@ public sealed partial class MainPage : Page
 
         //Create additinal controls:
         CreateMenubarFromLanguage();
+
+        //load line ending items to menubar!
+        LineEndingHelper.MakeAndAddLineEndingItems(LineEndingMenubarFlyout, LineEnding_Click);
 
         if (!AppSettings.FirstStart)
         {
@@ -508,12 +512,12 @@ public sealed partial class MainPage : Page
         if (sender is RadioMenuFlyoutItem item)
         {
             //only set this per current document
-            currentlySelectedTabPage.SetTabsSpaces((int)item.Tag);
+            currentlySelectedTabPage.SetTabsSpaces(ConvertHelper.ToInt(item.Tag, -1));
         }
         else if (sender is QuickAccessWindowItem runitem)
         {
             //only set this per current document
-            currentlySelectedTabPage.SetTabsSpaces((int)runitem.Tag);
+            currentlySelectedTabPage.SetTabsSpaces(ConvertHelper.ToInt(runitem.Tag, -1));
         }
     }
     private void Fullscreen_Click(object sender, RoutedEventArgs e)
@@ -651,5 +655,14 @@ public sealed partial class MainPage : Page
     {
         await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.paypal.com/donate/?hosted_button_id=Q7YWPMBV6YNCQ"));
 
+    }
+
+    private void LineEnding_Click(LineEnding lineEnding)
+    {
+        if (currentlySelectedTabPage != null && currentlySelectedTabPage.textbox != null)
+        {
+            currentlySelectedTabPage.LineEnding = lineEnding;
+            this.textStatusBar.UpdateLineEndings();
+        }
     }
 }

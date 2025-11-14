@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
 using TextControlBoxNS;
 
 namespace Fastedit.Helper;
@@ -16,4 +18,34 @@ internal class LineEndingHelper
         };
     }
 
+    public static LineEnding[] GetLineEndings()
+    {
+        return (LineEnding[])Enum.GetValues(typeof(LineEnding));
+    }
+
+    private static IEnumerable<MenuFlyoutItem> MakeItems(Action<LineEnding> lineEndingSelected)
+    {
+        foreach (var lineEnding in GetLineEndings())
+        {
+            var item = new MenuFlyoutItem { Text = lineEnding.ToString() };
+            item.Click += (sender, e) =>
+            {
+                lineEndingSelected?.Invoke(lineEnding);
+            };
+
+            yield return item;
+        }
+    }
+
+    public static void MakeAndAddLineEndingItems(MenuFlyout menuFlyout, Action<LineEnding> lineEndingSelected)
+    {
+        foreach (var item in MakeItems(lineEndingSelected))
+            menuFlyout.Items.Add(item);
+    }
+
+    public static void MakeAndAddLineEndingItems(MenuFlyoutSubItem subItem, Action<LineEnding> lineEndingSelected)
+    {
+        foreach (var item in MakeItems(lineEndingSelected))
+            subItem.Items.Add(item);
+    }
 }
