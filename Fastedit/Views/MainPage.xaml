@@ -570,32 +570,41 @@
                 </MenuBarItem>
             <MenuBarItem Title="Document">
                     <MenuBarItem.Items>
-                        <MenuFlyoutItem Text="Close" Click="CloseTab_Click">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="T" Modifiers="Control" IsEnabled="False"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="File Info" Click="FileInfo_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="I" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Rename" Click="RenameFile_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="F2"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutSubItem Text="Line Ending" x:Name="LineEndingMenubarFlyout"/>
                         <MenuFlyoutItem Text="Encoding" Click="ChangeEncoding_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="E" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Close" Click="CloseTab_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="W" Modifiers="Control" IsEnabled="False"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Close All" Click="CloseAll_Click"/>
+                        <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Undock Tab" Click="UndockTab_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Close All" Click="CloseAll_Click"/>
+                        <ToggleMenuFlyoutItem Text="Visualize Whitespace Characters" Click="VisualizeWhitespaceCharacters_Click" x:Name="VisualizeWhitespaceCharacters_MenuFlyoutItem"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
-            <MenuBarItem Title="Advanced">
+                <MenuBarItem Title="Advanced">
                     <MenuBarItem.Items>
                         <MenuFlyoutSubItem Text="Syntax Highlighting" x:Name="CodeLanguageSelector"/>
                         <MenuFlyoutSubItem Text="Tabs / Spaces" x:Name="TabsSpacesMenubarFlyout">
@@ -609,21 +618,16 @@
                                 <RadioMenuFlyoutItem Text="16 Spaces" Click="TabSpaces_Click" Tag="16"/>
                             </MenuFlyoutSubItem.Items>
                         </MenuFlyoutSubItem>
-                        <MenuFlyoutSubItem Text="Line Ending" x:Name="LineEndingMenubarFlyout"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Surround With" Click="SurroundWith_Click">
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Q" Modifiers="Control"/>
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Quick Access" Click="ShowRunCommandWindow_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="B" Modifiers="Control" IsEnabled="False"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Rename" Click="RenameFile_Click">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="F2"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Surround With" Click="SurroundWith_Click">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="Q" Modifiers="Control"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                     </MenuBarItem.Items>

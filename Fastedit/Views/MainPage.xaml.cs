@@ -343,6 +343,8 @@ public sealed partial class MainPage : Page
             tab.textbox.Focus(FocusState.Programmatic);
             searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
 
+            VisualizeWhitespaceCharacters_MenuFlyoutItem.IsChecked = tab.GetEffectiveWhitespaceSetting();
+
             textStatusBar.UpdateAll();
         }
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
@@ -665,5 +667,18 @@ public sealed partial class MainPage : Page
             currentlySelectedTabPage.LineEnding = lineEnding;
             this.textStatusBar.UpdateLineEndings();
         }
+    }
+
+    private void VisualizeWhitespaceCharacters_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        //reset when the same as in the settings
+        bool clickedValue = VisualizeWhitespaceCharacters_MenuFlyoutItem.IsChecked;
+        if (clickedValue == AppSettings.ShowWhitespaceCharacters)
+            currentlySelectedTabPage.ShowWhitespaceCharacters = null;
+        else
+            currentlySelectedTabPage.ShowWhitespaceCharacters = clickedValue;
     }
 }

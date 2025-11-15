@@ -171,6 +171,19 @@ public class TabPageItem : TabViewItem
         }
     }
 
+    public bool? ShowWhitespaceCharacters
+    {
+        get => _DataBaseItem.WhitespaceCharacters;
+        set
+        {
+            _DataBaseItem.WhitespaceCharacters = value;
+            textbox.ShowWhitespaceCharacters = GetEffectiveWhitespaceSetting();
+        }
+    }
+
+    public bool GetEffectiveWhitespaceSetting()
+        => ShowWhitespaceCharacters ?? AppSettings.ShowWhitespaceCharacters;
+
     public void SetTabsSpaces(int spaces = -1)
     {
         //-1 = use tabs positive values => spaces

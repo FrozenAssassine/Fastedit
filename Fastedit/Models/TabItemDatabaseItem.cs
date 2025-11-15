@@ -17,6 +17,8 @@ namespace Fastedit.Models
         public int CharacterPos { get; set; }
         public int LinePos { get; set; }
         public LineEnding LineEnding { get; set; }
+        public bool? WhitespaceCharacters { get; set; } = null;
+
         [JsonIgnore]
         public bool WasNeverSaved => this.FilePath.Length == 0;
     }
