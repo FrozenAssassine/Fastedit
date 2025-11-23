@@ -15,14 +15,6 @@ namespace Fastedit.Core.Storage;
 
 public class OpenFileHelper
 {
-    private static IEnumerable<string> GetLines(StreamReader reader)
-    {
-        string line;
-        while ((line = reader.ReadLine()) != null)
-        {
-            yield return line;
-        }
-    }
     private static (IEnumerable<string> lines, bool mixedEndings, LineEnding lineEnding) GetLinesAndDetectMixed(StreamReader reader)
     {
         var sb = new StringBuilder();
@@ -107,35 +99,6 @@ public class OpenFileHelper
         return (null, null, false, false, LineEnding.CRLF);
     }
 
-    public static async Task<(string text, Encoding encoding, bool succeeded)> ReadTextFromFileAsync(string path, Encoding encoding = null)
-    {
-        if (string.IsNullOrWhiteSpace(path))
-            return ("", Encoding.Default, false);
-
-        try
-        {
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, useAsync: true))
-            using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
-            {
-                string text = await reader.ReadToEndAsync();
-
-                encoding ??= reader.CurrentEncoding;
-
-                return (text, encoding, true);
-            }
-        }
-        catch (UnauthorizedAccessException)
-        {
-            InfoMessages.NoAccessToReadFile();
-        }
-        catch (Exception ex)
-        {
-            InfoMessages.UnhandledException(ex.Message);
-        }
-
-        return ("", Encoding.Default, false);
-    }
-
     private static async Task<bool> DoOpenTab(TabPageItem tab, string path, bool load = true)
     {
         if (path == null)
@@ -157,7 +120,7 @@ public class OpenFileHelper
         else
             lineEnding = res.lineEnding;
 
-            tab.DatabaseItem.FilePath = path;
+        tab.DatabaseItem.FilePath = path;
         tab.DatabaseItem.FileName = Path.GetFileName(path);
         tab.Encoding = res.encoding;
         tab.LineEnding = lineEnding;
@@ -165,7 +128,9 @@ public class OpenFileHelper
         tab.textbox.Loaded += (sender) =>
         {
             if (load)
-                tab.textbox.LoadLines(res.lines, lineEnding);
+            {
+                tab.LoadLines(res.lines, true, lineEnding);
+            }
 
             TabPageHelper.SelectHighlightLanguageByPath(tab);
             tab.textbox.GoToLine(0);
@@ -230,7 +195,7 @@ public class OpenFileHelper
         if (res.succeeded)
         {
             tab.Encoding = res.encoding;
-            tab.textbox.LoadLines(res.lines);
+            tab.LoadLines(res.lines);
             return true;
         }
         return false;

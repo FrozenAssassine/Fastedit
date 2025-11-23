@@ -13,6 +13,7 @@ using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Fastedit;
 
@@ -71,11 +72,15 @@ public sealed partial class MainPage : Page
             }
             SettingsUpdater.UpdateTabs(tabControl);
 
+            if (currentlySelectedTabPage != null)
+            {
+                SelectTabSpacesMenubarItem();
+                SelectLineEndingMenubarItem();
+            }
+
             //Show new-version info
             VersionHelper.CheckNewVersion();
-
             progressBar.IsActive = false;
-
         }
     }
 
@@ -127,26 +132,16 @@ public sealed partial class MainPage : Page
             InfoMessages.WelcomeMessage();
         }
     }
-    public void HighlightTabsSpacesMenubarItem()
+
+    public void SelectTabSpacesMenubarItem()
     {
-        if (currentlySelectedTabPage == null)
-            return;
-
-        string tag = (currentlySelectedTabPage.textbox.UseSpacesInsteadTabs ? currentlySelectedTabPage.textbox.NumberOfSpacesForTab : -1).ToString();
-
-        foreach (MenuFlyoutItemBase item in TabsSpacesMenubarFlyout.Items)
-        {
-            if (item is RadioMenuFlyoutItem radioItem)
-            {
-                if (radioItem.Tag.Equals(tag))
-                {
-                    radioItem.IsChecked = true;
-                    continue;
-                }
-                radioItem.IsChecked = false;
-            }
-        }
+        TabsSpacesHelper.SelectToggleMenuItemsFromMenu(TabKeyBehaviourFlyout, currentlySelectedTabPage);
     }
+    public void SelectLineEndingMenubarItem()
+    {
+        LineEndingHelper.SelectItems(LineEndingMenubarFlyout.Items, currentlySelectedTabPage);
+    }
+
     private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
     {
         if (DesignWindowHelper.IsWindowOpen())
@@ -179,7 +174,6 @@ public sealed partial class MainPage : Page
         {
             return; // Tab was reordered inside the tab control, no need to open a new window
         }
-
 
         await TabWindowHelper.ShowInNewWindow(tabControl, args.Tab as TabPageItem);
     }
@@ -337,7 +331,8 @@ public sealed partial class MainPage : Page
             
             TabPageHelper.LoadUnloadedTab(tab, progressWindow);
 
-            this.HighlightTabsSpacesMenubarItem();
+            SelectTabSpacesMenubarItem();
+            SelectLineEndingMenubarItem();
 
             //set the focus to the textbox:
             tab.textbox.Focus(FocusState.Programmatic);
@@ -512,7 +507,7 @@ public sealed partial class MainPage : Page
         if (currentlySelectedTabPage == null)
             return;
 
-        if (sender is RadioMenuFlyoutItem item)
+        if (sender is ToggleMenuFlyoutItem item)
         {
             //only set this per current document
             currentlySelectedTabPage.SetTabsSpaces(ConvertHelper.ToInt(item.Tag, -1));
@@ -665,7 +660,6 @@ public sealed partial class MainPage : Page
         if (currentlySelectedTabPage != null && currentlySelectedTabPage.textbox != null)
         {
             currentlySelectedTabPage.LineEnding = lineEnding;
-            this.textStatusBar.UpdateLineEndings();
         }
     }
 
@@ -680,5 +674,25 @@ public sealed partial class MainPage : Page
             currentlySelectedTabPage.ShowWhitespaceCharacters = null;
         else
             currentlySelectedTabPage.ShowWhitespaceCharacters = clickedValue;
+    }
+
+    private void ReformatTabsInDocument_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        if (sender is MenuFlyoutItem item)
+            currentlySelectedTabPage.RewriteTabsSpaces(ConvertHelper.ToInt(item.Tag, -1));
+        if (sender is QuickAccessWindowItem qawi)
+            currentlySelectedTabPage.RewriteTabsSpaces(ConvertHelper.ToInt(qawi.Tag, -1));
+    }
+
+    private void AutodetectTabsSpaces_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        (bool useSpacesInstead, int tabs) = currentlySelectedTabPage.textbox.DetectTabsSpaces();
+        currentlySelectedTabPage.SetTabsSpaces(useSpacesInstead ? tabs : -1);
     }
 }

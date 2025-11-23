@@ -24,7 +24,7 @@ namespace Fastedit.Core.Settings
         public static bool SyntaxHighlighting = true;
         public static bool ShowMenubar = true;
         public static bool ShowStatusbar = true;
-        public static int NumberOfSpacesPerTab = 4;
+        public static int DefaultTabsSpaces = 4; //-1 for tabs, > 0 for spaces
         public static string DefaultDesignName = "Simple_Dark.json";
         public static Color wrongInputColor = Color.FromArgb(255, 255, 0, 0);
         public static Color correctInputColor = Color.FromArgb(255, 0, 255, 0);

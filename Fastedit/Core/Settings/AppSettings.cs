@@ -64,16 +64,11 @@ internal class AppSettings
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_NewTabExtension, value);
     }
 
-    public static bool UseSpacesInsteadTabs
+    public static int TabsSpacesMode
     {
-        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_UseSpacesInsteadTabs, DefaultValues.UseSpacesInsteadTabs);
-        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_UseSpacesInsteadTabs, value);
-    }
-
-    public static int SpacesPerTab
-    {
-        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_SpacesPerTab, DefaultValues.NumberOfSpacesPerTab);
-        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_SpacesPerTab, value);
+        //-1 for tab, >0 for spaces
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_TabsSpacesMode, DefaultValues.DefaultTabsSpaces);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_TabsSpacesMode, value);
     }
 
     public static bool ShowStatusbar

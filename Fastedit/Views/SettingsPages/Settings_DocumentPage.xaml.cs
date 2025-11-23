@@ -3,8 +3,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Fastedit.Core.Settings;
+using Fastedit.Helper;
 
 
 namespace Fastedit.Views.SettingsPages;
@@ -23,9 +23,11 @@ public sealed partial class Settings_DocumentPage : Page
     {
         this.InitializeComponent();
 
-        var value = AppSettings.SpacesPerTab;
-        SpacesPerTabSlider.Value = value == -1 ? DefaultValues.NumberOfSpacesPerTab : value;
-        SpacesOrTabsSwitch.IsOn = AppSettings.UseSpacesInsteadTabs;
+        int tabsSpaces = AppSettings.TabsSpacesMode;
+        TabsSpacesSelectorCombobox.SelectedItem = 
+            TabsSpacesSelectorCombobox.Items.First(
+                item => ConvertHelper.ToInt((item as ComboBoxItem).Tag.ToString(), DefaultValues.DefaultTabsSpaces) == tabsSpaces
+                );
 
         FontFamilyCombobox.SelectedItem = AppSettings.FontFamily;
         FontSizeNumberBox.Value = AppSettings.FontSize;
@@ -38,14 +40,6 @@ public sealed partial class Settings_DocumentPage : Page
         EnableClickableLinks.IsOn = AppSettings.EnableClickableLinks;
     }
 
-    private void SpacesOrTabsSwitch_Toggled(object sender, RoutedEventArgs e)
-    {
-        AppSettings.UseSpacesInsteadTabs = SpacesOrTabsSwitch.IsOn;
-    }
-    private void SpacesPerTabSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-    {
-        AppSettings.SpacesPerTab = (int)SpacesPerTabSlider.Value;
-    }
 
     private void FontFamilyCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -79,5 +73,10 @@ public sealed partial class Settings_DocumentPage : Page
     private void EnableClickableLinks_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.EnableClickableLinks = EnableClickableLinks.IsOn;
+    }
+
+    private void TabsSpacesSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        AppSettings.TabsSpacesMode = ConvertHelper.ToInt((TabsSpacesSelectorCombobox.SelectedItem as ComboBoxItem).Tag, DefaultValues.DefaultTabsSpaces);
     }
 }

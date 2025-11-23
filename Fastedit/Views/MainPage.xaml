@@ -607,15 +607,25 @@
                 <MenuBarItem Title="Advanced">
                     <MenuBarItem.Items>
                         <MenuFlyoutSubItem Text="Syntax Highlighting" x:Name="CodeLanguageSelector"/>
-                        <MenuFlyoutSubItem Text="Tabs / Spaces" x:Name="TabsSpacesMenubarFlyout">
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutSubItem Text="Tab Behaviour (Tabs/Spaces)" x:Name="TabKeyBehaviourFlyout">
                             <MenuFlyoutSubItem.Items>
-                                <MenuFlyoutItem Text="Use Tab (\t)" Click="TabSpaces_Click" Tag="-1"/>
+                                <MenuFlyoutItem Text="Auto Detect" Click="AutodetectTabsSpaces_Click"/>
                                 <MenuFlyoutSeparator/>
-                                <RadioMenuFlyoutItem Text="2 Spaces" Click="TabSpaces_Click" Tag="2"/>
-                                <RadioMenuFlyoutItem Text="4 Spaces" Click="TabSpaces_Click" Tag="4"/>
-                                <RadioMenuFlyoutItem Text="8 Spaces" Click="TabSpaces_Click" Tag="8"/>
-                                <RadioMenuFlyoutItem Text="12 Spaces" Click="TabSpaces_Click" Tag="12"/>
-                                <RadioMenuFlyoutItem Text="16 Spaces" Click="TabSpaces_Click" Tag="16"/>
+                                <ToggleMenuFlyoutItem Text="Use Tab (\t)" Click="TabSpaces_Click" Tag="-1"/>
+                                <MenuFlyoutSeparator/>
+                                <ToggleMenuFlyoutItem Text="2 Spaces" Click="TabSpaces_Click" Tag="2" />
+                                <ToggleMenuFlyoutItem Text="4 Spaces" Click="TabSpaces_Click" Tag="4"/>
+                                <ToggleMenuFlyoutItem Text="8 Spaces" Click="TabSpaces_Click" Tag="8"/>
+                            </MenuFlyoutSubItem.Items>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="Reformat Tabs/Spaces">
+                            <MenuFlyoutSubItem.Items>
+                                <MenuFlyoutItem Text="Use Tab (\t)" Click="ReformatTabsInDocument_Click" Tag="-1"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Text="2 Spaces" Click="ReformatTabsInDocument_Click" Tag="2"/>
+                                <MenuFlyoutItem Text="4 Spaces" Click="ReformatTabsInDocument_Click" Tag="4"/>
+                                <MenuFlyoutItem Text="8 Spaces" Click="ReformatTabsInDocument_Click" Tag="8"/>
                             </MenuFlyoutSubItem.Items>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
@@ -692,14 +702,20 @@
                 <models:QuickAccessWindowItem Command="Select All" Shortcut="Ctrl + A" RunCommandWindowItemClicked="SelectAll_Click"/>
                 <models:QuickAccessWindowItem Command="Reload Settings" Shortcut="Ctrl + Shift + R" RunCommandWindowItemClicked="ReloadSettings_Click"/>
                 <models:QuickAccessWindowItem Command="Rename" Shortcut="F2" RunCommandWindowItemClicked="RenameFile_Click"/>
-                <models:QuickAccessWindowSubItem Command="Tabs/Spaces">
+                <models:QuickAccessWindowSubItem Command="Tab Key Behaviour (Tabs/Spaces)">
                     <models:QuickAccessWindowSubItem.Items>
                         <models:QuickAccessWindowItem Command="Tabs" Tag="-1" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="4" Tag="4" RunCommandWindowItemClicked="TabSpaces_Click"/>
                         <models:QuickAccessWindowItem Command="8" Tag="8" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <models:QuickAccessWindowItem Command="12" Tag="12" RunCommandWindowItemClicked="TabSpaces_Click"/>
-                        <models:QuickAccessWindowItem Command="16" Tag="16" RunCommandWindowItemClicked="TabSpaces_Click"/>
+                    </models:QuickAccessWindowSubItem.Items>
+                </models:QuickAccessWindowSubItem>
+                <models:QuickAccessWindowSubItem Command="Reformat Tabs/Spaces">
+                    <models:QuickAccessWindowSubItem.Items>
+                        <models:QuickAccessWindowItem Command="Tabs" Tag="-1" RunCommandWindowItemClicked="ReformatTabsInDocument_Click"/>
+                        <models:QuickAccessWindowItem Command="2" Tag="2" RunCommandWindowItemClicked="ReformatTabsInDocument_Click"/>
+                        <models:QuickAccessWindowItem Command="4" Tag="4" RunCommandWindowItemClicked="ReformatTabsInDocument_Click"/>
+                        <models:QuickAccessWindowItem Command="8" Tag="8" RunCommandWindowItemClicked="ReformatTabsInDocument_Click"/>
                     </models:QuickAccessWindowSubItem.Items>
                 </models:QuickAccessWindowSubItem>
                 <models:QuickAccessWindowSubItem Command="Line Ending" x:Name="RunCommandWindowItem_LineEndings"/>
