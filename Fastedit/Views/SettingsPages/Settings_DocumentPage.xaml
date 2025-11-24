@@ -59,7 +59,7 @@
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Tab/Spaces"/>
+        <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Default Document Settings"/>
         <controls:SettingsControl x:Uid="Settings_Page_Number_Of_Spaces_Per_Tab_Control" Header="Default Tab behaviour for new documents">
             <controls:SettingsControl.Content>
                 <ComboBox Width="200" x:Name="TabsSpacesSelectorCombobox" SelectionChanged="TabsSpacesSelectorCombobox_SelectionChanged">
@@ -67,6 +67,17 @@
                     <ComboBoxItem Content="2 Spaces" Tag="2"/>
                     <ComboBoxItem Content="4 Spaces" Tag="4"/>
                     <ComboBoxItem Content="8 Spaces" Tag="8"/>
+                </ComboBox>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Default Line Ending for new Documents">
+            <controls:SettingsControl.Content>
+                <ComboBox ItemsSource="{x:Bind LineEndings}" Width="200" x:Name="LineEndingSelectorCombobox" SelectionChanged="LineEndingSelectorCombobox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock Text="{x:Bind}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>

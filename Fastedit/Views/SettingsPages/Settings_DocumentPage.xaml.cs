@@ -19,9 +19,15 @@ public sealed partial class Settings_DocumentPage : Page
         }
     }
 
+    public string[] LineEndings
+    {
+        get => LineEndingHelper.GetLineEndings().Select(item => item.ToString()).ToArray();
+    }
+
     public Settings_DocumentPage()
     {
         this.InitializeComponent();
+
 
         int tabsSpaces = AppSettings.TabsSpacesMode;
         TabsSpacesSelectorCombobox.SelectedItem = 
@@ -38,6 +44,9 @@ public sealed partial class Settings_DocumentPage : Page
 
         ShowWhitespaceCharacters.IsOn = AppSettings.ShowWhitespaceCharacters;
         EnableClickableLinks.IsOn = AppSettings.EnableClickableLinks;
+
+        LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
+
     }
 
 
@@ -78,5 +87,10 @@ public sealed partial class Settings_DocumentPage : Page
     private void TabsSpacesSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         AppSettings.TabsSpacesMode = ConvertHelper.ToInt((TabsSpacesSelectorCombobox.SelectedItem as ComboBoxItem).Tag, DefaultValues.DefaultTabsSpaces);
+    }
+
+    private void LineEndingSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        AppSettings.DefaultLineEnding = (TextControlBoxNS.LineEnding)LineEndingSelectorCombobox.SelectedIndex;
     }
 }

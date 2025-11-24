@@ -1,6 +1,7 @@
 ﻿using Fastedit.Core.Settings;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
+using TextControlBoxNS;
 
 internal class AppSettings
 {
@@ -153,5 +154,10 @@ internal class AppSettings
     {
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_EnableClickableLinks, DefaultValues.EnableClickableLinks);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_EnableClickableLinks, value);
+    }
+    public static LineEnding DefaultLineEnding
+    {
+        get => (LineEnding)SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_DefaultLineEnding, LineEnding.CRLF.GetHashCode());
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultLineEnding, value.GetHashCode());
     }
 }

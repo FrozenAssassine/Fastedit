@@ -9,7 +9,7 @@ namespace Fastedit.Core.Settings
     {
         public static string NewTabTitle = "Untitled";
         public static string NewTabExtension = ".txt";
-        public static Encoding Encoding = Encoding.UTF8;
+        public static Encoding Encoding = new UTF8Encoding(false);
         public static bool FastLoadTabs = true;
         public static string DatabasePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database");
         public static string DesignPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Designs");
@@ -20,7 +20,6 @@ namespace Fastedit.Core.Settings
         public static int FontSize = 18;
         public static bool ShowLineHighlighter = true;
         public static bool ShowLinenumbers = true;
-        public static bool UseSpacesInsteadTabs = false;
         public static bool SyntaxHighlighting = true;
         public static bool ShowMenubar = true;
         public static bool ShowStatusbar = true;

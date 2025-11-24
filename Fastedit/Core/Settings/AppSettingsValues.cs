@@ -15,6 +15,7 @@ public static class AppSettingsValues
     public const string Settings_NewTabTitle = "NewTabTitle";
     public const string Settings_NewTabExtension = "NewTabExtension";
 
+    public const string Settings_DefaultLineEnding = "DefaultLineEnding";
     public const string Settings_TabsSpacesMode = "TabsSpacesMode";
     public const string Settings_ShowWhitespaceCharacters = "ShowWhitespaceCharacters";
     public const string Settings_EnableClickableLinks = "EnableClickableLinks";

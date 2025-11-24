@@ -81,7 +81,7 @@ public class TabPageItem : TabViewItem
             FilePath = "",
             IsModified = false,
             ZoomFactor = 100,
-            LineEnding = LineEnding.CRLF,
+            LineEnding = AppSettings.DefaultLineEnding,
         };
 
         //newly created tab => set default tabs/spaces
