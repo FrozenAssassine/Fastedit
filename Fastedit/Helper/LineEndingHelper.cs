@@ -39,11 +39,11 @@ internal class LineEndingHelper
             yield return item;
         }
     }
-    private static IEnumerable<RadioMenuFlyoutItem> MakeRadioItems(Action<LineEnding> lineEndingSelected)
+    private static IEnumerable<ToggleMenuFlyoutItem> MakeSelectableMenuFlyoutItems(Action<LineEnding> lineEndingSelected)
     {
         foreach (var lineEnding in GetLineEndings())
         {
-            var item = new RadioMenuFlyoutItem { Text = lineEnding.ToString(), Tag = lineEnding };
+            var item = new ToggleMenuFlyoutItem { Text = lineEnding.ToString(), Tag = lineEnding };
             item.Click += (sender, e) =>
             {
                 lineEndingSelected?.Invoke(lineEnding);
@@ -82,7 +82,7 @@ internal class LineEndingHelper
 
     public static void MakeAndAddLineEndingItems(MenuFlyoutSubItem subItem, Action<LineEnding> lineEndingSelected)
     {
-        foreach (var item in MakeRadioItems(lineEndingSelected))
+        foreach (var item in MakeSelectableMenuFlyoutItems(lineEndingSelected))
             subItem.Items.Add(item);
     }
 
@@ -93,11 +93,10 @@ internal class LineEndingHelper
 
         foreach (var item in items)
         {
-            if(item is RadioMenuFlyoutItem radioItem && 
-               radioItem.Tag is LineEnding lineEnding)
+            if(item is ToggleMenuFlyoutItem toggleItem && 
+               toggleItem.Tag is LineEnding lineEnding)
             {
-                radioItem.IsChecked = tabPage.LineEnding == lineEnding;
-                return;
+                toggleItem.IsChecked = tabPage.LineEnding == lineEnding;
             }
         }
     }
