@@ -7,7 +7,11 @@ namespace Fastedit.Helper
     {
         public static OverlappedPresenterState GetWindowState(Window window)
         {
-            return (window.AppWindow.Presenter as OverlappedPresenter).State;
+            var presenter = (window.AppWindow.Presenter as OverlappedPresenter);
+            if (presenter == null)
+                return OverlappedPresenterState.Restored;
+
+            return presenter.State;
         }
 
         public static OverlappedPresenterState SetWindowState(Window window, OverlappedPresenterState state)
