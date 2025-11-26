@@ -70,7 +70,7 @@ public sealed partial class TextStatusBar : UserControl
         }
 
         var sorting = AppSettings.StatusbarSorting.Split("|", System.StringSplitOptions.RemoveEmptyEntries);
-        foreach(var item in sorting)
+        foreach (var item in sorting)
         {
             var splitted = item.Split(":");
             if (splitted.Length != 2)
@@ -150,10 +150,10 @@ public sealed partial class TextStatusBar : UserControl
 
     public void UpdateLineEndings()
     {
-        if (!IsVisible) 
+        if (!IsVisible)
             return;
 
-        if(tabPage == null)
+        if (tabPage == null)
         {
             ItemLineEndings.ChangingText = "-";
             return;
@@ -206,6 +206,8 @@ public sealed partial class TextStatusBar : UserControl
 
         tabPage.DatabaseItem.IsModified = true;
         tabPage.LineEnding = lineEnding;
+
+        UpdateLineEndings();
     }
 
     private void ChangeEncoding_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -280,11 +282,13 @@ public sealed partial class TextStatusBar : UserControl
     private void TabSpaces_Click(object sender, RoutedEventArgs e)
     {
         TabsSpacesHelper.SetTabsSpaces(tabPage, sender);
+        UpdateTabsSpaces();
     }
 
     private void ReformatTabsInDocument_Click(object sender, RoutedEventArgs e)
     {
         TabsSpacesHelper.RewriteTabsSpaces(tabPage, sender);
+        UpdateTabsSpaces();
     }
 
     private void ItemTabsSpaces_FlyoutOpening(object sender, object e)
