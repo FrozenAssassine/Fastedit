@@ -1,8 +1,9 @@
-﻿using Fastedit.Models;
+﻿using Fastedit.Core.Tab;
+using Fastedit.Models;
 using Fastedit.Views;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
-using Fastedit.Core.Tab;
+using Microsoft.UI.Xaml.Controls;
+
 
 namespace Fastedit.Helper;
 
@@ -52,7 +53,14 @@ public class SettingsTabPageHelper
     }
     public static void CloseSettings(TabView tabView)
     {
+        //this check prevents a crash, happing when closing the settings tab while it is selected
+        //I think it is a problem with tabview!
+        if (tabView.SelectedIndex == 0 && IsSettingsPage(tabView.SelectedItem))
+        {
+            tabView.SelectedIndex = 1;
+        }
         tabView.TabItems.Remove(settingsPage);
+
         SettingsPageOpen = SettingsSelected = false;
         SettingsTabClosed?.Invoke();
     }
