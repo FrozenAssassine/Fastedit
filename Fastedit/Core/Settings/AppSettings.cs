@@ -1,6 +1,7 @@
 ﻿using Fastedit.Core.Settings;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
+using TextControlBoxNS;
 
 internal class AppSettings
 {
@@ -64,16 +65,11 @@ internal class AppSettings
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_NewTabExtension, value);
     }
 
-    public static bool UseSpacesInsteadTabs
+    public static int TabsSpacesMode
     {
-        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_UseSpacesInsteadTabs, DefaultValues.UseSpacesInsteadTabs);
-        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_UseSpacesInsteadTabs, value);
-    }
-
-    public static int SpacesPerTab
-    {
-        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_SpacesPerTab, DefaultValues.NumberOfSpacesPerTab);
-        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_SpacesPerTab, value);
+        //-1 for tab, >0 for spaces
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_TabsSpacesMode, DefaultValues.DefaultTabsSpaces);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_TabsSpacesMode, value);
     }
 
     public static bool ShowStatusbar
@@ -158,5 +154,10 @@ internal class AppSettings
     {
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_EnableClickableLinks, DefaultValues.EnableClickableLinks);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_EnableClickableLinks, value);
+    }
+    public static LineEnding DefaultLineEnding
+    {
+        get => (LineEnding)SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_DefaultLineEnding, LineEnding.CRLF.GetHashCode());
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultLineEnding, value.GetHashCode());
     }
 }

@@ -206,7 +206,6 @@ public sealed partial class TextStatusBar : UserControl
 
         tabPage.DatabaseItem.IsModified = true;
         tabPage.LineEnding = lineEnding;
-        UpdateLineEndings();
     }
 
     private void ChangeEncoding_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -280,28 +279,16 @@ public sealed partial class TextStatusBar : UserControl
 
     private void TabSpaces_Click(object sender, RoutedEventArgs e)
     {
-        if (this.tabPage == null)
-            return;
-
-        int tabs = ConvertHelper.ToInt((sender as RadioMenuFlyoutItem).Tag, -1);
-        tabPage.SetTabsSpaces(tabs);
+        TabsSpacesHelper.SetTabsSpaces(tabPage, sender);
     }
 
-    private void TabsSpacesFlyout_Opened(object sender, object e)
+    private void ReformatTabsInDocument_Click(object sender, RoutedEventArgs e)
     {
-        string tag = (tabPage.textbox.UseSpacesInsteadTabs ? tabPage.textbox.NumberOfSpacesForTab : -1).ToString();
+        TabsSpacesHelper.RewriteTabsSpaces(tabPage, sender);
+    }
 
-        foreach (MenuFlyoutItemBase item in TabsSpacesFlyout.Items)
-        {
-            if (item is RadioMenuFlyoutItem radioItem)
-            {
-                if (radioItem.Tag.Equals(tag))
-                {
-                    radioItem.IsChecked = true;
-                    continue;
-                }
-                radioItem.IsChecked = false;
-            }
-        }
+    private void ItemTabsSpaces_FlyoutOpening(object sender, object e)
+    {
+        TabsSpacesHelper.SelectToggleMenuItemsFromMenu(ItemTabKeyBehaviour, tabPage);
     }
 }

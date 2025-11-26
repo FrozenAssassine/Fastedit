@@ -95,10 +95,6 @@ namespace Fastedit.Core.Settings
                     (tabView.TabItems[i] as TabViewItem).Background = DesignHelper.CreateBackgroundBrush(ConvertHelper.ToColor(currentDesign.TextBoxBackground), currentDesign.TextboxBackgroundType);
                 }
             }
-
-            //Load tabs or spaces
-            object tag = AppSettings.UseSpacesInsteadTabs ? AppSettings.SpacesPerTab : "-1";
-            TabPageHelper.TabsOrSpacesForAll(tabView, tag);
         }
         public static void SetSettingsToStatusbar(TextStatusBar statusbar, FasteditDesign design)
         {

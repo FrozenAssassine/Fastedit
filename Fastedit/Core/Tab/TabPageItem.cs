@@ -1,12 +1,13 @@
-﻿using Fastedit.Helper;
+﻿using Fastedit.Core.Settings;
+using Fastedit.Helper;
 using Fastedit.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Text;
-using Microsoft.UI.Xaml;
-using TextControlBoxNS;
-using Fastedit.Core.Settings;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
+using TextControlBoxNS;
 
 namespace Fastedit.Core.Tab;
 
@@ -14,7 +15,6 @@ public class TabPageItem : TabViewItem
 {
     public TextControlBox textbox { get; private set; }
     private TabView tabView;
-    private MainPage mainPage;
     
     public TabPageItem(TabView tabView, TabItemDatabaseItem databaseItem = null)
     {
@@ -80,8 +80,12 @@ public class TabPageItem : TabViewItem
             FilePath = "",
             IsModified = false,
             ZoomFactor = 100,
-            LineEnding = LineEnding.CRLF,
+            LineEnding = AppSettings.DefaultLineEnding,
         };
+
+        //newly created tab => set default tabs/spaces
+        if (item == null)
+            SetTabsSpaces(AppSettings.TabsSpacesMode);
 
         UpdateTabIcon();
     }
@@ -143,6 +147,8 @@ public class TabPageItem : TabViewItem
         if (Enum.TryParse(_DataBaseItem.CodeLanguage, true, out SyntaxHighlightID language))
             highlightID = language;
 
+        this.SetTabsSpaces(_DataBaseItem.TabsSpaces);
+
         textbox.SyntaxHighlighting = TextControlBox.GetSyntaxHighlightingFromID(highlightID);
     }
 
@@ -186,9 +192,23 @@ public class TabPageItem : TabViewItem
 
     public void SetTabsSpaces(int spaces = -1)
     {
+        this.DatabaseItem.TabsSpaces = spaces;
         //-1 = use tabs positive values => spaces
         this.textbox.UseSpacesInsteadTabs = spaces != -1;
         if(spaces > 0)
             this.textbox.NumberOfSpacesForTab = spaces;
+    }
+
+    public void RewriteTabsSpaces(int spaces) 
+    {
+        bool useSpaces = spaces != -1;
+        this.textbox.RewriteTabsSpaces(spaces == -1 ? 4 : spaces, useSpaces);
+    }
+
+    public void LoadLines(IEnumerable<string> lines, bool autodetectTabsSpaces = true, LineEnding lineEnding = LineEnding.CRLF)
+    {
+        this.textbox.LoadLines(lines, autodetectTabsSpaces, lineEnding);
+        int spaces = this.textbox.UseSpacesInsteadTabs ? this.textbox.NumberOfSpacesForTab : -1;
+        this.DatabaseItem.TabsSpaces = spaces;
     }
 }

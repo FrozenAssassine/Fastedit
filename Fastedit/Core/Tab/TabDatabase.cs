@@ -1,4 +1,5 @@
 ﻿using Fastedit.Core.Settings;
+using Fastedit.Dialogs;
 using Fastedit.Models;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ public class TabDatabase
 {
     string DatabaseName = "database.db";
 
-    public void SaveData(IList<object> TabItems, int SelectedIndex)
+    public bool SaveData(IList<object> TabItems, int SelectedIndex)
     {
         StringBuilder databaseBuilder = new StringBuilder();
         for (int i = 0; i < TabItems.Count; i++)
@@ -39,13 +40,22 @@ public class TabDatabase
             databaseBuilder.AppendLine(JsonConvert.SerializeObject(window.Value.DatabaseItem));
         }
 
-        string path = Path.Combine(DefaultValues.DatabasePath, DatabaseName);
-        if (!File.Exists(path))
+        try
         {
-            Directory.CreateDirectory(DefaultValues.DatabasePath);
-        }
+            string path = Path.Combine(DefaultValues.DatabasePath, DatabaseName);
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(DefaultValues.DatabasePath);
+            }
 
-        File.WriteAllText(path, databaseBuilder.ToString());
+            File.WriteAllText(path, databaseBuilder.ToString());
+            return true;
+        }
+        catch (Exception ex)
+        {
+            InfoMessages.ErrorSavingDatabaseFile(ex.Message);
+            return false;
+        }
     }
     public IEnumerable<TabPageItem> LoadData(TabView tabView)
     {
@@ -64,9 +74,18 @@ public class TabDatabase
         }
     }
 
-    public static void SaveTempFile(TabPageItem tab)
+    public static bool SaveTempFile(TabPageItem tab)
     {
-        File.WriteAllLines(Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier), tab.textbox.Lines);
+        try
+        {
+            File.WriteAllLines(Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier), tab.textbox.Lines);
+            return true;
+        }
+        catch(Exception ex)
+        {
+            InfoMessages.ErrorSavingDBTempFile(ex.Message);
+            return false;
+        }
     }
     public static void DeleteTempFile(TabPageItem tab)
     {

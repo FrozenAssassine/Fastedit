@@ -36,10 +36,18 @@ public static class TabPageHelper
         textbox.SelectionChanged += Textbox_SelectionChanged;
         textbox.TabsSpacesChanged += Textbox_TabsSpacesChanged;
         textbox.LinkClicked += Textbox_LinkClicked;
+        textbox.LineEndingChanged += Textbox_LineEndingChanged;
+
         return textbox;
     }
 
-    private static async void Textbox_LinkClicked(string url)
+    private static void Textbox_LineEndingChanged(TextControlBox sender, LineEnding lineEnding)
+    {
+        mainPage.TextStatusBar.UpdateLineEndings();
+        mainPage.SelectLineEndingMenubarItem();
+    }
+
+    private static async void Textbox_LinkClicked(TextControlBox sender, string url)
     {
         await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
     }
@@ -47,6 +55,7 @@ public static class TabPageHelper
     private static void Textbox_TabsSpacesChanged(TextControlBox sender, bool spacesInsteadTabs, int spaces)
     {
         mainPage.TextStatusBar.UpdateTabsSpaces();
+        mainPage.SelectTabSpacesMenubarItem();
     }
 
     //textbox events:
@@ -88,7 +97,10 @@ public static class TabPageHelper
         {
             progressWindow?.ShowProgress();
             progressWindow?.SetText("Loading file " + tab.DatabaseItem.FileName + "...");
+            
             tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+            tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
+
             tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
             progressWindow?.HideProgress();
             tab.DataIsLoaded = true;
@@ -124,7 +136,10 @@ public static class TabPageHelper
                 currentCount == tab.DatabaseItem.SelectedIndex ||
                 !DefaultValues.FastLoadTabs)
             {
+                //when loading back from the database file, we apply everything like it was on app closing
                 tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+                tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
+
                 tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
                 tab.DataIsLoaded = true;
             }
@@ -156,9 +171,11 @@ public static class TabPageHelper
         tabView.SelectedIndex = Math.Clamp(selectingIndex, 0, tabView.TabItems.Count - 1);
     }
 
-    public static void SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
+    public static bool SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
     {
         progressWindow?.ShowProgress();
+
+        bool anyFailed = false;
 
         //Close all windows to get the tabs back to the tabcontrol:
         //when saving the database without closing the app, only save the temp files
@@ -168,12 +185,13 @@ public static class TabPageHelper
         {
             foreach (var window in TabWindowHelper.OpenWindows)
             {
-                TabDatabase.SaveTempFile(window.Value);
+                if (!TabDatabase.SaveTempFile(window.Value))
+                    anyFailed = true;
             }
         }
 
         //Create the file with the tab data:
-        tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
+        bool saveDBFileRes = tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
 
         //save the individual files
         for (int i = 0; i < tabView.TabItems.Count; i++)
@@ -184,10 +202,13 @@ public static class TabPageHelper
                     continue;
 
                 progressWindow?.SetText("Saving database " + tab.DatabaseItem.FileName + "...");
-                TabDatabase.SaveTempFile(tab);
+                if (!TabDatabase.SaveTempFile(tab))
+                    anyFailed = true;
             }
         }
         progressWindow?.HideProgress();
+
+        return saveDBFileRes && !anyFailed;
     }
 
     public static string GenerateUniqueHeader(TabView tabView)
@@ -282,21 +303,6 @@ public static class TabPageHelper
         return !tabView.TabItems.Contains(tab);
     }
 
-    public static void TabsOrSpacesForAll(TabView tabView, object tag)
-    {
-        if (tag == null)
-            return;
-
-        int number = ConvertHelper.ToInt(tag);
-        for (int i = 0; i < tabView.TabItems.Count; i++)
-        {
-            if (tabView.TabItems[i] is TabPageItem tab)
-                tab.SetTabsSpaces(number);
-        }
-
-        AppSettings.SpacesPerTab = number;
-        AppSettings.UseSpacesInsteadTabs = number != -1;
-    }
     public static void UpdateSaveStatus(TabPageItem tab, bool IsModified)
     {
         tab.DatabaseItem.IsModified = IsModified;
