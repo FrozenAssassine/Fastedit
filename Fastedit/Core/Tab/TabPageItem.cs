@@ -15,7 +15,6 @@ public class TabPageItem : TabViewItem
 {
     public TextControlBox textbox { get; private set; }
     private TabView tabView;
-    private MainPage mainPage;
     
     public TabPageItem(TabView tabView, TabItemDatabaseItem databaseItem = null)
     {
@@ -198,8 +197,6 @@ public class TabPageItem : TabViewItem
         this.textbox.UseSpacesInsteadTabs = spaces != -1;
         if(spaces > 0)
             this.textbox.NumberOfSpacesForTab = spaces;
-        
-        mainPage?.SelectTabSpacesMenubarItem();
     }
 
     public void RewriteTabsSpaces(int spaces) 

@@ -98,7 +98,7 @@ public sealed partial class MainPage : Page
             title = $"{tab.Header}";
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
             title = "Fastedit - Settings";
-            App.m_window.Title = title;
+        App.m_window.Title = title;
     }
     private void Initialise()
     {
@@ -152,7 +152,10 @@ public sealed partial class MainPage : Page
             return;
         }
 
-        SaveDatabase();
+        if (!SaveDatabase())
+        {
+            args.Cancel = true;
+        }
     }
 
     private void tabControl_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
@@ -624,9 +627,9 @@ public sealed partial class MainPage : Page
     {
         tabControl.SelectedItem = tab;
     }
-    public void SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
+    public bool SaveDatabase(bool ShowProgress = true, bool closeWindows = true)
     {
-        TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
+        return TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
     }
     public void ShowSettings(string page = null)
     {

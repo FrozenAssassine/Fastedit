@@ -171,9 +171,11 @@ public static class TabPageHelper
         tabView.SelectedIndex = Math.Clamp(selectingIndex, 0, tabView.TabItems.Count - 1);
     }
 
-    public static void SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
+    public static bool SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
     {
         progressWindow?.ShowProgress();
+
+        bool anyFailed = false;
 
         //Close all windows to get the tabs back to the tabcontrol:
         //when saving the database without closing the app, only save the temp files
@@ -183,12 +185,13 @@ public static class TabPageHelper
         {
             foreach (var window in TabWindowHelper.OpenWindows)
             {
-                TabDatabase.SaveTempFile(window.Value);
+                if (!TabDatabase.SaveTempFile(window.Value))
+                    anyFailed = true;
             }
         }
 
         //Create the file with the tab data:
-        tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
+        bool saveDBFileRes = tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex);
 
         //save the individual files
         for (int i = 0; i < tabView.TabItems.Count; i++)
@@ -199,10 +202,13 @@ public static class TabPageHelper
                     continue;
 
                 progressWindow?.SetText("Saving database " + tab.DatabaseItem.FileName + "...");
-                TabDatabase.SaveTempFile(tab);
+                if (!TabDatabase.SaveTempFile(tab))
+                    anyFailed = true;
             }
         }
         progressWindow?.HideProgress();
+
+        return saveDBFileRes && !anyFailed;
     }
 
     public static string GenerateUniqueHeader(TabView tabView)

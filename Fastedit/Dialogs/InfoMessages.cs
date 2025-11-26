@@ -8,6 +8,8 @@ namespace Fastedit.Dialogs;
 public class InfoMessages
 {
     public static void NoAccessToSaveFile() => new InfoBar().Show("No access", "No access to write to the file", InfoBarSeverity.Error);
+    public static void ErrorSavingDatabaseFile(string message) => new InfoBar().Show("Saving Database Error", message, InfoBarSeverity.Error);
+    public static void ErrorSavingDBTempFile(string message) => new InfoBar().Show("Saving open file error", message, InfoBarSeverity.Error);
     public static void NoAccessToReadFile() => new InfoBar().Show("No access", "No access to read from the file", InfoBarSeverity.Error);
     public static void UnhandledException(string message) => new InfoBar().Show("Exception", "Unhandled exception:\n" + message, InfoBarSeverity.Error);
     public static void ClearRecycleBinError() => new InfoBar().Show("Clear Recycle Bin", "An error occurred while clearing the Recycle Bin", InfoBarSeverity.Error);
