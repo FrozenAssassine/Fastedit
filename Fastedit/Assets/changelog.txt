@@ -1,4 +1,19 @@
-﻿#Version 2.8.0 [07.11.2025]
+﻿#Version 2.9.0 [28.11.2025]
+	• Reworked tab/space handling system (major update, many fixes)
+	• Added database safety checks with info messages
+	• Added default line ending settings
+	• Added option to visualize whitespace characters per document (#170)
+	• Added line ending selection to quick access window
+	• Added clickable links option and removed "1 space as tab" quick access item
+	• Added ability to change line endings via menubar
+	• Added tabs + spaces as a status bar item with flyout for quick changes
+	• Added active line endings and indentation being selected in the menubar
+	• Fixed status bar not updating when indentation or line endings change
+	• Fixed a bug, which caused the app to crash when closing an undocked tab window restored from database
+	• Fixed a crash when exiting fullscreen mode
+	• Fixed TabView crashing when closing settings in a specific sequence
+
+#Version 2.8.0 [07.11.2025]
 	• Added line ending information in file info dialog
 	• Added mixed line ending warning dialog upon opening files
 	• Added option to enable/disable the visualization of whitespace characters with dots and arrows
