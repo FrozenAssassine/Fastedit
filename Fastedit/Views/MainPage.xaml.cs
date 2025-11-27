@@ -178,7 +178,7 @@ public sealed partial class MainPage : Page
             return; // Tab was reordered inside the tab control, no need to open a new window
         }
 
-        await TabWindowHelper.ShowInNewWindow(tabControl, args.Tab as TabPageItem);
+        TabWindowHelper.ShowInNewWindow(tabControl, args.Tab as TabPageItem);
     }
     private void SettingsUpdater_SettingsTabClosed()
     {
@@ -493,7 +493,7 @@ public sealed partial class MainPage : Page
 
     private async void UndockTab_Click(object sender, RoutedEventArgs e)
     {
-        await TabWindowHelper.ShowInNewWindow(tabControl, currentlySelectedTabPage);
+        TabWindowHelper.ShowInNewWindow(tabControl, currentlySelectedTabPage);
     }
 
     //View

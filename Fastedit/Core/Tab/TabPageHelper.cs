@@ -155,7 +155,7 @@ public static class TabPageHelper
 
             //Show tab in it's own window or add it to the tabView:
             if (tab.DatabaseItem.HasOwnWindow)
-                await TabWindowHelper.ShowInNewWindow(tabView, tab);
+                TabWindowHelper.ShowInNewWindow(tabView, tab);
             else
                 tabView.TabItems.Add(tab);
 

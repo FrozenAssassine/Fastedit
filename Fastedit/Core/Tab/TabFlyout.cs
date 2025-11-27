@@ -91,7 +91,7 @@ public class TabFlyout
                     await TabPageHelper.CloseAll(data.TabView);
                     break;
                 case TabPageFlyoutItem.Undock:
-                    await TabWindowHelper.ShowInNewWindow(data.TabView, data.Tab);
+                    TabWindowHelper.ShowInNewWindow(data.TabView, data.Tab);
                     break;
             }
         }

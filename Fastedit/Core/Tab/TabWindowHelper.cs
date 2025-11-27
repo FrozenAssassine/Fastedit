@@ -19,7 +19,7 @@ internal class TabWindowHelper
     private static bool closeWithoutChanging = true;
     public static Dictionary<Window, TabPageItem> OpenWindows { get; } = new();
 
-    public static async Task<bool> ShowInNewWindow(TabView tabView, TabPageItem tab)
+    public static bool ShowInNewWindow(TabView tabView, TabPageItem tab)
     {
         TabWindowHelper.tabView = tabView;
 
@@ -28,9 +28,7 @@ internal class TabWindowHelper
 
         //load the tab otherwise it has no text
         if (!tab.DataIsLoaded)
-        {
             TabPageHelper.LoadUnloadedTab(tab);
-        }
 
         tabView.TabItems.Remove(tab);
 
@@ -49,8 +47,6 @@ internal class TabWindowHelper
         UpdateSettings();
         tab.textbox.ClearSelection();
 
-        //Delay to prevent holding down the key
-        await Task.Delay(400);
         return false;
     }
 
