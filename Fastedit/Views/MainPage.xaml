@@ -656,16 +656,8 @@
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="Add" Modifiers="Control" IsEnabled="False"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="Subtract" Modifiers="Control" IsEnabled="False"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click"/>
+                        <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
             </MenuBar.Items>
