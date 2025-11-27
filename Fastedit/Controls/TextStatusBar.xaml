@@ -16,6 +16,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <controls:StatusbarItem Grid.Column="0" HorizontalAlignment="Left" StaticText="" x:Name="ItemFileName" StatusbarItemClick="ItemFileName_StatusbarItemClick"/>
@@ -51,6 +52,12 @@
         <controls:StatusbarItem Grid.Column="5" HorizontalAlignment="Left" StaticText="" x:Name="ItemLineEndings">
             <controls:StatusbarItem.CustomFlyout>
                 <MenuFlyout x:Name="LineEndingsFlyout">
+                </MenuFlyout>
+            </controls:StatusbarItem.CustomFlyout>
+        </controls:StatusbarItem>
+        <controls:StatusbarItem Grid.Column="7" HorizontalAlignment="Left" StaticText="" x:Name="ItemSyntaxHighlightings">
+            <controls:StatusbarItem.CustomFlyout>
+                <MenuFlyout x:Name="SyntaxHighlightingsFlyout">
                 </MenuFlyout>
             </controls:StatusbarItem.CustomFlyout>
         </controls:StatusbarItem>

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TextControlBoxNS;
 
 namespace Fastedit.Controls;
@@ -32,6 +33,7 @@ public sealed partial class TextStatusBar : UserControl
 
         LoadEncodings();
         LoadLineEndings();
+        LoadSyntaxhighlights();
 
         StatusbarSortingNames = new()
         {
@@ -42,12 +44,23 @@ public sealed partial class TextStatusBar : UserControl
             { "WordChar", ItemWordCharacter },
             { "LineEndings", ItemLineEndings },
             { "TabsSpaces", ItemTabsSpaces },
+            { "Syntaxhighlights", ItemSyntaxHighlightings },
         };
     }
 
     private void LoadLineEndings()
     {
         LineEndingHelper.MakeAndAddLineEndingItems(LineEndingsFlyout, ChangeLineEnding_Click);
+    }
+
+    private void LoadSyntaxhighlights()
+    {
+        foreach(var highlight in TextControlBox.SyntaxHighlightings)
+        {
+            var item = new MenuFlyoutItem { Text = highlight.Value == null ? "None":highlight.Value.Name, Tag = highlight.Key.GetHashCode() };
+            item.Click += Syntaxhighlighting_Selected;
+            SyntaxHighlightingsFlyout.Items.Add(item);
+        }
     }
 
     private void LoadEncodings()
@@ -181,6 +194,19 @@ public sealed partial class TextStatusBar : UserControl
         ItemTabsSpaces.ChangingText = content;
     }
 
+    public void UpdateSyntaxhighlightings()
+    {
+        if (!IsVisible)
+            return;
+
+        if (tabPage == null)
+        {
+            ItemSyntaxHighlightings.ChangingText = "-";
+            return;
+        }
+            ItemSyntaxHighlightings.ChangingText = tabPage.textbox.SyntaxHighlighting != null ? tabPage.textbox.SyntaxHighlighting.Name : "None";
+    }
+
     public void UpdateAll()
     {
         UpdateSelectionChanged();
@@ -190,6 +216,7 @@ public sealed partial class TextStatusBar : UserControl
         UpdateText();
         UpdateLineEndings();
         UpdateTabsSpaces();
+        UpdateSyntaxhighlightings();
     }
     private void ZoomSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
     {
@@ -294,5 +321,16 @@ public sealed partial class TextStatusBar : UserControl
     private void ItemTabsSpaces_FlyoutOpening(object sender, object e)
     {
         TabsSpacesHelper.SelectToggleMenuItemsFromMenu(ItemTabKeyBehaviour, tabPage);
+    }
+
+    private void Syntaxhighlighting_Selected(object sender, RoutedEventArgs e)
+    {
+        if (tabPage == null)
+            return;
+
+        var menuItem = sender as MenuFlyoutItem;
+        tabPage.HighlightLanguage = (SyntaxHighlightID)ConvertHelper.ToInt(menuItem.Tag);
+
+        UpdateSyntaxhighlightings();
     }
 }

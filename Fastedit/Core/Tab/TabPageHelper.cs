@@ -37,7 +37,6 @@ public static class TabPageHelper
         textbox.TabsSpacesChanged += Textbox_TabsSpacesChanged;
         textbox.LinkClicked += Textbox_LinkClicked;
         textbox.LineEndingChanged += Textbox_LineEndingChanged;
-
         return textbox;
     }
 

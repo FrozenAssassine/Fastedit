@@ -51,6 +51,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -77,6 +78,9 @@
 
                         <TextBlock x:Uid="Settings_App_TabsSpacesText" FontSize="16" Text="Tab Spaces" Grid.Row="6" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showTabsSpaces" Tag="5" Grid.Row="6" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
+
+                        <TextBlock x:Uid="Settings_App_TabsSpacesText" FontSize="16" Text="Syntax Highlighting" Grid.Row="7" Grid.Column="0"/>
+                        <ToggleSwitch x:Name="showSyntaxhighlights" Tag="5" Grid.Row="7" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
                     </Grid>
                 </Expander.Content>
             </Expander>

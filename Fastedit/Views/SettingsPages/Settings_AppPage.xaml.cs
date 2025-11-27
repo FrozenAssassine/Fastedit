@@ -36,7 +36,8 @@ public sealed partial class Settings_AppPage : Page
             { showFileItem, "FileName" },
             { showWordChars, "WordChar" },
             { showLineEndings, "LineEndings" },
-            { showTabsSpaces, "TabsSpaces"}
+            { showTabsSpaces, "TabsSpaces"},
+            { showSyntaxhighlights, "Syntaxhighlights" }
         };
         StatusbarStrings = new Dictionary<string, ToggleSwitch>
         {
@@ -46,7 +47,9 @@ public sealed partial class Settings_AppPage : Page
             { "FileName", showFileItem},
             { "WordChar", showWordChars },
             { "LineEndings", showLineEndings },
-            { "TabsSpaces", showTabsSpaces }
+            { "TabsSpaces", showTabsSpaces },
+            { "Syntaxhighlights", showSyntaxhighlights }
+
         };
 
         //turn them all on (fallback)

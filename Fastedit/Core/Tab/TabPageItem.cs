@@ -98,6 +98,8 @@ public class TabPageItem : TabViewItem
         {
             textbox.SyntaxHighlighting = TextControlBox.GetSyntaxHighlightingFromID(value);
             DatabaseItem.CodeLanguage = value.ToString();
+
+            TabPageHelper.mainPage.TextStatusBar.UpdateSyntaxhighlightings();
         }
     }
 
