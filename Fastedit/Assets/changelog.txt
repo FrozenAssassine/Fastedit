@@ -2,7 +2,7 @@
 	• Reworked tab/space handling system (major update, many fixes)
 	• Added database safety checks with info messages
 	• Added default line ending settings
-	• Added option to visualize whitespace characters per document (#170)
+	• Added option to visualize whitespace characters per document
 	• Added line ending selection to quick access window
 	• Added clickable links option and removed "1 space as tab" quick access item
 	• Added ability to change line endings via menubar

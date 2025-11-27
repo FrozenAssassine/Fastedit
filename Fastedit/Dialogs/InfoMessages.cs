@@ -58,7 +58,7 @@ public class InfoMessages
 
         new InfoBar().Show(
             $"Welcome to Fastedit {version}!",
-            "• Major rework of tab/space handling (many fixes)\n• Database safety checks + info messages\n• Default line ending settings added\n• Whitespace visualization per document (#170)\n• Line ending selection in quick access window\n• Clickable links option added\n• Change line endings via menubar\n• Tabs + spaces status bar item with quick switch flyout\n• Active line ending/indentation highlighted in menubar\n• Status bar now updates correctly\n• Fixed crash when closing undocked tab window from database\n• Fixed fullscreen exit crash\n• Fixed TabView crash from settings close sequence\n• Updated to TextControlBox v1.5.0",
+            "• Major rework of tab/space handling (many fixes)\n• Database safety checks + info messages\n• Default line ending settings added\n• Whitespace visualization per document\n• Line ending selection in quick access window\n• Clickable links option added\n• Change line endings via menubar\n• Tabs + spaces status bar item with quick switch flyout\n• Active line ending/indentation highlighted in menubar\n• Status bar now updates correctly\n• Fixed crash when closing undocked tab window from database\n• Fixed fullscreen exit crash\n• Fixed TabView crash from settings close sequence\n• Updated to TextControlBox v1.5.0",
             btn,
             InfoBarSeverity.Success,
             25
