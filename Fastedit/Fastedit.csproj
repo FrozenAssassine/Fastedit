@@ -14,7 +14,7 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <AssemblyName>$(MSBuildProjectName.Replace("-", "_"))</AssemblyName>
 	  <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
-	  <PackageCertificateThumbprint>48B37B6F3FD042B598DFAEA22B22610C7E6BEF67</PackageCertificateThumbprint>
+	  <PackageCertificateThumbprint>9528B8A89B3432F61C4F321BE3088D9488AE2140</PackageCertificateThumbprint>
 	  <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 	  <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
 	  <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
