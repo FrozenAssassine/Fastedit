@@ -1,4 +1,7 @@
-﻿#Version 2.9.0 [28.11.2025]
+﻿#Version 2.9.1 [15.12.2025]
+	• Updated to TextControlBox v1.5.1 due to bug in python syntaxhighlighting which caused crashes
+
+#Version 2.9.0 [28.11.2025]
 	• Reworked tab/space handling system (major update, many fixes)
 	• Added default line ending settings
 	• Added option to visualize whitespace characters per document

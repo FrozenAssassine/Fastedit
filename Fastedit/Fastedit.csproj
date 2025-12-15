@@ -23,8 +23,8 @@
 	  <GenerateTestArtifacts>True</GenerateTestArtifacts>
 	  <AppxBundle>Always</AppxBundle>
 	  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-	  <AssemblyVersion>2.9.0</AssemblyVersion>
-	  <Version>2.9.0</Version>
+	  <AssemblyVersion>2.9.1</AssemblyVersion>
+	  <Version>2.9.1</Version>
 	  <Authors>Julius Kirsch</Authors>
 	  <Copyright>Copyright © 2022-2025</Copyright>
 	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
@@ -33,7 +33,7 @@
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.5.0" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.5.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
