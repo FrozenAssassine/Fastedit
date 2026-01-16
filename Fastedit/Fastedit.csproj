@@ -5,7 +5,7 @@
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &gt;= 8">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+	 <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
@@ -14,7 +14,7 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <AssemblyName>$(MSBuildProjectName.Replace("-", "_"))</AssemblyName>
 	  <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
-	  <PackageCertificateThumbprint>9528B8A89B3432F61C4F321BE3088D9488AE2140</PackageCertificateThumbprint>
+	  <PackageCertificateThumbprint>F0F662243AEEC5542F8CEADF3CF12D029168EDE4</PackageCertificateThumbprint>
 	  <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 	  <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
 	  <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -27,7 +27,9 @@
 	  <Version>2.9.1</Version>
 	  <Authors>Julius Kirsch</Authors>
 	  <Copyright>Copyright © 2022-2025</Copyright>
-	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+	  <WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
+	  <SelfContained>true</SelfContained>
+	  <WindowsPackageType>MSIX</WindowsPackageType>
   </PropertyGroup>
 
   <ItemGroup>
