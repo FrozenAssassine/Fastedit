@@ -120,6 +120,7 @@ public class SaveFileHelper
 
 
         var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+        savePicker.FileTypeChoices.Add("All Files", ["."]);
         savePicker.FileTypeChoices.Add("Current extension", [Path.GetExtension(tab.DatabaseItem.FileName)]);
         WinRT.Interop.InitializeWithWindow.Initialize(savePicker,
             window != null ? WinRT.Interop.WindowNative.GetWindowHandle(window) : App.m_window.WindowHandle
