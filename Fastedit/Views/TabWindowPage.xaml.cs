@@ -91,10 +91,12 @@ public sealed partial class TabWindowPage : Page
     private async void SaveAs_Click(object sender, RoutedEventArgs e)
     {
         await SaveFileHelper.SaveFileAs(tab, this.window);
+        textStatusBar.UpdateFile();
     }
     private async void Save_Click(object sender, RoutedEventArgs e)
     {
         await SaveFileHelper.Save(tab, this.window);
+        textStatusBar.UpdateFile();
     }
 
     private async void Rename()

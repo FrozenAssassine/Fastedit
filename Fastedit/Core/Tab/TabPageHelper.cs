@@ -308,6 +308,7 @@ public static class TabPageHelper
         tab.SetHeader(tab.DatabaseItem.FileName);
         SelectHighlightLanguageByPath(tab);
         tab.UpdateHeader();
+        mainPage.TextStatusBar.UpdateFile();
     }
     public static async Task<bool> SaveFile(TabPageItem tab)
     {
