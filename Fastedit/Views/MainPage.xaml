@@ -601,6 +601,7 @@
                                 <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <ToggleMenuFlyoutItem x:Name="textboxReadonlyMenubarItem" Text="Readonly" Click="ToggleReadonly_Click"/>
                         <MenuFlyoutSeparator/>
                         <ToggleMenuFlyoutItem Text="Visualize Whitespace Characters" Click="VisualizeWhitespaceCharacters_Click" x:Name="VisualizeWhitespaceCharacters_MenuFlyoutItem"/>
                     </MenuBarItem.Items>

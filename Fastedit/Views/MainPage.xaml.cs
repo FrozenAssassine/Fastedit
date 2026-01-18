@@ -13,7 +13,6 @@ using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace Fastedit;
 
@@ -342,6 +341,7 @@ public sealed partial class MainPage : Page
             searchControl.Visibility = ConvertHelper.BoolToVisibility(searchControl.searchOpen && searchControl.currentTab == tab);
 
             VisualizeWhitespaceCharacters_MenuFlyoutItem.IsChecked = tab.GetEffectiveWhitespaceSetting();
+            textboxReadonlyMenubarItem.IsChecked = currentlySelectedTabPage.IsReadOnly;
 
             textStatusBar.UpdateAll();
         }
@@ -698,6 +698,15 @@ public sealed partial class MainPage : Page
         (bool useSpacesInstead, int tabs) = currentlySelectedTabPage.textbox.DetectTabsSpaces();
         currentlySelectedTabPage.SetTabsSpaces(useSpacesInstead ? tabs : -1);
     }
+
+    private void ToggleReadonly_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        currentlySelectedTabPage.IsReadOnly = !currentlySelectedTabPage.IsReadOnly;
+    }
+
     private void RevealTabInFileExplorer(object sender, RoutedEventArgs e)
     {
         if (currentlySelectedTabPage == null)

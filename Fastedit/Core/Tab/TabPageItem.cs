@@ -54,11 +54,20 @@ public class TabPageItem : TabViewItem
         }
     }
 
+    public string getTabIconStr(bool ignoreModifiedIcon = false)
+    {
+        if (this.DatabaseItem.IsReadOnly)
+            return "\uE8A6";
+        if (!ignoreModifiedIcon && this.DatabaseItem.IsModified)
+            return "\uE915";
+        return "\uE7C3";
+    }
+
     public void UpdateTabIcon()
     {
         this.IconSource = 
             new FontIconSource { 
-                Glyph = this.DatabaseItem.IsModified ? "\uE915" : "\uE7C3" 
+                Glyph = getTabIconStr()
             };
     }
 
@@ -81,6 +90,7 @@ public class TabPageItem : TabViewItem
             IsModified = false,
             ZoomFactor = 100,
             LineEnding = AppSettings.DefaultLineEnding,
+            IsReadOnly = false
         };
 
         //newly created tab => set default tabs/spaces
@@ -143,6 +153,8 @@ public class TabPageItem : TabViewItem
 
         LineEnding = _DataBaseItem.LineEnding;
         textbox.ZoomFactor = _DataBaseItem.ZoomFactor;
+        textbox.IsReadOnly = _DataBaseItem.IsReadOnly;
+
         SetHeader(_DataBaseItem.FileName);
 
         SyntaxHighlightID highlightID = SyntaxHighlightID.None;
@@ -186,6 +198,16 @@ public class TabPageItem : TabViewItem
         {
             _DataBaseItem.WhitespaceCharacters = value;
             textbox.ShowWhitespaceCharacters = GetEffectiveWhitespaceSetting();
+        }
+    }
+
+    public bool IsReadOnly
+    {
+        get => _DataBaseItem.IsReadOnly;
+        set
+        {
+            this._DataBaseItem.IsReadOnly = textbox.IsReadOnly = value;
+            UpdateTabIcon();
         }
     }
 

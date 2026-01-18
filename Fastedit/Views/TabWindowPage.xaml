@@ -50,6 +50,7 @@
                     <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
+            <ToggleMenuFlyoutItem x:Name="readonlyModeFlyoutItem" Text="ReadOnly" Click="ToggleReadOnlyMode_Click"/>
         </MenuFlyout>
     </Page.Resources>
 
@@ -60,7 +61,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" VerticalAlignment="Center" x:Name="titlebar">
-            <SymbolIcon Margin="10,0,0,0" VerticalAlignment="Center" Symbol="Page2" HorizontalAlignment="Left" />
+            <FontIcon x:Name="pageIcon" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <TextBlock x:Name="titleText" VerticalAlignment="Center" Margin="40,0,0,0" Text="{x:Bind tab.Header, Mode=OneWay}" HorizontalAlignment="Left"/>
         </Grid>
 

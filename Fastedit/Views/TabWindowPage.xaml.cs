@@ -1,14 +1,12 @@
 ﻿using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
-using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Fastedit.Controls;
 using Fastedit.Core.Tab;
 using Fastedit.Core;
-using Fastedit.Core.Storage;
 
 namespace Fastedit.Views;
 
@@ -39,6 +37,10 @@ public sealed partial class TabWindowPage : Page
         tab.textbox.EndSearch();
         tab.textbox.ContextFlyout = RightClickMenu;
 
+        readonlyModeFlyoutItem.IsChecked = tab.IsReadOnly;
+
+        UpdateTabIcon();
+
         InitStatusbar();
     }
 
@@ -66,6 +68,11 @@ public sealed partial class TabWindowPage : Page
     private void Textbox_SelectionChanged(TextControlBoxNS.TextControlBox sender, TextControlBoxNS.SelectionChangedEventHandler args)
     {
         textStatusBar.UpdateSelectionChanged();
+    }
+
+    private void UpdateTabIcon()
+    {
+        pageIcon.Glyph = tab.getTabIconStr(true);
     }
 
     public void Close()
@@ -187,5 +194,12 @@ public sealed partial class TabWindowPage : Page
     private void OpenReplace_Click(object sender, RoutedEventArgs e)
     {
         searchControl.ShowReplace(tab);
+    }
+
+    private void ToggleReadOnlyMode_Click(object sender, RoutedEventArgs e)
+    {
+        tab.IsReadOnly = readonlyModeFlyoutItem.IsChecked = !tab.IsReadOnly;
+
+        UpdateTabIcon();
     }
 }
