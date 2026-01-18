@@ -4,6 +4,7 @@ using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Windows.System;
 using Microsoft.UI.Xaml.Input;
+using Fastedit.Helper;
 
 namespace Fastedit.Core.Tab;
 
@@ -14,6 +15,7 @@ public class TabFlyout
         var flyout = new MenuFlyout();
         flyout.Items.Add(CreateItem(tab, tabView, "Close", "\uE8BB", TabPageFlyoutItem.Close, VirtualKeyModifiers.Control, VirtualKey.W));
         flyout.Items.Add(new MenuFlyoutSeparator());
+        flyout.Items.Add(CreateItem(tab, tabView, "Show in File Explorer", Symbol.Link, TabPageFlyoutItem.RevealInFileExplorer));
         flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
         flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
         flyout.Items.Add(new MenuFlyoutSeparator());
@@ -92,6 +94,9 @@ public class TabFlyout
                     break;
                 case TabPageFlyoutItem.Undock:
                     TabWindowHelper.ShowInNewWindow(data.TabView, data.Tab);
+                    break;
+                case TabPageFlyoutItem.RevealInFileExplorer:
+                    FileExplorerHelper.OpenExplorerAtPath(data.Tab.DatabaseItem.FilePath);
                     break;
             }
         }

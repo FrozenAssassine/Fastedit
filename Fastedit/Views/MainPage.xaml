@@ -580,6 +580,7 @@
                                 <KeyboardAccelerator Key="F2"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Show in File Explorer" Click="RevealTabInFileExplorer"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutSubItem Text="Line Ending" x:Name="LineEndingMenubarFlyout"/>
                         <MenuFlyoutItem Text="Encoding" Click="ChangeEncoding_Click">

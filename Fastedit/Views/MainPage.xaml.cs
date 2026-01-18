@@ -698,4 +698,10 @@ public sealed partial class MainPage : Page
         (bool useSpacesInstead, int tabs) = currentlySelectedTabPage.textbox.DetectTabsSpaces();
         currentlySelectedTabPage.SetTabsSpaces(useSpacesInstead ? tabs : -1);
     }
+    private void RevealTabInFileExplorer(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+        FileExplorerHelper.OpenExplorerAtPath(currentlySelectedTabPage.DatabaseItem.FilePath);
+    }
 }
