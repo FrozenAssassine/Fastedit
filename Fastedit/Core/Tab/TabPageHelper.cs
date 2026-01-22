@@ -30,6 +30,8 @@ public static class TabPageHelper
             Margin = TabMargin,
             ControlW_SelectWord = false,
             ShowWhitespaceCharacters = true,
+            DoAutoPairing = true,
+            AutoPairOnlyOnSelection = true,
         };
         textbox.TextChanged += Textbox_TextChanged;
         textbox.ZoomChanged += Textbox_ZoomChanged;
