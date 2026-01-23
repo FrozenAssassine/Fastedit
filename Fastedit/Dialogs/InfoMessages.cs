@@ -58,7 +58,7 @@ public class InfoMessages
 
         new InfoBar().Show(
             $"Welcome to Fastedit {version}!",
-            "Updated to TextControlBox v1.5.1 due to bug in python syntaxhighlighting which caused crashes",
+            "• Added readonly mode for tabs\n• Added 'Reveal in Explorer' in right-click menu\n• Updated TextControlBox to v1.6.1 (Enhanced CSV highlighting, home/end fixes, shift-tab crash fix, selection over line number fix)\n• Removed .NET install prompt on first run\n• Disabled auto-pair for unselected text",
             btn,
             InfoBarSeverity.Success,
             25
