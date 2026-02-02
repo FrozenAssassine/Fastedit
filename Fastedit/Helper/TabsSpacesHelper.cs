@@ -1,4 +1,5 @@
-﻿using Fastedit.Core.Tab;
+﻿using Fastedit.Models;
+using Fastedit.Core.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +41,13 @@ internal class TabsSpacesHelper
         if (tabPage == null)
             return;
 
-        int spaces = ConvertHelper.ToInt((sender as MenuFlyoutItem).Tag, -1);
+        int spaces = -1;
+
+        if (sender is MenuFlyoutItem item)
+            spaces = ConvertHelper.ToInt(item.Tag, -1);
+        else if (sender is QuickAccessWindowItem qawi)
+            spaces = ConvertHelper.ToInt(qawi.Tag, -1);
+
         tabPage.SetTabsSpaces(spaces);
 
     }
@@ -50,7 +57,14 @@ internal class TabsSpacesHelper
         if (tabPage == null)
             return;
 
-        int spaces = ConvertHelper.ToInt((sender as MenuFlyoutItem).Tag, -1);
+        int spaces = -1;
+
+        if (sender is MenuFlyoutItem item)
+            spaces = ConvertHelper.ToInt(item.Tag, -1);
+        else if (sender is QuickAccessWindowItem qawi)
+            spaces = ConvertHelper.ToInt(qawi.Tag, -1);
+
+
         tabPage.RewriteTabsSpaces(spaces);
     }
 }

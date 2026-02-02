@@ -681,13 +681,7 @@ public sealed partial class MainPage : Page
 
     private void ReformatTabsInDocument_Click(object sender, RoutedEventArgs e)
     {
-        if (currentlySelectedTabPage == null)
-            return;
-
-        if (sender is MenuFlyoutItem item)
-            currentlySelectedTabPage.RewriteTabsSpaces(ConvertHelper.ToInt(item.Tag, -1));
-        if (sender is QuickAccessWindowItem qawi)
-            currentlySelectedTabPage.RewriteTabsSpaces(ConvertHelper.ToInt(qawi.Tag, -1));
+        TabsSpacesHelper.RewriteTabsSpaces(currentlySelectedTabPage, sender);
     }
 
     private void AutodetectTabsSpaces_Click(object sender, RoutedEventArgs e)
