@@ -58,7 +58,7 @@ public class InfoMessages
 
         new InfoBar().Show(
             $"Welcome to Fastedit {version}!",
-            "• Added readonly mode for tabs\n• Added 'Reveal in Explorer' in right-click menu\n• Updated TextControlBox to v1.6.1 (Enhanced CSV highlighting, home/end fixes, shift-tab crash fix, selection over line number fix)\n• Removed .NET install prompt on first run\n• Disabled auto-pair for unselected text",
+            "• Fixed crash when rewriting tabs/spaces\n• Fixed crash, when clicking over the linenumbers without the line actually existing",
             btn,
             InfoBarSeverity.Success,
             25
