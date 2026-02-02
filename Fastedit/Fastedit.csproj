@@ -25,20 +25,21 @@
 	  <GenerateTestArtifacts>True</GenerateTestArtifacts>
 	  <AppxBundle>Always</AppxBundle>
 	  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-	  <AssemblyVersion>2.10.0</AssemblyVersion>
-	  <Version>2.10.0</Version>
+	  <AssemblyVersion>2.10.1</AssemblyVersion>
+	  <Version>2.10.1</Version>
 	  <Authors>Julius Kirsch</Authors>
 	  <Copyright>Copyright © 2022-2026</Copyright>
 	  <WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
 	  <SelfContained>true</SelfContained>
 	  <WindowsPackageType>MSIX</WindowsPackageType>
-	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+	  <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+	  <AppxPackageDir>W:\FasteditDump\Test</AppxPackageDir>
   </PropertyGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.6.1" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.6.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
