@@ -32,6 +32,8 @@ public partial class App : Application
             if(!e.IsFirstLaunch)
                 m_window.SendLaunchArguments();
         }
+
+        m_window.BringToForeground();
     }
 
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

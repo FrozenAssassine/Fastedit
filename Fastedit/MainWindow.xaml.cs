@@ -1,4 +1,5 @@
 using Fastedit.Core;
+using Fastedit.Helper;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -57,6 +58,11 @@ namespace Fastedit
             {
                 await mainPage.TriggerAppActivationAfterStart();
             });
+        }
+
+        public void BringToForeground()
+        {
+            InteropHelper.SetForegroundWindow(WindowHandle);
         }
     }
 }
