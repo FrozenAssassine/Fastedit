@@ -160,6 +160,11 @@ public static class TabPageHelper
             else
                 tabView.TabItems.Add(tab);
 
+            if (!string.IsNullOrEmpty(tab.DatabaseItem?.FilePath) && File.Exists(tab.DatabaseItem.FilePath))
+            {
+                FileChangeManager.StartWatching(tab);
+            }
+
             currentCount++;
         }
 
@@ -298,6 +303,8 @@ public static class TabPageHelper
 
         if(mainPage.SearchControl.currentTab == tab)
             mainPage.SearchControl.Close();
+
+        FileChangeManager.StopWatching(tab);
 
         tabView.TabItems.Remove(tab);
         TabDatabase.DeleteTempFile(tab);

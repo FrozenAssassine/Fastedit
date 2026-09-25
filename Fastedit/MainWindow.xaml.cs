@@ -28,7 +28,7 @@ namespace Fastedit
             restoreWindowManager.RestoreSettings();
 
             this.WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
-
+            
             XamlRoot = this.Content.XamlRoot;
             UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
             InfoMessagesPanel = this.infoMessagesPanel;
@@ -36,7 +36,7 @@ namespace Fastedit
 
             this.mainPage.TitleBarGrid.LayoutUpdated += TitleBarGrid_LayoutUpdated;
             this.Closed += MainWindow_Closed;
-
+            this.Activated += MainWindow_Activated;
 
             this.Title = "Fastedit";
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\Icon.ico"));
@@ -45,6 +45,15 @@ namespace Fastedit
         private void MainWindow_Closed(object sender, WindowEventArgs args)
         {
             this.mainPage.TitleBarGrid.LayoutUpdated -= TitleBarGrid_LayoutUpdated;
+            this.Activated -= MainWindow_Activated;
+        }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState != WindowActivationState.Deactivated)
+            {
+                Fastedit.Core.Storage.FileChangeManager.CheckForExternalChanges();
+            }
         }
 
         private void TitleBarGrid_LayoutUpdated(object sender, object e)

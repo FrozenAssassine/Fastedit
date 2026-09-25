@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Fastedit.Dialogs;
 using Fastedit.Core.Tab;
@@ -41,6 +41,7 @@ internal class RenameFileHelper
                 Directory.Move(sourceFile, destFile);
                 tab.DatabaseItem.FilePath = destFile;
                 tab.SetHeader(newName);
+                Fastedit.Core.Storage.FileChangeManager.UpdateWatchedPath(tab, destFile);
             }
             catch (Exception ex)
             {

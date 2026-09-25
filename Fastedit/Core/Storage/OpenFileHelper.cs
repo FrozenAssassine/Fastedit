@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Microsoft.UI.Xaml;
@@ -70,14 +70,14 @@ public class OpenFileHelper
         return (lines, mixed, ending);
     }
 
-    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding) ReadLinesFromFile(string path, Encoding encoding = null)
+    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding) ReadLinesFromFile(string path, Encoding encoding = null, bool silent = false)
     {
         if (string.IsNullOrWhiteSpace(path))
             return (null, null, false, false, LineEnding.CRLF);
 
         try
         {
-            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 65536, useAsync: false);
+            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete, bufferSize: 65536, useAsync: false);
             using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
             {
                 var getLinesResult = GetLinesAndDetectMixed(reader);
@@ -89,14 +89,43 @@ public class OpenFileHelper
         }
         catch (UnauthorizedAccessException)
         {
-            InfoMessages.NoAccessToReadFile();
+            if (!silent)
+                InfoMessages.NoAccessToReadFile();
+            return (null, null, false, false, LineEnding.CRLF);
+        }
+        catch (IOException)
+        {
+            if (!silent)
+                InfoMessages.UnhandledException("The file is currently locked or being used by another process.");
             return (null, null, false, false, LineEnding.CRLF);
         }
         catch (Exception ex)
         {
-            InfoMessages.UnhandledException(ex.Message);
+            if (!silent)
+                InfoMessages.UnhandledException(ex.Message);
         }
         return (null, null, false, false, LineEnding.CRLF);
+    }
+
+    public static async Task<(string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding)> ReadLinesFromFileWithRetryAsync(string path, Encoding encoding = null, int maxRetries = 5, int delayMs = 60)
+    {
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                var res = ReadLinesFromFile(path, encoding, silent: i < maxRetries - 1);
+                if (res.succeeded)
+                    return res;
+            }
+            catch (IOException)
+            {
+                // Transient file lock by another application
+            }
+
+            if (i < maxRetries - 1)
+                await Task.Delay(delayMs);
+        }
+        return ReadLinesFromFile(path, encoding, silent: false);
     }
 
     private static async Task<bool> DoOpenTab(TabPageItem tab, string path, bool load = true)
@@ -145,6 +174,8 @@ public class OpenFileHelper
         {
             File.Copy(path, Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier));
         }
+
+        FileChangeManager.StartWatching(tab);
 
         return true;
     }
@@ -196,6 +227,10 @@ public class OpenFileHelper
         {
             tab.Encoding = res.encoding;
             tab.LoadLines(res.lines);
+            if (File.Exists(tab.DatabaseItem.FilePath))
+            {
+                tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(tab.DatabaseItem.FilePath);
+            }
             return true;
         }
         return false;

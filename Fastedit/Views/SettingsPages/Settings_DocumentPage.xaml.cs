@@ -1,4 +1,4 @@
-﻿using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.Text;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
@@ -45,6 +45,10 @@ public sealed partial class Settings_DocumentPage : Page
         ShowWhitespaceCharacters.IsOn = AppSettings.ShowWhitespaceCharacters;
         EnableClickableLinks.IsOn = AppSettings.EnableClickableLinks;
 
+        DetectExternalFileChangesSwitch.IsOn = AppSettings.DetectExternalFileChanges;
+        AutoReloadUnmodifiedFilesSwitch.IsOn = AppSettings.AutoReloadUnmodifiedFiles;
+        AutoReloadUnmodifiedFilesSwitch.IsEnabled = AppSettings.DetectExternalFileChanges;
+
         LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
 
     }
@@ -82,6 +86,25 @@ public sealed partial class Settings_DocumentPage : Page
     private void EnableClickableLinks_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.EnableClickableLinks = EnableClickableLinks.IsOn;
+    }
+
+    private void DetectExternalFileChangesSwitch_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DetectExternalFileChanges = DetectExternalFileChangesSwitch.IsOn;
+        AutoReloadUnmodifiedFilesSwitch.IsEnabled = DetectExternalFileChangesSwitch.IsOn;
+        if (DetectExternalFileChangesSwitch.IsOn)
+        {
+            Fastedit.Core.Storage.FileChangeManager.StartAll(Fastedit.Core.Tab.TabPageHelper.mainPage?.tabView);
+        }
+        else
+        {
+            Fastedit.Core.Storage.FileChangeManager.StopAll();
+        }
+    }
+
+    private void AutoReloadUnmodifiedFilesSwitch_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.AutoReloadUnmodifiedFiles = AutoReloadUnmodifiedFilesSwitch.IsOn;
     }
 
     private void TabsSpacesSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
