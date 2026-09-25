@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Helper;
 using Fastedit.Models;
 using Microsoft.UI.Xaml;
@@ -101,6 +101,9 @@ public class TabPageItem : TabViewItem
     }
 
     public bool DataIsLoaded = false;
+    public DateTime LastKnownWriteTimeUtc { get; set; } = DateTime.MinValue;
+    public bool IsSelfSaving { get; set; } = false;
+    public bool HasPendingExternalConflict { get; set; } = false;
 
     public SyntaxHighlightID HighlightLanguage
     {
@@ -208,6 +211,16 @@ public class TabPageItem : TabViewItem
         {
             this._DataBaseItem.IsReadOnly = textbox.IsReadOnly = value;
             UpdateTabIcon();
+        }
+    }
+
+    public bool WordWrap
+    {
+        get => _DataBaseItem.WordWrap;
+        set
+        {
+            _DataBaseItem.WordWrap = value;
+            textbox.WordWrap = value;
         }
     }
 

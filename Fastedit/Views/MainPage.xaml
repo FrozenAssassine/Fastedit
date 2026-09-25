@@ -570,6 +570,7 @@
                 </MenuBarItem>
             <MenuBarItem Title="Document">
                     <MenuBarItem.Items>
+                        <ToggleMenuFlyoutItem x:Name="WordWrapMenuIndicator" Text="Word wrap" Click="WordWrap_Click"/>
                         <MenuFlyoutItem Text="File Info" Click="FileInfo_Click">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="I" Modifiers="Control" IsEnabled="False"/>
@@ -724,6 +725,7 @@
                 <models:QuickAccessWindowItem Command="Close All" RunCommandWindowItemClicked="CloseAll_Click"/>
                 <models:QuickAccessWindowItem Command="Surround With" Shortcut="Ctrl + Q" RunCommandWindowItemClicked="SurroundWith_Click"/>
                 <models:QuickAccessWindowItem Command="Toggle Readonly" RunCommandWindowItemClicked="ToggleReadonly_Click"/>
+                <models:QuickAccessWindowItem Command="Word wrap" RunCommandWindowItemClicked="WordWrap_Click"/>
                 <models:QuickAccessWindowSubItem ItemSelected="RunCommandWindowItem_Designs_ItemSelected" TriggerOnSelecting="True" SelectedChanged="RunCommandWindowItem_Designs_SelectedChanged" Command="Design" x:Name="RunCommandWindowItem_Designs"/>
                 </controls:QuickAccessWindow.Items>
         </controls:QuickAccessWindow>

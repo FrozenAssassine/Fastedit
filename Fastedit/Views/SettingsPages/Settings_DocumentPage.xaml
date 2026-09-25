@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="Fastedit.Views.SettingsPages.Settings_DocumentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -56,6 +56,18 @@
         <controls:SettingsControl x:Uid="Settings_Page_EnableClickableLinks" Header="Enable clickable links in the text">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="EnableClickableLinks" Toggled="EnableClickableLinks_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SettingsControl Header="Track external file changes on disk">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DetectExternalFileChangesSwitch" Toggled="DetectExternalFileChangesSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SettingsControl Header="Automatically reload unmodified files when changed on disk">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="AutoReloadUnmodifiedFilesSwitch" Toggled="AutoReloadUnmodifiedFilesSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 

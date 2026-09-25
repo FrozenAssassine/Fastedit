@@ -11,6 +11,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
 using System.Threading.Tasks;
 
@@ -154,6 +155,10 @@ public sealed partial class MainPage : Page
         if (!SaveDatabase())
         {
             args.Cancel = true;
+        }
+        else
+        {
+            FileChangeManager.StopAll();
         }
     }
 
@@ -342,8 +347,11 @@ public sealed partial class MainPage : Page
 
             VisualizeWhitespaceCharacters_MenuFlyoutItem.IsChecked = tab.GetEffectiveWhitespaceSetting();
             textboxReadonlyMenubarItem.IsChecked = currentlySelectedTabPage.IsReadOnly;
+            WordWrapMenuIndicator.IsChecked = currentlySelectedTabPage.WordWrap;
 
             textStatusBar.UpdateAll();
+
+            FileChangeManager.CheckTabForExternalChanges(tab);
         }
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
         {
@@ -706,5 +714,13 @@ public sealed partial class MainPage : Page
         if (currentlySelectedTabPage == null)
             return;
         FileExplorerHelper.OpenExplorerAtPath(currentlySelectedTabPage.DatabaseItem.FilePath);
+    }
+
+    private void WordWrap_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        WordWrapMenuIndicator.IsChecked = currentlySelectedTabPage.WordWrap = !currentlySelectedTabPage.WordWrap;
     }
 }

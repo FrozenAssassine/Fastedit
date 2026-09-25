@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
 using TextControlBoxNS;
@@ -159,5 +159,17 @@ internal class AppSettings
     {
         get => (LineEnding)SettingsManager.GetSettingsAsInt(AppSettingsValues.Settings_DefaultLineEnding, LineEnding.CRLF.GetHashCode());
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultLineEnding, value.GetHashCode());
+    }
+
+    public static bool DetectExternalFileChanges
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_DetectExternalFileChanges, DefaultValues.DetectExternalFileChanges);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DetectExternalFileChanges, value);
+    }
+
+    public static bool AutoReloadUnmodifiedFiles
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_AutoReloadUnmodifiedFiles, DefaultValues.AutoReloadUnmodifiedFiles);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_AutoReloadUnmodifiedFiles, value);
     }
 }

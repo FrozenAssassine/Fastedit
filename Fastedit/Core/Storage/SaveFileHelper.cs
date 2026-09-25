@@ -1,4 +1,5 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -94,7 +95,7 @@ public class SaveFileHelper
 
         return false;
     }
-    public static async Task<bool> Save(TabPageItem tab, Window window = null)
+    public static async Task<bool> Save(TabPageItem tab, Window window = null, bool forceOverwrite = false)
     {
         if (tab == null)
             return false;
@@ -106,12 +107,30 @@ public class SaveFileHelper
         if (tab.DatabaseItem.WasNeverSaved)
             return await SaveFileAs(tab, window);
 
-        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
-        if (result)
+        // Check if file changed on disk externally since last load/save
+        if (!forceOverwrite && FileChangeManager.HasExternalConflict(tab))
         {
-            TabPageHelper.UpdateSaveStatus(tab, false);
+            var conflictRes = await FileConflictDialog.ShowAsync(tab, root: window?.Content?.XamlRoot);
+            if (conflictRes != FileConflictResolution.Overwrite)
+            {
+                return false;
+            }
         }
-        return result;
+
+        FileChangeManager.NotifySavingStarted(tab);
+        try
+        {
+            bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
+            if (result)
+            {
+                TabPageHelper.UpdateSaveStatus(tab, false);
+            }
+            return result;
+        }
+        finally
+        {
+            FileChangeManager.NotifySavingFinished(tab);
+        }
     }
     public static async Task<bool> SaveFileAs(TabPageItem tab, Window window = null)
     {
@@ -136,13 +155,22 @@ public class SaveFileHelper
         StorageFile file = await savePicker.PickSaveFileAsync();
         if (file != null)
         {
-            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
+            FileChangeManager.NotifySavingStarted(tab);
+            try
+            {
+                await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
 
-            tab.DatabaseItem.FilePath = file.Path;
-            tab.DatabaseItem.FileName = file.Name;
+                tab.DatabaseItem.FilePath = file.Path;
+                tab.DatabaseItem.FileName = file.Name;
 
-            TabPageHelper.UpdateSaveStatus(tab, false);
-            return true;
+                TabPageHelper.UpdateSaveStatus(tab, false);
+                return true;
+            }
+            finally
+            {
+                FileChangeManager.NotifySavingFinished(tab);
+                FileChangeManager.StartWatching(tab);
+            }
         }
         return false;
     }
