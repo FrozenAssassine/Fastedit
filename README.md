@@ -43,7 +43,7 @@ Introducing Fastedit, designed to make editing and organizing your documents eff
 - Highly Customizable – Customize to your needs.
 
 ## 🚀 Building the project:
-To build Fastedit you need Visual Studio and UWP installed. Then you can clone the repository and open the .sln file with Visual Studio.
+To build Fastedit you need Visual Studio and WinUI-3 installed. Then you can clone the repository and open the .sln file with Visual Studio.
 
 ## 👨‍👩‍👧‍👦 Contributors:
 If you want to contribute to this project, feel free to open an <a href="https://github.com/FrozenAssassine/TextControlBox-UWP/issues/new">issue</a> or a <a href="https://github.com/FrozenAssassine/TextControlBox-UWP/pulls">pull request</a>.
