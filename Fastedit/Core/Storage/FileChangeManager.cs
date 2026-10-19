@@ -94,6 +94,7 @@ public static class FileChangeManager
         string filePath = tab.DatabaseItem?.FilePath;
         if (!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath))
         {
+            tab.IsDeletedOnDisk = false;
             tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(filePath);
         }
 
@@ -139,6 +140,7 @@ public static class FileChangeManager
             HandleFileDeleted(tab);
             return;
         }
+        tab.IsDeletedOnDisk = false;
 
         try
         {
@@ -261,8 +263,11 @@ public static class FileChangeManager
 
     public static void HandleFileDeleted(TabPageItem tab)
     {
-        if (tab == null)
+        //only notify once per deletion, otherwise every window activation shows a new message
+        if (tab == null || tab.IsDeletedOnDisk)
             return;
+
+        tab.IsDeletedOnDisk = true;
 
         tab.DatabaseItem.IsModified = true;
         tab.UpdateHeader();
@@ -446,6 +451,7 @@ public class TabFileWatcher : IDisposable
             FileChangeManager.HandleFileDeleted(_tab);
             return;
         }
+        _tab.IsDeletedOnDisk = false;
 
         try
         {
@@ -486,6 +492,7 @@ public class TabFileWatcher : IDisposable
                     }
                     else
                     {
+                        _tab.IsDeletedOnDisk = false;
                         // File was recreated / replaced atomically
                         var diskWriteTime = File.GetLastWriteTimeUtc(_filePath);
                         if (diskWriteTime > _tab.LastKnownWriteTimeUtc)

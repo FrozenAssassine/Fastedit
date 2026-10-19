@@ -158,7 +158,9 @@ public class SaveFileHelper
             FileChangeManager.NotifySavingStarted(tab);
             try
             {
-                await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
+                //do not mark the tab as saved if writing failed -> would lose changes on close
+                if (!await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding))
+                    return false;
 
                 tab.DatabaseItem.FilePath = file.Path;
                 tab.DatabaseItem.FileName = file.Name;

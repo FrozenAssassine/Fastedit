@@ -71,7 +71,15 @@ namespace Fastedit
 
         public void BringToForeground()
         {
-            InteropHelper.SetForegroundWindow(WindowHandle);
+            //called from the named pipe thread when a second instance launches
+            this.DispatcherQueue.TryEnqueue(() =>
+            {
+                if (InteropHelper.IsIconic(WindowHandle))
+                    InteropHelper.ShowWindow(WindowHandle, InteropHelper.SW_RESTORE);
+
+                this.Activate();
+                InteropHelper.SetForegroundWindow(WindowHandle);
+            });
         }
     }
 }

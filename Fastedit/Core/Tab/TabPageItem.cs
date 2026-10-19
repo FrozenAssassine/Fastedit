@@ -105,6 +105,7 @@ public class TabPageItem : TabViewItem
     public DateTime LastKnownWriteTimeUtc { get; set; } = DateTime.MinValue;
     public bool IsSelfSaving { get; set; } = false;
     public bool HasPendingExternalConflict { get; set; } = false;
+    public bool IsDeletedOnDisk { get; set; } = false;
 
     public SyntaxHighlightID HighlightLanguage
     {
