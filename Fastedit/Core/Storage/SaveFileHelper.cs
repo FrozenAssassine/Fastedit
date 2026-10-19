@@ -20,17 +20,20 @@ public class SaveFileHelper
 {
     public static string GenerateUniqueNameFromPath(string filePath)
     {
-        int count = 0;
-        string path = filePath;
         string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
         string extension = Path.GetExtension(filePath);
         string pathWithoutFile = Path.GetDirectoryName(filePath);
 
-        while (File.Exists(path))
+        //check the full path, otherwise an existing file gets overwritten
+        int count = 0;
+        string fileName;
+        do
         {
-            path = Path.Join($"{fileNameWithoutExtension}({count++}){extension}");
+            fileName = $"{fileNameWithoutExtension}({count++}){extension}";
         }
-        return $"{fileNameWithoutExtension}({count++}){extension}";
+        while (File.Exists(Path.Join(pathWithoutFile, fileName)));
+
+        return fileName;
     }
 
     public static async Task<bool> WriteLinesToFile(string path, IEnumerable<string> lines, Encoding encoding, LineEnding lineEnding)

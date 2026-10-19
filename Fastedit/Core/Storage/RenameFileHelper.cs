@@ -24,7 +24,9 @@ internal class RenameFileHelper
             return true;
 
         //Check if the file already exists
-        if (Directory.Exists(Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName)))
+        string newPath = Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName);
+        bool onlyCaseChanged = string.Equals(tab.DatabaseItem.FileName, newName, StringComparison.OrdinalIgnoreCase);
+        if (!onlyCaseChanged && (File.Exists(newPath) || Directory.Exists(newPath)))
         {
             InfoMessages.RenameFileAlreadyExists();
             return false;

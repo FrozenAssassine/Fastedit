@@ -43,7 +43,34 @@ public class EncodingHelper
             data.StartsWith(new byte[] { 0x00, 0x00, 0xFE, 0xFF }))
             return null;
 
+        //UTF-16 without BOM: ASCII characters have a zero byte in every second position
+        var utf16 = DetectUtf16WithoutBom(data);
+        if (utf16 != null)
+            return utf16;
+
         return System.Text.Unicode.Utf8.IsValid(data) ? AllEncodings[0].encoding : Windows1252;
+    }
+
+    private static Encoding DetectUtf16WithoutBom(ReadOnlySpan<byte> data)
+    {
+        int length = Math.Min(data.Length, 4096) & ~1;
+        if (length < 4)
+            return null;
+
+        int evenZeros = 0, oddZeros = 0;
+        for (int i = 0; i < length; i += 2)
+        {
+            if (data[i] == 0) evenZeros++;
+            if (data[i + 1] == 0) oddZeros++;
+        }
+
+        int pairs = length / 2;
+        //most text is ASCII, so a high share of zeros on one side only means UTF-16
+        if (oddZeros > pairs * 0.4 && evenZeros < pairs * 0.05)
+            return AllEncodings[2].encoding; //UTF-16 LE
+        if (evenZeros > pairs * 0.4 && oddZeros < pairs * 0.05)
+            return AllEncodings[3].encoding; //UTF-16 BE
+        return null;
     }
 
     public static IEnumerable<string> AllEncodingNames => AllEncodings.Select(x => x.name);

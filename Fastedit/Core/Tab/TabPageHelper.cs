@@ -99,7 +99,7 @@ public static class TabPageHelper
             progressWindow?.ShowProgress();
             progressWindow?.SetText("Loading file " + tab.DatabaseItem.FileName + "...");
             
-            tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+            tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab), true, tab.LineEnding);
             tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
 
             tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
@@ -128,7 +128,8 @@ public static class TabPageHelper
 
     public static async Task LoadTabDatabase(TabView tabView, TabDatabase tabdatabase)
     {
-        var tabData = tabdatabase.LoadData(tabView);
+        var tabData = tabdatabase.LoadData(tabView).ToList();
+        var ownWindowTabs = new List<TabPageItem>();
         int currentCount = 0;
         foreach (var tab in tabData)
         {
@@ -138,7 +139,7 @@ public static class TabPageHelper
                 !DefaultValues.FastLoadTabs)
             {
                 //when loading back from the database file, we apply everything like it was on app closing
-                tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+                tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab), true, tab.LineEnding);
                 tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
 
                 tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
@@ -154,11 +155,11 @@ public static class TabPageHelper
                     tab.textbox.SetCursorPosition(tab.DatabaseItem.LinePos, tab.DatabaseItem.CharacterPos);
             };
 
-            //Show tab in it's own window or add it to the tabView:
+            //tabs with their own window are first loaded in the main window and moved out afterwards,
+            //like dragging a tab out. A textbox that is first loaded in a separate window crashes the app when that window closes
+            tabView.TabItems.Add(tab);
             if (tab.DatabaseItem.HasOwnWindow)
-                TabWindowHelper.ShowInNewWindow(tabView, tab);
-            else
-                tabView.TabItems.Add(tab);
+                ownWindowTabs.Add(tab);
 
             if (!string.IsNullOrEmpty(tab.DatabaseItem?.FilePath) && File.Exists(tab.DatabaseItem.FilePath))
             {
@@ -173,8 +174,31 @@ public static class TabPageHelper
 
         tabView.SelectedIndex = -1;
         await Task.Delay(20); //textbox sometimes does not load without the delay
-        int selectingIndex = tabData.ElementAt(0).DatabaseItem.SelectedIndex;
+
+        foreach (var tab in ownWindowTabs)
+        {
+            tabView.SelectedItem = tab;
+            await WaitForTextboxLoaded(tab);
+            TabWindowHelper.ShowInNewWindow(tabView, tab);
+        }
+
+        if (tabView.TabItems.Count == 0)
+            return;
+
+        int selectingIndex = tabData[0].DatabaseItem.SelectedIndex;
         tabView.SelectedIndex = Math.Clamp(selectingIndex, 0, tabView.TabItems.Count - 1);
+    }
+
+    private static async Task WaitForTextboxLoaded(TabPageItem tab)
+    {
+        if (tab.textbox.IsLoaded)
+            return;
+
+        var loaded = new TaskCompletionSource();
+        void OnLoaded(object sender, RoutedEventArgs e) => loaded.TrySetResult();
+        ((FrameworkElement)tab.textbox).Loaded += OnLoaded;
+        await Task.WhenAny(loaded.Task, Task.Delay(1000));
+        ((FrameworkElement)tab.textbox).Loaded -= OnLoaded;
     }
 
     public static bool SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)

@@ -41,6 +41,7 @@ internal class TabWindowHelper
         window.Title = tab.DatabaseItem.FileName;
         window.ExtendsContentIntoTitleBar = AppSettings.HideTitlebar;
         window.Closed += Window_Closed;
+        window.AppWindow.Closing += AppWindow_Closing;
         window.Activate();
 
         OpenWindows.Add(window, tab);
@@ -50,6 +51,15 @@ internal class TabWindowHelper
         return false;
     }
 
+    //fired when the user closes the window, while it is still fully alive:
+    //detach the textbox here, moving it during the teardown in Closed crashes WinUI natively
+    private static void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
+    {
+        var window = OpenWindows.Keys.FirstOrDefault(x => x.AppWindow == sender);
+        if (window?.Content is TabWindowPage page)
+            page.Close();
+    }
+
     private static void Window_Closed(object sender, WindowEventArgs args)
     {
         Window window = sender as Window;
@@ -57,36 +67,47 @@ internal class TabWindowHelper
         if (window == null)
             return;
 
-        OpenWindows.TryGetValue(window, out var tab);
+        window.Closed -= Window_Closed;
+        window.AppWindow.Closing -= AppWindow_Closing;
+
+        if (!OpenWindows.TryGetValue(window, out var tab))
+            return;
         OpenWindows.Remove(window);
 
-        //remove the textbox from the window and add it back to the tab:
-        if (window.Content is TabWindowPage page)
+        if (window.Content is not TabWindowPage page)
+            return;
+
+        page.Close();
+
+        bool keepOwnWindow = !closeWithoutChanging;
+        void MoveTabBack()
         {
-            page.Close();
             tab.AddTextbox();
 
             tabView.TabItems.Add(tab);
             tabView.SelectedItem = tab;
-            if (closeWithoutChanging)
-            {
-                tab.DatabaseItem.HasOwnWindow = false;
-                closeWithoutChanging = true;
-            }
+            tab.DatabaseItem.HasOwnWindow = keepOwnWindow;
 
             SettingsUpdater.UpdateTab(tab, false);
         }
+
+        //when closing the app, the tab has to be back in the tabview before the database is saved
+        if (keepOwnWindow)
+            MoveTabBack();
+        else
+            tabView.DispatcherQueue.TryEnqueue(MoveTabBack);
     }
 
     public static void CloseAllWindows(bool closeForSave = true)
     {
         closeWithoutChanging = !closeForSave;
 
-        int count = OpenWindows.Count;
-        for (int i = 0; i < count; i++)
+        foreach (var window in OpenWindows.Keys.ToArray())
         {
-            OpenWindows.Keys.ElementAt(0).Close();
+            window.Close();
         }
+
+        closeWithoutChanging = true;
     }
 
     public static void UpdateSettings()

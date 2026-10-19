@@ -181,7 +181,10 @@ public class OpenFileHelper
 
         if (!load)
         {
-            File.Copy(path, Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier));
+            //store the already decoded lines: temp files are always read back as UTF-8,
+            //copying the raw bytes would break ANSI and UTF-16 files
+            Directory.CreateDirectory(DefaultValues.DatabasePath);
+            File.WriteAllLines(Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier), res.lines);
         }
 
         FileChangeManager.StartWatching(tab);
