@@ -55,8 +55,9 @@ public class OpenFileHelper
             }
         }
 
-        if (sb.Length > 0)
-            lines.Add(sb.ToString());
+        //always add the last line, even when empty: a file ending with a line break gets an empty
+        //last line, so saving writes the file back exactly as it was (no added or removed line break)
+        lines.Add(sb.ToString());
 
         bool mixed = (seenCRLF ? 1 : 0) + (seenLF ? 1 : 0) + (seenCR ? 1 : 0) > 1;
 

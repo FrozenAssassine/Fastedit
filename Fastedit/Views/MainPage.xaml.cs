@@ -639,6 +639,10 @@ public sealed partial class MainPage : Page
     {
         return TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
     }
+    public void BackupChangedTabs()
+    {
+        TabPageHelper.BackupChangedTabs(tabdatabase, tabControl);
+    }
     public void ShowSettings(string page = null)
     {
         SettingsTabPageHelper.OpenSettings(this, tabControl, page);

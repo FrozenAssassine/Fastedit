@@ -56,7 +56,7 @@ public class RecycleBinManager
         {
             string fileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(DefaultValues.RecycleBinPath, tab.DatabaseItem.FileName));
             var filePath = Path.Join(DefaultValues.RecycleBinPath, fileName);
-            File.WriteAllLines(filePath, tab.textbox.Lines);
+            File.WriteAllText(filePath, string.Join(Environment.NewLine, tab.textbox.Lines));
             return true;
         }
         catch (Exception ex)

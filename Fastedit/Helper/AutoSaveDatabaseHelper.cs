@@ -6,7 +6,7 @@ namespace Fastedit.Helper;
 
 internal class AutoSaveDatabaseHelper
 {
-    public static TimeSpan DatabaseBackupTime = new TimeSpan(0, 4, 0);
+    public static TimeSpan DatabaseBackupTime = new TimeSpan(0, 1, 0);
 
     public static void RegisterSave()
     {
@@ -18,6 +18,6 @@ internal class AutoSaveDatabaseHelper
 
     private static void SaveDatabaseTimer_Tick(object sender, object e)
     {
-        TabPageHelper.mainPage.SaveDatabase(false, false);
+        TabPageHelper.mainPage.BackupChangedTabs();
     }
 }

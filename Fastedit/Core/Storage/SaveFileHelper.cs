@@ -48,10 +48,14 @@ public class SaveFileHelper
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 65536, useAsync: true))
             using (var writer = new StreamWriter(stream, encoding))
             {
+                //line breaks only between lines, a trailing line break is stored as an empty last line
+                bool first = true;
                 foreach (var line in lines)
                 {
+                    if (!first)
+                        await writer.WriteAsync(lineEndingStr.AsMemory());
                     await writer.WriteAsync(line.AsMemory());
-                    await writer.WriteAsync(lineEndingStr.AsMemory());
+                    first = false;
                 }
 
                 await writer.FlushAsync();

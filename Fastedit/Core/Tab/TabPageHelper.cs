@@ -77,6 +77,7 @@ public static class TabPageHelper
     {
         if (sender.Tag is TabPageItem tab)
         {
+            tab.NeedsBackup = true;
             if (!tab.DatabaseItem.IsModified)
             {
                 tab.DatabaseItem.IsModified = true;
@@ -234,11 +235,38 @@ public static class TabPageHelper
                 progressWindow?.SetText("Saving database " + tab.DatabaseItem.FileName + "...");
                 if (!TabDatabase.SaveTempFile(tab))
                     anyFailed = true;
+                else
+                    tab.NeedsBackup = false;
             }
         }
         progressWindow?.HideProgress();
+        lastBackupTabCount = tabView.TabItems.Count + TabWindowHelper.OpenWindows.Count;
 
         return saveDBFileRes && !anyFailed;
+    }
+
+    private static int lastBackupTabCount = -1;
+
+    //auto save: only back up tabs whose text changed since the last backup
+    public static void BackupChangedTabs(TabDatabase tabDatabase, TabView tabView)
+    {
+        var changedTabs = tabView.TabItems.OfType<TabPageItem>()
+            .Concat(TabWindowHelper.OpenWindows.Values)
+            .Where(x => x.NeedsBackup && x.DataIsLoaded)
+            .ToList();
+
+        int tabCount = tabView.TabItems.Count + TabWindowHelper.OpenWindows.Count;
+        if (changedTabs.Count == 0 && tabCount == lastBackupTabCount)
+            return;
+
+        foreach (var tab in changedTabs)
+        {
+            if (TabDatabase.SaveTempFile(tab))
+                tab.NeedsBackup = false;
+        }
+
+        if (tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex))
+            lastBackupTabCount = tabCount;
     }
 
     public static string GenerateUniqueHeader(TabView tabView)

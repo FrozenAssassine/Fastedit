@@ -106,6 +106,8 @@ public class TabPageItem : TabViewItem
     public bool IsSelfSaving { get; set; } = false;
     public bool HasPendingExternalConflict { get; set; } = false;
     public bool IsDeletedOnDisk { get; set; } = false;
+    //text changed since the last backup to the database -> picked up by the auto save
+    public bool NeedsBackup { get; set; } = false;
 
     public SyntaxHighlightID HighlightLanguage
     {
