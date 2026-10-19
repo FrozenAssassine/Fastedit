@@ -50,7 +50,8 @@ public sealed partial class Settings_DocumentPage : Page
         AutoReloadUnmodifiedFilesSwitch.IsEnabled = AppSettings.DetectExternalFileChanges;
 
         LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
-
+        DefaultWordWrap.IsOn = AppSettings.DefaultWordWrap;
+        DefaultSmoothScroling.IsOn = AppSettings.DefaultSmoothScroling;
     }
 
 
@@ -115,5 +116,15 @@ public sealed partial class Settings_DocumentPage : Page
     private void LineEndingSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         AppSettings.DefaultLineEnding = (TextControlBoxNS.LineEnding)LineEndingSelectorCombobox.SelectedIndex;
+    }
+
+    private void DefaultWordWrap_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DefaultWordWrap = DefaultWordWrap.IsOn;
+    }
+
+    private void DefaultSmoothScroling_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DefaultSmoothScroling = DefaultSmoothScroling.IsOn;
     }
 }

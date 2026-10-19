@@ -90,7 +90,8 @@ public class TabPageItem : TabViewItem
             IsModified = false,
             ZoomFactor = 100,
             LineEnding = AppSettings.DefaultLineEnding,
-            IsReadOnly = false
+            IsReadOnly = false,
+            WordWrap = AppSettings.DefaultWordWrap,
         };
 
         //newly created tab => set default tabs/spaces
@@ -157,6 +158,7 @@ public class TabPageItem : TabViewItem
         LineEnding = _DataBaseItem.LineEnding;
         textbox.ZoomFactor = _DataBaseItem.ZoomFactor;
         textbox.IsReadOnly = _DataBaseItem.IsReadOnly;
+        textbox.WordWrap = _DataBaseItem.WordWrap;
 
         SetHeader(_DataBaseItem.FileName);
 

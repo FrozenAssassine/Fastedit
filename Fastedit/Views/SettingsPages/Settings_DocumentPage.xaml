@@ -70,7 +70,12 @@
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="AutoReloadUnmodifiedFilesSwitch" Toggled="AutoReloadUnmodifiedFilesSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-
+        <controls:SettingsControl Header="Smooth Scrolling">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultSmoothScroling" Toggled="DefaultSmoothScroling_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        
         <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Default Document Settings"/>
         <controls:SettingsControl x:Uid="Settings_Page_Number_Of_Spaces_Per_Tab_Control" Header="Default Tab behaviour for new documents">
             <controls:SettingsControl.Content>
@@ -91,6 +96,11 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Wordwrap">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultWordWrap" Toggled="DefaultWordWrap_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
     </StackPanel>

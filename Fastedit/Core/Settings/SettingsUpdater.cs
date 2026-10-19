@@ -68,6 +68,7 @@ namespace Fastedit.Core.Settings
             tab.textbox.ShowWhitespaceCharacters = tab.GetEffectiveWhitespaceSetting();
 
             tab.textbox.HighlightLinks = AppSettings.EnableClickableLinks;
+            tab.textbox.SmoothScrolling = AppSettings.DefaultSmoothScroling;
 
             if (setMargin)
                 tab.textbox.Margin = TabPageHelper.TabMargin;

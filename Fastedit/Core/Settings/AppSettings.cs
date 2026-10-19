@@ -172,4 +172,15 @@ internal class AppSettings
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_AutoReloadUnmodifiedFiles, DefaultValues.AutoReloadUnmodifiedFiles);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_AutoReloadUnmodifiedFiles, value);
     }
+    public static bool DefaultWordWrap
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_DefaultWordWrap, DefaultValues.DefaultWordWrap);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultWordWrap, value);
+    }
+
+    public static bool DefaultSmoothScroling
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_DefaultSmoothScroling, DefaultValues.DefaultSmoothScroling);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultSmoothScroling, value);
+    }
 }

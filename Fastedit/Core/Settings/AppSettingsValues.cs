@@ -17,11 +17,12 @@ public static class AppSettingsValues
 
     public const string Settings_DefaultLineEnding = "DefaultLineEnding";
     public const string Settings_TabsSpacesMode = "TabsSpacesMode";
+    public const string Settings_DefaultWordWrap = "DefaultWordWrap";
     public const string Settings_ShowWhitespaceCharacters = "ShowWhitespaceCharacters";
     public const string Settings_EnableClickableLinks = "EnableClickableLinks";
     public const string Settings_DetectExternalFileChanges = "DetectExternalFileChanges";
     public const string Settings_AutoReloadUnmodifiedFiles = "AutoReloadUnmodifiedFiles";
-
+    public const string Settings_DefaultSmoothScroling = "DefaultSmoothScroling";
     public const string Settings_HideTitlebar = "HideTitlebar";
     public const string Settings_ShowStatusbar = "ShowStatusbar";
     public const string Settings_ShowMenubar = "ShowMenubar";
