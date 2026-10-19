@@ -145,7 +145,7 @@ public sealed partial class TextStatusBar : UserControl
             return;
         }
 
-        ItemEncoding.ChangingText = EncodingHelper.AllEncodings[EncodingHelper.GetIndexByEncoding(tabPage.Encoding)].name;
+        ItemEncoding.ChangingText = EncodingHelper.GetEncodingName(tabPage.Encoding);
     }
     public void UpdateFile()
     {
@@ -243,6 +243,8 @@ public sealed partial class TextStatusBar : UserControl
             return;
 
         tabPage.Encoding = (System.Text.Encoding)(sender as MenuFlyoutItem).Tag;
+        //the file has to be saved again to apply the new encoding
+        TabPageHelper.UpdateSaveStatus(tabPage, true);
 
         UpdateEncoding();
     }

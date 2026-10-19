@@ -1,6 +1,7 @@
 using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -77,7 +78,15 @@ public class OpenFileHelper
 
         try
         {
-            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete, bufferSize: 65536, useAsync: false);
+            using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete, bufferSize: 65536, useAsync: false);
+            using var stream = new MemoryStream();
+            fileStream.CopyTo(stream);
+            stream.Position = 0;
+
+            //no BOM and not valid UTF-8 -> most likely an ANSI file. Reading it as UTF-8 would replace
+            //characters like umlauts with '?' and destroy them on the next save
+            encoding ??= EncodingHelper.DetectEncodingWithoutBom(stream.GetBuffer().AsSpan(0, (int)stream.Length));
+
             using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
             {
                 var getLinesResult = GetLinesAndDetectMixed(reader);
@@ -226,7 +235,8 @@ public class OpenFileHelper
         if (res.succeeded)
         {
             tab.Encoding = res.encoding;
-            tab.LoadLines(res.lines);
+            tab.LoadLines(res.lines, true, res.lineEnding);
+            tab.LineEnding = res.lineEnding;
             if (File.Exists(tab.DatabaseItem.FilePath))
             {
                 tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(tab.DatabaseItem.FilePath);

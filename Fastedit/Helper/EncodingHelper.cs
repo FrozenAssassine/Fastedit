@@ -14,8 +14,37 @@ public class EncodingHelper
         new EncodingItem(new UnicodeEncoding(bigEndian: false, byteOrderMark: false), "UTF-16 LE"),
         new EncodingItem(new UnicodeEncoding(bigEndian: true, byteOrderMark: false), "UTF-16 BE"),
         new EncodingItem(new UnicodeEncoding(bigEndian: false, byteOrderMark: true), "UTF-16 LE BOM"),
-        new EncodingItem(new UnicodeEncoding(bigEndian: true, byteOrderMark: true), "UTF-16 BE BOM")
+        new EncodingItem(new UnicodeEncoding(bigEndian: true, byteOrderMark: true), "UTF-16 BE BOM"),
+        new EncodingItem(new UTF32Encoding(bigEndian: false, byteOrderMark: true), "UTF-32 LE BOM"),
+        new EncodingItem(new UTF32Encoding(bigEndian: true, byteOrderMark: true), "UTF-32 BE BOM"),
+        new EncodingItem(Windows1252, "ANSI (Windows-1252)"),
     };
+
+    private static Encoding _windows1252;
+    public static Encoding Windows1252
+    {
+        get
+        {
+            if (_windows1252 == null)
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                _windows1252 = Encoding.GetEncoding(1252);
+            }
+            return _windows1252;
+        }
+    }
+
+    //returns null when the data has a BOM, so the StreamReader detects it
+    public static Encoding DetectEncodingWithoutBom(ReadOnlySpan<byte> data)
+    {
+        if (data.StartsWith(new byte[] { 0xEF, 0xBB, 0xBF }) ||
+            data.StartsWith(new byte[] { 0xFF, 0xFE }) ||
+            data.StartsWith(new byte[] { 0xFE, 0xFF }) ||
+            data.StartsWith(new byte[] { 0x00, 0x00, 0xFE, 0xFF }))
+            return null;
+
+        return System.Text.Unicode.Utf8.IsValid(data) ? AllEncodings[0].encoding : Windows1252;
+    }
 
     public static IEnumerable<string> AllEncodingNames => AllEncodings.Select(x => x.name);
 
@@ -107,6 +136,9 @@ public class EncodingHelper
 
     public static Encoding GetEncodingByIndex(int index)
     {
+        //invalid index (e.g. from an older database) -> fall back to UTF-8 instead of crashing
+        if (index < 0 || index >= AllEncodings.Length)
+            return AllEncodings[0].encoding;
         return AllEncodings[index].encoding;
     }
     public static string GetEncodingName(Encoding currentEncoding)

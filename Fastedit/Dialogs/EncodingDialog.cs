@@ -47,7 +47,15 @@ public class EncodingDialog
         dialog.Content = null;
 
         if (res == ContentDialogResult.Primary)
-            tab.Encoding = EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex);
+        {
+            var newEncoding = EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex);
+            if (!newEncoding.Equals(tab.Encoding))
+            {
+                tab.Encoding = newEncoding;
+                //the file has to be saved again to apply the new encoding
+                TabPageHelper.UpdateSaveStatus(tab, true);
+            }
+        }
         else if (res == ContentDialogResult.Secondary)
         {
             OpenFileHelper.ReopenWithEncoding(tab, EncodingHelper.GetEncodingByIndex(encodingCombobox.SelectedIndex));

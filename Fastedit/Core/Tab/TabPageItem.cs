@@ -243,6 +243,8 @@ public class TabPageItem : TabViewItem
     {
         bool useSpaces = spaces != -1;
         this.textbox.RewriteTabsSpaces(spaces == -1 ? 4 : spaces, useSpaces);
+        //keep the tab key behaviour in sync with the rewritten content
+        SetTabsSpaces(spaces);
     }
 
     public void LoadLines(IEnumerable<string> lines, bool autodetectTabsSpaces = true, LineEnding lineEnding = LineEnding.CRLF)
