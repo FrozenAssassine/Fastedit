@@ -51,6 +51,7 @@ public sealed partial class Settings_DocumentPage : Page
 
         LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
         DefaultWordWrap.IsOn = AppSettings.DefaultWordWrap;
+        UseGenericHighlight.IsOn = AppSettings.UseGenericHighlightForUnknownFiles;
         DefaultSmoothScroling.IsOn = AppSettings.DefaultSmoothScroling;
     }
 
@@ -121,6 +122,11 @@ public sealed partial class Settings_DocumentPage : Page
     private void DefaultWordWrap_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.DefaultWordWrap = DefaultWordWrap.IsOn;
+    }
+
+    private void UseGenericHighlight_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.UseGenericHighlightForUnknownFiles = UseGenericHighlight.IsOn;
     }
 
     private void DefaultSmoothScroling_Toggled(object sender, RoutedEventArgs e)

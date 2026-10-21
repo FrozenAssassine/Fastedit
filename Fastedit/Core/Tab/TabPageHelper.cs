@@ -434,6 +434,8 @@ public static class TabPageHelper
                 }
             }
         }
+
+        tab.HighlightLanguage = AppSettings.UseGenericHighlightForUnknownFiles ? SyntaxHighlightID.Generic : SyntaxHighlightID.None;
     }
     public static void SelectNextTab(TabView tabView)
     {

@@ -177,6 +177,11 @@ internal class AppSettings
         get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_DefaultWordWrap, DefaultValues.DefaultWordWrap);
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_DefaultWordWrap, value);
     }
+    public static bool UseGenericHighlightForUnknownFiles
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.Settings_UseGenericHighlightForUnknownFiles, DefaultValues.UseGenericHighlightForUnknownFiles);
+        set => SettingsManager.SaveSettings(AppSettingsValues.Settings_UseGenericHighlightForUnknownFiles, value);
+    }
 
     public static bool DefaultSmoothScroling
     {

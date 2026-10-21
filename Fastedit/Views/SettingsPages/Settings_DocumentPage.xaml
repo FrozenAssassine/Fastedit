@@ -103,5 +103,10 @@
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultWordWrap" Toggled="DefaultWordWrap_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
+        <controls:SettingsControl Header="Syntax highlighting for unknown files">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="UseGenericHighlight" Toggled="UseGenericHighlight_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
     </StackPanel>
 </Page>
