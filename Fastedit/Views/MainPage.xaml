@@ -431,7 +431,7 @@
         </Style>
     </Page.Resources>
     
-    <Grid x:Name="mainGrid">
+    <Grid x:Name="mainGrid" Background="Transparent">
         <TabView HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       Background="Transparent"
