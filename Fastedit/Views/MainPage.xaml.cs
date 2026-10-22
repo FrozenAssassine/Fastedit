@@ -190,17 +190,26 @@ public sealed partial class MainPage : Page
         ApplySettings();
     }
 
+    private void Page_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        //handle in preview, otherwise the textbox consumes the tab key
+        if (e.Key != VirtualKey.Tab || !KeyHelper.IsKeyPressed(VirtualKey.Control))
+            return;
+
+        if (KeyHelper.IsKeyPressed(VirtualKey.Shift))
+            TabPageHelper.SelectPreviousTab(tabControl, true);
+        else
+            TabPageHelper.SelectNextTab(tabControl, true);
+        e.Handled = true;
+    }
+
     private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var ctrl = KeyHelper.IsKeyPressed(VirtualKey.Control);
         var shift = KeyHelper.IsKeyPressed(VirtualKey.Shift);
         var menu = KeyHelper.IsKeyPressed(VirtualKey.Menu);
 
-        if (ctrl && e.Key== VirtualKey.Tab)
-            TabPageHelper.SelectNextTab(tabControl);
-        else if (ctrl && shift && e.Key== VirtualKey.Tab)
-            TabPageHelper.SelectPreviousTab(tabControl);
-        else if (ctrl && shift && e.Key== VirtualKey.P)
+        if (ctrl && shift && e.Key== VirtualKey.P)
         {
             if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
                 return;
@@ -239,16 +248,23 @@ public sealed partial class MainPage : Page
                     Search_Click(null, null);
                     break;
                 case VirtualKey.R:
+                case VirtualKey.H:
                     Replace_Click(null, null);
                     break;
                 case VirtualKey.G:
                     GoToLine_Click(null, null);
                     break;
                 case VirtualKey.Add:
+                case (VirtualKey)187: //OemPlus, the + key on the main keyboard
                     ZoomIn_Click(null, null);
                     break;
                 case VirtualKey.Subtract:
+                case (VirtualKey)189: //OemMinus
                     ZoomOut_Click(null, null);
+                    break;
+                case VirtualKey.Number0:
+                case VirtualKey.NumberPad0:
+                    ResetZoom_Click(null, null);
                     break;
                 case VirtualKey.I:
                     FileInfo_Click(null, null);
@@ -512,6 +528,10 @@ public sealed partial class MainPage : Page
     private void ZoomOut_Click(object sender, RoutedEventArgs e)
     {
         EditActions.ZoomOut(currentlySelectedTabPage);
+    }
+    private void ResetZoom_Click(object sender, RoutedEventArgs e)
+    {
+        EditActions.ResetZoom(currentlySelectedTabPage);
     }
     private void TabSpaces_Click(object sender, RoutedEventArgs e)
     {
