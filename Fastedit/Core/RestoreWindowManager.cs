@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Helper;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -32,7 +32,7 @@ public class RestoreWindowManager
         var top = AppSettings.WindowTop;
 
         //no saved size -> first launch, center the window on the primary display
-        if (width < 200 || height < 100 || AppSettings.FirstStart)
+        if (width < 200 || height < 100 || !AppSettings.FirstStart)
         {
             width = 1100;
             height = 700;
