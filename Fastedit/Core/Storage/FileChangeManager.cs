@@ -247,7 +247,7 @@ public static class FileChangeManager
 
         tab.UpdateHeader();
         TabPageHelper.SelectHighlightLanguageByPath(tab);
-        TabPageHelper.mainPage?.TextStatusBar?.UpdateAll();
+        TabPageHelper.UpdateStatusbarForTab(tab);
     }
 
     private static InfoBar _activeReloadInfoBar = null;

@@ -13,6 +13,7 @@ using TextControlBoxNS;
 using System.Diagnostics;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Storage;
+using Fastedit.Views;
 
 namespace Fastedit.Core.Tab;
 
@@ -371,6 +372,33 @@ public static class TabPageHelper
         tab.UpdateHeader();
         mainPage.TextStatusBar.UpdateFile();
     }
+
+    public static void UpdateStatusbarForTab(TabPageItem tab)
+    {
+        if (tab == null)
+            return;
+
+        if (mainPage != null && (mainPage.currentlySelectedTabPage == tab || ReferenceEquals(mainPage.tabView?.SelectedItem, tab)))
+        {
+            if (mainPage.TextStatusBar != null)
+            {
+                mainPage.TextStatusBar.tabPage = tab;
+                mainPage.TextStatusBar.UpdateAll();
+            }
+        }
+        else
+        {
+            var windowEntry = TabWindowHelper.OpenWindows.FirstOrDefault(x => x.Value == tab);
+            if (windowEntry.Key?.Content is TabWindowPage page)
+            {
+                if (page.Statusbar != null)
+                {
+                    page.Statusbar.tabPage = tab;
+                    page.Statusbar.UpdateAll();
+                }
+            }
+        }
+    }
     public static async Task<bool> SaveFile(TabPageItem tab)
     {
         if (tab == null)
@@ -437,19 +465,23 @@ public static class TabPageHelper
 
         tab.HighlightLanguage = AppSettings.UseGenericHighlightForUnknownFiles ? SyntaxHighlightID.Generic : SyntaxHighlightID.None;
     }
-    public static void SelectNextTab(TabView tabView)
+    public static void SelectNextTab(TabView tabView, bool wrapAround = false)
     {
         if (tabView.SelectedIndex < tabView.TabItems.Count - 1)
         {
             tabView.SelectedIndex++;
         }
+        else if (wrapAround && tabView.TabItems.Count > 0)
+            tabView.SelectedIndex = 0;
     }
-    public static void SelectPreviousTab(TabView tabView)
+    public static void SelectPreviousTab(TabView tabView, bool wrapAround = false)
     {
         if (tabView.SelectedIndex > 0)
         {
             tabView.SelectedIndex--;
         }
+        else if (wrapAround && tabView.TabItems.Count > 0)
+            tabView.SelectedIndex = tabView.TabItems.Count - 1;
     }
     public static async Task SaveAll(TabView tabView)
     {

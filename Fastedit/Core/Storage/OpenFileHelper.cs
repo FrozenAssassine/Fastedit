@@ -164,17 +164,40 @@ public class OpenFileHelper
         tab.Encoding = res.encoding;
         tab.LineEnding = lineEnding;
 
-        tab.textbox.Loaded += (sender) =>
+        bool initialized = false;
+        void OnTabLoaded()
         {
-            if (load)
-            {
-                tab.LoadLines(res.lines, true, lineEnding);
-            }
+            if (initialized)
+                return;
+            initialized = true;
 
             TabPageHelper.SelectHighlightLanguageByPath(tab);
             tab.textbox.GoToLine(0);
             tab.textbox.ScrollLineIntoView(0);
-        };
+            TabPageHelper.UpdateStatusbarForTab(tab);
+            if (TabPageHelper.mainPage?.currentlySelectedTabPage == tab)
+            {
+                TabPageHelper.mainPage.SelectTabSpacesMenubarItem();
+                TabPageHelper.mainPage.SelectLineEndingMenubarItem();
+            }
+        }
+
+        if (load)
+        {
+            tab.LoadLines(res.lines, true, lineEnding);
+        }
+
+        if (tab.textbox.IsLoaded)
+        {
+            OnTabLoaded();
+        }
+        else
+        {
+            tab.textbox.Loaded += (sender) =>
+            {
+                OnTabLoaded();
+            };
+        }
 
         tab.DataIsLoaded = load;
         tab.DatabaseItem.IsModified = false;
@@ -245,6 +268,7 @@ public class OpenFileHelper
             {
                 tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(tab.DatabaseItem.FilePath);
             }
+            TabPageHelper.UpdateStatusbarForTab(tab);
             return true;
         }
         return false;
