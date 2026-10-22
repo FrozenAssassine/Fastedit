@@ -13,7 +13,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" 
     xmlns:models="using:Fastedit.Models"
     DragOver="Page_DragOver" Drop="Page_Drop" AllowDrop="True"
-    KeyDown="Page_KeyDown"
+    KeyDown="Page_KeyDown" PreviewKeyDown="Page_PreviewKeyDown"
     Loaded="Page_Loaded">
 
     <Page.Resources>
@@ -506,8 +506,6 @@
                                 <KeyboardAccelerator Key="F1" IsEnabled="False" Modifiers="None"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Support Development" Click="SupportDevelopment_Click"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
 
@@ -659,8 +657,9 @@
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click"/>
-                        <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click"/>
+                        <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click" KeyboardAcceleratorTextOverride="Ctrl++"/>
+                        <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click" KeyboardAcceleratorTextOverride="Ctrl+-"/>
+                        <MenuFlyoutItem Text="Reset Zoom" Click="ResetZoom_Click" KeyboardAcceleratorTextOverride="Ctrl+0"/>
                     </MenuBarItem.Items>
                 </MenuBarItem>
             </MenuBar.Items>

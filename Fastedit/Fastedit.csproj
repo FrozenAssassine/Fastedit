@@ -16,7 +16,7 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <AssemblyName>$(MSBuildProjectName.Replace("-", "_"))</AssemblyName>
 	  <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
-	  <PackageCertificateThumbprint>F0F662243AEEC5542F8CEADF3CF12D029168EDE4</PackageCertificateThumbprint>
+	  <PackageCertificateThumbprint>05EF367F39EF9D3D6210138261F40FA42F9BECD2</PackageCertificateThumbprint>
 	  <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 	  <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
 	  <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -32,14 +32,15 @@
 	  <WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
 	  <SelfContained>true</SelfContained>
 	  <WindowsPackageType>MSIX</WindowsPackageType>
-	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+	  <AppxBundlePlatforms>x64</AppxBundlePlatforms>
 	  <AppxPackageDir>F:\Published\Fastedit_ms-store\Versions\</AppxPackageDir>
   </PropertyGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0-beta" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

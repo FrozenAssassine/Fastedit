@@ -65,6 +65,13 @@ public class EditActions
 
         tab.textbox.ZoomFactor -= DefaultValues.ZoomSteps;
     }
+    public static void ResetZoom(TabPageItem tab)
+    {
+        if (tab == null)
+            return;
+
+        tab.textbox.ZoomFactor = 100;
+    }
 
     public static void GoToLine(TabPageItem tab, int line)
     {
