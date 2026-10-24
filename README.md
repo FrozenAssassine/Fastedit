@@ -13,7 +13,15 @@
 </div>
 
 ## 🤔 What is Fastedit?
-Introducing Fastedit, designed to make editing and organizing your documents effortless. With the ability to open multiple tabs, you can easily edit or view multiple documents at once. The app also features line numbering and custom designs to personalize your experience. A session snapshot feature ensures your work is saved and opens up exactly as you left it. Additionally, the line highlighter and syntax highlighting features make editing code or important information super efficient. Plus, the ability to edit documents in a second instance and a recycle bin to recover deleted files, ensure that you never lose any important work. Upgrade your editing experience with Fastedit.
+Fastedit is a fast, tabbed text editor for Windows 11, designed to bridge the gap between simple notepads and heavy IDEs. It opens instantly, stays responsive even with massive files, and focuses on what actually matters when reading or editing text.
+
+With the latest update, Fastedit now includes full word wrap support (one of the most requested features) allowing long lines in text and code files to wrap cleanly to your window without slowing down the editor.
+
+Key Features:
+- Smart Highlighting: Native syntax colors for common languages and data formats (Python, C#, C++, JavaScript, Markdown, JSON, XML, G-Code, and more). It even colors CSV columns for easier reading and includes a generic highlighter that automatically picks up dates, URLs, numbers, and strings in plain text or log files.
+- Modern Reading & Navigation: Smooth scrolling, pinch-to-zoom, full precision touchpad gestures, and word wrap for documents of any size.
+- Tabbed Workspace: Keep multiple documents organized in tabs, search and replace with ease, and don't worry about closing the app; automatic session snapshots keep your open files right where you left them.
+- Touch & Pen Support: Natural tap-to-select gestures and fluid navigation on touch devices.
 
 ## Support my work  
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=PPME7KF7KF7QS)
@@ -26,6 +34,7 @@ Introducing Fastedit, designed to make editing and organizing your documents eff
 
 
 ## 🔍 Features:
+- Word Wrap – Keep long text easily readable
 - Tabbed Editing – Work with multiple documents at once.
 - Customizable Designs – Personalize the editor's appearance.
 - Syntax Highlighting – Supports various programming languages.
@@ -51,6 +60,7 @@ If you want to contribute to this project, feel free to open an <a href="https:/
 
 ## 📸 Images
 <div align="center">
+    <img src="Screenshots/image14.png" alt="mainimage">
     <img src="Screenshots/image7.png" alt="mainimage">
     <img src="Screenshots/image4.png" alt="mainimage">
     <img src="Screenshots/image1.png" alt="mainimage">
