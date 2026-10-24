@@ -58,7 +58,7 @@ public class InfoMessages
 
         new InfoBar().Show(
             $"Welcome to Fastedit {version}!",
-            "• Fixed crash when rewriting tabs/spaces\n• Fixed crash, when clicking over the linenumbers without the line actually existing",
+            "• Added word wrap and default word wrap setting\n• Watch file changes on disk and notify\n• Added log file and generic syntax highlighting\n• Smoother scrolling, touchpad gestures, touch and pen support\n• Support for ANSI and UTF-32 encodings\n• Significantly faster with less RAM usage, crash and stability fixes",
             btn,
             InfoBarSeverity.Success,
             25

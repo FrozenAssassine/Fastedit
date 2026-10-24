@@ -25,20 +25,20 @@
 	  <GenerateTestArtifacts>True</GenerateTestArtifacts>
 	  <AppxBundle>Always</AppxBundle>
 	  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-	  <AssemblyVersion>2.10.1</AssemblyVersion>
-	  <Version>2.10.1</Version>
+	  <AssemblyVersion>2.11.0</AssemblyVersion>
+	  <Version>2.11.0</Version>
 	  <Authors>Julius Kirsch</Authors>
 	  <Copyright>Copyright © 2022-2026</Copyright>
 	  <WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
 	  <SelfContained>true</SelfContained>
 	  <WindowsPackageType>MSIX</WindowsPackageType>
-	  <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+	  <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
 	  <AppxPackageDir>F:\Published\Fastedit_ms-store\Versions\</AppxPackageDir>
   </PropertyGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
-	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
+  <ItemGroup>	
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1" />
+	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0-beta" />
     <Manifest Include="$(ApplicationManifest)" />

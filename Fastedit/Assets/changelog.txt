@@ -1,4 +1,28 @@
-﻿#Version 2.10.1 [02.02.2026]
+﻿#Version 2.11.0 [22.10.2026]
+• Added word wrap
+• Added log file syntax highlighting 
+• Added generic highlighting with default settings
+• Added default setting for word wrap
+• Added smooth scrolling setting and smoother touchpad gestures
+• Added file content change watcher to notify when a file is modified externally
+• Added support for ANSI and UTF-32 encodings (preserved umlauts in ANSI files)
+• Added setting to open unknown file types with generic syntax highlighting
+• Added reset zoom action and updated zoom shortcuts
+• Added undo/redo for entire words and horizontal scroll virtualization
+• Added full touch and pen support
+• Added graceful handling for corrupted tab databases
+• Improved performance: significantly faster with less RAM usage
+• Reopening with encoding preserves line endings
+• Changing encoding now marks the tab as modified
+• Auto save only backs up tabs with actual changes
+• Failed 'Save As' no longer marks document as saved
+• Fixed crash when handling UTF-32 files
+• Fixed crash issues and memory leaks
+• Fixed Asian characters and emojis
+• Fixed tab key behavior after converting between tabs and spaces
+• Fixed window placement and center on first start
+
+#Version 2.10.1 [02.02.2026]
 	• Fixed crash when clicking in line number view
 	• Fixed crash when rewriting tab/spaces
 	• Updated to TextControlBox v1.6.2
