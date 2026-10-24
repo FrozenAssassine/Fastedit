@@ -1,4 +1,4 @@
-﻿using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.Text;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
@@ -45,8 +45,14 @@ public sealed partial class Settings_DocumentPage : Page
         ShowWhitespaceCharacters.IsOn = AppSettings.ShowWhitespaceCharacters;
         EnableClickableLinks.IsOn = AppSettings.EnableClickableLinks;
 
-        LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
+        DetectExternalFileChangesSwitch.IsOn = AppSettings.DetectExternalFileChanges;
+        AutoReloadUnmodifiedFilesSwitch.IsOn = AppSettings.AutoReloadUnmodifiedFiles;
+        AutoReloadUnmodifiedFilesSwitch.IsEnabled = AppSettings.DetectExternalFileChanges;
 
+        LineEndingSelectorCombobox.SelectedIndex = AppSettings.DefaultLineEnding.GetHashCode();
+        DefaultWordWrap.IsOn = AppSettings.DefaultWordWrap;
+        UseGenericHighlight.IsOn = AppSettings.UseGenericHighlightForUnknownFiles;
+        DefaultSmoothScroling.IsOn = AppSettings.DefaultSmoothScroling;
     }
 
 
@@ -84,6 +90,25 @@ public sealed partial class Settings_DocumentPage : Page
         AppSettings.EnableClickableLinks = EnableClickableLinks.IsOn;
     }
 
+    private void DetectExternalFileChangesSwitch_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DetectExternalFileChanges = DetectExternalFileChangesSwitch.IsOn;
+        AutoReloadUnmodifiedFilesSwitch.IsEnabled = DetectExternalFileChangesSwitch.IsOn;
+        if (DetectExternalFileChangesSwitch.IsOn)
+        {
+            Fastedit.Core.Storage.FileChangeManager.StartAll(Fastedit.Core.Tab.TabPageHelper.mainPage?.tabView);
+        }
+        else
+        {
+            Fastedit.Core.Storage.FileChangeManager.StopAll();
+        }
+    }
+
+    private void AutoReloadUnmodifiedFilesSwitch_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.AutoReloadUnmodifiedFiles = AutoReloadUnmodifiedFilesSwitch.IsOn;
+    }
+
     private void TabsSpacesSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         AppSettings.TabsSpacesMode = ConvertHelper.ToInt((TabsSpacesSelectorCombobox.SelectedItem as ComboBoxItem).Tag, DefaultValues.DefaultTabsSpaces);
@@ -92,5 +117,20 @@ public sealed partial class Settings_DocumentPage : Page
     private void LineEndingSelectorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         AppSettings.DefaultLineEnding = (TextControlBoxNS.LineEnding)LineEndingSelectorCombobox.SelectedIndex;
+    }
+
+    private void DefaultWordWrap_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DefaultWordWrap = DefaultWordWrap.IsOn;
+    }
+
+    private void UseGenericHighlight_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.UseGenericHighlightForUnknownFiles = UseGenericHighlight.IsOn;
+    }
+
+    private void DefaultSmoothScroling_Toggled(object sender, RoutedEventArgs e)
+    {
+        AppSettings.DefaultSmoothScroling = DefaultSmoothScroling.IsOn;
     }
 }

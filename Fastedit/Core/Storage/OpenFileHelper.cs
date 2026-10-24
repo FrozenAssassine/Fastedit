@@ -1,6 +1,7 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -54,8 +55,9 @@ public class OpenFileHelper
             }
         }
 
-        if (sb.Length > 0)
-            lines.Add(sb.ToString());
+        //always add the last line, even when empty: a file ending with a line break gets an empty
+        //last line, so saving writes the file back exactly as it was (no added or removed line break)
+        lines.Add(sb.ToString());
 
         bool mixed = (seenCRLF ? 1 : 0) + (seenLF ? 1 : 0) + (seenCR ? 1 : 0) > 1;
 
@@ -70,14 +72,22 @@ public class OpenFileHelper
         return (lines, mixed, ending);
     }
 
-    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding) ReadLinesFromFile(string path, Encoding encoding = null)
+    public static (string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding) ReadLinesFromFile(string path, Encoding encoding = null, bool silent = false)
     {
         if (string.IsNullOrWhiteSpace(path))
             return (null, null, false, false, LineEnding.CRLF);
 
         try
         {
-            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 65536, useAsync: false);
+            using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete, bufferSize: 65536, useAsync: false);
+            using var stream = new MemoryStream();
+            fileStream.CopyTo(stream);
+            stream.Position = 0;
+
+            //no BOM and not valid UTF-8 -> most likely an ANSI file. Reading it as UTF-8 would replace
+            //characters like umlauts with '?' and destroy them on the next save
+            encoding ??= EncodingHelper.DetectEncodingWithoutBom(stream.GetBuffer().AsSpan(0, (int)stream.Length));
+
             using (var reader = new StreamReader(stream, encoding ?? Encoding.Default, detectEncodingFromByteOrderMarks: true))
             {
                 var getLinesResult = GetLinesAndDetectMixed(reader);
@@ -89,14 +99,43 @@ public class OpenFileHelper
         }
         catch (UnauthorizedAccessException)
         {
-            InfoMessages.NoAccessToReadFile();
+            if (!silent)
+                InfoMessages.NoAccessToReadFile();
+            return (null, null, false, false, LineEnding.CRLF);
+        }
+        catch (IOException)
+        {
+            if (!silent)
+                InfoMessages.UnhandledException("The file is currently locked or being used by another process.");
             return (null, null, false, false, LineEnding.CRLF);
         }
         catch (Exception ex)
         {
-            InfoMessages.UnhandledException(ex.Message);
+            if (!silent)
+                InfoMessages.UnhandledException(ex.Message);
         }
         return (null, null, false, false, LineEnding.CRLF);
+    }
+
+    public static async Task<(string[] lines, Encoding encoding, bool succeeded, bool mixedLineEndings, LineEnding lineEnding)> ReadLinesFromFileWithRetryAsync(string path, Encoding encoding = null, int maxRetries = 5, int delayMs = 60)
+    {
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                var res = ReadLinesFromFile(path, encoding, silent: i < maxRetries - 1);
+                if (res.succeeded)
+                    return res;
+            }
+            catch (IOException)
+            {
+                // Transient file lock by another application
+            }
+
+            if (i < maxRetries - 1)
+                await Task.Delay(delayMs);
+        }
+        return ReadLinesFromFile(path, encoding, silent: false);
     }
 
     private static async Task<bool> DoOpenTab(TabPageItem tab, string path, bool load = true)
@@ -125,17 +164,40 @@ public class OpenFileHelper
         tab.Encoding = res.encoding;
         tab.LineEnding = lineEnding;
 
-        tab.textbox.Loaded += (sender) =>
+        bool initialized = false;
+        void OnTabLoaded()
         {
-            if (load)
-            {
-                tab.LoadLines(res.lines, true, lineEnding);
-            }
+            if (initialized)
+                return;
+            initialized = true;
 
             TabPageHelper.SelectHighlightLanguageByPath(tab);
             tab.textbox.GoToLine(0);
             tab.textbox.ScrollLineIntoView(0);
-        };
+            TabPageHelper.UpdateStatusbarForTab(tab);
+            if (TabPageHelper.mainPage?.currentlySelectedTabPage == tab)
+            {
+                TabPageHelper.mainPage.SelectTabSpacesMenubarItem();
+                TabPageHelper.mainPage.SelectLineEndingMenubarItem();
+            }
+        }
+
+        if (load)
+        {
+            tab.LoadLines(res.lines, true, lineEnding);
+        }
+
+        if (tab.textbox.IsLoaded)
+        {
+            OnTabLoaded();
+        }
+        else
+        {
+            tab.textbox.Loaded += (sender) =>
+            {
+                OnTabLoaded();
+            };
+        }
 
         tab.DataIsLoaded = load;
         tab.DatabaseItem.IsModified = false;
@@ -143,8 +205,13 @@ public class OpenFileHelper
 
         if (!load)
         {
-            File.Copy(path, Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier));
+            //store the already decoded lines: temp files are always read back as UTF-8,
+            //copying the raw bytes would break ANSI and UTF-16 files
+            Directory.CreateDirectory(DefaultValues.DatabasePath);
+            File.WriteAllLines(Path.Combine(DefaultValues.DatabasePath, tab.DatabaseItem.Identifier), res.lines);
         }
+
+        FileChangeManager.StartWatching(tab);
 
         return true;
     }
@@ -195,7 +262,13 @@ public class OpenFileHelper
         if (res.succeeded)
         {
             tab.Encoding = res.encoding;
-            tab.LoadLines(res.lines);
+            tab.LoadLines(res.lines, true, res.lineEnding);
+            tab.LineEnding = res.lineEnding;
+            if (File.Exists(tab.DatabaseItem.FilePath))
+            {
+                tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(tab.DatabaseItem.FilePath);
+            }
+            TabPageHelper.UpdateStatusbarForTab(tab);
             return true;
         }
         return false;

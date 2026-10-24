@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Fastedit.Dialogs;
 using Fastedit.Core.Tab;
@@ -24,7 +24,9 @@ internal class RenameFileHelper
             return true;
 
         //Check if the file already exists
-        if (Directory.Exists(Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName)))
+        string newPath = Path.Combine(Path.GetDirectoryName(tab.DatabaseItem.FilePath), newName);
+        bool onlyCaseChanged = string.Equals(tab.DatabaseItem.FileName, newName, StringComparison.OrdinalIgnoreCase);
+        if (!onlyCaseChanged && (File.Exists(newPath) || Directory.Exists(newPath)))
         {
             InfoMessages.RenameFileAlreadyExists();
             return false;
@@ -41,6 +43,7 @@ internal class RenameFileHelper
                 Directory.Move(sourceFile, destFile);
                 tab.DatabaseItem.FilePath = destFile;
                 tab.SetHeader(newName);
+                Fastedit.Core.Storage.FileChangeManager.UpdateWatchedPath(tab, destFile);
             }
             catch (Exception ex)
             {

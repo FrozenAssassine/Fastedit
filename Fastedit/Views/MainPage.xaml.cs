@@ -11,6 +11,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using TextControlBoxNS;
 using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
 using System.Threading.Tasks;
 
@@ -155,6 +156,10 @@ public sealed partial class MainPage : Page
         {
             args.Cancel = true;
         }
+        else
+        {
+            FileChangeManager.StopAll();
+        }
     }
 
     private void tabControl_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
@@ -185,17 +190,26 @@ public sealed partial class MainPage : Page
         ApplySettings();
     }
 
+    private void Page_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        //handle in preview, otherwise the textbox consumes the tab key
+        if (e.Key != VirtualKey.Tab || !KeyHelper.IsKeyPressed(VirtualKey.Control))
+            return;
+
+        if (KeyHelper.IsKeyPressed(VirtualKey.Shift))
+            TabPageHelper.SelectPreviousTab(tabControl, true);
+        else
+            TabPageHelper.SelectNextTab(tabControl, true);
+        e.Handled = true;
+    }
+
     private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var ctrl = KeyHelper.IsKeyPressed(VirtualKey.Control);
         var shift = KeyHelper.IsKeyPressed(VirtualKey.Shift);
         var menu = KeyHelper.IsKeyPressed(VirtualKey.Menu);
 
-        if (ctrl && e.Key== VirtualKey.Tab)
-            TabPageHelper.SelectNextTab(tabControl);
-        else if (ctrl && shift && e.Key== VirtualKey.Tab)
-            TabPageHelper.SelectPreviousTab(tabControl);
-        else if (ctrl && shift && e.Key== VirtualKey.P)
+        if (ctrl && shift && e.Key== VirtualKey.P)
         {
             if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
                 return;
@@ -234,16 +248,23 @@ public sealed partial class MainPage : Page
                     Search_Click(null, null);
                     break;
                 case VirtualKey.R:
+                case VirtualKey.H:
                     Replace_Click(null, null);
                     break;
                 case VirtualKey.G:
                     GoToLine_Click(null, null);
                     break;
                 case VirtualKey.Add:
+                case (VirtualKey)187: //OemPlus, the + key on the main keyboard
                     ZoomIn_Click(null, null);
                     break;
                 case VirtualKey.Subtract:
+                case (VirtualKey)189: //OemMinus
                     ZoomOut_Click(null, null);
+                    break;
+                case VirtualKey.Number0:
+                case VirtualKey.NumberPad0:
+                    ResetZoom_Click(null, null);
                     break;
                 case VirtualKey.I:
                     FileInfo_Click(null, null);
@@ -342,8 +363,11 @@ public sealed partial class MainPage : Page
 
             VisualizeWhitespaceCharacters_MenuFlyoutItem.IsChecked = tab.GetEffectiveWhitespaceSetting();
             textboxReadonlyMenubarItem.IsChecked = currentlySelectedTabPage.IsReadOnly;
+            WordWrapMenuIndicator.IsChecked = currentlySelectedTabPage.WordWrap;
 
             textStatusBar.UpdateAll();
+
+            FileChangeManager.CheckTabForExternalChanges(tab);
         }
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
         {
@@ -505,6 +529,10 @@ public sealed partial class MainPage : Page
     {
         EditActions.ZoomOut(currentlySelectedTabPage);
     }
+    private void ResetZoom_Click(object sender, RoutedEventArgs e)
+    {
+        EditActions.ResetZoom(currentlySelectedTabPage);
+    }
     private void TabSpaces_Click(object sender, RoutedEventArgs e)
     {
         if (currentlySelectedTabPage == null)
@@ -631,6 +659,10 @@ public sealed partial class MainPage : Page
     {
         return TabPageHelper.SaveTabDatabase(tabdatabase, tabControl, ShowProgress ? progressWindow : null, closeWindows);
     }
+    public void BackupChangedTabs()
+    {
+        TabPageHelper.BackupChangedTabs(tabdatabase, tabControl);
+    }
     public void ShowSettings(string page = null)
     {
         SettingsTabPageHelper.OpenSettings(this, tabControl, page);
@@ -706,5 +738,13 @@ public sealed partial class MainPage : Page
         if (currentlySelectedTabPage == null)
             return;
         FileExplorerHelper.OpenExplorerAtPath(currentlySelectedTabPage.DatabaseItem.FilePath);
+    }
+
+    private void WordWrap_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentlySelectedTabPage == null)
+            return;
+
+        WordWrapMenuIndicator.IsChecked = currentlySelectedTabPage.WordWrap = !currentlySelectedTabPage.WordWrap;
     }
 }

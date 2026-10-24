@@ -108,6 +108,9 @@ public sealed class SingleInstanceDesktopApp : IDisposable
     {
         try
         {
+            //this instance was launched by the user and owns the foreground right, pass it to the running instance
+            InteropHelper.AllowSetForegroundWindow(InteropHelper.ASFW_ANY);
+
             using var namedPipeClientStream = new NamedPipeClientStream(".", _pipeName, PipeDirection.Out);
             namedPipeClientStream.Connect(3000); // Maximum wait 3 seconds
             using var sw = new StreamWriter(namedPipeClientStream);

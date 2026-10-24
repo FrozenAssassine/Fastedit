@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Helper;
 using Fastedit.Models;
 using Microsoft.UI.Xaml;
@@ -90,7 +90,8 @@ public class TabPageItem : TabViewItem
             IsModified = false,
             ZoomFactor = 100,
             LineEnding = AppSettings.DefaultLineEnding,
-            IsReadOnly = false
+            IsReadOnly = false,
+            WordWrap = AppSettings.DefaultWordWrap,
         };
 
         //newly created tab => set default tabs/spaces
@@ -101,6 +102,12 @@ public class TabPageItem : TabViewItem
     }
 
     public bool DataIsLoaded = false;
+    public DateTime LastKnownWriteTimeUtc { get; set; } = DateTime.MinValue;
+    public bool IsSelfSaving { get; set; } = false;
+    public bool HasPendingExternalConflict { get; set; } = false;
+    public bool IsDeletedOnDisk { get; set; } = false;
+    //text changed since the last backup to the database -> picked up by the auto save
+    public bool NeedsBackup { get; set; } = false;
 
     public SyntaxHighlightID HighlightLanguage
     {
@@ -154,6 +161,7 @@ public class TabPageItem : TabViewItem
         LineEnding = _DataBaseItem.LineEnding;
         textbox.ZoomFactor = _DataBaseItem.ZoomFactor;
         textbox.IsReadOnly = _DataBaseItem.IsReadOnly;
+        textbox.WordWrap = _DataBaseItem.WordWrap;
 
         SetHeader(_DataBaseItem.FileName);
 
@@ -211,6 +219,16 @@ public class TabPageItem : TabViewItem
         }
     }
 
+    public bool WordWrap
+    {
+        get => _DataBaseItem.WordWrap;
+        set
+        {
+            _DataBaseItem.WordWrap = value;
+            textbox.WordWrap = value;
+        }
+    }
+
     public bool GetEffectiveWhitespaceSetting()
         => ShowWhitespaceCharacters ?? AppSettings.ShowWhitespaceCharacters;
 
@@ -227,6 +245,8 @@ public class TabPageItem : TabViewItem
     {
         bool useSpaces = spaces != -1;
         this.textbox.RewriteTabsSpaces(spaces == -1 ? 4 : spaces, useSpaces);
+        //keep the tab key behaviour in sync with the rewritten content
+        SetTabsSpaces(spaces);
     }
 
     public void LoadLines(IEnumerable<string> lines, bool autodetectTabsSpaces = true, LineEnding lineEnding = LineEnding.CRLF)

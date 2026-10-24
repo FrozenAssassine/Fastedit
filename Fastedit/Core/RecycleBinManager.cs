@@ -56,7 +56,7 @@ public class RecycleBinManager
         {
             string fileName = SaveFileHelper.GenerateUniqueNameFromPath(Path.Join(DefaultValues.RecycleBinPath, tab.DatabaseItem.FileName));
             var filePath = Path.Join(DefaultValues.RecycleBinPath, fileName);
-            File.WriteAllLines(filePath, tab.textbox.Lines);
+            File.WriteAllText(filePath, string.Join(Environment.NewLine, tab.textbox.Lines));
             return true;
         }
         catch (Exception ex)
@@ -107,11 +107,20 @@ public class RecycleBinManager
             {
                 var selecteditem = itemListView.SelectedItems[itemListView.SelectedItems.Count - 1] as RecycleBinItem;
                 var res = await OpenFileHelper.DoOpenAsync(tabView, selecteditem.FilePath, true);
-                if (res != null)
-                {
-                    File.Delete(selecteditem.FilePath);
-                    recycleBinItems.Remove(selecteditem);
-                }
+
+                //always deselect, otherwise a failed open loops forever
+                itemListView.SelectedItems.Remove(selecteditem);
+                if (res == null)
+                    continue;
+
+                //the tab must not point to the file in the recycle bin, it gets deleted below.
+                //Treat it as a new unsaved document so the content is not lost when closing the tab
+                FileChangeManager.StopWatching(res);
+                res.DatabaseItem.FilePath = "";
+                TabPageHelper.UpdateSaveStatus(res, true);
+
+                File.Delete(selecteditem.FilePath);
+                recycleBinItems.Remove(selecteditem);
             }
         }
         catch

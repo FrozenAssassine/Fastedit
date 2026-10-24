@@ -13,6 +13,7 @@ using TextControlBoxNS;
 using System.Diagnostics;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Storage;
+using Fastedit.Views;
 
 namespace Fastedit.Core.Tab;
 
@@ -77,6 +78,7 @@ public static class TabPageHelper
     {
         if (sender.Tag is TabPageItem tab)
         {
+            tab.NeedsBackup = true;
             if (!tab.DatabaseItem.IsModified)
             {
                 tab.DatabaseItem.IsModified = true;
@@ -99,7 +101,7 @@ public static class TabPageHelper
             progressWindow?.ShowProgress();
             progressWindow?.SetText("Loading file " + tab.DatabaseItem.FileName + "...");
             
-            tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+            tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab), true, tab.LineEnding);
             tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
 
             tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
@@ -128,7 +130,8 @@ public static class TabPageHelper
 
     public static async Task LoadTabDatabase(TabView tabView, TabDatabase tabdatabase)
     {
-        var tabData = tabdatabase.LoadData(tabView);
+        var tabData = tabdatabase.LoadData(tabView).ToList();
+        var ownWindowTabs = new List<TabPageItem>();
         int currentCount = 0;
         foreach (var tab in tabData)
         {
@@ -138,7 +141,7 @@ public static class TabPageHelper
                 !DefaultValues.FastLoadTabs)
             {
                 //when loading back from the database file, we apply everything like it was on app closing
-                tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab));
+                tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab), true, tab.LineEnding);
                 tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
 
                 tab.Encoding = EncodingHelper.GetEncodingByIndex(tab.DatabaseItem.Encoding);
@@ -154,11 +157,16 @@ public static class TabPageHelper
                     tab.textbox.SetCursorPosition(tab.DatabaseItem.LinePos, tab.DatabaseItem.CharacterPos);
             };
 
-            //Show tab in it's own window or add it to the tabView:
+            //tabs with their own window are first loaded in the main window and moved out afterwards,
+            //like dragging a tab out. A textbox that is first loaded in a separate window crashes the app when that window closes
+            tabView.TabItems.Add(tab);
             if (tab.DatabaseItem.HasOwnWindow)
-                TabWindowHelper.ShowInNewWindow(tabView, tab);
-            else
-                tabView.TabItems.Add(tab);
+                ownWindowTabs.Add(tab);
+
+            if (!string.IsNullOrEmpty(tab.DatabaseItem?.FilePath) && File.Exists(tab.DatabaseItem.FilePath))
+            {
+                FileChangeManager.StartWatching(tab);
+            }
 
             currentCount++;
         }
@@ -168,8 +176,31 @@ public static class TabPageHelper
 
         tabView.SelectedIndex = -1;
         await Task.Delay(20); //textbox sometimes does not load without the delay
-        int selectingIndex = tabData.ElementAt(0).DatabaseItem.SelectedIndex;
+
+        foreach (var tab in ownWindowTabs)
+        {
+            tabView.SelectedItem = tab;
+            await WaitForTextboxLoaded(tab);
+            TabWindowHelper.ShowInNewWindow(tabView, tab);
+        }
+
+        if (tabView.TabItems.Count == 0)
+            return;
+
+        int selectingIndex = tabData[0].DatabaseItem.SelectedIndex;
         tabView.SelectedIndex = Math.Clamp(selectingIndex, 0, tabView.TabItems.Count - 1);
+    }
+
+    private static async Task WaitForTextboxLoaded(TabPageItem tab)
+    {
+        if (tab.textbox.IsLoaded)
+            return;
+
+        var loaded = new TaskCompletionSource();
+        void OnLoaded(object sender, RoutedEventArgs e) => loaded.TrySetResult();
+        ((FrameworkElement)tab.textbox).Loaded += OnLoaded;
+        await Task.WhenAny(loaded.Task, Task.Delay(1000));
+        ((FrameworkElement)tab.textbox).Loaded -= OnLoaded;
     }
 
     public static bool SaveTabDatabase(TabDatabase tabDatabase, TabView tabView, ProgressWindowItem progressWindow = null, bool closeWindows = true)
@@ -205,11 +236,38 @@ public static class TabPageHelper
                 progressWindow?.SetText("Saving database " + tab.DatabaseItem.FileName + "...");
                 if (!TabDatabase.SaveTempFile(tab))
                     anyFailed = true;
+                else
+                    tab.NeedsBackup = false;
             }
         }
         progressWindow?.HideProgress();
+        lastBackupTabCount = tabView.TabItems.Count + TabWindowHelper.OpenWindows.Count;
 
         return saveDBFileRes && !anyFailed;
+    }
+
+    private static int lastBackupTabCount = -1;
+
+    //auto save: only back up tabs whose text changed since the last backup
+    public static void BackupChangedTabs(TabDatabase tabDatabase, TabView tabView)
+    {
+        var changedTabs = tabView.TabItems.OfType<TabPageItem>()
+            .Concat(TabWindowHelper.OpenWindows.Values)
+            .Where(x => x.NeedsBackup && x.DataIsLoaded)
+            .ToList();
+
+        int tabCount = tabView.TabItems.Count + TabWindowHelper.OpenWindows.Count;
+        if (changedTabs.Count == 0 && tabCount == lastBackupTabCount)
+            return;
+
+        foreach (var tab in changedTabs)
+        {
+            if (TabDatabase.SaveTempFile(tab))
+                tab.NeedsBackup = false;
+        }
+
+        if (tabDatabase.SaveData(tabView.TabItems, tabView.SelectedIndex))
+            lastBackupTabCount = tabCount;
     }
 
     public static string GenerateUniqueHeader(TabView tabView)
@@ -299,6 +357,8 @@ public static class TabPageHelper
         if(mainPage.SearchControl.currentTab == tab)
             mainPage.SearchControl.Close();
 
+        FileChangeManager.StopWatching(tab);
+
         tabView.TabItems.Remove(tab);
         TabDatabase.DeleteTempFile(tab);
         return !tabView.TabItems.Contains(tab);
@@ -311,6 +371,33 @@ public static class TabPageHelper
         SelectHighlightLanguageByPath(tab);
         tab.UpdateHeader();
         mainPage.TextStatusBar.UpdateFile();
+    }
+
+    public static void UpdateStatusbarForTab(TabPageItem tab)
+    {
+        if (tab == null)
+            return;
+
+        if (mainPage != null && (mainPage.currentlySelectedTabPage == tab || ReferenceEquals(mainPage.tabView?.SelectedItem, tab)))
+        {
+            if (mainPage.TextStatusBar != null)
+            {
+                mainPage.TextStatusBar.tabPage = tab;
+                mainPage.TextStatusBar.UpdateAll();
+            }
+        }
+        else
+        {
+            var windowEntry = TabWindowHelper.OpenWindows.FirstOrDefault(x => x.Value == tab);
+            if (windowEntry.Key?.Content is TabWindowPage page)
+            {
+                if (page.Statusbar != null)
+                {
+                    page.Statusbar.tabPage = tab;
+                    page.Statusbar.UpdateAll();
+                }
+            }
+        }
     }
     public static async Task<bool> SaveFile(TabPageItem tab)
     {
@@ -375,20 +462,26 @@ public static class TabPageHelper
                 }
             }
         }
+
+        tab.HighlightLanguage = AppSettings.UseGenericHighlightForUnknownFiles ? SyntaxHighlightID.Generic : SyntaxHighlightID.None;
     }
-    public static void SelectNextTab(TabView tabView)
+    public static void SelectNextTab(TabView tabView, bool wrapAround = false)
     {
         if (tabView.SelectedIndex < tabView.TabItems.Count - 1)
         {
             tabView.SelectedIndex++;
         }
+        else if (wrapAround && tabView.TabItems.Count > 0)
+            tabView.SelectedIndex = 0;
     }
-    public static void SelectPreviousTab(TabView tabView)
+    public static void SelectPreviousTab(TabView tabView, bool wrapAround = false)
     {
         if (tabView.SelectedIndex > 0)
         {
             tabView.SelectedIndex--;
         }
+        else if (wrapAround && tabView.TabItems.Count > 0)
+            tabView.SelectedIndex = tabView.TabItems.Count - 1;
     }
     public static async Task SaveAll(TabView tabView)
     {

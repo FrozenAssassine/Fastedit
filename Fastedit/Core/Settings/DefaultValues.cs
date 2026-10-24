@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Text;
 using Windows.Storage;
 using Windows.UI;
@@ -32,7 +32,11 @@ namespace Fastedit.Core.Settings
         public static bool HideTitlebar = true;
         public static bool ShowWhitespaceCharacters = true;
         public static bool EnableClickableLinks = true;
-
+        public static bool DetectExternalFileChanges = true;
+        public static bool AutoReloadUnmodifiedFiles = true;
+        public static bool DefaultWordWrap = false;
+        public static bool UseGenericHighlightForUnknownFiles = false;
+        public static bool DefaultSmoothScroling = false;
         public const int windowWidth = 1100;
         public const int windowHeight = 700;
         public const int windowLeft = -1;

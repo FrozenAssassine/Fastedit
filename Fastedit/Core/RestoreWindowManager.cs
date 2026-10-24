@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Helper;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -31,10 +31,18 @@ public class RestoreWindowManager
         var left = AppSettings.WindowLeft;
         var top = AppSettings.WindowTop;
 
-        if (width < 200)
+        //no saved size -> first launch, center the window on the primary display
+        if (width < 200 || height < 100 || !AppSettings.FirstStart)
+        {
             width = 1100;
-        if (height < 100)
             height = 700;
+
+            var workArea = DisplayArea.Primary.WorkArea;
+            width = System.Math.Min(width, workArea.Width);
+            height = System.Math.Min(height, workArea.Height);
+            left = workArea.X + (workArea.Width - width) / 2;
+            top = workArea.Y + (workArea.Height - height) / 2;
+        }
 
         RectInt32 restoreBounds = new RectInt32(left, top, width, height);
 

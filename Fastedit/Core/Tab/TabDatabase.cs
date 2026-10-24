@@ -48,7 +48,10 @@ public class TabDatabase
                 Directory.CreateDirectory(DefaultValues.DatabasePath);
             }
 
-            File.WriteAllText(path, databaseBuilder.ToString());
+            //write to a temp file first, so a crash while saving does not corrupt the database
+            string tempPath = path + ".tmp";
+            File.WriteAllText(tempPath, databaseBuilder.ToString());
+            File.Move(tempPath, path, true);
             return true;
         }
         catch (Exception ex)
@@ -69,8 +72,16 @@ public class TabDatabase
 
         for (int i = 0; i < lines.Length; i++)
         {
-            var dbItem = JsonConvert.DeserializeObject<TabItemDatabaseItem>(lines[i]);
-            yield return new TabPageItem(tabView, dbItem);
+            //skip broken entries instead of failing to restore every tab
+            TabItemDatabaseItem dbItem = null;
+            try
+            {
+                dbItem = JsonConvert.DeserializeObject<TabItemDatabaseItem>(lines[i]);
+            }
+            catch (JsonException) { }
+
+            if (dbItem != null)
+                yield return new TabPageItem(tabView, dbItem);
         }
     }
 

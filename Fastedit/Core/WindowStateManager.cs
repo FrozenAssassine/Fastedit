@@ -19,29 +19,25 @@ public class WindowStateManager
     private Window window;
     private AppWindow appWindow;
 
-    public WindowSizePosState GetWindowSizePosStateIndependent()
-    {
-        //get the window size independent of the state (maximized, minimized, restored).
-        //So a minimized window still has a valid size and position and not -32000.
-        //Also a maxmimized window would be the size of the screen, but now it is only as big as it was in the restore state.
-        return new WindowSizePosState { position = previousWindowPosition, size = previousWindowSize, state = WindowStateHelper.GetWindowState(window) };
-    }
+    private PointInt32 previousWindowPosition;
+    private SizeInt32 previousWindowSize;
 
     public WindowStateManager(Window window)
     {
         this.window = window;
         this.appWindow = window.AppWindow;
 
+        // 1. Initial mit den aktuellen Werten belegen
+        previousWindowPosition = appWindow.Position;
+        previousWindowSize = appWindow.Size;
+
         window.AppWindow.Changed += AppWindow_Changed;
     }
 
-    private PointInt32 previousWindowPosition; 
-    private SizeInt32 previousWindowSize; 
-
-
     private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
     {
-        if (args.DidPositionChange)
+        // 2. Auf Größen- UND Positionsänderungen reagieren
+        if (args.DidPositionChange || args.DidSizeChange)
         {
             var state = WindowStateHelper.GetWindowState(window);
 
@@ -51,5 +47,15 @@ public class WindowStateManager
                 previousWindowPosition = appWindow.Position;
             }
         }
+    }
+
+    public WindowSizePosState GetWindowSizePosStateIndependent()
+    {
+        return new WindowSizePosState
+        {
+            position = previousWindowPosition,
+            size = previousWindowSize,
+            state = WindowStateHelper.GetWindowState(window)
+        };
     }
 }

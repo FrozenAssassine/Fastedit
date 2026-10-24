@@ -1,4 +1,5 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
+using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -19,17 +20,20 @@ public class SaveFileHelper
 {
     public static string GenerateUniqueNameFromPath(string filePath)
     {
-        int count = 0;
-        string path = filePath;
         string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
         string extension = Path.GetExtension(filePath);
         string pathWithoutFile = Path.GetDirectoryName(filePath);
 
-        while (File.Exists(path))
+        //check the full path, otherwise an existing file gets overwritten
+        int count = 0;
+        string fileName;
+        do
         {
-            path = Path.Join($"{fileNameWithoutExtension}({count++}){extension}");
+            fileName = $"{fileNameWithoutExtension}({count++}){extension}";
         }
-        return $"{fileNameWithoutExtension}({count++}){extension}";
+        while (File.Exists(Path.Join(pathWithoutFile, fileName)));
+
+        return fileName;
     }
 
     public static async Task<bool> WriteLinesToFile(string path, IEnumerable<string> lines, Encoding encoding, LineEnding lineEnding)
@@ -44,10 +48,14 @@ public class SaveFileHelper
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 65536, useAsync: true))
             using (var writer = new StreamWriter(stream, encoding))
             {
+                //line breaks only between lines, a trailing line break is stored as an empty last line
+                bool first = true;
                 foreach (var line in lines)
                 {
+                    if (!first)
+                        await writer.WriteAsync(lineEndingStr.AsMemory());
                     await writer.WriteAsync(line.AsMemory());
-                    await writer.WriteAsync(lineEndingStr.AsMemory());
+                    first = false;
                 }
 
                 await writer.FlushAsync();
@@ -94,7 +102,7 @@ public class SaveFileHelper
 
         return false;
     }
-    public static async Task<bool> Save(TabPageItem tab, Window window = null)
+    public static async Task<bool> Save(TabPageItem tab, Window window = null, bool forceOverwrite = false)
     {
         if (tab == null)
             return false;
@@ -106,12 +114,30 @@ public class SaveFileHelper
         if (tab.DatabaseItem.WasNeverSaved)
             return await SaveFileAs(tab, window);
 
-        bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
-        if (result)
+        // Check if file changed on disk externally since last load/save
+        if (!forceOverwrite && FileChangeManager.HasExternalConflict(tab))
         {
-            TabPageHelper.UpdateSaveStatus(tab, false);
+            var conflictRes = await FileConflictDialog.ShowAsync(tab, root: window?.Content?.XamlRoot);
+            if (conflictRes != FileConflictResolution.Overwrite)
+            {
+                return false;
+            }
         }
-        return result;
+
+        FileChangeManager.NotifySavingStarted(tab);
+        try
+        {
+            bool result = await WriteLinesToFile(tab.DatabaseItem.FilePath, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
+            if (result)
+            {
+                TabPageHelper.UpdateSaveStatus(tab, false);
+            }
+            return result;
+        }
+        finally
+        {
+            FileChangeManager.NotifySavingFinished(tab);
+        }
     }
     public static async Task<bool> SaveFileAs(TabPageItem tab, Window window = null)
     {
@@ -136,13 +162,24 @@ public class SaveFileHelper
         StorageFile file = await savePicker.PickSaveFileAsync();
         if (file != null)
         {
-            await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding);
+            FileChangeManager.NotifySavingStarted(tab);
+            try
+            {
+                //do not mark the tab as saved if writing failed -> would lose changes on close
+                if (!await WriteLinesToFile(file.Path, tab.textbox.Lines, tab.Encoding, tab.LineEnding))
+                    return false;
 
-            tab.DatabaseItem.FilePath = file.Path;
-            tab.DatabaseItem.FileName = file.Name;
+                tab.DatabaseItem.FilePath = file.Path;
+                tab.DatabaseItem.FileName = file.Name;
 
-            TabPageHelper.UpdateSaveStatus(tab, false);
-            return true;
+                TabPageHelper.UpdateSaveStatus(tab, false);
+                return true;
+            }
+            finally
+            {
+                FileChangeManager.NotifySavingFinished(tab);
+                FileChangeManager.StartWatching(tab);
+            }
         }
         return false;
     }

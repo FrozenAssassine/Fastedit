@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="Fastedit.Views.SettingsPages.Settings_DocumentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -59,6 +59,23 @@
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
+        <controls:SettingsControl Header="Track external file changes on disk">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DetectExternalFileChangesSwitch" Toggled="DetectExternalFileChangesSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+
+        <controls:SettingsControl Header="Automatically reload unmodified files when changed on disk">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="AutoReloadUnmodifiedFilesSwitch" Toggled="AutoReloadUnmodifiedFilesSwitch_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Smooth Scrolling">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultSmoothScroling" Toggled="DefaultSmoothScroling_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        
         <controls:SetingsItemSeparator x:Uid="Settings_Page_Tab_Key_Separator" Header="Default Document Settings"/>
         <controls:SettingsControl x:Uid="Settings_Page_Number_Of_Spaces_Per_Tab_Control" Header="Default Tab behaviour for new documents">
             <controls:SettingsControl.Content>
@@ -79,6 +96,16 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Wordwrap">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultWordWrap" Toggled="DefaultWordWrap_Toggled"/>
+            </controls:SettingsControl.Content>
+        </controls:SettingsControl>
+        <controls:SettingsControl Header="Syntax highlighting for unknown files">
+            <controls:SettingsControl.Content>
+                <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="UseGenericHighlight" Toggled="UseGenericHighlight_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
     </StackPanel>

@@ -20,6 +20,7 @@ namespace Fastedit.Models
         public bool? WhitespaceCharacters { get; set; } = null;
         public int TabsSpaces { get; set; } = -1;
         public bool IsReadOnly { get; set; } = false;
+        public bool WordWrap { get; set; } = false;
         [JsonIgnore]
         public bool WasNeverSaved => this.FilePath.Length == 0;
     }

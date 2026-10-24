@@ -75,8 +75,13 @@ public sealed partial class TabWindowPage : Page
         pageIcon.Glyph = tab.getTabIconStr(true);
     }
 
+    private bool isClosed = false;
     public void Close()
     {
+        if (isClosed)
+            return;
+        isClosed = true;
+
         //Show the default rightclick menu
         tab.textbox.ContextFlyout = null;
         tab.textbox.EndSearch();
