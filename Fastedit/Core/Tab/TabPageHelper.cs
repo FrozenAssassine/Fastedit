@@ -368,9 +368,8 @@ public static class TabPageHelper
     {
         tab.DatabaseItem.IsModified = IsModified;
         tab.SetHeader(tab.DatabaseItem.FileName);
-        SelectHighlightLanguageByPath(tab);
         tab.UpdateHeader();
-        mainPage.TextStatusBar.UpdateFile();
+        mainPage?.TextStatusBar?.UpdateFile();
     }
 
     public static void UpdateStatusbarForTab(TabPageItem tab)
