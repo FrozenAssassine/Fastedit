@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefaultLanguage>en-US</DefaultLanguage>
     <OutputType>WinExe</OutputType>
@@ -52,9 +52,6 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="Strings\**\*.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\changelog.txt">
