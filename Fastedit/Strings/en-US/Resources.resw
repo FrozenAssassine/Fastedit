@@ -486,6 +486,15 @@
   <data name="Settings_App_HideTitleBarHeader.InfoText" xml:space="preserve">
     <value>Restart to fix rendering issues</value>
   </data>
+  <data name="Settings_App_LanguageHeader.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_App_LanguageControl.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
+    <value>Restart to apply changes</value>
+  </data>
   <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
     <value>Import / Export App Settings</value>
   </data>

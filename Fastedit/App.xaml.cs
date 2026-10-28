@@ -1,4 +1,5 @@
-﻿using Fastedit.Helper;
+using Fastedit.Core;
+using Fastedit.Helper;
 using Microsoft.UI.Xaml;
 
 namespace Fastedit;
@@ -10,6 +11,7 @@ public partial class App : Application
 
     public App()
     {
+        LocalizationManager.Instance.Initialize();
         this.InitializeComponent();
 
         _singleInstanceApp = new SingleInstanceDesktopApp("fastedit.juliuskirsch");

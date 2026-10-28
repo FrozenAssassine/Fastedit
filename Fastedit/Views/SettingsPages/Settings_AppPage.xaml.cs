@@ -1,5 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+using Fastedit.Core;
+using Fastedit.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,13 +18,17 @@ public sealed partial class Settings_AppPage : Page
     {
         this.InitializeComponent();
 
+        lockSave = true;
         ShowMenubarToggleSwitch.IsOn = AppSettings.ShowMenubar;
         ShowStatusbarToggleSwitch.IsOn = AppSettings.ShowStatusbar;
         menubarAlignmentCombobox.SelectedIndex = AppSettings.MenubarAlignment;
         HideTitlebarToggle.IsOn = AppSettings.HideTitlebar;
 
+        selectLanguageBox.ItemsSource = LocalizationManager.Instance.Languages;
+        var languageTag = AppSettings.Language;
+        selectLanguageBox.SelectedIndex = LocalizationManager.Instance.Languages.FindIndex(x => x.Tag.Equals(languageTag, StringComparison.OrdinalIgnoreCase));
+
         //Load the statusbar sorting:
-        lockSave = true;
         LoadStatusbarSorting();
         lockSave = false;
     }
@@ -104,5 +111,17 @@ public sealed partial class Settings_AppPage : Page
     private void HideTitlebar_Toggled(object sender, RoutedEventArgs e)
     {
         AppSettings.HideTitlebar = HideTitlebarToggle.IsOn;
+    }
+
+    private void selectLanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (lockSave || selectLanguageBox.SelectedItem == null)
+            return;
+
+        if (selectLanguageBox.SelectedItem is LanguageItem selected)
+        {
+            AppSettings.Language = selected.Tag;
+            LocalizationManager.Instance.SetLanguage(selected);
+        }
     }
 }

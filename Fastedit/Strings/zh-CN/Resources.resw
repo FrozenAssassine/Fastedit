@@ -486,6 +486,15 @@
   <data name="Settings_App_HideTitleBarHeader.InfoText" xml:space="preserve">
     <value>重启以修复渲染问题</value>
   </data>
+  <data name="Settings_App_LanguageHeader.Header" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_App_LanguageControl.Header" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
+    <value>重启以应用更改</value>
+  </data>
   <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
     <value>导入 / 导出应用设置</value>
   </data>
