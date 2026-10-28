@@ -90,6 +90,7 @@ public class LocalizationManager
         if (Languages.Count == 0)
         {
             Languages.Add(new LanguageItem("en-US", "English"));
+            Languages.Add(new LanguageItem("de-DE", "Deutsch"));
             Languages.Add(new LanguageItem("zh-CN", "简体中文"));
         }
     }

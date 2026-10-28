@@ -12,6 +12,12 @@ namespace Fastedit
 
         static Multilingual()
         {
+            Reload();
+        }
+
+        /// <summary>Recreates the resource loader when active language changes.</summary>
+        public static void Reload()
+        {
             try
             {
                 loader = new ResourceLoader();

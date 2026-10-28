@@ -1,4 +1,4 @@
-﻿using Fastedit.Helper;
+using Fastedit.Helper;
 using Fastedit.Models;
 using Fastedit.Views.SettingsPages;
 using System;
@@ -30,6 +30,20 @@ public sealed partial class SettingsPage : Page
         SettingsParameter = param;
         NavView_Navigate(SettingsParameter.Page ?? _pages[0].Tag);
     }
+    private string GetHeaderTitle(string tag)
+    {
+        return tag switch
+        {
+            "AppPage" => Multilingual.L("SettingsPage_NavigationViewItem_1.Content"),
+            "TextboxPage" => Multilingual.L("SettingsPage_NavigationViewItem_2.Content"),
+            "TabviewPage" => Multilingual.L("SettingsPage_NavigationViewItem_3.Content"),
+            "DesignPage" => Multilingual.L("SettingsPage_NavigationViewItem_4.Content"),
+            "DataPage" => Multilingual.L("SettingsPage_NavigationViewItem_5.Content"),
+            "AboutPage" => Multilingual.L("SettingsPage_NavigationViewItem_6.Content"),
+            _ => tag
+        };
+    }
+
     private void NavView_Navigate(string navItemTag)
     {
         Type _page = null;
@@ -42,8 +56,51 @@ public sealed partial class SettingsPage : Page
         var preNavPageType = navigationFrame.CurrentSourcePageType;
         if (!(_page is null) && !Type.Equals(preNavPageType, _page))
         {
-            pageNameDisplay.Text = item.HeaderContent;
+            pageNameDisplay.Text = GetHeaderTitle(item.Tag);
             navigationFrame.Navigate(_page, SettingsParameter);
+        }
+    }
+
+    public void ReloadLanguage()
+    {
+        if (navigationView?.MenuItems != null)
+        {
+            foreach (var navItem in navigationView.MenuItems.OfType<NavigationViewItem>())
+            {
+                switch (navItem.Tag?.ToString())
+                {
+                    case "AppPage": navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_1.Content"); break;
+                    case "TextboxPage": navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_2.Content"); break;
+                    case "TabviewPage": navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_3.Content"); break;
+                    case "DesignPage": navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_4.Content"); break;
+                    case "DataPage": navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_5.Content"); break;
+                }
+            }
+        }
+        if (navigationView?.FooterMenuItems != null)
+        {
+            foreach (var navItem in navigationView.FooterMenuItems.OfType<NavigationViewItem>())
+            {
+                if (navItem.Tag?.ToString() == "AboutPage")
+                    navItem.Content = Multilingual.L("SettingsPage_NavigationViewItem_6.Content");
+            }
+        }
+
+        if (applySettingsButton != null)
+            applySettingsButton.Content = Multilingual.L("SettingsPage_Button_1.Content");
+
+        if (SettingsTabPageHelper.settingsPage != null)
+            SettingsTabPageHelper.settingsPage.Header = Multilingual.L("MainPage_MenuFlyoutItem_7.Text");
+
+        var curType = navigationFrame.CurrentSourcePageType;
+        if (curType != null)
+        {
+            var item = _pages.FirstOrDefault(p => p.Page == curType);
+            if (item.Page != null)
+            {
+                pageNameDisplay.Text = GetHeaderTitle(item.Tag);
+                navigationFrame.Navigate(item.Page, SettingsParameter);
+            }
         }
     }
 
@@ -57,6 +114,7 @@ public sealed partial class SettingsPage : Page
     private void ApplySettings_Click(object sender, RoutedEventArgs e)
     {
         SettingsParameter?.MainPage.ApplySettings();
+        ReloadLanguage();
 
         this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
     }

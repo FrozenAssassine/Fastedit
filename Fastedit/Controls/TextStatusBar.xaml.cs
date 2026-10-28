@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Tab;
+using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml;
@@ -205,6 +205,46 @@ public sealed partial class TextStatusBar : UserControl
             return;
         }
             ItemSyntaxHighlightings.ChangingText = tabPage.textbox.SyntaxHighlighting != null ? tabPage.textbox.SyntaxHighlighting.Name : Multilingual.L("T_None");
+    }
+
+    public void ReloadLanguage()
+    {
+        if (zoomRun != null)
+            zoomRun.Text = Multilingual.L("TextStatusBar_Run_1.Text");
+
+        if (GoToLineNumberBox != null)
+        {
+            GoToLineNumberBox.Header = Multilingual.L("TextStatusBar_NumberBox_1.Header");
+            GoToLineNumberBox.PlaceholderText = Multilingual.L("TextStatusBar_NumberBox_1.PlaceholderText");
+        }
+
+        if (ItemTabKeyBehaviour != null)
+        {
+            ItemTabKeyBehaviour.Text = Multilingual.L("TextStatusBar_MenuFlyoutSubItem_1.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 0 && ItemTabKeyBehaviour.Items[0] is MenuFlyoutItem i0)
+                i0.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_1.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 2 && ItemTabKeyBehaviour.Items[2] is MenuFlyoutItem i2)
+                i2.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_2.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 3 && ItemTabKeyBehaviour.Items[3] is MenuFlyoutItem i3)
+                i3.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_3.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 4 && ItemTabKeyBehaviour.Items[4] is MenuFlyoutItem i4)
+                i4.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_4.Text");
+        }
+
+        if (ItemReformatDocument != null)
+        {
+            ItemReformatDocument.Text = Multilingual.L("TextStatusBar_MenuFlyoutSubItem_2.Text");
+            if (ItemReformatDocument.Items.Count > 0 && ItemReformatDocument.Items[0] is MenuFlyoutItem r0)
+                r0.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_1.Text");
+            if (ItemReformatDocument.Items.Count > 2 && ItemReformatDocument.Items[2] is MenuFlyoutItem r2)
+                r2.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_2.Text");
+            if (ItemReformatDocument.Items.Count > 3 && ItemReformatDocument.Items[3] is MenuFlyoutItem r3)
+                r3.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_3.Text");
+            if (ItemReformatDocument.Items.Count > 4 && ItemReformatDocument.Items[4] is MenuFlyoutItem r4)
+                r4.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_4.Text");
+        }
+
+        UpdateAll();
     }
 
     public void UpdateAll()

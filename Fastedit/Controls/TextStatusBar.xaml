@@ -25,7 +25,7 @@
                 <Grid IsDoubleTapEnabled="True" DoubleTapped="ResetZoom_DoubleClicked">
                     <TextBlock>
                         <TextBlock.Inlines>
-                            <Run x:Uid="TextStatusBar_Run_1" Text="Zoom"/>
+                            <Run x:Name="zoomRun" x:Uid="TextStatusBar_Run_1" Text="Zoom"/>
                             <Bold>
                                 <Run Text="{x:Bind zoomSlider.Value, Mode=OneWay}"/>
                             </Bold>
@@ -76,7 +76,7 @@
                     </MenuFlyoutSubItem>
 
                     <!-- Reformat entire text -->
-                    <MenuFlyoutSubItem x:Uid="TextStatusBar_MenuFlyoutSubItem_2" Text="Reformat Document">
+                    <MenuFlyoutSubItem x:Name="ItemReformatDocument" x:Uid="TextStatusBar_MenuFlyoutSubItem_2" Text="Reformat Document">
                         <MenuFlyoutSubItem.Items>
                             <MenuFlyoutItem x:Uid="TextStatusBar_MenuFlyoutItem_1" Text="Use Tab (\t)" Click="ReformatTabsInDocument_Click" Tag="-1"/>
                             <MenuFlyoutSeparator/>

@@ -493,7 +493,7 @@
     <value>Language</value>
   </data>
   <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
-    <value>Restart to apply changes</value>
+    <value>Click 'Apply Settings' to apply</value>
   </data>
   <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
     <value>Import / Export App Settings</value>

@@ -493,7 +493,7 @@
     <value>语言</value>
   </data>
   <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
-    <value>重启以应用更改</value>
+    <value>点击“应用设置”以应用更改</value>
   </data>
   <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
     <value>导入 / 导出应用设置</value>

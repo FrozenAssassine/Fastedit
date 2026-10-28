@@ -13,7 +13,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <controls:SetingsItemSeparator x:Uid="Settings_App_LanguageHeader" Header="Language"/>
-            <controls:SettingsControl x:Uid="Settings_App_LanguageControl" Header="Language" InfoText="Restart to apply changes">
+            <controls:SettingsControl x:Uid="Settings_App_LanguageControl" Header="Language" InfoText="Click 'Apply Settings' to apply">
                 <controls:SettingsControl.Content>
                     <ComboBox Width="200" x:Name="selectLanguageBox" SelectionChanged="selectLanguageBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
