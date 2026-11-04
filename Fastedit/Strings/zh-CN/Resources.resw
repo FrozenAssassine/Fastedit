@@ -475,6 +475,9 @@
     <value>行尾符</value>
   </data>
   <data name="Settings_App_TabsSpacesText.Text" xml:space="preserve">
+    <value>制表符 / 空格</value>
+  </data>
+  <data name="Settings_App_SyntaxHighlightingText.Text" xml:space="preserve">
     <value>语法高亮</value>
   </data>
   <data name="Settings_App_WindowHeader.Header" xml:space="preserve">
@@ -978,4 +981,59 @@
   <data name="T_FileRenamedOnDisk" xml:space="preserve">
     <value>文件已在磁盘上重命名为“{0}”。</value>
   </data>
-<data name="T_LineColumnFormat" xml:space="preserve"><value>行: {0}，列: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>词: {0}，</value></data><data name="T_CharsFormat" xml:space="preserve"><value>字符: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>空格: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>制表符</value></data></root>
+<data name="T_LineColumnFormat" xml:space="preserve"><value>行: {0}，列: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>词: {0}，</value></data><data name="T_CharsFormat" xml:space="preserve"><value>字符: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>空格: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>制表符</value></data>
+  <data name="T_Undock" xml:space="preserve">
+    <value>分离标签页</value>
+  </data>
+  <data name="T_Info" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="T_CloseAll" xml:space="preserve">
+    <value>全部关闭</value>
+  </data>
+  <data name="T_EncodingTitle" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="T_Done" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="T_Reopen" xml:space="preserve">
+    <value>重新打开</value>
+  </data>
+  <data name="T_ReopenUnsavedWarning" xml:space="preserve">
+    <value>未保存的更改将会丢失。是否确实要从磁盘重新加载文件？</value>
+  </data>
+  <data name="T_SaveDesignTitle" xml:space="preserve">
+    <value>保存设计？</value>
+  </data>
+  <data name="T_SaveDesignContent" xml:space="preserve">
+    <value>是否保存对 {0} 的更改？</value>
+  </data>
+  <data name="T_SaveFileTitle" xml:space="preserve">
+    <value>保存文件？</value>
+  </data>
+  <data name="T_SaveFileContent" xml:space="preserve">
+    <value>是否保存文件 {0}？</value>
+  </data>
+  <data name="T_FileConflictChangedOnDisk" xml:space="preserve">
+    <value>文件“{0}”已被其他程序在磁盘上修改。</value>
+  </data>
+  <data name="T_FileConflictTitle" xml:space="preserve">
+    <value>文件冲突 - {0}</value>
+  </data>
+  <data name="T_ReloadFromDisk" xml:space="preserve">
+    <value>从磁盘重新加载</value>
+  </data>
+  <data name="T_OverwriteDisk" xml:space="preserve">
+    <value>覆盖磁盘文件</value>
+  </data>
+  <data name="T_Ignore" xml:space="preserve">
+    <value>忽略</value>
+  </data>
+  <data name="T_Apply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="T_RecycleBin" xml:space="preserve">
+    <value>回收站</value>
+  </data>
+</root>

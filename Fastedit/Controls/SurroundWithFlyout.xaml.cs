@@ -13,10 +13,20 @@ namespace Fastedit.Controls
         public SurroundWithFlyout()
         {
             this.InitializeComponent();
+            ReloadLanguage();
+        }
+
+        public void ReloadLanguage()
+        {
+            if (titleTextBlock != null)
+            {
+                titleTextBlock.Text = Multilingual.L("SurroundWithFlyout_TextBlock_1.Text");
+            }
         }
 
         public void ShowFlyout(TextControlBox textbox)
         {
+            ReloadLanguage();
             surroundText1.Text = surroundText2.Text = "";
             this.textbox = textbox;
             surroundText2.Visibility = Visibility.Collapsed;

@@ -1,4 +1,4 @@
-﻿using Fastedit.Storage;
+using Fastedit.Storage;
 using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
@@ -16,8 +16,8 @@ public class AskSaveDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Save File?",
-            Content = "Would you like to save the file " + tab.DatabaseItem.FileName + "?",
+            Title = Multilingual.L("T_SaveFileTitle"),
+            Content = Multilingual.L("T_SaveFileContent", tab.DatabaseItem.FileName),
             PrimaryButtonText = Multilingual.L("T_Save"),
             SecondaryButtonText = Multilingual.L("T_DonTSave"),
             CloseButtonText = Multilingual.L("T_Cancel"),

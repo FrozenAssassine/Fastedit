@@ -1,34 +1,37 @@
 using Fastedit.Helper;
 using Fastedit.Models;
+using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System.Linq;
 using Fastedit.Views.SettingsPages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Input;
 
 namespace Fastedit.Views;
 
 public sealed partial class SettingsPage : Page
 {
-    SettingsNavigationParameter SettingsParameter = null;
-
-    private readonly List<(string Tag, Type Page, string HeaderContent)> _pages = new List<(string Tag, Type Page, string HeaderContent)>
+    private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
     {
-        ("AppPage", typeof(Settings_AppPage), "App"),
-        ("TextboxPage", typeof(Settings_DocumentPage), "Textbox"),
-        ("TabviewPage", typeof(Settings_TabControl), "Tabs"),
-        ("DesignPage", typeof(Settings_DesignPage), "Designs"),
-        ("DataPage", typeof(Settings_Data), "Data"),
-        ("AboutPage", typeof(AboutPage), "About"),
+        ("AppPage", typeof(Settings_AppPage)),
+        ("TextboxPage", typeof(Settings_DocumentPage)),
+        ("TabviewPage", typeof(Settings_TabControl)),
+        ("DesignPage", typeof(Settings_DesignPage)),
+        ("DataPage", typeof(Settings_Data)),
+        ("AboutPage", typeof(AboutPage)),
     };
+
+    public SettingsNavigationParameter SettingsParameter { get; set; }
 
     public SettingsPage(SettingsNavigationParameter param)
     {
         this.InitializeComponent();
+
         SettingsParameter = param;
+        ReloadLanguage(false);
         NavView_Navigate(SettingsParameter.Page ?? _pages[0].Tag);
+        this.Loaded += (s, e) => ReloadLanguage(false);
     }
     private string GetHeaderTitle(string tag)
     {
@@ -47,6 +50,10 @@ public sealed partial class SettingsPage : Page
     private void NavView_Navigate(string navItemTag)
     {
         Type _page = null;
+        if (navItemTag == "settings")
+        {
+            // _page = typeof(SettingsPage);
+        }
 
         var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
         _page = item.Page;
@@ -61,7 +68,7 @@ public sealed partial class SettingsPage : Page
         }
     }
 
-    public void ReloadLanguage()
+    public void ReloadLanguage(bool reloadCurrentSubPage = true)
     {
         if (navigationView?.MenuItems != null)
         {
@@ -99,7 +106,11 @@ public sealed partial class SettingsPage : Page
             if (item.Page != null)
             {
                 pageNameDisplay.Text = GetHeaderTitle(item.Tag);
-                navigationFrame.Navigate(item.Page, SettingsParameter);
+                if (reloadCurrentSubPage)
+                {
+                    navigationFrame.Content = null;
+                    navigationFrame.Navigate(item.Page, SettingsParameter);
+                }
             }
         }
     }

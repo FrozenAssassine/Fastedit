@@ -43,6 +43,7 @@
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0" />
     <Manifest Include="$(ApplicationManifest)" />
+    <PackageReference Include="WinUI3Localizer" Version="2.3.0" />
   </ItemGroup>
 
   <!--
@@ -54,6 +55,9 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Strings\**\*.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\changelog.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

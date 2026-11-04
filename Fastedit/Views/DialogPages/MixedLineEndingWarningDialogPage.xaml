@@ -10,8 +10,8 @@
 
     <StackPanel>
 
-        <TextBlock x:Uid="MixedLineEndingWarningDialogPage_TextBlock_1" Text="This file contains a mix of different line endings."/>
-        <TextBlock FontWeight="Bold" x:Uid="MixedLineEndingWarningDialogPage_TextBlock_2" Text="Please select one format to make them consistent."/>
+        <TextBlock x:Name="warningTextBlock1" x:Uid="MixedLineEndingWarningDialogPage_TextBlock_1" Text="This file contains a mix of different line endings."/>
+        <TextBlock x:Name="warningTextBlock2" FontWeight="Bold" x:Uid="MixedLineEndingWarningDialogPage_TextBlock_2" Text="Please select one format to make them consistent."/>
         <ComboBox Margin="0,15,0,0" Width="150" ItemsSource="{x:Bind LineEndingStrings}" SelectedIndex="1" SelectionChanged="ComboBox_SelectionChanged" x:Name="lineEndingCombobox">
             <ComboBox.ItemTemplate>
                 <DataTemplate x:DataType="x:String">

@@ -1,4 +1,4 @@
-﻿using Fastedit.Helper;
+using Fastedit.Helper;
 using Fastedit.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -21,6 +21,15 @@ public sealed partial class VerticalTabsFlyoutControl : Flyout
     {
         this.InitializeComponent();
         TabPageHelper.mainPage.verticalTabsFlyout = this;
+        ReloadLanguage();
+    }
+
+    public void ReloadLanguage()
+    {
+        if (newTabFlyoutButtonText != null)
+        {
+            newTabFlyoutButtonText.Text = Multilingual.L("VerticalTabsFlyoutControl_TextBlock_1.Text");
+        }
     }
 
     public void UpdateFlyoutIfOpen()
@@ -59,6 +68,7 @@ public sealed partial class VerticalTabsFlyoutControl : Flyout
 
     private void ShowAllTabsFlyout_Opened(object sender, object e)
     {
+        ReloadLanguage();
         UpdateFlyout();
     }
     private void AllTabsFlyout_SelectionChanged(object sender, SelectionChangedEventArgs e)

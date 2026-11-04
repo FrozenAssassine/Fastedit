@@ -475,6 +475,9 @@
     <value>Line Endings</value>
   </data>
   <data name="Settings_App_TabsSpacesText.Text" xml:space="preserve">
+    <value>Tabs / Spaces</value>
+  </data>
+  <data name="Settings_App_SyntaxHighlightingText.Text" xml:space="preserve">
     <value>Syntax Highlighting</value>
   </data>
   <data name="Settings_App_WindowHeader.Header" xml:space="preserve">
@@ -978,4 +981,59 @@
   <data name="T_FileRenamedOnDisk" xml:space="preserve">
     <value>File was renamed to '{0}' on disk.</value>
   </data>
-<data name="T_LineColumnFormat" xml:space="preserve"><value>Ln: {0}, Cl: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>W: {0}, </value></data><data name="T_CharsFormat" xml:space="preserve"><value>C: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>Spaces: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>Tabs</value></data></root>
+<data name="T_LineColumnFormat" xml:space="preserve"><value>Ln: {0}, Cl: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>W: {0}, </value></data><data name="T_CharsFormat" xml:space="preserve"><value>C: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>Spaces: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>Tabs</value></data>
+  <data name="T_Undock" xml:space="preserve">
+    <value>Undock Tab</value>
+  </data>
+  <data name="T_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="T_CloseAll" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="T_EncodingTitle" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="T_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="T_Reopen" xml:space="preserve">
+    <value>Reopen</value>
+  </data>
+  <data name="T_ReopenUnsavedWarning" xml:space="preserve">
+    <value>Unsaved changes will be lost. Do you want to reload the file from disk?</value>
+  </data>
+  <data name="T_SaveDesignTitle" xml:space="preserve">
+    <value>Save Design?</value>
+  </data>
+  <data name="T_SaveDesignContent" xml:space="preserve">
+    <value>Would you like to save the changes on {0}?</value>
+  </data>
+  <data name="T_SaveFileTitle" xml:space="preserve">
+    <value>Save File?</value>
+  </data>
+  <data name="T_SaveFileContent" xml:space="preserve">
+    <value>Would you like to save the file {0}?</value>
+  </data>
+  <data name="T_FileConflictChangedOnDisk" xml:space="preserve">
+    <value>The file "{0}" has been changed on disk by another program.</value>
+  </data>
+  <data name="T_FileConflictTitle" xml:space="preserve">
+    <value>File Conflict - {0}</value>
+  </data>
+  <data name="T_ReloadFromDisk" xml:space="preserve">
+    <value>Reload from disk</value>
+  </data>
+  <data name="T_OverwriteDisk" xml:space="preserve">
+    <value>Overwrite disk</value>
+  </data>
+  <data name="T_Ignore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="T_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="T_RecycleBin" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+</root>

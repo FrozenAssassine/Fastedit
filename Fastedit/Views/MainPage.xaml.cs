@@ -1,3 +1,5 @@
+using Fastedit.Views;
+using Fastedit.Core;
 using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -572,6 +574,7 @@ public sealed partial class MainPage : Page
         if (sender is SplitButton btn)
         {
             addTabButton = btn;
+            ToolTipService.SetToolTip(addTabButton, Multilingual.L("MainPage_SplitButton_1.ToolTipService.ToolTip"));
         }
     }
 
@@ -597,82 +600,16 @@ public sealed partial class MainPage : Page
     public void ReloadLanguage()
     {
         Multilingual.Reload();
+        LocalizationManager.Instance.ReapplyLanguage();
 
-        if (mainMenubar?.Items?.Count >= 5)
+        if (CodeLanguageSelector?.Items?.Count > 0 && CodeLanguageSelector.Items[0] is MenuFlyoutItem noneSyntaxItem)
         {
-            // 1. File
-            var fileMenu = mainMenubar.Items[0];
-            fileMenu.Title = Multilingual.L("MainPage_MenuBarItem_1.Title");
-            UpdateMenuItem(fileMenu.Items, 0, "MainPage_MenuFlyoutItem_1.Text"); // New
-            UpdateMenuItem(fileMenu.Items, 1, "MainPage_MenuFlyoutItem_2.Text"); // Open
-            UpdateMenuItem(fileMenu.Items, 3, "MainPage_MenuFlyoutItem_3.Text"); // Save
-            UpdateMenuItem(fileMenu.Items, 4, "MainPage_MenuFlyoutItem_4.Text"); // Save As
-            UpdateMenuItem(fileMenu.Items, 5, "MainPage_MenuFlyoutItem_5.Text"); // Save All
-            UpdateMenuItem(fileMenu.Items, 7, "MainPage_MenuFlyoutItem_6.Text"); // Recycle Bin
-            UpdateMenuItem(fileMenu.Items, 9, "MainPage_MenuFlyoutItem_7.Text"); // Settings
+            noneSyntaxItem.Text = Multilingual.L("T_None");
+        }
 
-            // 2. Edit
-            var editMenu = mainMenubar.Items[1];
-            editMenu.Title = Multilingual.L("MainPage_MenuBarItem_2.Title");
-            UpdateMenuItem(editMenu.Items, 0, "MainPage_MenuFlyoutItem_8.Text");  // Undo
-            UpdateMenuItem(editMenu.Items, 1, "MainPage_MenuFlyoutItem_9.Text");  // Redo
-            UpdateMenuItem(editMenu.Items, 3, "MainPage_MenuFlyoutItem_10.Text"); // Cut
-            UpdateMenuItem(editMenu.Items, 4, "MainPage_MenuFlyoutItem_11.Text"); // Copy
-            UpdateMenuItem(editMenu.Items, 5, "MainPage_MenuFlyoutItem_12.Text"); // Paste
-            UpdateMenuItem(editMenu.Items, 6, "MainPage_MenuFlyoutItem_13.Text"); // Duplicate Line
-            UpdateMenuItem(editMenu.Items, 8, "MainPage_MenuFlyoutItem_14.Text"); // Search
-            UpdateMenuItem(editMenu.Items, 9, "MainPage_MenuFlyoutItem_15.Text"); // Replace
-            UpdateMenuItem(editMenu.Items, 10, "MainPage_MenuFlyoutItem_16.Text"); // Go To
-            UpdateMenuItem(editMenu.Items, 11, "MainPage_MenuFlyoutItem_17.Text"); // Select All
-
-            // 3. Document
-            var docMenu = mainMenubar.Items[2];
-            docMenu.Title = Multilingual.L("MainPage_MenuBarItem_3.Title");
-            UpdateMenuItem(docMenu.Items, 0, "MainPage_ToggleMenuFlyoutItem_1.Text"); // Word wrap
-            UpdateMenuItem(docMenu.Items, 1, "MainPage_MenuFlyoutItem_18.Text"); // File Info
-            UpdateMenuItem(docMenu.Items, 2, "MainPage_MenuFlyoutItem_19.Text"); // Rename
-            UpdateMenuItem(docMenu.Items, 3, "MainPage_MenuFlyoutItem_20.Text"); // Show in File Explorer
-            UpdateMenuItem(docMenu.Items, 4, "MainPage_MenuFlyoutSubItem_1.Text"); // Line Ending
-            UpdateMenuItem(docMenu.Items, 5, "MainPage_MenuFlyoutItem_21.Text"); // Encoding
-            UpdateMenuItem(docMenu.Items, 7, "MainPage_MenuFlyoutItem_22.Text"); // Close
-            UpdateMenuItem(docMenu.Items, 8, "MainPage_MenuFlyoutItem_23.Text"); // Close All
-            UpdateMenuItem(docMenu.Items, 9, "MainPage_MenuFlyoutItem_24.Text"); // Undock Tab
-            UpdateMenuItem(docMenu.Items, 11, "MainPage_ToggleMenuFlyoutItem_2.Text"); // Readonly
-            UpdateMenuItem(docMenu.Items, 13, "MainPage_ToggleMenuFlyoutItem_3.Text"); // Visualize Whitespace
-
-            // 4. Advanced
-            var advMenu = mainMenubar.Items[3];
-            advMenu.Title = Multilingual.L("MainPage_MenuBarItem_4.Title");
-            UpdateMenuItem(advMenu.Items, 0, "MainPage_MenuFlyoutSubItem_2.Text"); // Syntax Highlighting
-            if (advMenu.Items.Count > 2 && advMenu.Items[2] is MenuFlyoutSubItem tabBehaviour)
-            {
-                tabBehaviour.Text = Multilingual.L("MainPage_MenuFlyoutSubItem_3.Text");
-                UpdateMenuItem(tabBehaviour.Items, 0, "MainPage_MenuFlyoutItem_25.Text"); // Auto Detect
-                UpdateMenuItem(tabBehaviour.Items, 2, "MainPage_ToggleMenuFlyoutItem_4.Text"); // Use Tab
-                UpdateMenuItem(tabBehaviour.Items, 4, "MainPage_ToggleMenuFlyoutItem_5.Text"); // 2 Spaces
-                UpdateMenuItem(tabBehaviour.Items, 5, "MainPage_ToggleMenuFlyoutItem_6.Text"); // 4 Spaces
-                UpdateMenuItem(tabBehaviour.Items, 6, "MainPage_ToggleMenuFlyoutItem_7.Text"); // 8 Spaces
-            }
-            if (advMenu.Items.Count > 3 && advMenu.Items[3] is MenuFlyoutSubItem reformatTabs)
-            {
-                reformatTabs.Text = Multilingual.L("MainPage_MenuFlyoutSubItem_4.Text");
-                UpdateMenuItem(reformatTabs.Items, 0, "MainPage_MenuFlyoutItem_26.Text"); // Use Tab
-                UpdateMenuItem(reformatTabs.Items, 2, "MainPage_MenuFlyoutItem_27.Text"); // 2 Spaces
-                UpdateMenuItem(reformatTabs.Items, 3, "MainPage_MenuFlyoutItem_28.Text"); // 4 Spaces
-                UpdateMenuItem(reformatTabs.Items, 4, "MainPage_MenuFlyoutItem_29.Text"); // 8 Spaces
-            }
-            UpdateMenuItem(advMenu.Items, 5, "MainPage_MenuFlyoutItem_30.Text"); // Surround With
-            UpdateMenuItem(advMenu.Items, 7, "MainPage_MenuFlyoutItem_31.Text"); // Quick Access
-
-            // 5. View
-            var viewMenu = mainMenubar.Items[4];
-            viewMenu.Title = Multilingual.L("MainPage_MenuBarItem_5.Title");
-            UpdateMenuItem(viewMenu.Items, 0, "MainPage_MenuFlyoutItem_32.Text"); // Compact Overlay
-            UpdateMenuItem(viewMenu.Items, 1, "MainPage_MenuFlyoutItem_33.Text"); // Fullscreen
-            UpdateMenuItem(viewMenu.Items, 2, "MainPage_MenuFlyoutItem_34.Text"); // Always On Top
-            UpdateMenuItem(viewMenu.Items, 4, "MainPage_MenuFlyoutItem_35.Text"); // Zoom In
-            UpdateMenuItem(viewMenu.Items, 5, "MainPage_MenuFlyoutItem_36.Text"); // Zoom Out
-            UpdateMenuItem(viewMenu.Items, 6, "MainPage_MenuFlyoutItem_37.Text"); // Reset Zoom
+        if (RunCommandWindowItem_SyntaxHighlighting?.Items?.Count > 0 && RunCommandWindowItem_SyntaxHighlighting.Items[0] is QuickAccessWindowItem noneQuickAccessItem)
+        {
+            noneQuickAccessItem.Command = Multilingual.L("T_None");
         }
 
         if (addTabButton != null)
@@ -680,21 +617,30 @@ public sealed partial class MainPage : Page
             ToolTipService.SetToolTip(addTabButton, Multilingual.L("MainPage_SplitButton_1.ToolTipService.ToolTip"));
         }
 
+        runCommandWindow?.ReloadLanguage();
         searchControl?.ReloadLanguage();
         textStatusBar?.ReloadLanguage();
+        verticalTabsFlyout?.ReloadLanguage();
+        surroundWithFlyout?.ReloadLanguage();
+
+        if (SettingsTabPageHelper.settingsPage?.Content is SettingsPage settingsPage)
+        {
+            settingsPage.ReloadLanguage(true);
+        }
+
+        if (tabControl?.TabItems != null)
+        {
+            foreach (var item in tabControl.TabItems)
+            {
+                if (item is TabPageItem tab)
+                {
+                    tab.ContextFlyout = TabFlyout.CreateFlyout(tab, tabControl);
+                }
+            }
+        }
         MakeAppTitle(tabControl.SelectedItem);
     }
 
-    private static void UpdateMenuItem(IList<MenuFlyoutItemBase> list, int index, string resourceKey)
-    {
-        if (index >= 0 && index < list.Count)
-        {
-            if (list[index] is MenuFlyoutItem item)
-                item.Text = Multilingual.L(resourceKey);
-            else if (list[index] is MenuFlyoutSubItem subItem)
-                subItem.Text = Multilingual.L(resourceKey);
-        }
-    }
     private void CreateMenubarFromLanguage()
     {
         //items already added

@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Models;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
@@ -19,9 +19,9 @@ public class TabFlyout
         flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Rename"), Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
         flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Save"), Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
         flyout.Items.Add(new MenuFlyoutSeparator());
-        flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock, VirtualKeyModifiers.Control, VirtualKey.L));
-        flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
-        flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Undock"), Symbol.DockBottom, TabPageFlyoutItem.Undock, VirtualKeyModifiers.Control, VirtualKey.L));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Info"), "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_CloseAll"), Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
         return flyout;
     }
     private static MenuFlyoutItem CreateItem(TabPageItem tab, TabView tabView, string Text, Symbol symbol, TabPageFlyoutItem type, VirtualKeyModifiers modifier = VirtualKeyModifiers.None, VirtualKey key = VirtualKey.None)

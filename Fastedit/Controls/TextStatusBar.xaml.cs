@@ -46,6 +46,8 @@ public sealed partial class TextStatusBar : UserControl
             { "TabsSpaces", ItemTabsSpaces },
             { "Syntaxhighlights", ItemSyntaxHighlightings },
         };
+
+        ReloadLanguage();
     }
 
     private void LoadLineEndings()
@@ -209,6 +211,9 @@ public sealed partial class TextStatusBar : UserControl
 
     public void ReloadLanguage()
     {
+        if (ItemZoom != null)
+            ItemZoom.StaticText = Multilingual.L("TextStatusBar_Run_1.Text") + ": ";
+
         if (zoomRun != null)
             zoomRun.Text = Multilingual.L("TextStatusBar_Run_1.Text");
 
@@ -242,6 +247,11 @@ public sealed partial class TextStatusBar : UserControl
                 r3.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_3.Text");
             if (ItemReformatDocument.Items.Count > 4 && ItemReformatDocument.Items[4] is MenuFlyoutItem r4)
                 r4.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_4.Text");
+        }
+
+        if (SyntaxHighlightingsFlyout?.Items?.Count > 0 && SyntaxHighlightingsFlyout.Items[0] is MenuFlyoutItem firstItem)
+        {
+            firstItem.Text = Multilingual.L("T_None");
         }
 
         UpdateAll();

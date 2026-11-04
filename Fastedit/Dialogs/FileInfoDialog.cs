@@ -1,4 +1,4 @@
-﻿using Fastedit.Helper;
+using Fastedit.Helper;
 using Fastedit.Storage;
 using System;
 using System.IO;
@@ -59,7 +59,7 @@ public class FileInfoDialog
             RequestedTheme = DialogHelper.DialogDesign,
             Title = Multilingual.L("T_Info_2") + tab.DatabaseItem.FileName,
             Content = new TextBlock { MaxWidth = 500, Text = content.ToString(), IsTextSelectionEnabled = true, TextWrapping=Microsoft.UI.Xaml.TextWrapping.Wrap },
-            CloseButtonText = "Ok",
+            CloseButtonText = Multilingual.L("T_Ok"),
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = App.m_window.Content.XamlRoot,
             

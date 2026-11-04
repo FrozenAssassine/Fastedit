@@ -1,31 +1,17 @@
+using Fastedit.Core;
 using System;
-using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace Fastedit
 {
     /// <summary>
-    /// Provides localized strings from Strings/&lt;lang&gt;/Resources.resw
+    /// Provides localized strings from Strings/<lang>/Resources.resw
     /// </summary>
     public static class Multilingual
     {
-        private static ResourceLoader loader;
-
-        static Multilingual()
-        {
-            Reload();
-        }
-
-        /// <summary>Recreates the resource loader when active language changes.</summary>
+        /// <summary>Recreates or re-syncs the resource loader when active language changes.</summary>
         public static void Reload()
         {
-            try
-            {
-                loader = new ResourceLoader();
-            }
-            catch
-            {
-                loader = null;
-            }
+            // Context and qualifier switching is maintained through LocalizationManager
         }
 
         /// <summary>Returns the localized string for the given resource key.</summary>
@@ -33,8 +19,7 @@ namespace Fastedit
         {
             try
             {
-                var value = loader?.GetString(key);
-                return string.IsNullOrEmpty(value) ? key : value;
+                return LocalizationManager.Instance.GetString(key).Replace("\\n", "\n");
             }
             catch
             {

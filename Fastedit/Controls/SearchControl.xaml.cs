@@ -21,6 +21,7 @@ namespace Fastedit.Controls
         public SearchControl()
         {
             this.InitializeComponent();
+            ReloadLanguage();
         }
 
         public void ReloadLanguage()

@@ -4,7 +4,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Fastedit.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Fastedit.Controls"
+    xmlns:l="using:WinUI3Localizer"
     mc:Ignorable="d">
 
     <Grid Height="30" x:Name="statusbar">
@@ -25,7 +27,7 @@
                 <Grid IsDoubleTapEnabled="True" DoubleTapped="ResetZoom_DoubleClicked">
                     <TextBlock>
                         <TextBlock.Inlines>
-                            <Run x:Name="zoomRun" x:Uid="TextStatusBar_Run_1" Text="Zoom"/>
+                            <Run x:Name="zoomRun" l:Uids.Uid="TextStatusBar_Run_1" Text="Zoom"/>
                             <Bold>
                                 <Run Text="{x:Bind zoomSlider.Value, Mode=OneWay}"/>
                             </Bold>
@@ -39,7 +41,7 @@
         <controls:StatusbarItem Grid.Column="2" HorizontalAlignment="Left" StaticText="" x:Name="ItemWordCharacter"/>
         <controls:StatusbarItem Grid.Column="3" HorizontalAlignment="Right" StaticText="Ln: " x:Name="ItemLineColumn" FlyoutOpening="ItemLineColumn_FlyoutOpening">
             <controls:StatusbarItem.FlyoutContent>
-                <NumberBox Minimum="1" ValueChanged="GoToLineNumberBox_ValueChanged" Padding="5" Width="120" x:Name="GoToLineNumberBox" x:Uid="TextStatusBar_NumberBox_1" Header="Go To Line" PlaceholderText="Line..." KeyDown="GoToLineTextbox_KeyDown"/>
+                <NumberBox Minimum="1" ValueChanged="GoToLineNumberBox_ValueChanged" Padding="5" Width="120" x:Name="GoToLineNumberBox" l:Uids.Uid="TextStatusBar_NumberBox_1" Header="Go To Line" PlaceholderText="Line..." KeyDown="GoToLineTextbox_KeyDown"/>
             </controls:StatusbarItem.FlyoutContent>
         </controls:StatusbarItem>
         <controls:StatusbarItem Grid.Column="4" HorizontalAlignment="Left" StaticText="" x:Name="ItemEncoding">
@@ -65,24 +67,24 @@
             <controls:StatusbarItem.CustomFlyout>
                 <MenuFlyout Opening="ItemTabsSpaces_FlyoutOpening">
                     <!-- Tab key behavior -->
-                    <MenuFlyoutSubItem x:Uid="TextStatusBar_MenuFlyoutSubItem_1" Text="Tab Key" x:Name="ItemTabKeyBehaviour">
+                    <MenuFlyoutSubItem l:Uids.Uid="TextStatusBar_MenuFlyoutSubItem_1" Text="Tab Key" x:Name="ItemTabKeyBehaviour">
                         <MenuFlyoutSubItem.Items>
-                            <ToggleMenuFlyoutItem x:Uid="TextStatusBar_ToggleMenuFlyoutItem_1" Text="Use Tab (\t)" Click="TabSpaces_Click" Tag="-1"/>
+                            <ToggleMenuFlyoutItem l:Uids.Uid="TextStatusBar_ToggleMenuFlyoutItem_1" Text="Use Tab (\t)" Click="TabSpaces_Click" Tag="-1"/>
                             <MenuFlyoutSeparator/>
-                            <ToggleMenuFlyoutItem x:Uid="TextStatusBar_ToggleMenuFlyoutItem_2" Text="2 Spaces" Click="TabSpaces_Click" Tag="2"/>
-                            <ToggleMenuFlyoutItem x:Uid="TextStatusBar_ToggleMenuFlyoutItem_3" Text="4 Spaces" Click="TabSpaces_Click" Tag="4"/>
-                            <ToggleMenuFlyoutItem x:Uid="TextStatusBar_ToggleMenuFlyoutItem_4" Text="8 Spaces" Click="TabSpaces_Click" Tag="8"/>
+                            <ToggleMenuFlyoutItem l:Uids.Uid="TextStatusBar_ToggleMenuFlyoutItem_2" Text="2 Spaces" Click="TabSpaces_Click" Tag="2"/>
+                            <ToggleMenuFlyoutItem l:Uids.Uid="TextStatusBar_ToggleMenuFlyoutItem_3" Text="4 Spaces" Click="TabSpaces_Click" Tag="4"/>
+                            <ToggleMenuFlyoutItem l:Uids.Uid="TextStatusBar_ToggleMenuFlyoutItem_4" Text="8 Spaces" Click="TabSpaces_Click" Tag="8"/>
                         </MenuFlyoutSubItem.Items>
                     </MenuFlyoutSubItem>
 
                     <!-- Reformat entire text -->
-                    <MenuFlyoutSubItem x:Name="ItemReformatDocument" x:Uid="TextStatusBar_MenuFlyoutSubItem_2" Text="Reformat Document">
+                    <MenuFlyoutSubItem x:Name="ItemReformatDocument" l:Uids.Uid="TextStatusBar_MenuFlyoutSubItem_2" Text="Reformat Document">
                         <MenuFlyoutSubItem.Items>
-                            <MenuFlyoutItem x:Uid="TextStatusBar_MenuFlyoutItem_1" Text="Use Tab (\t)" Click="ReformatTabsInDocument_Click" Tag="-1"/>
+                            <MenuFlyoutItem l:Uids.Uid="TextStatusBar_MenuFlyoutItem_1" Text="Use Tab (\t)" Click="ReformatTabsInDocument_Click" Tag="-1"/>
                             <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem x:Uid="TextStatusBar_MenuFlyoutItem_2" Text="2 Spaces" Click="ReformatTabsInDocument_Click" Tag="2"/>
-                            <MenuFlyoutItem x:Uid="TextStatusBar_MenuFlyoutItem_3" Text="4 Spaces" Click="ReformatTabsInDocument_Click" Tag="4"/>
-                            <MenuFlyoutItem x:Uid="TextStatusBar_MenuFlyoutItem_4" Text="8 Spaces" Click="ReformatTabsInDocument_Click" Tag="8"/>
+                            <MenuFlyoutItem l:Uids.Uid="TextStatusBar_MenuFlyoutItem_2" Text="2 Spaces" Click="ReformatTabsInDocument_Click" Tag="2"/>
+                            <MenuFlyoutItem l:Uids.Uid="TextStatusBar_MenuFlyoutItem_3" Text="4 Spaces" Click="ReformatTabsInDocument_Click" Tag="4"/>
+                            <MenuFlyoutItem l:Uids.Uid="TextStatusBar_MenuFlyoutItem_4" Text="8 Spaces" Click="ReformatTabsInDocument_Click" Tag="8"/>
                         </MenuFlyoutSubItem.Items>
                     </MenuFlyoutSubItem>
 

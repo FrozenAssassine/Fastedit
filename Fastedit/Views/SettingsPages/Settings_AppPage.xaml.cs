@@ -25,8 +25,11 @@ public sealed partial class Settings_AppPage : Page
         HideTitlebarToggle.IsOn = AppSettings.HideTitlebar;
 
         selectLanguageBox.ItemsSource = LocalizationManager.Instance.Languages;
-        var languageTag = AppSettings.Language;
-        selectLanguageBox.SelectedIndex = LocalizationManager.Instance.Languages.FindIndex(x => x.Tag.Equals(languageTag, StringComparison.OrdinalIgnoreCase));
+        var currentLangTag = LocalizationManager.Instance.CurrentLanguage?.Tag ?? AppSettings.Language;
+        var index = LocalizationManager.Instance.Languages.FindIndex(x => x.Tag.Equals(currentLangTag, StringComparison.OrdinalIgnoreCase));
+        if (index < 0 && LocalizationManager.Instance.Languages.Count > 0)
+            index = 0;
+        selectLanguageBox.SelectedIndex = index;
 
         //Load the statusbar sorting:
         LoadStatusbarSorting();

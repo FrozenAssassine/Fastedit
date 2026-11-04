@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Tab;
+using Fastedit.Core.Tab;
 using Fastedit.Models;
 using Fastedit.Views;
 using Microsoft.UI.Xaml;
@@ -22,7 +22,7 @@ public class SettingsTabPageHelper
         if (settingsPage == null)
             settingsPage = new TabViewItem
             {
-                Header = "Settings",
+                Header = Multilingual.L("MainPage_MenuFlyoutItem_7.Text"),
                 IconSource = new SymbolIconSource { Symbol = Symbol.Setting },
                 Content = new SettingsPage(new SettingsNavigationParameter(mainPage, tabView, page)),
             };
@@ -42,6 +42,12 @@ public class SettingsTabPageHelper
     public static void OpenSettings(MainPage mainPage, TabView tabView, string page = null)
     {
         InitialiseTab(mainPage, tabView, page);
+
+        if (settingsPage != null)
+        {
+            settingsPage.Header = Multilingual.L("MainPage_MenuFlyoutItem_7.Text");
+            (settingsPage.Content as SettingsPage)?.ReloadLanguage(false);
+        }
 
         if (!tabView.TabItems.Contains(settingsPage))
         {

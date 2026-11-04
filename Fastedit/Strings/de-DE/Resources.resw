@@ -475,6 +475,9 @@
     <value>Zeilenenden</value>
   </data>
   <data name="Settings_App_TabsSpacesText.Text" xml:space="preserve">
+    <value>Tabs / Leerzeichen</value>
+  </data>
+  <data name="Settings_App_SyntaxHighlightingText.Text" xml:space="preserve">
     <value>Syntaxhervorhebung</value>
   </data>
   <data name="Settings_App_WindowHeader.Header" xml:space="preserve">
@@ -986,4 +989,59 @@ klicken Sie auf die Schaltfläche unten</value>
   <data name="T_FileRenamedOnDisk" xml:space="preserve">
     <value>Datei wurde auf dem Datenträger in '{0}' umbenannt.</value>
   </data>
-<data name="T_LineColumnFormat" xml:space="preserve"><value>Zl: {0}, Sp: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>W: {0}, </value></data><data name="T_CharsFormat" xml:space="preserve"><value>Z: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>Leerzeichen: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>Tabs</value></data></root>
+<data name="T_LineColumnFormat" xml:space="preserve"><value>Zl: {0}, Sp: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>W: {0}, </value></data><data name="T_CharsFormat" xml:space="preserve"><value>Z: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>Leerzeichen: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>Tabs</value></data>
+  <data name="T_Undock" xml:space="preserve">
+    <value>Tab abdocken</value>
+  </data>
+  <data name="T_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="T_CloseAll" xml:space="preserve">
+    <value>Alle schließen</value>
+  </data>
+  <data name="T_EncodingTitle" xml:space="preserve">
+    <value>Codierung</value>
+  </data>
+  <data name="T_Done" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="T_Reopen" xml:space="preserve">
+    <value>Erneut öffnen</value>
+  </data>
+  <data name="T_ReopenUnsavedWarning" xml:space="preserve">
+    <value>Ungespeicherte Änderungen gehen verloren. Möchten Sie die Datei wirklich erneut von der Festplatte laden?</value>
+  </data>
+  <data name="T_SaveDesignTitle" xml:space="preserve">
+    <value>Design speichern?</value>
+  </data>
+  <data name="T_SaveDesignContent" xml:space="preserve">
+    <value>Möchten Sie die Änderungen an {0} speichern?</value>
+  </data>
+  <data name="T_SaveFileTitle" xml:space="preserve">
+    <value>Datei speichern?</value>
+  </data>
+  <data name="T_SaveFileContent" xml:space="preserve">
+    <value>Möchten Sie die Datei {0} speichern?</value>
+  </data>
+  <data name="T_FileConflictChangedOnDisk" xml:space="preserve">
+    <value>Die Datei „{0}“ wurde auf dem Datenträger von einem anderen Programm geändert.</value>
+  </data>
+  <data name="T_FileConflictTitle" xml:space="preserve">
+    <value>Dateikonflikt - {0}</value>
+  </data>
+  <data name="T_ReloadFromDisk" xml:space="preserve">
+    <value>Vom Datenträger neu laden</value>
+  </data>
+  <data name="T_OverwriteDisk" xml:space="preserve">
+    <value>Auf Datenträger überschreiben</value>
+  </data>
+  <data name="T_Ignore" xml:space="preserve">
+    <value>Ignorieren</value>
+  </data>
+  <data name="T_Apply" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="T_RecycleBin" xml:space="preserve">
+    <value>Papierkorb</value>
+  </data>
+</root>

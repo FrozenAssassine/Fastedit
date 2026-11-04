@@ -1,6 +1,7 @@
 using Fastedit.Core;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
 
 namespace Fastedit;
 
@@ -18,10 +19,11 @@ public partial class App : Application
         _singleInstanceApp.Launched += _singleInstanceApp_Launched;
     }
 
-    private void _singleInstanceApp_Launched(object sender, SingleInstanceLaunchEventArgs e)
+    private async void _singleInstanceApp_Launched(object sender, SingleInstanceLaunchEventArgs e)
     {
         if (e.IsFirstLaunch)
         {
+            await LocalizationManager.Instance.InitializeLocalizerAsync();
             m_window = new MainWindow();
             m_window.Activate();
         }

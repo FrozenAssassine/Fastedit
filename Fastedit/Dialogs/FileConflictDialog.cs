@@ -47,7 +47,7 @@ public class FileConflictDialog
             var contentPanel = new StackPanel { Spacing = 12 };
             contentPanel.Children.Add(new TextBlock
             {
-                Text = $"The file \"{fileName}\" has been changed on disk by another program.",
+                Text = Multilingual.L("T_FileConflictChangedOnDisk", fileName),
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 TextWrapping = TextWrapping.Wrap
             });
@@ -66,11 +66,11 @@ public class FileConflictDialog
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = $"File Conflict - {fileName}",
+                Title = Multilingual.L("T_FileConflictTitle", fileName),
                 Content = contentPanel,
-                PrimaryButtonText = "Reload from disk",
-                SecondaryButtonText = "Overwrite disk",
-                CloseButtonText = "Ignore",
+                PrimaryButtonText = Multilingual.L("T_ReloadFromDisk"),
+                SecondaryButtonText = Multilingual.L("T_OverwriteDisk"),
+                CloseButtonText = Multilingual.L("T_Ignore"),
                 DefaultButton = ContentDialogButton.Primary
             };
 
