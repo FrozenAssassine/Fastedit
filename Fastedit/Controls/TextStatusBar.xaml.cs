@@ -46,6 +46,8 @@ public sealed partial class TextStatusBar : UserControl
             { "TabsSpaces", ItemTabsSpaces },
             { "Syntaxhighlights", ItemSyntaxHighlightings },
         };
+
+        ReloadLanguage();
     }
 
     private void LoadLineEndings()
@@ -57,7 +59,7 @@ public sealed partial class TextStatusBar : UserControl
     {
         foreach(var highlight in TextControlBox.SyntaxHighlightings)
         {
-            var item = new MenuFlyoutItem { Text = highlight.Value == null ? "None":highlight.Value.Name, Tag = highlight.Key.GetHashCode() };
+            var item = new MenuFlyoutItem { Text = highlight.Value == null ? Multilingual.L("T_None"):highlight.Value.Name, Tag = highlight.Key.GetHashCode() };
             item.Click += Syntaxhighlighting_Selected;
             SyntaxHighlightingsFlyout.Items.Add(item);
         }
@@ -105,7 +107,7 @@ public sealed partial class TextStatusBar : UserControl
             return;
         }
 
-        ItemLineColumn.CustomText = $"Ln: {tabPage.textbox.CurrentLineIndex + 1}, Cl: {tabPage.textbox.CursorPosition.CharacterPosition}";
+        ItemLineColumn.CustomText = string.Format(Multilingual.L("T_LineColumnFormat"), tabPage.textbox.CurrentLineIndex + 1, tabPage.textbox.CursorPosition.CharacterPosition);
     }
 
     public void UpdateText()
@@ -119,7 +121,7 @@ public sealed partial class TextStatusBar : UserControl
             return;
         }
         int charCount = tabPage.textbox.CharacterCount();
-        ItemWordCharacter.CustomText = (charCount > 5_000_000 ? "" : $"W: {tabPage.textbox.WordCount()}, ") + $"C: {charCount}";
+        ItemWordCharacter.CustomText = (charCount > 5_000_000 ? "" : string.Format(Multilingual.L("T_WordsFormat"), tabPage.textbox.WordCount())) + string.Format(Multilingual.L("T_CharsFormat"), charCount);
     }
     public void UpdateZoom()
     {
@@ -188,9 +190,9 @@ public sealed partial class TextStatusBar : UserControl
 
         string content;
         if (tabPage.textbox.UseSpacesInsteadTabs)
-            content = $"Spaces: {tabPage.textbox.NumberOfSpacesForTab}";
+            content = string.Format(Multilingual.L("T_SpacesFormat"), tabPage.textbox.NumberOfSpacesForTab);
         else
-            content = $"Tabs";
+            content = Multilingual.L("T_TabsCharacter");
         ItemTabsSpaces.ChangingText = content;
     }
 
@@ -204,7 +206,55 @@ public sealed partial class TextStatusBar : UserControl
             ItemSyntaxHighlightings.ChangingText = "-";
             return;
         }
-            ItemSyntaxHighlightings.ChangingText = tabPage.textbox.SyntaxHighlighting != null ? tabPage.textbox.SyntaxHighlighting.Name : "None";
+            ItemSyntaxHighlightings.ChangingText = tabPage.textbox.SyntaxHighlighting != null ? tabPage.textbox.SyntaxHighlighting.Name : Multilingual.L("T_None");
+    }
+
+    public void ReloadLanguage()
+    {
+        if (ItemZoom != null)
+            ItemZoom.StaticText = Multilingual.L("TextStatusBar_Run_1.Text") + ": ";
+
+        if (zoomRun != null)
+            zoomRun.Text = Multilingual.L("TextStatusBar_Run_1.Text");
+
+        if (GoToLineNumberBox != null)
+        {
+            GoToLineNumberBox.Header = Multilingual.L("TextStatusBar_NumberBox_1.Header");
+            GoToLineNumberBox.PlaceholderText = Multilingual.L("TextStatusBar_NumberBox_1.PlaceholderText");
+        }
+
+        if (ItemTabKeyBehaviour != null)
+        {
+            ItemTabKeyBehaviour.Text = Multilingual.L("TextStatusBar_MenuFlyoutSubItem_1.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 0 && ItemTabKeyBehaviour.Items[0] is MenuFlyoutItem i0)
+                i0.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_1.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 2 && ItemTabKeyBehaviour.Items[2] is MenuFlyoutItem i2)
+                i2.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_2.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 3 && ItemTabKeyBehaviour.Items[3] is MenuFlyoutItem i3)
+                i3.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_3.Text");
+            if (ItemTabKeyBehaviour.Items.Count > 4 && ItemTabKeyBehaviour.Items[4] is MenuFlyoutItem i4)
+                i4.Text = Multilingual.L("TextStatusBar_ToggleMenuFlyoutItem_4.Text");
+        }
+
+        if (ItemReformatDocument != null)
+        {
+            ItemReformatDocument.Text = Multilingual.L("TextStatusBar_MenuFlyoutSubItem_2.Text");
+            if (ItemReformatDocument.Items.Count > 0 && ItemReformatDocument.Items[0] is MenuFlyoutItem r0)
+                r0.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_1.Text");
+            if (ItemReformatDocument.Items.Count > 2 && ItemReformatDocument.Items[2] is MenuFlyoutItem r2)
+                r2.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_2.Text");
+            if (ItemReformatDocument.Items.Count > 3 && ItemReformatDocument.Items[3] is MenuFlyoutItem r3)
+                r3.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_3.Text");
+            if (ItemReformatDocument.Items.Count > 4 && ItemReformatDocument.Items[4] is MenuFlyoutItem r4)
+                r4.Text = Multilingual.L("TextStatusBar_MenuFlyoutItem_4.Text");
+        }
+
+        if (SyntaxHighlightingsFlyout?.Items?.Count > 0 && SyntaxHighlightingsFlyout.Items[0] is MenuFlyoutItem firstItem)
+        {
+            firstItem.Text = Multilingual.L("T_None");
+        }
+
+        UpdateAll();
     }
 
     public void UpdateAll()

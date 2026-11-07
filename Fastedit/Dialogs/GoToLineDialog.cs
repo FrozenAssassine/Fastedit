@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Tab;
+using Fastedit.Core.Tab;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -27,10 +27,10 @@ internal class GoToLineDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Go To Line",
+            Title = Multilingual.L("T_GoToLine"),
             Content = input,
-            PrimaryButtonText = "Ok",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = Multilingual.L("T_Ok"),
+            CloseButtonText = Multilingual.L("T_Cancel"),
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = App.m_window.Content.XamlRoot
         };

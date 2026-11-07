@@ -174,6 +174,8 @@ public class OpenFileHelper
             TabPageHelper.SelectHighlightLanguageByPath(tab);
             tab.textbox.GoToLine(0);
             tab.textbox.ScrollLineIntoView(0);
+            tab.HasPendingExternalConflict = false;
+            TabPageHelper.UpdateSaveStatus(tab, false);
             TabPageHelper.UpdateStatusbarForTab(tab);
             if (TabPageHelper.mainPage?.currentlySelectedTabPage == tab)
             {
@@ -268,6 +270,8 @@ public class OpenFileHelper
             {
                 tab.LastKnownWriteTimeUtc = File.GetLastWriteTimeUtc(tab.DatabaseItem.FilePath);
             }
+            tab.HasPendingExternalConflict = false;
+            TabPageHelper.UpdateSaveStatus(tab, false);
             TabPageHelper.UpdateStatusbarForTab(tab);
             return true;
         }

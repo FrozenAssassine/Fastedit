@@ -1,0 +1,1045 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DesignGridView_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>创建副本</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>编辑 JSON</value>
+  </data>
+  <data name="SearchControl_TextBox_1.PlaceholderText" xml:space="preserve">
+    <value>查找...</value>
+  </data>
+  <data name="SearchControl_ToggleButton_1.Content" xml:space="preserve">
+    <value>区分大小写</value>
+  </data>
+  <data name="SearchControl_ToggleButton_2.Content" xml:space="preserve">
+    <value>全字匹配</value>
+  </data>
+  <data name="SearchControl_TextBox_2.PlaceholderText" xml:space="preserve">
+    <value>替换...</value>
+  </data>
+  <data name="SearchControl_Button_1.ToolTipService.ToolTip" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="SearchControl_Button_2.Content" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="SearchControl_Button_2.ToolTipService.ToolTip" xml:space="preserve">
+    <value>全部替换</value>
+  </data>
+  <data name="SurroundWithFlyout_TextBlock_1.Text" xml:space="preserve">
+    <value>包围所选内容（按 Tab 键）</value>
+  </data>
+  <data name="TextStatusBar_Run_1.Text" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="TextStatusBar_NumberBox_1.Header" xml:space="preserve">
+    <value>转到行</value>
+  </data>
+  <data name="TextStatusBar_NumberBox_1.PlaceholderText" xml:space="preserve">
+    <value>行...</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutSubItem_1.Text" xml:space="preserve">
+    <value>Tab 键</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>使用制表符 (\t)</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>2 个空格</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>4 个空格</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>8 个空格</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutSubItem_2.Text" xml:space="preserve">
+    <value>重新格式化文档</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>使用制表符 (\t)</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>2 个空格</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>4 个空格</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>8 个空格</value>
+  </data>
+  <data name="VerticalTabsFlyoutControl_TextBlock_1.Text" xml:space="preserve">
+    <value>新建标签页</value>
+  </data>
+  <data name="AboutPage_TextBlock_1.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="AboutPage_TextBlock_2.Text" xml:space="preserve">
+    <value>开发者</value>
+  </data>
+  <data name="AboutPage_TextBlock_3.Text" xml:space="preserve">
+    <value>参与贡献</value>
+  </data>
+  <data name="AboutPage_HyperlinkButton_1.Content" xml:space="preserve">
+    <value>报告问题</value>
+  </data>
+  <data name="AboutPage_HyperlinkButton_2.Content" xml:space="preserve">
+    <value>功能建议</value>
+  </data>
+  <data name="AboutPage_TextBlock_4.Text" xml:space="preserve">
+    <value>使用的其他依赖项</value>
+  </data>
+  <data name="AboutPage_TextBlock_5.Text" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
+  <data name="AboutPage_SetingsItemSeparator_1.Header" xml:space="preserve">
+    <value>法律信息</value>
+  </data>
+  <data name="AboutPage_TextBlock_6.Text" xml:space="preserve">
+    <value>隐私政策</value>
+  </data>
+  <data name="AboutPage_TextBlock_7.Text" xml:space="preserve">
+    <value>免责声明</value>
+  </data>
+  <data name="DesignEditor_Button_1.Content" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="DesignEditor_Button_2.Content" xml:space="preserve">
+    <value>保存到文件</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_1.Header" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_1.Content" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_2.Content" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_3.Content" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_2.Header" xml:space="preserve">
+    <value>背景颜色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_4.Content" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_5.Content" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_6.Content" xml:space="preserve">
+    <value>云母</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_3.Header" xml:space="preserve">
+    <value>文本颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_4.Header" xml:space="preserve">
+    <value>选中区颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_5.Header" xml:space="preserve">
+    <value>行号颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_6.Header" xml:space="preserve">
+    <value>行号背景颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_7.Header" xml:space="preserve">
+    <value>当前行高亮背景颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_8.Header" xml:space="preserve">
+    <value>文本框背景颜色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_7.Content" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_8.Content" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_9.Content" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_9.Header" xml:space="preserve">
+    <value>搜索高亮颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_10.Header" xml:space="preserve">
+    <value>光标颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_11.Header" xml:space="preserve">
+    <value>选中标签页文字颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_12.Header" xml:space="preserve">
+    <value>未选中标签页文字颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_13.Header" xml:space="preserve">
+    <value>选中标签页背景颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_14.Header" xml:space="preserve">
+    <value>未选中标签页背景颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_15.Header" xml:space="preserve">
+    <value>状态栏文字颜色</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_16.Header" xml:space="preserve">
+    <value>状态栏背景颜色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_10.Content" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_11.Content" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_12.Content" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_17.Header" xml:space="preserve">
+    <value>对话框背景颜色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_13.Content" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_14.Content" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_15.Content" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_18.Header" xml:space="preserve">
+    <value>对话框文字颜色</value>
+  </data>
+  <data name="MixedLineEndingWarningDialogPage_TextBlock_1.Text" xml:space="preserve">
+    <value>此文件包含多种不同的行尾符。</value>
+  </data>
+  <data name="MixedLineEndingWarningDialogPage_TextBlock_2.Text" xml:space="preserve">
+    <value>请选择一种格式以使其保持一致。</value>
+  </data>
+  <data name="MainPage_SplitButton_1.ToolTipService.ToolTip" xml:space="preserve">
+    <value>显示全部标签页；Ctrl + M（输入以搜索）</value>
+  </data>
+  <data name="MainPage_MenuBarItem_1.Title" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>全部保存</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>回收站</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MainPage_MenuBarItem_2.Title" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_8.Text" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_9.Text" xml:space="preserve">
+    <value>重做</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_10.Text" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_11.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_12.Text" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_13.Text" xml:space="preserve">
+    <value>复制当前行</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_14.Text" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_15.Text" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_16.Text" xml:space="preserve">
+    <value>转到</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_17.Text" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="MainPage_MenuBarItem_3.Title" xml:space="preserve">
+    <value>文档</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>自动换行</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_18.Text" xml:space="preserve">
+    <value>文件信息</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_19.Text" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_20.Text" xml:space="preserve">
+    <value>在文件资源管理器中显示</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_1.Text" xml:space="preserve">
+    <value>行尾符</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_21.Text" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_22.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_23.Text" xml:space="preserve">
+    <value>全部关闭</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_24.Text" xml:space="preserve">
+    <value>分离标签页</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>只读</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>显示空白字符</value>
+  </data>
+  <data name="MainPage_MenuBarItem_4.Title" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_2.Text" xml:space="preserve">
+    <value>语法高亮</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_3.Text" xml:space="preserve">
+    <value>Tab 行为（制表符/空格）</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_25.Text" xml:space="preserve">
+    <value>自动检测</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>使用制表符 (\t)</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>2 个空格</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>4 个空格</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>8 个空格</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_4.Text" xml:space="preserve">
+    <value>重新格式化制表符/空格</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_26.Text" xml:space="preserve">
+    <value>使用制表符 (\t)</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_27.Text" xml:space="preserve">
+    <value>2 个空格</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_28.Text" xml:space="preserve">
+    <value>4 个空格</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_29.Text" xml:space="preserve">
+    <value>8 个空格</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_30.Text" xml:space="preserve">
+    <value>包围插入</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_31.Text" xml:space="preserve">
+    <value>快速访问</value>
+  </data>
+  <data name="MainPage_MenuBarItem_5.Title" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_32.Text" xml:space="preserve">
+    <value>迷你模式</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_33.Text" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_34.Text" xml:space="preserve">
+    <value>窗口置顶</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_35.Text" xml:space="preserve">
+    <value>放大</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_36.Text" xml:space="preserve">
+    <value>缩小</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_37.Text" xml:space="preserve">
+    <value>重置缩放</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_1.Content" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_2.Content" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_3.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_1.Content" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_2.Content" xml:space="preserve">
+    <value>文本框</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_3.Content" xml:space="preserve">
+    <value>标签页</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_4.Content" xml:space="preserve">
+    <value>设计</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_5.Content" xml:space="preserve">
+    <value>数据</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_6.Content" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="SettingsPage_TextBlock_1.Text" xml:space="preserve">
+    <value>你好</value>
+  </data>
+  <data name="SettingsPage_Button_1.Content" xml:space="preserve">
+    <value>应用设置</value>
+  </data>
+  <data name="Settings_App_MenubarHeader.Header" xml:space="preserve">
+    <value>菜单栏</value>
+  </data>
+  <data name="Settings_App_ShowMenubarHeader.Header" xml:space="preserve">
+    <value>显示菜单栏</value>
+  </data>
+  <data name="Settings_App_MenubarAlignmentHeader.Header" xml:space="preserve">
+    <value>菜单栏对齐方式</value>
+  </data>
+  <data name="Settings_App_AlignmentLeft.Content" xml:space="preserve">
+    <value>左对齐</value>
+  </data>
+  <data name="Settings_App_AlignmentCenter.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="Settings_App_AlignmentRight.Content" xml:space="preserve">
+    <value>右对齐</value>
+  </data>
+  <data name="Settings_App_StatusbarHeader.Header" xml:space="preserve">
+    <value>状态栏</value>
+  </data>
+  <data name="Settings_App_ShowStatusbarHeader.Header" xml:space="preserve">
+    <value>显示状态栏</value>
+  </data>
+  <data name="Settings_App_StatusbarText.Text" xml:space="preserve">
+    <value>状态栏</value>
+  </data>
+  <data name="Settings_App_FileNameText.Text" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="Settings_App_ZoomText.Text" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="Settings_App_LineColumnText.Text" xml:space="preserve">
+    <value>行号 / 列号</value>
+  </data>
+  <data name="Settings_App_WordCharsText.Text" xml:space="preserve">
+    <value>单词数 / 字符数</value>
+  </data>
+  <data name="Settings_App_EncodingText.Text" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="Settings_App_LineEndingsText.Text" xml:space="preserve">
+    <value>行尾符</value>
+  </data>
+  <data name="Settings_App_TabsSpacesText.Text" xml:space="preserve">
+    <value>制表符 / 空格</value>
+  </data>
+  <data name="Settings_App_SyntaxHighlightingText.Text" xml:space="preserve">
+    <value>语法高亮</value>
+  </data>
+  <data name="Settings_App_WindowHeader.Header" xml:space="preserve">
+    <value>窗口</value>
+  </data>
+  <data name="Settings_App_HideTitleBarHeader.Header" xml:space="preserve">
+    <value>隐藏标题栏</value>
+  </data>
+  <data name="Settings_App_HideTitleBarHeader.InfoText" xml:space="preserve">
+    <value>重启以修复渲染问题</value>
+  </data>
+  <data name="Settings_App_LanguageHeader.Header" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_App_LanguageControl.Header" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
+    <value>点击“应用设置”以应用更改</value>
+  </data>
+  <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
+    <value>导入 / 导出应用设置</value>
+  </data>
+  <data name="Settings_Data_ExportSettingsButton.Content" xml:space="preserve">
+    <value>导出设置</value>
+  </data>
+  <data name="Settings_Data_ImportSettingsButton.Content" xml:space="preserve">
+    <value>导入设置</value>
+  </data>
+  <data name="Settings_Data_SetingsItemSeparator2.Header" xml:space="preserve">
+    <value>清理文件夹</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinHeader.Header" xml:space="preserve">
+    <value>清空回收站</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinButton.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Settings_Data_FlyoutText.Text" xml:space="preserve">
+    <value>回收站中的所有项目都将被删除</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinConfirmButton.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Settings_Data_ClearTemporaryFilesHeader.Header" xml:space="preserve">
+    <value>清除临时文件</value>
+  </data>
+  <data name="Settings_Data_ClearTemporaryFilesButton.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Settings_DesignPage_NewButton.Content" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="Settings_DesignPage_ImportButton.Content" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="Settings_DesignPage_ResetDefaultsButton.Content" xml:space="preserve">
+    <value>恢复默认设置</value>
+  </data>
+  <data name="Settings_DesignPage_AllWillBeReplaced.Text" xml:space="preserve">
+    <value>所有现有项目都将被替换。请先导出项目进行备份！</value>
+  </data>
+  <data name="Settings_DesignPage_ConfirmButton.Content" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="Settings_Page_Text_Separator.Header" xml:space="preserve">
+    <value>文本样式</value>
+  </data>
+  <data name="Settings_Page_Font_Family_Control.Header" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="Settings_Page_Font_Size_Control.Header" xml:space="preserve">
+    <value>字号</value>
+  </data>
+  <data name="Settings_Page_Features_Separator.Header" xml:space="preserve">
+    <value>启用 / 禁用功能</value>
+  </data>
+  <data name="Settings_Page_Show_Line_Numbers_Control.Header" xml:space="preserve">
+    <value>显示行号</value>
+  </data>
+  <data name="Settings_Page_Show_Line_Highlighter_Control.Header" xml:space="preserve">
+    <value>显示当前行高亮</value>
+  </data>
+  <data name="Settings_Page_Syntax_Highlighting_Control.Header" xml:space="preserve">
+    <value>语法高亮</value>
+  </data>
+  <data name="Settings_Page_ShowWhitespaceCharacters.Header" xml:space="preserve">
+    <value>用箭头 / 圆点显示空格与制表符</value>
+  </data>
+  <data name="Settings_Page_EnableClickableLinks.Header" xml:space="preserve">
+    <value>启用文本中的可点击链接</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_1.Header" xml:space="preserve">
+    <value>跟踪磁盘上的外部文件更改</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_2.Header" xml:space="preserve">
+    <value>文件在磁盘上被更改且未修改时自动重新加载</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_3.Header" xml:space="preserve">
+    <value>平滑滚动</value>
+  </data>
+  <data name="Settings_Page_Tab_Key_Separator.Header" xml:space="preserve">
+    <value>默认文档设置</value>
+  </data>
+  <data name="Settings_Page_Number_Of_Spaces_Per_Tab_Control.Header" xml:space="preserve">
+    <value>新文档的默认 Tab 行为</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_1.Content" xml:space="preserve">
+    <value>标签页</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_2.Content" xml:space="preserve">
+    <value>2 个空格</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_3.Content" xml:space="preserve">
+    <value>4 个空格</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_4.Content" xml:space="preserve">
+    <value>8 个空格</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_4.Header" xml:space="preserve">
+    <value>新文档的默认行尾符</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_5.Header" xml:space="preserve">
+    <value>自动换行</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_6.Header" xml:space="preserve">
+    <value>为未知文件类型启用语法高亮</value>
+  </data>
+  <data name="Settings_TabControl_TabSizingMode.Header" xml:space="preserve">
+    <value>标签页尺寸模式</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Equals.Content" xml:space="preserve">
+    <value>等宽</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Title.Content" xml:space="preserve">
+    <value>按标题自适应</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Compact.Content" xml:space="preserve">
+    <value>紧凑</value>
+  </data>
+  <data name="Settings_TabControl_NewTabTitle.Header" xml:space="preserve">
+    <value>新建标签页标题</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>迷你模式</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_8.Text" xml:space="preserve">
+    <value>窗口置顶</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_9.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_10.Text" xml:space="preserve">
+    <value>查找</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_11.Text" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="TabWindowPage_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>只读</value>
+  </data>
+  <data name="T_NumberOfWords" xml:space="preserve">
+    <value>单词数</value>
+  </data>
+  <data name="T_NumberOfCharacter" xml:space="preserve">
+    <value>字符数</value>
+  </data>
+  <data name="T_NumberOfLines" xml:space="preserve">
+    <value>行数</value>
+  </data>
+  <data name="T_CurrentEncoding" xml:space="preserve">
+    <value>当前编码</value>
+  </data>
+  <data name="T_FilePath" xml:space="preserve">
+    <value>文件路径</value>
+  </data>
+  <data name="T_FileName" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="T_OpenDocument" xml:space="preserve">
+    <value>打开文档</value>
+  </data>
+  <data name="T_None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="T_FileUpdated" xml:space="preserve">
+    <value>文件已更新</value>
+  </data>
+  <data name="T_File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="T_SaveToRecreate" xml:space="preserve">
+    <value>保存以重新创建</value>
+  </data>
+  <data name="T_FileDeleted" xml:space="preserve">
+    <value>文件已删除</value>
+  </data>
+  <data name="T_GCode" xml:space="preserve">
+    <value>G 代码</value>
+  </data>
+  <data name="T_ArduinoSketch" xml:space="preserve">
+    <value>Arduino 项目</value>
+  </data>
+  <data name="T_HypertextPreprocessor" xml:space="preserve">
+    <value>PHP 文件</value>
+  </data>
+  <data name="T_AssemblyLanguage" xml:space="preserve">
+    <value>汇编文件</value>
+  </data>
+  <data name="T_Textfile" xml:space="preserve">
+    <value>文本文件</value>
+  </data>
+  <data name="T_RegistrationFile" xml:space="preserve">
+    <value>注册表文件</value>
+  </data>
+  <data name="T_CascadingStyleSheets" xml:space="preserve">
+    <value>CSS 样式表</value>
+  </data>
+  <data name="T_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="T_ShowInFileExplorer" xml:space="preserve">
+    <value>在文件资源管理器中显示</value>
+  </data>
+  <data name="T_Rename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="T_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="T_LoadingFile" xml:space="preserve">
+    <value>正在加载文件 </value>
+  </data>
+  <data name="T_DonTSave" xml:space="preserve">
+    <value>不保存</value>
+  </data>
+  <data name="T_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="T_Encoding" xml:space="preserve">
+    <value>编码：</value>
+  </data>
+  <data name="T_YouAlsoHaveUnsavedModificationsInFasteditNN" xml:space="preserve">
+    <value>你在 Fastedit 中还有未保存的修改。\n\n</value>
+  </data>
+  <data name="T_ReloadDiscardYourLocalChangesAndLoadTheDiskVersionN" xml:space="preserve">
+    <value>• 重新加载：放弃本地更改并载入磁盘上的版本。\n</value>
+  </data>
+  <data name="T_OverwriteKeepYourLocalChangesAndOverwriteTheFileOnDiskN" xml:space="preserve">
+    <value>• 覆盖：保留本地更改并覆盖磁盘上的文件。\n</value>
+  </data>
+  <data name="T_IgnoreKeepYourChangesInTheEditorWithoutModifyingDisk" xml:space="preserve">
+    <value>• 忽略：在编辑器中保留你的更改，不修改磁盘文件。</value>
+  </data>
+  <data name="T_Extension" xml:space="preserve">
+    <value>扩展名：</value>
+  </data>
+  <data name="T_Path" xml:space="preserve">
+    <value>路径：</value>
+  </data>
+  <data name="T_Created" xml:space="preserve">
+    <value>创建时间：</value>
+  </data>
+  <data name="T_LastModified" xml:space="preserve">
+    <value>修改时间：</value>
+  </data>
+  <data name="T_Size" xml:space="preserve">
+    <value>大小：</value>
+  </data>
+  <data name="T_Language" xml:space="preserve">
+    <value>语言：</value>
+  </data>
+  <data name="T_Words" xml:space="preserve">
+    <value>单词数：</value>
+  </data>
+  <data name="T_Lines" xml:space="preserve">
+    <value>行数：</value>
+  </data>
+  <data name="T_Characters" xml:space="preserve">
+    <value>字符数：</value>
+  </data>
+  <data name="T_Encoding_2" xml:space="preserve">
+    <value>编码：</value>
+  </data>
+  <data name="T_LineEnding" xml:space="preserve">
+    <value>行尾符：</value>
+  </data>
+  <data name="T_Info_2" xml:space="preserve">
+    <value>信息 </value>
+  </data>
+  <data name="T_GoToLine" xml:space="preserve">
+    <value>转到行</value>
+  </data>
+  <data name="T_Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="T_NoAccess" xml:space="preserve">
+    <value>无访问权限</value>
+  </data>
+  <data name="T_NoAccessToWriteToTheFile" xml:space="preserve">
+    <value>没有写入该文件的权限</value>
+  </data>
+  <data name="T_SavingDatabaseError" xml:space="preserve">
+    <value>保存数据库时出错</value>
+  </data>
+  <data name="T_SavingOpenFileError" xml:space="preserve">
+    <value>保存打开的文件时出错</value>
+  </data>
+  <data name="T_NoAccessToReadFromTheFile" xml:space="preserve">
+    <value>没有读取该文件的权限</value>
+  </data>
+  <data name="T_Exception" xml:space="preserve">
+    <value>异常</value>
+  </data>
+  <data name="T_UnhandledExceptionN" xml:space="preserve">
+    <value>未处理的异常：\n</value>
+  </data>
+  <data name="T_ClearRecycleBin" xml:space="preserve">
+    <value>清空回收站</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileClearingTheRecycleBin" xml:space="preserve">
+    <value>清空回收站时发生错误</value>
+  </data>
+  <data name="T_DeleteFromRecycleBin" xml:space="preserve">
+    <value>从回收站删除</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileDeletingTheFileFromTheRecycleBin" xml:space="preserve">
+    <value>从回收站删除文件时发生错误</value>
+  </data>
+  <data name="T_SuccessfullyClearedTheRecycleBin" xml:space="preserve">
+    <value>已成功清空回收站</value>
+  </data>
+  <data name="T_MoveToRecycleBin" xml:space="preserve">
+    <value>移入回收站</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileMovingTheFileToTheRecycleBin" xml:space="preserve">
+    <value>将文件移入回收站时发生错误</value>
+  </data>
+  <data name="T_OpenFromRecycleBin" xml:space="preserve">
+    <value>从回收站打开</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileOpeningTheFileFromTheRecycleBin" xml:space="preserve">
+    <value>从回收站打开文件时发生错误</value>
+  </data>
+  <data name="T_InvalidCharacter" xml:space="preserve">
+    <value>无效字符</value>
+  </data>
+  <data name="T_TheTextEnteredContainsInvalidCharactersForAFileName" xml:space="preserve">
+    <value>输入的内容包含文件名不允许的字符</value>
+  </data>
+  <data name="T_DesignLoadFailed" xml:space="preserve">
+    <value>设计加载失败</value>
+  </data>
+  <data name="T_CouldNotLoadTheDesign" xml:space="preserve">
+    <value>无法加载设计：</value>
+  </data>
+  <data name="T_DetectEncoding" xml:space="preserve">
+    <value>检测编码</value>
+  </data>
+  <data name="T_CouldNotDetectTheEncodingN" xml:space="preserve">
+    <value>无法检测编码\n</value>
+  </data>
+  <data name="T_SettingsExport" xml:space="preserve">
+    <value>设置导出</value>
+  </data>
+  <data name="T_SettingsSuccessfullyExported" xml:space="preserve">
+    <value>设置已成功导出</value>
+  </data>
+  <data name="T_SettingsImport" xml:space="preserve">
+    <value>设置导入</value>
+  </data>
+  <data name="T_SettingsSuccessfullyImported" xml:space="preserve">
+    <value>设置已成功导入</value>
+  </data>
+  <data name="T_FailedToExportSettings" xml:space="preserve">
+    <value>导出设置失败</value>
+  </data>
+  <data name="T_FailedToImportSettings" xml:space="preserve">
+    <value>导入设置失败</value>
+  </data>
+  <data name="T_TemporaryFiles" xml:space="preserve">
+    <value>临时文件</value>
+  </data>
+  <data name="T_FailedToClearTemporaryFiles" xml:space="preserve">
+    <value>清除临时文件失败</value>
+  </data>
+  <data name="T_SuccessfullyClearedTemporaryFiles" xml:space="preserve">
+    <value>已成功清除临时文件</value>
+  </data>
+  <data name="T_DeleteDesign" xml:space="preserve">
+    <value>删除设计</value>
+  </data>
+  <data name="T_CouldNotDeleteDesign" xml:space="preserve">
+    <value>无法删除设计</value>
+  </data>
+  <data name="T_ImportDesign" xml:space="preserve">
+    <value>导入设计</value>
+  </data>
+  <data name="T_CouldNotImportDesign" xml:space="preserve">
+    <value>无法导入设计</value>
+  </data>
+  <data name="T_ExportDesign" xml:space="preserve">
+    <value>导出设计</value>
+  </data>
+  <data name="T_CouldNotExportDesign" xml:space="preserve">
+    <value>无法导出设计</value>
+  </data>
+  <data name="T_CouldNotDelete" xml:space="preserve">
+    <value>无法删除</value>
+  </data>
+  <data name="T_CouldNotDeleteTheDesignBecauseAtLeastOneDesignMustRemain" xml:space="preserve">
+    <value>无法删除该设计，因为至少需要保留一个设计</value>
+  </data>
+  <data name="T_SaveDesign_2" xml:space="preserve">
+    <value>保存设计</value>
+  </data>
+  <data name="T_CouldNotSaveTheDesign" xml:space="preserve">
+    <value>无法保存设计</value>
+  </data>
+  <data name="T_TheDesignWasSavedSuccessfully" xml:space="preserve">
+    <value>设计已成功保存</value>
+  </data>
+  <data name="T_CloseDesignEditor" xml:space="preserve">
+    <value>关闭设计编辑器</value>
+  </data>
+  <data name="T_PleaseCloseAllInstancesOfTheDesignEditor" xml:space="preserve">
+    <value>请关闭所有设计编辑器窗口</value>
+  </data>
+  <data name="T_RenameFile" xml:space="preserve">
+    <value>重命名文件</value>
+  </data>
+  <data name="T_CouldNotRenameTheFileBecauseAFileWithTheSameNameAlreadyExist" xml:space="preserve">
+    <value>无法重命名文件，因为已存在同名文件</value>
+  </data>
+  <data name="T_AnExceptionOccurredWhileRenamingTheFileN" xml:space="preserve">
+    <value>重命名文件时发生异常：\n</value>
+  </data>
+  <data name="T_FileNotFound" xml:space="preserve">
+    <value>找不到文件</value>
+  </data>
+  <data name="T_CouldNotReopenTheFileBecauseItNoLongerExists" xml:space="preserve">
+    <value>无法重新打开文件，因为该文件已不存在</value>
+  </data>
+  <data name="T_InvalidDesignName" xml:space="preserve">
+    <value>无效的设计名称</value>
+  </data>
+  <data name="T_TheDesignNameIsInvalid" xml:space="preserve">
+    <value>设计名称无效</value>
+  </data>
+  <data name="T_Designs" xml:space="preserve">
+    <value>设计</value>
+  </data>
+  <data name="T_WelcomeToFastedit" xml:space="preserve">
+    <value>欢迎使用 Fastedit</value>
+  </data>
+  <data name="T_ToCustomizeYourExperienceNpressTheButtonBelow" xml:space="preserve">
+    <value>要自定义你的使用体验，\n请点击下方按钮</value>
+  </data>
+  <data name="T_Changelog" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
+  <data name="T_WelcomeToFasteditVersion" xml:space="preserve">
+    <value>欢迎使用 Fastedit {0}！</value>
+  </data>
+  <data name="T_Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="T_NewDesign" xml:space="preserve">
+    <value>新建设计</value>
+  </data>
+  <data name="T_Rename_2" xml:space="preserve">
+    <value>重命名 </value>
+  </data>
+  <data name="T_FasteditSettings_2" xml:space="preserve">
+    <value>Fastedit - 设置</value>
+  </data>
+  <data name="T_FileUpdatedFromDisk" xml:space="preserve">
+    <value>“{0}”已从磁盘更新。</value>
+  </data>
+  <data name="T_FileDeletedOnDisk" xml:space="preserve">
+    <value>“{0}”已从磁盘上删除。编辑器内容已保留，保存可重新创建该文件。</value>
+  </data>
+  <data name="T_FileRenamedOnDisk" xml:space="preserve">
+    <value>文件已在磁盘上重命名为“{0}”。</value>
+  </data>
+<data name="T_LineColumnFormat" xml:space="preserve"><value>行: {0}，列: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>词: {0}，</value></data><data name="T_CharsFormat" xml:space="preserve"><value>字符: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>空格: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>制表符</value></data>
+  <data name="T_Undock" xml:space="preserve">
+    <value>分离标签页</value>
+  </data>
+  <data name="T_Info" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="T_CloseAll" xml:space="preserve">
+    <value>全部关闭</value>
+  </data>
+  <data name="T_EncodingTitle" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="T_Done" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="T_Reopen" xml:space="preserve">
+    <value>重新打开</value>
+  </data>
+  <data name="T_ReopenUnsavedWarning" xml:space="preserve">
+    <value>未保存的更改将会丢失。是否确实要从磁盘重新加载文件？</value>
+  </data>
+  <data name="T_SaveDesignTitle" xml:space="preserve">
+    <value>保存设计？</value>
+  </data>
+  <data name="T_SaveDesignContent" xml:space="preserve">
+    <value>是否保存对 {0} 的更改？</value>
+  </data>
+  <data name="T_SaveFileTitle" xml:space="preserve">
+    <value>保存文件？</value>
+  </data>
+  <data name="T_SaveFileContent" xml:space="preserve">
+    <value>是否保存文件 {0}？</value>
+  </data>
+  <data name="T_FileConflictChangedOnDisk" xml:space="preserve">
+    <value>文件“{0}”已被其他程序在磁盘上修改。</value>
+  </data>
+  <data name="T_FileConflictTitle" xml:space="preserve">
+    <value>文件冲突 - {0}</value>
+  </data>
+  <data name="T_ReloadFromDisk" xml:space="preserve">
+    <value>从磁盘重新加载</value>
+  </data>
+  <data name="T_OverwriteDisk" xml:space="preserve">
+    <value>覆盖磁盘文件</value>
+  </data>
+  <data name="T_Ignore" xml:space="preserve">
+    <value>忽略</value>
+  </data>
+  <data name="T_Apply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="T_RecycleBin" xml:space="preserve">
+    <value>回收站</value>
+  </data>
+  <data name="T_FileRenamed" xml:space="preserve">
+    <value>文件已重命名</value>
+  </data>
+  <data name="T_EditDesignTitle" xml:space="preserve">
+    <value>编辑 {0}</value>
+  </data>
+</root>

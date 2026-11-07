@@ -20,6 +20,8 @@ public sealed partial class MixedLineEndingWarningDialogPage : Page
     public MixedLineEndingWarningDialogPage()
     {
         InitializeComponent();
+        warningTextBlock1.Text = Multilingual.L("MixedLineEndingWarningDialogPage_TextBlock_1.Text");
+        warningTextBlock2.Text = Multilingual.L("MixedLineEndingWarningDialogPage_TextBlock_2.Text");
     }
 
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="Fastedit.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,38 +6,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:l="using:WinUI3Localizer"
     mc:Ignorable="d" PointerEntered="Page_PointerEntered">
 
     <Grid>
         <NavigationView OpenPaneLength="250" Margin="0,15,0,0" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" x:Name="navigationView" ItemInvoked="NavigationView_ItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="App" Tag="AppPage" >
+                <NavigationViewItem l:Uids.Uid="SettingsPage_NavigationViewItem_1" Content="App" Tag="AppPage" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB7E;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 
-                <NavigationViewItem Content="Textbox" Tag="TextboxPage" >
+                <NavigationViewItem l:Uids.Uid="SettingsPage_NavigationViewItem_2" Content="Textbox" Tag="TextboxPage" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe8d2;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="Tabs" Tag="TabviewPage" >
+                <NavigationViewItem l:Uids.Uid="SettingsPage_NavigationViewItem_3" Content="Tabs" Tag="TabviewPage" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7C3;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Designs" Tag="DesignPage" >
+                <NavigationViewItem l:Uids.Uid="SettingsPage_NavigationViewItem_4" Content="Designs" Tag="DesignPage" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE790;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Data" Tag="DataPage" Icon="PostUpdate"/>
+                <NavigationViewItem l:Uids.Uid="SettingsPage_NavigationViewItem_5" Content="Data" Tag="DataPage" Icon="PostUpdate"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Tag="AboutPage" Content="About">
+                <NavigationViewItem Tag="AboutPage" l:Uids.Uid="SettingsPage_NavigationViewItem_6" Content="About">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE946;"/>
                     </NavigationViewItem.Icon>
@@ -45,8 +46,8 @@
             </NavigationView.FooterMenuItems>
             <NavigationView.Header>
                 <Grid VerticalAlignment="Center" Margin="0,-40,0,0">
-                    <TextBlock FontSize="48" Text="Hello" x:Name="pageNameDisplay" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Margin="0,10,20,0" x:Name="applySettingsButton" Click="ApplySettings_Click" Style="{ThemeResource AccentButtonStyle}" Content="Apply Settings" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock FontSize="48" Text="" x:Name="pageNameDisplay" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Margin="0,10,20,0" x:Name="applySettingsButton" Click="ApplySettings_Click" Style="{ThemeResource AccentButtonStyle}" l:Uids.Uid="SettingsPage_Button_1" Content="Apply Settings" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </NavigationView.Header>
 

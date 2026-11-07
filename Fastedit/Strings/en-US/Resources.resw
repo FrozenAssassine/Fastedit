@@ -1,42 +1,1045 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DesignGridView_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="DesignGridView_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>Edit Json</value>
+  </data>
+  <data name="SearchControl_TextBox_1.PlaceholderText" xml:space="preserve">
+    <value>Find...</value>
+  </data>
+  <data name="SearchControl_ToggleButton_1.Content" xml:space="preserve">
+    <value>Match case</value>
+  </data>
+  <data name="SearchControl_ToggleButton_2.Content" xml:space="preserve">
+    <value>Whole word</value>
+  </data>
+  <data name="SearchControl_TextBox_2.PlaceholderText" xml:space="preserve">
+    <value>Replace...</value>
+  </data>
+  <data name="SearchControl_Button_1.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="SearchControl_Button_2.Content" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="SearchControl_Button_2.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Replace all</value>
+  </data>
+  <data name="SurroundWithFlyout_TextBlock_1.Text" xml:space="preserve">
+    <value>Surround Selection (Press Tab)</value>
+  </data>
+  <data name="TextStatusBar_Run_1.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="TextStatusBar_NumberBox_1.Header" xml:space="preserve">
+    <value>Go To Line</value>
+  </data>
+  <data name="TextStatusBar_NumberBox_1.PlaceholderText" xml:space="preserve">
+    <value>Line...</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutSubItem_1.Text" xml:space="preserve">
+    <value>Tab Key</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>Use Tab (\t)</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>2 Spaces</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>4 Spaces</value>
+  </data>
+  <data name="TextStatusBar_ToggleMenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>8 Spaces</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutSubItem_2.Text" xml:space="preserve">
+    <value>Reformat Document</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>Use Tab (\t)</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>2 Spaces</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>4 Spaces</value>
+  </data>
+  <data name="TextStatusBar_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>8 Spaces</value>
+  </data>
+  <data name="VerticalTabsFlyoutControl_TextBlock_1.Text" xml:space="preserve">
+    <value>New Tab</value>
+  </data>
+  <data name="AboutPage_TextBlock_1.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutPage_TextBlock_2.Text" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="AboutPage_TextBlock_3.Text" xml:space="preserve">
+    <value>Contribute</value>
+  </data>
+  <data name="AboutPage_HyperlinkButton_1.Content" xml:space="preserve">
+    <value>Report Bug</value>
+  </data>
+  <data name="AboutPage_HyperlinkButton_2.Content" xml:space="preserve">
+    <value>Request Feature</value>
+  </data>
+  <data name="AboutPage_TextBlock_4.Text" xml:space="preserve">
+    <value>Additional dependencies used</value>
+  </data>
+  <data name="AboutPage_TextBlock_5.Text" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="AboutPage_SetingsItemSeparator_1.Header" xml:space="preserve">
+    <value>Legal</value>
+  </data>
+  <data name="AboutPage_TextBlock_6.Text" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="AboutPage_TextBlock_7.Text" xml:space="preserve">
+    <value>Disclaimer</value>
+  </data>
+  <data name="DesignEditor_Button_1.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="DesignEditor_Button_2.Content" xml:space="preserve">
+    <value>Save to File</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_1.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_1.Content" xml:space="preserve">
+    <value>System default</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_2.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_3.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_2.Header" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_4.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_5.Content" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_6.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_3.Header" xml:space="preserve">
+    <value>Text Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_4.Header" xml:space="preserve">
+    <value>Selection Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_5.Header" xml:space="preserve">
+    <value>Line Number Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_6.Header" xml:space="preserve">
+    <value>Line Number Background Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_7.Header" xml:space="preserve">
+    <value>Line Highlighter Background Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_8.Header" xml:space="preserve">
+    <value>Textbox Background Color</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_7.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_8.Content" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_9.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_9.Header" xml:space="preserve">
+    <value>Search Highlight Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_10.Header" xml:space="preserve">
+    <value>Cursor Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_11.Header" xml:space="preserve">
+    <value>Selected Tab Text Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_12.Header" xml:space="preserve">
+    <value>Unselected Tab Text Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_13.Header" xml:space="preserve">
+    <value>Selected Tab Background Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_14.Header" xml:space="preserve">
+    <value>Unselected Tab Background Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_15.Header" xml:space="preserve">
+    <value>Statusbar Text Color</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_16.Header" xml:space="preserve">
+    <value>Statusbar Background Color</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_10.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_11.Content" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_12.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_17.Header" xml:space="preserve">
+    <value>Dialog Background Color</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_13.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_14.Content" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="DesignEditor_ComboBoxItem_15.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="DesignEditor_SettingsControl_18.Header" xml:space="preserve">
+    <value>Dialog Text Color</value>
+  </data>
+  <data name="MixedLineEndingWarningDialogPage_TextBlock_1.Text" xml:space="preserve">
+    <value>This file contains a mix of different line endings.</value>
+  </data>
+  <data name="MixedLineEndingWarningDialogPage_TextBlock_2.Text" xml:space="preserve">
+    <value>Please select one format to make them consistent.</value>
+  </data>
+  <data name="MainPage_SplitButton_1.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show all Tabs; Ctrl + M (Type to search)</value>
+  </data>
+  <data name="MainPage_MenuBarItem_1.Title" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>Save All</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainPage_MenuBarItem_2.Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_8.Text" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_9.Text" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_10.Text" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_11.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_12.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_13.Text" xml:space="preserve">
+    <value>Duplicate Line</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_14.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_15.Text" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_16.Text" xml:space="preserve">
+    <value>Go To</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_17.Text" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="MainPage_MenuBarItem_3.Title" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>Word wrap</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_18.Text" xml:space="preserve">
+    <value>File Info</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_19.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_20.Text" xml:space="preserve">
+    <value>Show in File Explorer</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_1.Text" xml:space="preserve">
+    <value>Line Ending</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_21.Text" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_22.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_23.Text" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_24.Text" xml:space="preserve">
+    <value>Undock Tab</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>Readonly</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>Visualize Whitespace Characters</value>
+  </data>
+  <data name="MainPage_MenuBarItem_4.Title" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_2.Text" xml:space="preserve">
+    <value>Syntax Highlighting</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_3.Text" xml:space="preserve">
+    <value>Tab Behaviour (Tabs/Spaces)</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_25.Text" xml:space="preserve">
+    <value>Auto Detect</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>Use Tab (\t)</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>2 Spaces</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>4 Spaces</value>
+  </data>
+  <data name="MainPage_ToggleMenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>8 Spaces</value>
+  </data>
+  <data name="MainPage_MenuFlyoutSubItem_4.Text" xml:space="preserve">
+    <value>Reformat Tabs/Spaces</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_26.Text" xml:space="preserve">
+    <value>Use Tab (\t)</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_27.Text" xml:space="preserve">
+    <value>2 Spaces</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_28.Text" xml:space="preserve">
+    <value>4 Spaces</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_29.Text" xml:space="preserve">
+    <value>8 Spaces</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_30.Text" xml:space="preserve">
+    <value>Surround With</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_31.Text" xml:space="preserve">
+    <value>Quick Access</value>
+  </data>
+  <data name="MainPage_MenuBarItem_5.Title" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_32.Text" xml:space="preserve">
+    <value>Compact Overlay</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_33.Text" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_34.Text" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_35.Text" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_36.Text" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="MainPage_MenuFlyoutItem_37.Text" xml:space="preserve">
+    <value>Reset Zoom</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_1.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_2.Content" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="RecycleBinDialogPage_Button_3.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_1.Content" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_2.Content" xml:space="preserve">
+    <value>Textbox</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_3.Content" xml:space="preserve">
+    <value>Tabs</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_4.Content" xml:space="preserve">
+    <value>Designs</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_5.Content" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="SettingsPage_NavigationViewItem_6.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPage_TextBlock_1.Text" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="SettingsPage_Button_1.Content" xml:space="preserve">
+    <value>Apply Settings</value>
+  </data>
+  <data name="Settings_App_MenubarHeader.Header" xml:space="preserve">
+    <value>Menubar</value>
+  </data>
+  <data name="Settings_App_ShowMenubarHeader.Header" xml:space="preserve">
+    <value>Show Menubar</value>
+  </data>
+  <data name="Settings_App_MenubarAlignmentHeader.Header" xml:space="preserve">
+    <value>Menubar Alignment</value>
+  </data>
+  <data name="Settings_App_AlignmentLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Settings_App_AlignmentCenter.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="Settings_App_AlignmentRight.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Settings_App_StatusbarHeader.Header" xml:space="preserve">
+    <value>Statusbar</value>
+  </data>
+  <data name="Settings_App_ShowStatusbarHeader.Header" xml:space="preserve">
+    <value>Show Statusbar</value>
+  </data>
+  <data name="Settings_App_StatusbarText.Text" xml:space="preserve">
+    <value>Statusbar</value>
+  </data>
+  <data name="Settings_App_FileNameText.Text" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Settings_App_ZoomText.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="Settings_App_LineColumnText.Text" xml:space="preserve">
+    <value>Line Number / Column</value>
+  </data>
+  <data name="Settings_App_WordCharsText.Text" xml:space="preserve">
+    <value>Words / Characters</value>
+  </data>
+  <data name="Settings_App_EncodingText.Text" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="Settings_App_LineEndingsText.Text" xml:space="preserve">
+    <value>Line Endings</value>
+  </data>
+  <data name="Settings_App_TabsSpacesText.Text" xml:space="preserve">
+    <value>Tabs / Spaces</value>
+  </data>
+  <data name="Settings_App_SyntaxHighlightingText.Text" xml:space="preserve">
+    <value>Syntax Highlighting</value>
+  </data>
+  <data name="Settings_App_WindowHeader.Header" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="Settings_App_HideTitleBarHeader.Header" xml:space="preserve">
+    <value>Hide Title Bar</value>
+  </data>
+  <data name="Settings_App_HideTitleBarHeader.InfoText" xml:space="preserve">
+    <value>Restart to fix rendering issues</value>
+  </data>
+  <data name="Settings_App_LanguageHeader.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_App_LanguageControl.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_App_LanguageControl.InfoText" xml:space="preserve">
+    <value>Click 'Apply Settings' to apply</value>
+  </data>
+  <data name="Settings_Data_SettingsControl_ImportExportHeader.Header" xml:space="preserve">
+    <value>Import / Export App Settings</value>
+  </data>
+  <data name="Settings_Data_ExportSettingsButton.Content" xml:space="preserve">
+    <value>Export Settings</value>
+  </data>
+  <data name="Settings_Data_ImportSettingsButton.Content" xml:space="preserve">
+    <value>Import Settings</value>
+  </data>
+  <data name="Settings_Data_SetingsItemSeparator2.Header" xml:space="preserve">
+    <value>Clear Folders</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinHeader.Header" xml:space="preserve">
+    <value>Clear Recycle Bin</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinButton.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Settings_Data_FlyoutText.Text" xml:space="preserve">
+    <value>All items in the Recyclebin will be deleted</value>
+  </data>
+  <data name="Settings_Data_ClearRecycleBinConfirmButton.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Settings_Data_ClearTemporaryFilesHeader.Header" xml:space="preserve">
+    <value>Clear Temporary Files</value>
+  </data>
+  <data name="Settings_Data_ClearTemporaryFilesButton.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Settings_DesignPage_NewButton.Content" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Settings_DesignPage_ImportButton.Content" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Settings_DesignPage_ResetDefaultsButton.Content" xml:space="preserve">
+    <value>Reset Defaults</value>
+  </data>
+  <data name="Settings_DesignPage_AllWillBeReplaced.Text" xml:space="preserve">
+    <value>All existing items will be replaced. Export items to backup them!</value>
+  </data>
+  <data name="Settings_DesignPage_ConfirmButton.Content" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Settings_Page_Text_Separator.Header" xml:space="preserve">
+    <value>Text Styling</value>
+  </data>
+  <data name="Settings_Page_Font_Family_Control.Header" xml:space="preserve">
+    <value>Font Family</value>
+  </data>
+  <data name="Settings_Page_Font_Size_Control.Header" xml:space="preserve">
+    <value>Font Size</value>
+  </data>
+  <data name="Settings_Page_Features_Separator.Header" xml:space="preserve">
+    <value>Enable/Disable Features</value>
+  </data>
+  <data name="Settings_Page_Show_Line_Numbers_Control.Header" xml:space="preserve">
+    <value>Show Line Numbers</value>
+  </data>
+  <data name="Settings_Page_Show_Line_Highlighter_Control.Header" xml:space="preserve">
+    <value>Show Line Highlighter</value>
+  </data>
+  <data name="Settings_Page_Syntax_Highlighting_Control.Header" xml:space="preserve">
+    <value>Syntax Highlighting</value>
+  </data>
+  <data name="Settings_Page_ShowWhitespaceCharacters.Header" xml:space="preserve">
+    <value>Visualize whitespaces/tabs with arrows/dots</value>
+  </data>
+  <data name="Settings_Page_EnableClickableLinks.Header" xml:space="preserve">
+    <value>Enable clickable links in the text</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_1.Header" xml:space="preserve">
+    <value>Track external file changes on disk</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_2.Header" xml:space="preserve">
+    <value>Automatically reload unmodified files when changed on disk</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_3.Header" xml:space="preserve">
+    <value>Smooth Scrolling</value>
+  </data>
+  <data name="Settings_Page_Tab_Key_Separator.Header" xml:space="preserve">
+    <value>Default Document Settings</value>
+  </data>
+  <data name="Settings_Page_Number_Of_Spaces_Per_Tab_Control.Header" xml:space="preserve">
+    <value>Default Tab behaviour for new documents</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_1.Content" xml:space="preserve">
+    <value>Tabs</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_2.Content" xml:space="preserve">
+    <value>2 Spaces</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_3.Content" xml:space="preserve">
+    <value>4 Spaces</value>
+  </data>
+  <data name="Settings_DocumentPage_ComboBoxItem_4.Content" xml:space="preserve">
+    <value>8 Spaces</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_4.Header" xml:space="preserve">
+    <value>Default Line Ending for new Documents</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_5.Header" xml:space="preserve">
+    <value>Wordwrap</value>
+  </data>
+  <data name="Settings_DocumentPage_SettingsControl_6.Header" xml:space="preserve">
+    <value>Syntax highlighting for unknown files</value>
+  </data>
+  <data name="Settings_TabControl_TabSizingMode.Header" xml:space="preserve">
+    <value>Tab Sizing Mode</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Equals.Content" xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Title.Content" xml:space="preserve">
+    <value>Size to title</value>
+  </data>
+  <data name="Settings_TabControl_SizeMode_Compact.Content" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="Settings_TabControl_NewTabTitle.Header" xml:space="preserve">
+    <value>New Tab Title</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_2.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_3.Text" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_4.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_5.Text" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_6.Text" xml:space="preserve">
+    <value>Compact Overlay</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_7.Text" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_8.Text" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_9.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_10.Text" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="TabWindowPage_MenuFlyoutItem_11.Text" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="TabWindowPage_ToggleMenuFlyoutItem_1.Text" xml:space="preserve">
+    <value>ReadOnly</value>
+  </data>
+  <data name="T_NumberOfWords" xml:space="preserve">
+    <value>Number of Words</value>
+  </data>
+  <data name="T_NumberOfCharacter" xml:space="preserve">
+    <value>Number of Character</value>
+  </data>
+  <data name="T_NumberOfLines" xml:space="preserve">
+    <value>Number of Lines</value>
+  </data>
+  <data name="T_CurrentEncoding" xml:space="preserve">
+    <value>Current Encoding</value>
+  </data>
+  <data name="T_FilePath" xml:space="preserve">
+    <value>File Path</value>
+  </data>
+  <data name="T_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="T_OpenDocument" xml:space="preserve">
+    <value>Open document</value>
+  </data>
+  <data name="T_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="T_FileUpdated" xml:space="preserve">
+    <value>File Updated</value>
+  </data>
+  <data name="T_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="T_SaveToRecreate" xml:space="preserve">
+    <value>Save to recreate</value>
+  </data>
+  <data name="T_FileDeleted" xml:space="preserve">
+    <value>File Deleted</value>
+  </data>
+  <data name="T_GCode" xml:space="preserve">
+    <value>G-Code</value>
+  </data>
+  <data name="T_ArduinoSketch" xml:space="preserve">
+    <value>Arduino sketch</value>
+  </data>
+  <data name="T_HypertextPreprocessor" xml:space="preserve">
+    <value>Hypertext preprocessor</value>
+  </data>
+  <data name="T_AssemblyLanguage" xml:space="preserve">
+    <value>Assembly language</value>
+  </data>
+  <data name="T_Textfile" xml:space="preserve">
+    <value>Textfile</value>
+  </data>
+  <data name="T_RegistrationFile" xml:space="preserve">
+    <value>Registration file</value>
+  </data>
+  <data name="T_CascadingStyleSheets" xml:space="preserve">
+    <value>Cascading Style Sheets</value>
+  </data>
+  <data name="T_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="T_ShowInFileExplorer" xml:space="preserve">
+    <value>Show in File Explorer</value>
+  </data>
+  <data name="T_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="T_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="T_LoadingFile" xml:space="preserve">
+    <value>Loading file </value>
+  </data>
+  <data name="T_DonTSave" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="T_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="T_Encoding" xml:space="preserve">
+    <value>Encoding:</value>
+  </data>
+  <data name="T_YouAlsoHaveUnsavedModificationsInFasteditNN" xml:space="preserve">
+    <value>You also have unsaved modifications in Fastedit.\n\n</value>
+  </data>
+  <data name="T_ReloadDiscardYourLocalChangesAndLoadTheDiskVersionN" xml:space="preserve">
+    <value>• Reload: Discard your local changes and load the disk version.\n</value>
+  </data>
+  <data name="T_OverwriteKeepYourLocalChangesAndOverwriteTheFileOnDiskN" xml:space="preserve">
+    <value>• Overwrite: Keep your local changes and overwrite the file on disk.\n</value>
+  </data>
+  <data name="T_IgnoreKeepYourChangesInTheEditorWithoutModifyingDisk" xml:space="preserve">
+    <value>• Ignore: Keep your changes in the editor without modifying disk.</value>
+  </data>
+  <data name="T_Extension" xml:space="preserve">
+    <value>Extension: </value>
+  </data>
+  <data name="T_Path" xml:space="preserve">
+    <value>Path: </value>
+  </data>
+  <data name="T_Created" xml:space="preserve">
+    <value>Created: </value>
+  </data>
+  <data name="T_LastModified" xml:space="preserve">
+    <value>Last Modified: </value>
+  </data>
+  <data name="T_Size" xml:space="preserve">
+    <value>Size: </value>
+  </data>
+  <data name="T_Language" xml:space="preserve">
+    <value>Language: </value>
+  </data>
+  <data name="T_Words" xml:space="preserve">
+    <value>Words: </value>
+  </data>
+  <data name="T_Lines" xml:space="preserve">
+    <value>Lines: </value>
+  </data>
+  <data name="T_Characters" xml:space="preserve">
+    <value>Characters: </value>
+  </data>
+  <data name="T_Encoding_2" xml:space="preserve">
+    <value>Encoding: </value>
+  </data>
+  <data name="T_LineEnding" xml:space="preserve">
+    <value>Line Ending: </value>
+  </data>
+  <data name="T_Info_2" xml:space="preserve">
+    <value>Info </value>
+  </data>
+  <data name="T_GoToLine" xml:space="preserve">
+    <value>Go To Line</value>
+  </data>
+  <data name="T_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="T_NoAccess" xml:space="preserve">
+    <value>No access</value>
+  </data>
+  <data name="T_NoAccessToWriteToTheFile" xml:space="preserve">
+    <value>No access to write to the file</value>
+  </data>
+  <data name="T_SavingDatabaseError" xml:space="preserve">
+    <value>Saving Database Error</value>
+  </data>
+  <data name="T_SavingOpenFileError" xml:space="preserve">
+    <value>Saving open file error</value>
+  </data>
+  <data name="T_NoAccessToReadFromTheFile" xml:space="preserve">
+    <value>No access to read from the file</value>
+  </data>
+  <data name="T_Exception" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="T_UnhandledExceptionN" xml:space="preserve">
+    <value>Unhandled exception:\n</value>
+  </data>
+  <data name="T_ClearRecycleBin" xml:space="preserve">
+    <value>Clear Recycle Bin</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileClearingTheRecycleBin" xml:space="preserve">
+    <value>An error occurred while clearing the Recycle Bin</value>
+  </data>
+  <data name="T_DeleteFromRecycleBin" xml:space="preserve">
+    <value>Delete from Recycle Bin</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileDeletingTheFileFromTheRecycleBin" xml:space="preserve">
+    <value>An error occurred while deleting the file from the Recycle Bin</value>
+  </data>
+  <data name="T_SuccessfullyClearedTheRecycleBin" xml:space="preserve">
+    <value>Successfully cleared the Recycle Bin</value>
+  </data>
+  <data name="T_MoveToRecycleBin" xml:space="preserve">
+    <value>Move to Recycle Bin</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileMovingTheFileToTheRecycleBin" xml:space="preserve">
+    <value>An error occurred while moving the file to the Recycle Bin</value>
+  </data>
+  <data name="T_OpenFromRecycleBin" xml:space="preserve">
+    <value>Open from Recycle Bin</value>
+  </data>
+  <data name="T_AnErrorOccurredWhileOpeningTheFileFromTheRecycleBin" xml:space="preserve">
+    <value>An error occurred while opening the file from the Recycle Bin</value>
+  </data>
+  <data name="T_InvalidCharacter" xml:space="preserve">
+    <value>Invalid Character</value>
+  </data>
+  <data name="T_TheTextEnteredContainsInvalidCharactersForAFileName" xml:space="preserve">
+    <value>The text entered contains invalid characters for a file name</value>
+  </data>
+  <data name="T_DesignLoadFailed" xml:space="preserve">
+    <value>Design Load Failed</value>
+  </data>
+  <data name="T_CouldNotLoadTheDesign" xml:space="preserve">
+    <value>Could not load the design: </value>
+  </data>
+  <data name="T_DetectEncoding" xml:space="preserve">
+    <value>Detect Encoding</value>
+  </data>
+  <data name="T_CouldNotDetectTheEncodingN" xml:space="preserve">
+    <value>Could not detect the encoding\n</value>
+  </data>
+  <data name="T_SettingsExport" xml:space="preserve">
+    <value>Settings Export</value>
+  </data>
+  <data name="T_SettingsSuccessfullyExported" xml:space="preserve">
+    <value>Settings successfully exported</value>
+  </data>
+  <data name="T_SettingsImport" xml:space="preserve">
+    <value>Settings Import</value>
+  </data>
+  <data name="T_SettingsSuccessfullyImported" xml:space="preserve">
+    <value>Settings successfully imported</value>
+  </data>
+  <data name="T_FailedToExportSettings" xml:space="preserve">
+    <value>Failed to export settings</value>
+  </data>
+  <data name="T_FailedToImportSettings" xml:space="preserve">
+    <value>Failed to import settings</value>
+  </data>
+  <data name="T_TemporaryFiles" xml:space="preserve">
+    <value>Temporary Files</value>
+  </data>
+  <data name="T_FailedToClearTemporaryFiles" xml:space="preserve">
+    <value>Failed to clear temporary files</value>
+  </data>
+  <data name="T_SuccessfullyClearedTemporaryFiles" xml:space="preserve">
+    <value>Successfully cleared temporary files</value>
+  </data>
+  <data name="T_DeleteDesign" xml:space="preserve">
+    <value>Delete Design</value>
+  </data>
+  <data name="T_CouldNotDeleteDesign" xml:space="preserve">
+    <value>Could not delete design</value>
+  </data>
+  <data name="T_ImportDesign" xml:space="preserve">
+    <value>Import Design</value>
+  </data>
+  <data name="T_CouldNotImportDesign" xml:space="preserve">
+    <value>Could not import design</value>
+  </data>
+  <data name="T_ExportDesign" xml:space="preserve">
+    <value>Export Design</value>
+  </data>
+  <data name="T_CouldNotExportDesign" xml:space="preserve">
+    <value>Could not export design</value>
+  </data>
+  <data name="T_CouldNotDelete" xml:space="preserve">
+    <value>Could Not Delete</value>
+  </data>
+  <data name="T_CouldNotDeleteTheDesignBecauseAtLeastOneDesignMustRemain" xml:space="preserve">
+    <value>Could not delete the design because at least one design must remain</value>
+  </data>
+  <data name="T_SaveDesign_2" xml:space="preserve">
+    <value>Save Design</value>
+  </data>
+  <data name="T_CouldNotSaveTheDesign" xml:space="preserve">
+    <value>Could not save the design</value>
+  </data>
+  <data name="T_TheDesignWasSavedSuccessfully" xml:space="preserve">
+    <value>The design was saved successfully</value>
+  </data>
+  <data name="T_CloseDesignEditor" xml:space="preserve">
+    <value>Close Design Editor</value>
+  </data>
+  <data name="T_PleaseCloseAllInstancesOfTheDesignEditor" xml:space="preserve">
+    <value>Please close all instances of the design editor</value>
+  </data>
+  <data name="T_RenameFile" xml:space="preserve">
+    <value>Rename File</value>
+  </data>
+  <data name="T_CouldNotRenameTheFileBecauseAFileWithTheSameNameAlreadyExist" xml:space="preserve">
+    <value>Could not rename the file because a file with the same name already exists</value>
+  </data>
+  <data name="T_AnExceptionOccurredWhileRenamingTheFileN" xml:space="preserve">
+    <value>An exception occurred while renaming the file:\n</value>
+  </data>
+  <data name="T_FileNotFound" xml:space="preserve">
+    <value>File Not Found</value>
+  </data>
+  <data name="T_CouldNotReopenTheFileBecauseItNoLongerExists" xml:space="preserve">
+    <value>Could not reopen the file because it no longer exists</value>
+  </data>
+  <data name="T_InvalidDesignName" xml:space="preserve">
+    <value>Invalid Design Name</value>
+  </data>
+  <data name="T_TheDesignNameIsInvalid" xml:space="preserve">
+    <value>The design name is invalid</value>
+  </data>
+  <data name="T_Designs" xml:space="preserve">
+    <value>Designs</value>
+  </data>
+  <data name="T_WelcomeToFastedit" xml:space="preserve">
+    <value>Welcome to Fastedit</value>
+  </data>
+  <data name="T_ToCustomizeYourExperienceNpressTheButtonBelow" xml:space="preserve">
+    <value>To customize your experience,\npress the button below</value>
+  </data>
+  <data name="T_Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="T_WelcomeToFasteditVersion" xml:space="preserve">
+    <value>Welcome to Fastedit {0}!</value>
+  </data>
+  <data name="T_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="T_NewDesign" xml:space="preserve">
+    <value>New Design</value>
+  </data>
+  <data name="T_Rename_2" xml:space="preserve">
+    <value>Rename </value>
+  </data>
+  <data name="T_FasteditSettings_2" xml:space="preserve">
+    <value>Fastedit - Settings</value>
+  </data>
+  <data name="T_FileUpdatedFromDisk" xml:space="preserve">
+    <value>'{0}' was updated from disk.</value>
+  </data>
+  <data name="T_FileDeletedOnDisk" xml:space="preserve">
+    <value>'{0}' was deleted on disk. Editor content is preserved. Save to recreate the file.</value>
+  </data>
+  <data name="T_FileRenamedOnDisk" xml:space="preserve">
+    <value>File was renamed to '{0}' on disk.</value>
+  </data>
+<data name="T_LineColumnFormat" xml:space="preserve"><value>Ln: {0}, Cl: {1}</value></data><data name="T_WordsFormat" xml:space="preserve"><value>W: {0}, </value></data><data name="T_CharsFormat" xml:space="preserve"><value>C: {0}</value></data><data name="T_SpacesFormat" xml:space="preserve"><value>Spaces: {0}</value></data><data name="T_TabsCharacter" xml:space="preserve"><value>Tabs</value></data>
+  <data name="T_Undock" xml:space="preserve">
+    <value>Undock Tab</value>
+  </data>
+  <data name="T_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="T_CloseAll" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="T_EncodingTitle" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="T_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="T_Reopen" xml:space="preserve">
+    <value>Reopen</value>
+  </data>
+  <data name="T_ReopenUnsavedWarning" xml:space="preserve">
+    <value>Unsaved changes will be lost. Do you want to reload the file from disk?</value>
+  </data>
+  <data name="T_SaveDesignTitle" xml:space="preserve">
+    <value>Save Design?</value>
+  </data>
+  <data name="T_SaveDesignContent" xml:space="preserve">
+    <value>Would you like to save the changes on {0}?</value>
+  </data>
+  <data name="T_SaveFileTitle" xml:space="preserve">
+    <value>Save File?</value>
+  </data>
+  <data name="T_SaveFileContent" xml:space="preserve">
+    <value>Would you like to save the file {0}?</value>
+  </data>
+  <data name="T_FileConflictChangedOnDisk" xml:space="preserve">
+    <value>The file "{0}" has been changed on disk by another program.</value>
+  </data>
+  <data name="T_FileConflictTitle" xml:space="preserve">
+    <value>File Conflict - {0}</value>
+  </data>
+  <data name="T_ReloadFromDisk" xml:space="preserve">
+    <value>Reload from disk</value>
+  </data>
+  <data name="T_OverwriteDisk" xml:space="preserve">
+    <value>Overwrite disk</value>
+  </data>
+  <data name="T_Ignore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="T_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="T_RecycleBin" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+  <data name="T_FileRenamed" xml:space="preserve">
+    <value>File Renamed</value>
+  </data>
+  <data name="T_EditDesignTitle" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
 </root>

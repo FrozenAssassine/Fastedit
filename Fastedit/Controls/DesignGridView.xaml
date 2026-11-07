@@ -12,16 +12,16 @@
             <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind AppBackground}">
                 <Grid.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Tag="{x:Bind FileName}" Text="Export" Click="ExportDesign_Click">
+                        <MenuFlyoutItem Tag="{x:Bind FileName}" x:Uid="DesignGridView_MenuFlyoutItem_1" Text="Export" Click="ExportDesign_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xEDE1;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Icon="Copy" Text="Duplicate" Click="DuplicateDesign_Click" Tag="{x:Bind FileName}"/>
+                        <MenuFlyoutItem Icon="Copy" x:Uid="DesignGridView_MenuFlyoutItem_2" Text="Duplicate" Click="DuplicateDesign_Click" Tag="{x:Bind FileName}"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Icon="Delete" Tag="{x:Bind FileName}" Text="Delete" Click="DeleteDesign_Click"/>
-                        <MenuFlyoutItem Icon="Edit" Text="Edit" Click="EditDesign_Click" Tag="{x:Bind FileName}"/>
-                        <MenuFlyoutItem Text="Edit Json" Click="EditDesignJson_Click" Tag="{x:Bind FileName}">
+                        <MenuFlyoutItem Icon="Delete" Tag="{x:Bind FileName}" x:Uid="DesignGridView_MenuFlyoutItem_3" Text="Delete" Click="DeleteDesign_Click"/>
+                        <MenuFlyoutItem Icon="Edit" x:Uid="DesignGridView_MenuFlyoutItem_4" Text="Edit" Click="EditDesign_Click" Tag="{x:Bind FileName}"/>
+                        <MenuFlyoutItem x:Uid="DesignGridView_MenuFlyoutItem_5" Text="Edit Json" Click="EditDesignJson_Click" Tag="{x:Bind FileName}">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE932;" />
                             </MenuFlyoutItem.Icon>

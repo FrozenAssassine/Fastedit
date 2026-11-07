@@ -47,16 +47,16 @@ public class FileConflictDialog
             var contentPanel = new StackPanel { Spacing = 12 };
             contentPanel.Children.Add(new TextBlock
             {
-                Text = $"The file \"{fileName}\" has been changed on disk by another program.",
+                Text = Multilingual.L("T_FileConflictChangedOnDisk", fileName),
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 TextWrapping = TextWrapping.Wrap
             });
             contentPanel.Children.Add(new TextBlock
             {
-                Text = "You also have unsaved modifications in Fastedit.\n\n" +
-                       "• Reload: Discard your local changes and load the disk version.\n" +
-                       "• Overwrite: Keep your local changes and overwrite the file on disk.\n" +
-                       "• Ignore: Keep your changes in the editor without modifying disk.",
+                Text = Multilingual.L("T_YouAlsoHaveUnsavedModificationsInFasteditNN") +
+                       Multilingual.L("T_ReloadDiscardYourLocalChangesAndLoadTheDiskVersionN") +
+                       Multilingual.L("T_OverwriteKeepYourLocalChangesAndOverwriteTheFileOnDiskN") +
+                       Multilingual.L("T_IgnoreKeepYourChangesInTheEditorWithoutModifyingDisk"),
                 TextWrapping = TextWrapping.Wrap
             });
 
@@ -66,11 +66,11 @@ public class FileConflictDialog
                 Background = DialogHelper.ContentDialogBackground(),
                 Foreground = DialogHelper.ContentDialogForeground(),
                 RequestedTheme = DialogHelper.DialogDesign,
-                Title = $"File Conflict - {fileName}",
+                Title = Multilingual.L("T_FileConflictTitle", fileName),
                 Content = contentPanel,
-                PrimaryButtonText = "Reload from disk",
-                SecondaryButtonText = "Overwrite disk",
-                CloseButtonText = "Ignore",
+                PrimaryButtonText = Multilingual.L("T_ReloadFromDisk"),
+                SecondaryButtonText = Multilingual.L("T_OverwriteDisk"),
+                CloseButtonText = Multilingual.L("T_Ignore"),
                 DefaultButton = ContentDialogButton.Primary
             };
 

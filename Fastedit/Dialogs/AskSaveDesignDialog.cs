@@ -1,4 +1,4 @@
-﻿using Fastedit.Views;
+using Fastedit.Views;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,11 +16,11 @@ public class AskSaveDesignDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Save Design?",
-            Content = "Would you like to save the changes on " + Path.GetFileNameWithoutExtension(editor.CurrentDesignName) + "?",
-            PrimaryButtonText = "Save",
-            SecondaryButtonText = "Don't save",
-            CloseButtonText = "Cancel",
+            Title = Multilingual.L("T_SaveDesignTitle"),
+            Content = Multilingual.L("T_SaveDesignContent", Path.GetFileNameWithoutExtension(editor.CurrentDesignName)),
+            PrimaryButtonText = Multilingual.L("T_Save"),
+            SecondaryButtonText = Multilingual.L("T_DonTSave"),
+            CloseButtonText = Multilingual.L("T_Cancel"),
             DefaultButton = ContentDialogButton.Primary,
         };
         return await SaveDialog.ShowAsync();

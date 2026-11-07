@@ -1,5 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -25,8 +26,8 @@
 	  <GenerateTestArtifacts>True</GenerateTestArtifacts>
 	  <AppxBundle>Always</AppxBundle>
 	  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-	  <AssemblyVersion>2.11.0</AssemblyVersion>
-	  <Version>2.11.0</Version>
+	  <AssemblyVersion>2.12.0</AssemblyVersion>
+	  <Version>2.12.0</Version>
 	  <Authors>Julius Kirsch</Authors>
 	  <Copyright>Copyright © 2022-2026</Copyright>
 	  <WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
@@ -40,8 +41,9 @@
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0-beta" />
+	  <PackageReference Include="TextControlBox.WinUI.JuliusKirsch" Version="1.7.0" />
     <Manifest Include="$(ApplicationManifest)" />
+    <PackageReference Include="WinUI3Localizer" Version="2.3.0" />
   </ItemGroup>
 
   <!--
@@ -53,6 +55,9 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Strings\**\*.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\changelog.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Models;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml.Controls;
@@ -13,15 +13,15 @@ public class TabFlyout
     public static MenuFlyout CreateFlyout(TabPageItem tab, TabView tabView)
     {
         var flyout = new MenuFlyout();
-        flyout.Items.Add(CreateItem(tab, tabView, "Close", "\uE8BB", TabPageFlyoutItem.Close, VirtualKeyModifiers.Control, VirtualKey.W));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Close"), "\uE8BB", TabPageFlyoutItem.Close, VirtualKeyModifiers.Control, VirtualKey.W));
         flyout.Items.Add(new MenuFlyoutSeparator());
-        flyout.Items.Add(CreateItem(tab, tabView, "Show in File Explorer", Symbol.Link, TabPageFlyoutItem.RevealInFileExplorer));
-        flyout.Items.Add(CreateItem(tab, tabView, "Rename", Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
-        flyout.Items.Add(CreateItem(tab, tabView, "Save", Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_ShowInFileExplorer"), Symbol.Link, TabPageFlyoutItem.RevealInFileExplorer));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Rename"), Symbol.Rename, TabPageFlyoutItem.Rename, VirtualKeyModifiers.None, VirtualKey.F2));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Save"), Symbol.Save, TabPageFlyoutItem.Save, VirtualKeyModifiers.Control, VirtualKey.S));
         flyout.Items.Add(new MenuFlyoutSeparator());
-        flyout.Items.Add(CreateItem(tab, tabView, "Undock", Symbol.DockBottom, TabPageFlyoutItem.Undock, VirtualKeyModifiers.Control, VirtualKey.L));
-        flyout.Items.Add(CreateItem(tab, tabView, "Info", "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
-        flyout.Items.Add(CreateItem(tab, tabView, "Close all", Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Undock"), Symbol.DockBottom, TabPageFlyoutItem.Undock, VirtualKeyModifiers.Control, VirtualKey.L));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_Info"), "\uE946", TabPageFlyoutItem.FileInfo, VirtualKeyModifiers.Control, VirtualKey.I));
+        flyout.Items.Add(CreateItem(tab, tabView, Multilingual.L("T_CloseAll"), Symbol.RepeatAll, TabPageFlyoutItem.CloseAll));
         return flyout;
     }
     private static MenuFlyoutItem CreateItem(TabPageItem tab, TabView tabView, string Text, Symbol symbol, TabPageFlyoutItem type, VirtualKeyModifiers modifier = VirtualKeyModifiers.None, VirtualKey key = VirtualKey.None)

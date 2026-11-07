@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Helper;
 using Fastedit.Storage;
 using Microsoft.UI.Xaml;
@@ -53,6 +53,41 @@ public sealed partial class TabWindowPage : Page
         this.tab.textbox.SelectionChanged += Textbox_SelectionChanged;
         this.tab.textbox.TextChanged += Textbox_TextChanged;
         this.tab.textbox.ZoomChanged += Textbox_ZoomChanged;
+        ReloadLanguage();
+    }
+
+    public void ReloadLanguage()
+    {
+        textStatusBar?.ReloadLanguage();
+        searchControl?.ReloadLanguage();
+        if (RightClickMenu?.Items != null)
+        {
+            string[] keys =
+            [
+                "TabWindowPage_MenuFlyoutItem_1.Text",
+                "TabWindowPage_MenuFlyoutItem_2.Text",
+                "TabWindowPage_MenuFlyoutItem_3.Text",
+                null,
+                "TabWindowPage_MenuFlyoutItem_4.Text",
+                "TabWindowPage_MenuFlyoutItem_5.Text",
+                null,
+                "TabWindowPage_MenuFlyoutItem_6.Text",
+                "TabWindowPage_MenuFlyoutItem_7.Text",
+                "TabWindowPage_MenuFlyoutItem_8.Text",
+                null,
+                "TabWindowPage_MenuFlyoutItem_9.Text",
+                "TabWindowPage_MenuFlyoutItem_10.Text",
+                "TabWindowPage_MenuFlyoutItem_11.Text",
+                "TabWindowPage_ToggleMenuFlyoutItem_1.Text"
+            ];
+            for (int i = 0; i < RightClickMenu.Items.Count && i < keys.Length; i++)
+            {
+                if (keys[i] != null && RightClickMenu.Items[i] is MenuFlyoutItem item)
+                {
+                    item.Text = Multilingual.L(keys[i]);
+                }
+            }
+        }
     }
 
     private void Textbox_ZoomChanged(TextControlBoxNS.TextControlBox sender, int zoomFactor)

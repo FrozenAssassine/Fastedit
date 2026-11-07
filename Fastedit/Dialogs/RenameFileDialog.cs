@@ -1,4 +1,4 @@
-﻿using Fastedit.Storage;
+using Fastedit.Storage;
 using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
@@ -23,10 +23,10 @@ internal class RenameFileDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Rename " + tab.DatabaseItem.FileName,
+            Title = Multilingual.L("T_Rename_2") + tab.DatabaseItem.FileName,
             Content = renameTextbox,
-            PrimaryButtonText = "Rename",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = Multilingual.L("T_Rename"),
+            CloseButtonText = Multilingual.L("T_Cancel"),
             DefaultButton = ContentDialogButton.Primary,
         };
 

@@ -1,4 +1,4 @@
-﻿using Fastedit.Core.Settings;
+using Fastedit.Core.Settings;
 using Fastedit.Core.Tab;
 using Fastedit.Helper;
 using Microsoft.UI.Xaml;
@@ -21,6 +21,18 @@ namespace Fastedit.Controls
         public SearchControl()
         {
             this.InitializeComponent();
+            ReloadLanguage();
+        }
+
+        public void ReloadLanguage()
+        {
+            textToFindTextbox.PlaceholderText = Multilingual.L("SearchControl_TextBox_1.PlaceholderText");
+            FindMatchCaseButton.Content = Multilingual.L("SearchControl_ToggleButton_1.Content");
+            FindWholeWordButton.Content = Multilingual.L("SearchControl_ToggleButton_2.Content");
+            textToReplaceTextBox.PlaceholderText = Multilingual.L("SearchControl_TextBox_2.PlaceholderText");
+            ToolTipService.SetToolTip(StartReplaceButton, Multilingual.L("SearchControl_Button_1.ToolTipService.ToolTip"));
+            ReplaceAllButton.Content = Multilingual.L("SearchControl_Button_2.Content");
+            ToolTipService.SetToolTip(ReplaceAllButton, Multilingual.L("SearchControl_Button_2.ToolTipService.ToolTip"));
         }
 
         private void BeginSearch(string searchword, bool matchCase, bool wholeWord)

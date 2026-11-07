@@ -99,7 +99,7 @@ public static class TabPageHelper
         if (!tab.DataIsLoaded && tab != null)
         {
             progressWindow?.ShowProgress();
-            progressWindow?.SetText("Loading file " + tab.DatabaseItem.FileName + "...");
+            progressWindow?.SetText(Multilingual.L("T_LoadingFile") + tab.DatabaseItem.FileName + "...");
             
             tab.textbox.LoadLines(TabDatabase.ReadTempFile(tab), true, tab.LineEnding);
             tab.SetTabsSpaces(tab.DatabaseItem.TabsSpaces);
@@ -368,9 +368,8 @@ public static class TabPageHelper
     {
         tab.DatabaseItem.IsModified = IsModified;
         tab.SetHeader(tab.DatabaseItem.FileName);
-        SelectHighlightLanguageByPath(tab);
         tab.UpdateHeader();
-        mainPage.TextStatusBar.UpdateFile();
+        mainPage?.TextStatusBar?.UpdateFile();
     }
 
     public static void UpdateStatusbarForTab(TabPageItem tab)

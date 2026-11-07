@@ -29,8 +29,8 @@ namespace Fastedit.Storage
             new ExtensionItem()
             {
                 Extension = { ".gcode", ".ngc", ".tap" },
-                ExtensionName = "G-Code",
-                ExtensionLongName = "G-Code"
+                ExtensionName = Multilingual.L("T_GCode"),
+                ExtensionLongName = Multilingual.L("T_GCode")
             },
             new ExtensionItem()
             {
@@ -40,17 +40,17 @@ namespace Fastedit.Storage
             new ExtensionItem()
             {
                 Extension = { ".ino" },
-                ExtensionName = "Arduino sketch",
+                ExtensionName = Multilingual.L("T_ArduinoSketch"),
             },
             new ExtensionItem()
             {
                 Extension = { ".php" },
-                ExtensionName = "Hypertext preprocessor",
+                ExtensionName = Multilingual.L("T_HypertextPreprocessor"),
             },
             new ExtensionItem()
             {
                 Extension = { ".asm" },
-                ExtensionName = "Assembly language",
+                ExtensionName = Multilingual.L("T_AssemblyLanguage"),
             },
             new ExtensionItem()
             {
@@ -100,20 +100,20 @@ namespace Fastedit.Storage
             new ExtensionItem()
             {
                 Extension = { ".txt", ".log" },
-                ExtensionName = "Textfile",
-                ExtensionLongName = "Textfile"
+                ExtensionName = Multilingual.L("T_Textfile"),
+                ExtensionLongName = Multilingual.L("T_Textfile")
             },
             new ExtensionItem()
             {
                 Extension = { ".reg" },
-                ExtensionName = "Registration file",
+                ExtensionName = Multilingual.L("T_RegistrationFile"),
                 ExtensionLongName = "Windows Registration file"
             },
             new ExtensionItem()
             {
                 Extension = { ".css" },
-                ExtensionName = "Cascading Style Sheets",
-                ExtensionLongName = "Cascading Style Sheets"
+                ExtensionName = Multilingual.L("T_CascadingStyleSheets"),
+                ExtensionLongName = Multilingual.L("T_CascadingStyleSheets")
             },
             new ExtensionItem()
             {

@@ -86,7 +86,7 @@ internal class AppSettings
 
     public static string Language
     {
-        get => SettingsManager.GetSettings(AppSettingsValues.Settings_Language);
+        get => SettingsManager.GetSettings(AppSettingsValues.Settings_Language, "");
         set => SettingsManager.SaveSettings(AppSettingsValues.Settings_Language, value);
     }
 

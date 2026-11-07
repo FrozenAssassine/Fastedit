@@ -257,7 +257,7 @@ public static class FileChangeManager
         if (_activeReloadInfoBar == null || !_activeReloadInfoBar.IsOpen)
         {
             _activeReloadInfoBar = new InfoBar();
-            _activeReloadInfoBar.Show("File Updated", $"'{fileName}' was updated from disk.", InfoBarSeverity.Informational, 3);
+            _activeReloadInfoBar.Show(Multilingual.L("T_FileUpdated"), string.Format(Multilingual.L("T_FileUpdatedFromDisk"), fileName), InfoBarSeverity.Informational, 3);
         }
     }
 
@@ -272,11 +272,11 @@ public static class FileChangeManager
         tab.DatabaseItem.IsModified = true;
         tab.UpdateHeader();
 
-        string fileName = tab.DatabaseItem.FileName ?? "File";
+        string fileName = tab.DatabaseItem.FileName ?? Multilingual.L("T_File");
 
         var saveButton = new Button
         {
-            Content = "Save to recreate"
+            Content = Multilingual.L("T_SaveToRecreate")
         };
         saveButton.Click += async delegate
         {
@@ -284,8 +284,8 @@ public static class FileChangeManager
         };
 
         new InfoBar().Show(
-            "File Deleted",
-            $"'{fileName}' was deleted on disk. Editor content is preserved. Save to recreate the file.",
+            Multilingual.L("T_FileDeleted"),
+            string.Format(Multilingual.L("T_FileDeletedOnDisk"), fileName),
             saveButton,
             InfoBarSeverity.Warning,
             10
@@ -309,8 +309,8 @@ public static class FileChangeManager
         UpdateWatchedPath(tab, newFullPath);
 
         new InfoBar().Show(
-            "File Renamed",
-            $"File was renamed to '{tab.DatabaseItem.FileName}' on disk.",
+            Multilingual.L("T_FileRenamed"),
+            string.Format(Multilingual.L("T_FileRenamedOnDisk"), tab.DatabaseItem.FileName),
             InfoBarSeverity.Informational,
             4
         );

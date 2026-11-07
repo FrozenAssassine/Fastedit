@@ -18,6 +18,10 @@ public sealed partial class RecycleBinDialogPage : Page
         this.InitializeComponent();
         this.tabView = tabView;
 
+        deleteButton.Content = Multilingual.L("RecycleBinDialogPage_Button_1.Content");
+        openButton.Content = Multilingual.L("RecycleBinDialogPage_Button_2.Content");
+        clearButton.Content = Multilingual.L("RecycleBinDialogPage_Button_3.Content");
+
         recycleBinItems = new ObservableCollection<RecycleBinItem>(RecycleBinManager.GetTrashedFiles().Select(x => new RecycleBinItem(x)));
     }
 

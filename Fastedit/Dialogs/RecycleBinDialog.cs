@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Fastedit.Views;
@@ -16,8 +16,8 @@ public class RecycleBinDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Recycle Bin",
-            CloseButtonText = "Close",
+            Title = Multilingual.L("T_RecycleBin"),
+            CloseButtonText = Multilingual.L("T_Close"),
             Content = new RecycleBinDialogPage(tabView),
             XamlRoot = App.m_window.Content.XamlRoot
         };

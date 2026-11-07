@@ -1,4 +1,4 @@
-﻿using Fastedit.Helper;
+using Fastedit.Helper;
 using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
@@ -18,10 +18,10 @@ internal class NewDesignDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "New Design",
+            Title = Multilingual.L("T_NewDesign"),
             Content = designName_Textbox,
-            PrimaryButtonText = "Done",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = Multilingual.L("T_Done"),
+            CloseButtonText = Multilingual.L("T_Cancel"),
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = App.m_window.Content.XamlRoot
         };

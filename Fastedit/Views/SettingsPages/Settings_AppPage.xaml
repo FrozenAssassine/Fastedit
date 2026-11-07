@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="Fastedit.Views.SettingsPages.Settings_AppPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,10 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:controls="using:Fastedit.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:Fastedit.Models"
     mc:Ignorable="d">
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:SetingsItemSeparator x:Uid="Settings_App_LanguageHeader" Header="Language"/>
+            <controls:SettingsControl x:Uid="Settings_App_LanguageControl" Header="Language" InfoText="Click 'Apply Settings' to apply">
+                <controls:SettingsControl.Content>
+                    <ComboBox Width="200" x:Name="selectLanguageBox" SelectionChanged="selectLanguageBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:LanguageItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
+
             <controls:SetingsItemSeparator x:Uid="Settings_App_MenubarHeader" Header="Menubar"/>
             <controls:SettingsControl x:Uid="Settings_App_ShowMenubarHeader" Header="Show Menubar">
                 <controls:SettingsControl.Content>
@@ -79,7 +93,7 @@
                         <TextBlock x:Uid="Settings_App_TabsSpacesText" FontSize="16" Text="Tab Spaces" Grid.Row="6" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showTabsSpaces" Tag="5" Grid.Row="6" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
 
-                        <TextBlock x:Uid="Settings_App_TabsSpacesText" FontSize="16" Text="Syntax Highlighting" Grid.Row="7" Grid.Column="0"/>
+                        <TextBlock x:Uid="Settings_App_SyntaxHighlightingText" FontSize="16" Text="Syntax Highlighting" Grid.Row="7" Grid.Column="0"/>
                         <ToggleSwitch x:Name="showSyntaxhighlights" Tag="5" Grid.Row="7" Grid.Column="1" Toggled="Statusbar_ShowItem_Toggled" Style="{StaticResource LeftSideToggleSwitch}"/>
                     </Grid>
                 </Expander.Content>

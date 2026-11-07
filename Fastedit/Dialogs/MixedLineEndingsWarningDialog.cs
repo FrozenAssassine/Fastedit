@@ -1,4 +1,4 @@
-﻿using Fastedit.Views.DialogPages;
+using Fastedit.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -18,10 +18,10 @@ internal class MixedLineEndingsWarningDialog
             Background = DialogHelper.ContentDialogBackground(),
             Foreground = DialogHelper.ContentDialogForeground(),
             RequestedTheme = DialogHelper.DialogDesign,
-            Title = "Warning",
+            Title = Multilingual.L("T_Warning"),
             Content = dialogPage,
-            PrimaryButtonText = "Apply",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = Multilingual.L("T_Apply"),
+            CloseButtonText = Multilingual.L("T_Cancel"),
             DefaultButton = ContentDialogButton.Primary,
         };
 

@@ -7,8 +7,10 @@ namespace Fastedit.Models
     public class QuickAccessWindowSubItem : IQuickAccessWindowItem
     {
         public List<IQuickAccessWindowItem> Items { get; set; } = new List<IQuickAccessWindowItem>();
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
+        private string _Command;
+        public string Command { get => _Command; set { _Command = value; CallPropertyChanged("Command"); } }
+        private string _Shortcut;
+        public string Shortcut { get => _Shortcut; set { _Shortcut = value; CallPropertyChanged("Shortcut"); } }
         public object Tag { get; set; }
         private Brush _TextColor;
         public Brush TextColor { get => _TextColor; set { _TextColor = value; CallPropertyChanged("TextColor"); } }

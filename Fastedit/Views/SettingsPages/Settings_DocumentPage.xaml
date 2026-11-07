@@ -59,18 +59,18 @@
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SettingsControl Header="Track external file changes on disk">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_1" Header="Track external file changes on disk">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DetectExternalFileChangesSwitch" Toggled="DetectExternalFileChangesSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
 
-        <controls:SettingsControl Header="Automatically reload unmodified files when changed on disk">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_2" Header="Automatically reload unmodified files when changed on disk">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="AutoReloadUnmodifiedFilesSwitch" Toggled="AutoReloadUnmodifiedFilesSwitch_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Smooth Scrolling">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_3" Header="Smooth Scrolling">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultSmoothScroling" Toggled="DefaultSmoothScroling_Toggled"/>
             </controls:SettingsControl.Content>
@@ -80,14 +80,14 @@
         <controls:SettingsControl x:Uid="Settings_Page_Number_Of_Spaces_Per_Tab_Control" Header="Default Tab behaviour for new documents">
             <controls:SettingsControl.Content>
                 <ComboBox Width="200" x:Name="TabsSpacesSelectorCombobox" SelectionChanged="TabsSpacesSelectorCombobox_SelectionChanged">
-                    <ComboBoxItem Content="Tabs" Tag="-1"/>
-                    <ComboBoxItem Content="2 Spaces" Tag="2"/>
-                    <ComboBoxItem Content="4 Spaces" Tag="4"/>
-                    <ComboBoxItem Content="8 Spaces" Tag="8"/>
+                    <ComboBoxItem x:Uid="Settings_DocumentPage_ComboBoxItem_1" Content="Tabs" Tag="-1"/>
+                    <ComboBoxItem x:Uid="Settings_DocumentPage_ComboBoxItem_2" Content="2 Spaces" Tag="2"/>
+                    <ComboBoxItem x:Uid="Settings_DocumentPage_ComboBoxItem_3" Content="4 Spaces" Tag="4"/>
+                    <ComboBoxItem x:Uid="Settings_DocumentPage_ComboBoxItem_4" Content="8 Spaces" Tag="8"/>
                 </ComboBox>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Default Line Ending for new Documents">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_4" Header="Default Line Ending for new Documents">
             <controls:SettingsControl.Content>
                 <ComboBox ItemsSource="{x:Bind LineEndings}" Width="200" x:Name="LineEndingSelectorCombobox" SelectionChanged="LineEndingSelectorCombobox_SelectionChanged">
                     <ComboBox.ItemTemplate>
@@ -98,12 +98,12 @@
                 </ComboBox>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Wordwrap">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_5" Header="Wordwrap">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="DefaultWordWrap" Toggled="DefaultWordWrap_Toggled"/>
             </controls:SettingsControl.Content>
         </controls:SettingsControl>
-        <controls:SettingsControl Header="Syntax highlighting for unknown files">
+        <controls:SettingsControl x:Uid="Settings_DocumentPage_SettingsControl_6" Header="Syntax highlighting for unknown files">
             <controls:SettingsControl.Content>
                 <ToggleSwitch Style="{StaticResource LeftSideToggleSwitch}" x:Name="UseGenericHighlight" Toggled="UseGenericHighlight_Toggled"/>
             </controls:SettingsControl.Content>

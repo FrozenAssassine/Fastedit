@@ -1,3 +1,5 @@
+using Fastedit.Views;
+using Fastedit.Core;
 using Fastedit.Controls;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -13,6 +15,7 @@ using TextControlBoxNS;
 using Fastedit.Core.Settings;
 using Fastedit.Core.Storage;
 using Fastedit.Core.Tab;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fastedit;
@@ -97,7 +100,7 @@ public sealed partial class MainPage : Page
         else if (selectedTab is TabPageItem tab)
             title = $"{tab.Header}";
         else if (SettingsTabPageHelper.IsSettingsPage(tabControl.SelectedItem))
-            title = "Fastedit - Settings";
+            title = Multilingual.L("T_FasteditSettings_2");
         App.m_window.Title = title;
     }
     private void Initialise()
@@ -571,6 +574,7 @@ public sealed partial class MainPage : Page
         if (sender is SplitButton btn)
         {
             addTabButton = btn;
+            ToolTipService.SetToolTip(addTabButton, Multilingual.L("MainPage_SplitButton_1.ToolTipService.ToolTip"));
         }
     }
 
@@ -589,8 +593,54 @@ public sealed partial class MainPage : Page
 
     public void ApplySettings(FasteditDesign currentDesign = null)
     {
+        ReloadLanguage();
         SettingsUpdater.UpdateSettings(this, tabControl, mainMenubar, textStatusBar, currentDesign);
     }
+
+    public void ReloadLanguage()
+    {
+        Multilingual.Reload();
+        LocalizationManager.Instance.ReapplyLanguage();
+
+        if (CodeLanguageSelector?.Items?.Count > 0 && CodeLanguageSelector.Items[0] is MenuFlyoutItem noneSyntaxItem)
+        {
+            noneSyntaxItem.Text = Multilingual.L("T_None");
+        }
+
+        if (RunCommandWindowItem_SyntaxHighlighting?.Items?.Count > 0 && RunCommandWindowItem_SyntaxHighlighting.Items[0] is QuickAccessWindowItem noneQuickAccessItem)
+        {
+            noneQuickAccessItem.Command = Multilingual.L("T_None");
+        }
+
+        if (addTabButton != null)
+        {
+            ToolTipService.SetToolTip(addTabButton, Multilingual.L("MainPage_SplitButton_1.ToolTipService.ToolTip"));
+        }
+
+        runCommandWindow?.ReloadLanguage();
+        searchControl?.ReloadLanguage();
+        textStatusBar?.ReloadLanguage();
+        verticalTabsFlyout?.ReloadLanguage();
+        surroundWithFlyout?.ReloadLanguage();
+
+        if (SettingsTabPageHelper.settingsPage?.Content is SettingsPage settingsPage)
+        {
+            settingsPage.ReloadLanguage(true);
+        }
+
+        if (tabControl?.TabItems != null)
+        {
+            foreach (var item in tabControl.TabItems)
+            {
+                if (item is TabPageItem tab)
+                {
+                    tab.ContextFlyout = TabFlyout.CreateFlyout(tab, tabControl);
+                }
+            }
+        }
+        MakeAppTitle(tabControl.SelectedItem);
+    }
+
     private void CreateMenubarFromLanguage()
     {
         //items already added
@@ -601,7 +651,7 @@ public sealed partial class MainPage : Page
         {
             var menuItem = new MenuFlyoutItem
             {
-                Text = item.Value == null ? "None" : item.Value.Name,
+                Text = item.Value == null ? Multilingual.L("T_None") : item.Value.Name,
                 Tag = item.Key.GetHashCode(),
             };
             menuItem.Click += SyntaxHighlighting_Click;
@@ -609,7 +659,7 @@ public sealed partial class MainPage : Page
 
             var runCommandWindowItem = new QuickAccessWindowItem
             {
-                Command = item.Value == null ? "None" : item.Value.Name,
+                Command = item.Value == null ? Multilingual.L("T_None") : item.Value.Name,
                 Tag = item.Key.GetHashCode(),
             };
             runCommandWindowItem.RunCommandWindowItemClicked += SyntaxHighlighting_Click;

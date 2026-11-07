@@ -8,49 +8,49 @@
     mc:Ignorable="d" KeyDown="Page_KeyDown">
     <Page.Resources>
         <MenuFlyout x:Key="rightClickMenu" x:Name="RightClickMenu">
-            <MenuFlyoutItem Text="Copy" Click="Copy_Click" Icon="Copy"/>
-            <MenuFlyoutItem Text="Paste" Click="Paste_Click" Icon="Paste"/>
-            <MenuFlyoutItem Text="Cut" Click="Cut_Click" Icon="Cut"/>
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_1" Text="Copy" Click="Copy_Click" Icon="Copy"/>
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_2" Text="Paste" Click="Paste_Click" Icon="Paste"/>
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_3" Text="Cut" Click="Cut_Click" Icon="Cut"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Save" Click="Save_Click" Icon="Save">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_4" Text="Save" Click="Save_Click" Icon="Save">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="S" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Save As" Click="SaveAs_Click" Icon="SaveLocal">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_5" Text="Save As" Click="SaveAs_Click" Icon="SaveLocal">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="S" Modifiers="Control, Shift"  IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Compact Overlay" Click="CompactOverlay_Click">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_6" Text="Compact Overlay" Click="CompactOverlay_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="K" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Fullscreen" Click="Fullscreen_Click" Icon="Fullscreen">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_7" Text="Fullscreen" Click="Fullscreen_Click" Icon="Fullscreen">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F11"  IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Always On Top" Click="Toggle_TopMost_Click"/>
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_8" Text="Always On Top" Click="Toggle_TopMost_Click"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Close" Icon="Cancel" Click="Close_Click">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_9" Text="Close" Icon="Cancel" Click="Close_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="L" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Find" Click="OpenSearch_Click">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_10" Text="Find" Click="OpenSearch_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Replace" Click="OpenReplace_Click">
+            <MenuFlyoutItem x:Uid="TabWindowPage_MenuFlyoutItem_11" Text="Replace" Click="OpenReplace_Click">
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="R" Modifiers="Control" IsEnabled="False"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
             </MenuFlyoutItem>
-            <ToggleMenuFlyoutItem x:Name="readonlyModeFlyoutItem" Text="ReadOnly" Click="ToggleReadOnlyMode_Click"/>
+            <ToggleMenuFlyoutItem x:Name="readonlyModeFlyoutItem" x:Uid="TabWindowPage_ToggleMenuFlyoutItem_1" Text="ReadOnly" Click="ToggleReadOnlyMode_Click"/>
         </MenuFlyout>
     </Page.Resources>
 

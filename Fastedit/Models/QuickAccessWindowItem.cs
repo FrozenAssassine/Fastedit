@@ -25,10 +25,13 @@ namespace Fastedit.Models
         }
 
         public object Tag { get; set; }
-        public string Command { get; set; }
-        public string Shortcut { get; set; }
+        private string _Command;
+        public string Command { get => _Command; set { _Command = value; CallPropertyChanged("Command"); } }
+        private string _Shortcut;
+        public string Shortcut { get => _Shortcut; set { _Shortcut = value; CallPropertyChanged("Shortcut"); } }
         private Brush _TextColor;
         public Brush TextColor { get => _TextColor; set { _TextColor = value; CallPropertyChanged("TextColor"); } }
-        public string InfoText { get; set; } = null;
+        private string _InfoText = null;
+        public string InfoText { get => _InfoText; set { _InfoText = value; CallPropertyChanged("InfoText"); } }
     }
 }
