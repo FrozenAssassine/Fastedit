@@ -1036,4 +1036,10 @@
   <data name="T_RecycleBin" xml:space="preserve">
     <value>回收站</value>
   </data>
+  <data name="T_FileRenamed" xml:space="preserve">
+    <value>文件已重命名</value>
+  </data>
+  <data name="T_EditDesignTitle" xml:space="preserve">
+    <value>编辑 {0}</value>
+  </data>
 </root>

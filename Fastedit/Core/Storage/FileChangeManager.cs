@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Core.Tab;
 using Fastedit.Dialogs;
 using Fastedit.Helper;
@@ -309,7 +309,7 @@ public static class FileChangeManager
         UpdateWatchedPath(tab, newFullPath);
 
         new InfoBar().Show(
-            "File Renamed",
+            Multilingual.L("T_FileRenamed"),
             string.Format(Multilingual.L("T_FileRenamedOnDisk"), tab.DatabaseItem.FileName),
             InfoBarSeverity.Informational,
             4

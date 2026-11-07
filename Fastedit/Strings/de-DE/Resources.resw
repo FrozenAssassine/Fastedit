@@ -1044,4 +1044,10 @@ klicken Sie auf die Schaltfläche unten</value>
   <data name="T_RecycleBin" xml:space="preserve">
     <value>Papierkorb</value>
   </data>
+  <data name="T_FileRenamed" xml:space="preserve">
+    <value>Datei umbenannt</value>
+  </data>
+  <data name="T_EditDesignTitle" xml:space="preserve">
+    <value>{0} bearbeiten</value>
+  </data>
 </root>

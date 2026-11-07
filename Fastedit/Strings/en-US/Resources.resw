@@ -1036,4 +1036,10 @@
   <data name="T_RecycleBin" xml:space="preserve">
     <value>Recycle Bin</value>
   </data>
+  <data name="T_FileRenamed" xml:space="preserve">
+    <value>File Renamed</value>
+  </data>
+  <data name="T_EditDesignTitle" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
 </root>

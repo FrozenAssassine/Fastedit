@@ -1,4 +1,4 @@
-﻿using Fastedit.Helper;
+using Fastedit.Helper;
 using Fastedit.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -125,6 +125,7 @@ internal class TabWindowHelper
                 SettingsUpdater.UpdateTab(item.Value, false);
 
                 SettingsUpdater.SetSettingsToStatusbar(page.Statusbar, DesignHelper.CurrentDesign);
+                page.ReloadLanguage();
 
                 page.Statusbar.IsVisible = AppSettings.ShowStatusbar;
                 ThemeHelper.SetWindowTheme(window, design.Theme);

@@ -1,4 +1,4 @@
-﻿using Fastedit.Controls;
+using Fastedit.Controls;
 using Fastedit.Core.Tab;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -58,7 +58,7 @@ public class InfoMessages
 
         new InfoBar().Show(
             string.Format(Multilingual.L("T_WelcomeToFasteditVersion"), version),
-            "• Added word wrap and default word wrap setting\n• Watch file changes on disk and notify\n• Added log file and generic syntax highlighting\n• Smoother scrolling, touchpad gestures, touch and pen support\n• Support for ANSI and UTF-32 encodings\n• Significantly faster with less RAM usage, crash and stability fixes",
+            "• Added multi-language support (English, German, Simplified Chinese)\n• Added language switcher in App settings with live reload",
             btn,
             InfoBarSeverity.Success,
             25

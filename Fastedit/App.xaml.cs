@@ -33,11 +33,11 @@ public partial class App : Application
         {
             AppActivationHelper.appActivationArguments = e.Arguments;
 
-            if(!e.IsFirstLaunch)
-                m_window.SendLaunchArguments();
+            if (!e.IsFirstLaunch)
+                m_window?.SendLaunchArguments();
         }
 
-        m_window.BringToForeground();
+        m_window?.BringToForeground();
     }
 
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

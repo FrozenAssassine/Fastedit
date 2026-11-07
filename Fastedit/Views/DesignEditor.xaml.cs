@@ -1,4 +1,4 @@
-﻿using Fastedit.Dialogs;
+using Fastedit.Dialogs;
 using Fastedit.Helper;
 using System;
 using System.IO;
@@ -19,7 +19,7 @@ public sealed partial class DesignEditor : Page
         this.currentDesign = design;
         this.CurrentDesignName = designName;
 
-        this.titlebarHeader.Text = "Edit " + designName;
+        this.titlebarHeader.Text = Multilingual.L("T_EditDesignTitle", designName);
     }
     public string CurrentDesignName { get; private set; }
     public bool NeedSave { get; private set; } = false;
